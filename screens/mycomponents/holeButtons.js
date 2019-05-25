@@ -1,9 +1,16 @@
 import React from 'react';
-import { StyleSheet, View, Button } from 'react-native';
+import { StyleSheet, View, Button, Text } from 'react-native';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { WebBrowser } from 'expo';
 
+
+var score = 0 
+
+
 export default class HoleMoveButtons extends React.Component {
+  state = {
+    score: 0
+  }
     render() {
       return (
         <View>
@@ -28,6 +35,8 @@ export default class HoleMoveButtons extends React.Component {
          </Row>
  
 </Grid>
+<View><Text>{this.state.score}</Text></View>
+
         </View>
       );
     }
@@ -38,9 +47,12 @@ export default class HoleMoveButtons extends React.Component {
     };
   
     _handlePressICF = () => {
-      WebBrowser.openBrowserAsync('https://www.canoeicf.com/discipline/canoe-freestyle');
-    };
-  
+      this.setState({
+        score: this.state.score+1
+      })
+      console.log(this.state.score)
+      };
+
 
 
   styles = StyleSheet.create({
