@@ -73,21 +73,6 @@ export default class ExpoLinksScreen extends React.Component {
           </View>
         </Touchable>
 
-        <Touchable
-          style={styles.option}
-          background={Touchable.Ripple('#ccc', false)}
-          onPress={this._handlePressForums}>
-          <View style={{ flexDirection: 'row' }}>
-            <View style={styles.optionIconContainer}>
-              <Ionicons name="ios-chatboxes" size={22} color="#ccc" />
-            </View>
-            <View style={styles.optionTextContainer}>
-              <Text style={styles.optionText}>
-                Ask a question on the Expo forums
-              </Text>
-            </View>
-          </View>
-        </Touchable>
       </View>
     );
   }
@@ -104,9 +89,6 @@ export default class ExpoLinksScreen extends React.Component {
     WebBrowser.openBrowserAsync('https://www.gbfreestylekayaking.co.uk');
   };
 
-  _handlePressForums = () => {
-    WebBrowser.openBrowserAsync('http://forums.expo.io');
-  };
 }
 
 const styles = StyleSheet.create({
