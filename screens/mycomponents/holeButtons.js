@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Button } from 'react-native';
 import { Col, Row, Grid } from "react-native-easy-grid";
-
+import { WebBrowser } from 'expo';
 
 export default class HoleMoveButtons extends React.Component {
     render() {
@@ -12,16 +12,16 @@ export default class HoleMoveButtons extends React.Component {
     <Col>
     <Button
   onPress={this._handlePressNFL}
-  title="Learn More"
+  title="NFL"
   color="#841584"
   accessibilityLabel="Learn more about this purple button"
 />
 </Col>
     <Col>
     <Button
-  onPress={this._handlePressNFL}
-  title="Learn More"
-  color="#841584"
+  onPress={this._handlePressICF}
+  title="ICF"
+  color="#649524"
   accessibilityLabel="Learn more about this purple button"
 />
 </Col>
