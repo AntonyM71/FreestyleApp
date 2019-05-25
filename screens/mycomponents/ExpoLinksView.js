@@ -19,7 +19,7 @@ export default class ExpoLinksScreen extends React.Component {
           <View style={{ flexDirection: 'row' }}>
             <View style={styles.optionIconContainer}>
               <Image
-                source={require('./assets/images/icf.png')}
+                source={require('../../data/assets/images/icf.png')}
                 resizeMode="contain"
                 fadeDuration={0}
                 style={{ width: 60, height: 60, marginTop: 1 }}
@@ -40,7 +40,7 @@ export default class ExpoLinksScreen extends React.Component {
           <View style={{ flexDirection: 'row' }}>
             <View style={styles.optionIconContainer}>
               <Image
-                source={require('./assets/images/nfl.png')}
+                source={require('../../data/assets/images/nfl.png')}
                 fadeDuration={0}
                 style={{ width: 60, height: 60 }}
               />

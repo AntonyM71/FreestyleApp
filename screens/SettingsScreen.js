@@ -1,5 +1,5 @@
 import React from 'react';
-import  ExpoConfigView from './mycomponents'
+import ExpoConfigViewClass from './mycomponents/ExpoLinksView'
 export default class SettingsScreen extends React.Component {
   static navigationOptions = {
     title: 'app.json',
