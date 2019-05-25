@@ -1,16 +1,14 @@
 import React from 'react';
 import {
-  Image,
   Platform,
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
-import { WebBrowser } from 'expo';
-
 import { MonoText } from '../components/StyledText';
+import { WebBrowser } from 'expo';
+import  HoleMoveButtons  from './mycomponents/holeButtons';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -22,35 +20,11 @@ export default class HomeScreen extends React.Component {
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.welcomeContainer}>
-            <Image
-              source={
-                __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
-              }
-              style={styles.welcomeImage}
-            />
+          <Text> Freestyle Scoring App</Text>
           </View>
-
-          <View style={styles.getStartedContainer}>
-            {this._maybeRenderDevelopmentModeWarning()}
-
-            <Text style={styles.getStartedText}>Get started by opening</Text>
-
-            <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-              <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
-            </View>
-
-            <Text style={styles.getStartedText}>
-              Nick likes pointy boats
-            </Text>
-          </View>
-
-          <View style={styles.ICFContainer}>
-            <TouchableOpacity onPress={this._handleICFPress} style={styles.ICFLink}>
-              <Text style={styles.ICFLinkText}>Go to the ICF Website</Text>
-            </TouchableOpacity>
-          </View>
+      <View>
+      <HoleMoveButtons />
+      </View>
         </ScrollView>
 
         <View style={styles.tabBarInfoContainer}>
@@ -63,40 +37,16 @@ export default class HomeScreen extends React.Component {
       </View>
     );
   }
-
-  _maybeRenderDevelopmentModeWarning() {
-    if (__DEV__) {
-      const learnMoreButton = (
-        <Text onPress={this._handleLearnMorePress} style={styles.ICFLinkText}>
-          Learn more
-        </Text>
-      );
-
-      return (
-        <Text style={styles.developmentModeText}>
-          Development mode is enabled, your app will be slower but you can use useful development
-          tools. {learnMoreButton}
-        </Text>
-      );
-    } else {
-      return (
-        <Text style={styles.developmentModeText}>
-          You are not in development mode, your app will run at full speed.
-        </Text>
-      );
-    }
-  }
-
-  _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
+  _handlePressNFL = () => {
+    WebBrowser.openBrowserAsync('https://www.facebook.com/nottinghamfreestyleleague');
   };
 
-  _handleICFPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://www.canoeicf.com/discipline/canoe-freestyle'
-    );
+  _handlePressICF = () => {
+    WebBrowser.openBrowserAsync('https://www.canoeicf.com/discipline/canoe-freestyle');
   };
 }
+
+
 
 const styles = StyleSheet.create({
   container: {
