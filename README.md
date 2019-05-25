@@ -1,2 +1,0 @@
-# FreestyleApp
-Freestyle Scoring app
