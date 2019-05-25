@@ -70,4 +70,3 @@ export default class HoleMoveButtons extends React.Component {
     },
   });
 }
-  

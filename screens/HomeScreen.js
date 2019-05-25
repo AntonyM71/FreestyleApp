@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { WebBrowser } from 'expo';
 import  HoleMoveButtons  from './mycomponents/holeButtons';
+import MoveButtons from './mycomponents/JsonButtons';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -23,6 +24,9 @@ export default class HomeScreen extends React.Component {
           </View>
       <View>
       <HoleMoveButtons />
+      </View>
+      <View>
+        <MoveButtons/>
       </View>
         </ScrollView>
 
