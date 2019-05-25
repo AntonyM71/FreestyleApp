@@ -13,7 +13,7 @@ export default class HoleMoveButtons extends React.Component {
     <Button
   onPress={this._handlePressNFL}
   title="NFL"
-  color="#841584"
+  color="#841583"
   accessibilityLabel="Learn more about this purple button"
 />
 </Col>
