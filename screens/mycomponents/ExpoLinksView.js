@@ -54,6 +54,26 @@ export default class ExpoLinksScreen extends React.Component {
         </Touchable>
 
         <Touchable
+          background={Touchable.Ripple('#ccc', false)}
+          style={styles.option}
+          onPress={this._handlePressGBFreestyle}>
+          <View style={{ flexDirection: 'row' }}>
+            <View style={styles.optionIconContainer}>
+              <Image
+                source={require('../../data/assets/images/gb-freestyle.png')}
+                fadeDuration={0}
+                style={{ width: 60, height: 60 }}
+              />
+            </View>
+            <View style={styles.optionTextContainer}>
+              <Text style={styles.optionText}>
+                Go to the GB Freestyle Page
+              </Text>
+            </View>
+          </View>
+        </Touchable>
+
+        <Touchable
           style={styles.option}
           background={Touchable.Ripple('#ccc', false)}
           onPress={this._handlePressForums}>
@@ -78,6 +98,10 @@ export default class ExpoLinksScreen extends React.Component {
 
   _handlePressICF = () => {
     WebBrowser.openBrowserAsync('https://www.canoeicf.com/discipline/canoe-freestyle');
+  };
+
+  _handlePressGBFreestyle = () => {
+    WebBrowser.openBrowserAsync('https://www.gbfreestylekayaking.co.uk');
   };
 
   _handlePressForums = () => {
