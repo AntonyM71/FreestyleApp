@@ -1,11 +1,13 @@
 // Testing json import
 import React from 'react';
 import { StyleSheet, View, Button, Text } from 'react-native';
+import  HoleMoveButtons  from './holeButtons';
 
 class BasicButton extends React.Component {
     render() {
         return (
             <View style={{alignItems: 'center'}}>
+              <HoleMoveButtons title={this.props}/>
             <Text>{this.props.move}</Text>
             </View>
         );

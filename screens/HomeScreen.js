@@ -7,10 +7,11 @@ import {
   View,
 } from 'react-native';
 import { WebBrowser } from 'expo';
-import  HoleMoveButtons  from './mycomponents/holeButtons';
+import { connect } from 'react-redux';
+
 import MoveButtons from './mycomponents/JsonButtons';
 
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
@@ -23,7 +24,6 @@ export default class HomeScreen extends React.Component {
           <Text> Freestyle Scoring App</Text>
           </View>
       <View>
-      <HoleMoveButtons />
       </View>
       <View>
         <MoveButtons/>
@@ -136,3 +136,11 @@ const styles = StyleSheet.create({
     color: '#2e78b7',
   },
 });
+
+
+const mapStateToProps = (state) => {
+  const { friends } = state
+  return { friends }
+};
+
+export default connect(mapStateToProps)(HomeScreen);

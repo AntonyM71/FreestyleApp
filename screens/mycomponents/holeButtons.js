@@ -14,28 +14,14 @@ export default class HoleMoveButtons extends React.Component {
     render() {
       return (
         <View>
-           <Grid>
-      <Row>
-    <Col>
-    <Button
-  onPress={this._handlePressNFL}
-  title="NFL"
-  color="#841583"
-  accessibilityLabel="Learn more about this purple button"
-/>
-</Col>
-    <Col>
-    <Button
+            <Button
   onPress={this._handlePressICF}
   title="ICF"
   color="#649524"
   accessibilityLabel="Learn more about this purple button"
 />
-</Col>
-         </Row>
- 
-</Grid>
-<View><Text>{this.state.score}</Text></View>
+
+<View><Text>{this.state. score}</Text></View>
 
         </View>
       );
@@ -82,3 +68,4 @@ export default class HoleMoveButtons extends React.Component {
     },
   });
 }
+  
