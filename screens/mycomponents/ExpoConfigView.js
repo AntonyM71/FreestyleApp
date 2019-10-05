@@ -1,6 +1,6 @@
+import * as Constants from 'expo-constants';
 import React from 'react';
-import { SectionList, Image, StyleSheet, Text, View } from 'react-native';
-import { Constants } from 'expo';
+import { Image, SectionList, StyleSheet, Text, View } from 'react-native';
 
 export default class ExpoConfigViewClass extends React.Component {
   render() {

@@ -1,0 +1,16 @@
+{"hole": [
+    {"Move": "Shuvit", "Value": false, "Clean": false, "Super Clean": false, "Air": false, "Huge": false, "Link": false, "Reverse": true},
+    {"Move": "Spin", "Value": false, "Clean": false, "Super Clean": false, "Air": false, "Huge": false, "Link": false, "Reverse": true},
+    {"Move": "Cartwheel", "Value": false, "Clean": false, "Super Clean": false, "Air": false, "Huge": false, "Link": false, "Reverse": true},
+    {"Move": "Splitwheel", "Value": false, "Clean": false, "Super Clean": false, "Air": false, "Huge": false, "Link": false, "Reverse": true},
+    {"Move": "Tricky Woo", "Value": false, "Clean": false, "Super Clean": false, "Air": false, "Huge": false, "Link": false, "Reverse": true},
+    {"Move": "Pirouette", "Value": false, "Clean": false, "Super Clean": false, "Air": false, "Huge": false, "Link": false, "Reverse": true},
+    {"Move": "Loop", "Value": false, "Clean": false, "Super Clean": false, "Air": false, "Huge": false, "Link": false, "Reverse": false},
+    {"Move": "Back Loop", "Value": false, "Clean": false, "Super Clean": false, "Air": false, "Huge": false, "Link": false, "Reverse": false},
+    {"Move": "Space Godzilla", "Value": false, "Clean": false, "Super Clean": false, "Air": false, "Huge": false, "Link": false, "Reverse": true},
+    {"Move": "Orbit", "Value": false, "Clean": false, "Super Clean": false, "Air": false, "Huge": false, "Link": false, "Reverse": true},
+    {"Move": "Lunar Orbit", "Value": false, "Clean": false, "Super Clean": false, "Air": false, "Huge": false, "Link": false, "Reverse": true},
+    {"Move": "McNasty", "Value": false, "Clean": false, "Super Clean": false, "Air": false, "Huge": false, "Link": false, "Reverse": true},
+    {"Move": "Phoenix Monkey", "Value": false, "Clean": false, "Super Clean": false, "Air": false, "Huge": false, "Link": false, "Reverse": true}
+]
+}

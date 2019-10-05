@@ -1,7 +1,7 @@
+import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
-import { StyleSheet, View, Button, Text } from 'react-native';
-import { Col, Row, Grid } from "react-native-easy-grid";
-import { WebBrowser } from 'expo';
+import { Button, StyleSheet, Text, View } from 'react-native';
+import { Col, Grid, Row } from "react-native-easy-grid";
 
 
 var score = 0 
@@ -29,7 +29,7 @@ export default class HoleMoveButtons extends React.Component {
   onPress={this._handlePressICF}
   title="ICF"
   color="#649524"
-  accessibilityLabel="Learn more about this purple button"
+  accessibilityLabel="Learn more about the ICF"
 />
 </Col>
          </Row>

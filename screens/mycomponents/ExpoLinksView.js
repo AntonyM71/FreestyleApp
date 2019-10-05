@@ -1,7 +1,6 @@
+import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
-import { StyleSheet, Image, Text, View } from 'react-native';
-import { WebBrowser } from 'expo';
-import { Ionicons } from '@expo/vector-icons';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 
 export default class ExpoLinksScreen extends React.Component {

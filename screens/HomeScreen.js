@@ -1,13 +1,7 @@
+import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
-import {
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import { WebBrowser } from 'expo';
-import  HoleMoveButtons  from './mycomponents/holeButtons';
+import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
+import HoleMoveButtons from './mycomponents/holeButtons';
 import MoveButtons from './mycomponents/JsonButtons';
 
 export default class HomeScreen extends React.Component {

@@ -1,26 +1,36 @@
 // Testing json import
 import React from 'react';
-import { StyleSheet, View, Button, Text } from 'react-native';
+import { Button, Text, View } from 'react-native';
 
-class BasicButton extends React.Component {
-    render() {
-        return (
-            <View style={{alignItems: 'center'}}>
-            <Text>{this.props.move}</Text>
-            </View>
-        );
-    }
+
+const scoredMoves =  require('../../data/moves_lists/empty_move_list.json')
+
+const handleMove = (move, paddler) => {
+  console.log(move, paddler) 
+  // toggle the move on or off when the button is pressed (this needs more work, so it can put things is the right objects)
+  // scoredMoves.hole[move].Value = !scoredMoves.hole[move].Value
 }
-
+  
 export default class MoveButtons extends React.Component {
     render() {
       const moveList = require('../../data/moves_lists/move_list.json');
       return (
+        <View>
         <View style={{alignItems: 'center', top: 50}}>
           {moveList.hole.map((item, key) =>
-           <BasicButton move={item.Move} key={key} />
+            <Button
+              onPress={handleMove(item.Move, "paddler1")}
+              title={item.Move}
+              color="#841583"
+              key={key}
+          />
+            
           )}
         </View>
+        <View>
+            <Text>{"We could put some scores here"}</Text>
+          </View>
+          </View>
       );
     }
   }
