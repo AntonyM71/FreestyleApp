@@ -11,15 +11,15 @@ const handleMove = (move, paddler) => {
   // scoredMoves.hole[move].Value = !scoredMoves.hole[move].Value
 }
   
-export default class MoveButtons extends React.Component {
-    render() {
+export const MoveButtons= (currentPaddler) => {
       const moveList = require('../../data/moves_lists/move_list.json');
       return (
         <View>
+
         <View style={{alignItems: 'center', top: 50}}>
           {moveList.hole.map((item, key) =>
             <Button
-              onPress={handleMove(item.Move, "paddler1")}
+              onPress={handleMove(item.Move, currentPaddler.value)}
               title={item.Move}
               color="#841583"
               key={key}
@@ -33,4 +33,5 @@ export default class MoveButtons extends React.Component {
           </View>
       );
     }
-  }
+  
+    export default MoveButtons

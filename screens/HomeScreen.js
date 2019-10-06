@@ -3,12 +3,16 @@ import React from 'react';
 import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 import HoleMoveButtons from './mycomponents/holeButtons';
 import MoveButtons from './mycomponents/JsonButtons';
-
+import PaddlerHandler from "./mycomponents/paddlerHandler";
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
 
+  state = {
+    paddlerList: ["paddler1", "paddler2", "c1er"],
+    paddlerIndex: 0
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -18,9 +22,12 @@ export default class HomeScreen extends React.Component {
           </View>
       <View>
       <HoleMoveButtons />
-      </View>
+          </View>
+          <View>
+            <PaddlerHandler state={this.state}/>
+          </View>
       <View>
-        <MoveButtons/>
+        <MoveButtons currrentPaddler={"paddler1"}/>
       </View>
         </ScrollView>
 
