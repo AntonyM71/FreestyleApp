@@ -4,7 +4,13 @@ import { Asset } from "expo-asset";
 import * as Font from "expo-font";
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Provider } from 'react-redux';
 import AppNavigator from './navigation/AppNavigator';
+import configureStore from './store';
+
+
+const store = configureStore()
+
 
 export default class App extends React.Component {
   state = {
@@ -22,10 +28,13 @@ export default class App extends React.Component {
       );
     } else {
       return (
+        <Provider store={store}>
+          
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
           <AppNavigator />
-        </View>
+          </View>
+          </Provider>
       );
     }
   }
