@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { incrementScore } from '../../actions';
 
 
-export class HoleMoveButtons extends React.Component {
+export class PaddlerButtons extends React.Component {
   
   _handlePressNFL = () => {
     WebBrowser.openBrowserAsync('https://www.facebook.com/nottinghamfreestyleleague');
@@ -95,4 +95,4 @@ const mapDispatchToProps = dispatch => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(HoleMoveButtons)
+export default connect(mapStateToProps, mapDispatchToProps)(PaddlerButtons)

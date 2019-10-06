@@ -1,4 +1,4 @@
-import { CHANGE_PADDLER, INCREMENT_SCORE } from './actionTypes';
+import { ADD_OR_REMOVE_PADDLER, CHANGE_PADDLER, INCREMENT_SCORE } from './actionTypes';
 
 const initialState = {
     score: 0,
@@ -25,6 +25,11 @@ export const paddlerReducer = (state = initialState, action) => {
         return {
           ...state,
           paddlerIndex: action.payload
+        };
+      case ADD_OR_REMOVE_PADDLER:
+        return {
+          ...state,
+          paddlerList: action.payload
         };
       default:
         return state;

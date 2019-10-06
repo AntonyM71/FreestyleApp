@@ -1,4 +1,4 @@
-import { CHANGE_PADDLER, INCREMENT_SCORE } from "./actionTypes";
+import { ADD_OR_REMOVE_PADDLER, CHANGE_PADDLER, INCREMENT_SCORE } from "./actionTypes";
 
 export const incrementScore = score => {
     return {
@@ -16,3 +16,10 @@ export const changePaddler= paddlerIndex => {
     }
 }
   
+export const addOrRemovePaddler= remainingPaddlers=> {
+    return {
+    
+        type: ADD_OR_REMOVE_PADDLER,
+        payload: remainingPaddlers
+    }
+}

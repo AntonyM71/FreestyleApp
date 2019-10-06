@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 const scoredMoves =  require('../../data/moves_lists/empty_move_list.json')
 
-const _handleMove = (move, paddler) => {
+const _handleMove = (move, paddler) => () => {
   console.log(move, paddler) 
   // toggle the move on or off when the button is pressed (this needs more work, so it can put things is the right objects)
   // scoredMoves.hole[move].Value = !scoredMoves.hole[move].Value

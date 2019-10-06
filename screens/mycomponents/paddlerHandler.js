@@ -9,16 +9,14 @@ export const PaddlerHandler = (props) => {
     const numberOfPaddlers = props.paddlerList.length;
     
     const _handlePressNext = () => {
-        // -2 to account for zero indexing, and the space for the next paddler
+        // -1 to account for zero indexing
         const newPaddlerIndex = ((props.paddlerIndex < (numberOfPaddlers - 1)) ? props.paddlerIndex + 1 : 0)
-        console.log(props.paddlerIndex)
-        console.log(newPaddlerIndex)
         props.updatePaddler(newPaddlerIndex)
 
     };
     
     const _handlePressPrevious = () => {
-        // -2 to account for zero indexing, and the space for the next paddler
+        // -1 to account for zero indexing
         const newPaddlerIndex = ((props.paddlerIndex == 0) ? numberOfPaddlers -1 : props.paddlerIndex - 1 )
         console.log(props.paddlerIndex)
         console.log(newPaddlerIndex)
@@ -31,7 +29,7 @@ export const PaddlerHandler = (props) => {
             <View>
                 <Grid>
                     <Row>
-                    <Col>
+                        <Col>
                             <Button
                                 onPress={_handlePressPrevious}
                                 title="Previous"
@@ -65,7 +63,7 @@ const mapStateToProps = state => {
         paddlerIndex: state.paddlers.paddlerIndex,
         paddlerList: state.paddlers.paddlerList
     }
-  }
+}
   
   // not used currently, need to add an addmove function and redux pathway
   const mapDispatchToProps = dispatch => {

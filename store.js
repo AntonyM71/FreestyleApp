@@ -3,7 +3,7 @@ import { paddlerReducer, scoreReducer } from './reducers';
 
 const rootReducer = combineReducers({
     scores: scoreReducer,
-    paddlers: paddlerReducer
+  paddlers:  paddlerReducer
 });
 
 const configureStore = () => {
