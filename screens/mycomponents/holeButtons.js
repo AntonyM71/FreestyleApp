@@ -2,16 +2,23 @@ import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { Col, Grid, Row } from "react-native-easy-grid";
+import { connect } from 'react-redux';
+import { incrementScore } from '../../actions';
 
 
-var score = 0 
+export class HoleMoveButtons extends React.Component {
+  
+  _handlePressNFL = () => {
+    WebBrowser.openBrowserAsync('https://www.facebook.com/nottinghamfreestyleleague');
+  };
 
+_handlePressCount = () => {
 
-export default class HoleMoveButtons extends React.Component {
-  state = {
-    score: 0
-  }
-    render() {
+  console.log(this.props.score)
+  this.props.add(this.props.score)
+}
+
+  render() {
       return (
         <View>
            <Grid>
@@ -26,32 +33,22 @@ export default class HoleMoveButtons extends React.Component {
 </Col>
     <Col>
     <Button
-  onPress={this._handlePressICF}
-  title="ICF"
+  onPress={this._handlePressCount}
+  title="Count"
   color="#649524"
-  accessibilityLabel="Learn more about the ICF"
+  accessibilityLabel="Learn more about the Count"
 />
 </Col>
          </Row>
  
 </Grid>
-<View><Text>{this.state.score}</Text></View>
+ <View><Text>{this.props.score}</Text></View>
 
         </View>
       );
     }
 
   
-    _handlePressNFL = () => {
-      WebBrowser.openBrowserAsync('https://www.facebook.com/nottinghamfreestyleleague');
-    };
-  
-    _handlePressICF = () => {
-      this.setState({
-        score: this.state.score+1
-      })
-      console.log(this.state.score)
-      };
 
 
 
@@ -82,3 +79,20 @@ export default class HoleMoveButtons extends React.Component {
     },
   });
 }
+
+const mapStateToProps = state => {
+  return {
+    score: state.scores.score
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    add: (score) => {
+      dispatch(incrementScore(score))
+    }
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(HoleMoveButtons)
