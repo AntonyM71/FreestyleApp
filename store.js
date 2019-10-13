@@ -1,8 +1,7 @@
 import { combineReducers, createStore } from 'redux';
 import { paddlerReducer, scoreReducer } from './reducers';
-
+import devToolsEnhancer from 'remote-redux-devtools';
 const rootReducer = combineReducers({
-    scores: scoreReducer,
   paddlers:  paddlerReducer
 });
 

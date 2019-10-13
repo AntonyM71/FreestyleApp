@@ -17,14 +17,14 @@
     "eslint": "^5.16.0",
     "expo": "^35.0.0",
     "expo-asset": "~7.0.0",
-    "expo-cli": "^3.2.3",
+    "expo-cli": "^3.3.0",
     "expo-constants": "^7.0.0",
     "expo-font": "~7.0.0",
     "expo-web-browser": "~7.0.0",
     "react": "^16.10.2",
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
     "react-native-easy-grid": "^0.2.2",
-    "react-native-gesture-handler": "^1.3.0",
+    "react-native-gesture-handler": "^1.4.1",
     "react-native-ionicons": "^4.6.1",
     "react-native-paper": "^2.16.0",
     "react-navigation": "^3.13.0",
@@ -33,7 +33,8 @@
   },
   "devDependencies": {
     "babel-preset-expo": "^5.2.0",
-    "jest-expo": "^35.0.0"
+    "jest-expo": "^35.0.0",
+    "remote-redux-devtools": "^0.5.16"
   },
   "private": true
 }

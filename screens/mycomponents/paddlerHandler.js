@@ -34,7 +34,7 @@ export const PaddlerHandler = (props) => {
                                 onPress={_handlePressPrevious}
                                 title="Previous"
                                 color="#649524"
-                                accessibilityLabel="Learn more about the ICF"
+                                accessibilityLabel="Select Previous Paddler"
                             />
                         </Col>
                         <Col>
@@ -45,7 +45,7 @@ export const PaddlerHandler = (props) => {
                                 onPress={_handlePressNext}
                                 title="Next Paddler"
                                 color="#649524"
-                                accessibilityLabel="Learn more about the ICF"
+                                accessibilityLabel="Select Next Paddler"
                             />
                         </Col>
                     </Row>

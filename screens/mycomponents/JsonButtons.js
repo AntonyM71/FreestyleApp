@@ -2,33 +2,63 @@
 import React from 'react';
 import { Button, Text, View } from 'react-native';
 import { connect } from 'react-redux';
+import { updatePaddlerScores} from "../../actions"
 
-const scoredMoves =  require('../../data/moves_lists/empty_move_list.json')
 
-const _handleMove = (move, paddler) => () => {
-  console.log(move, paddler) 
-  // toggle the move on or off when the button is pressed (this needs more work, so it can put things is the right objects)
-  // scoredMoves.hole[move].Value = !scoredMoves.hole[move].Value
-}
   
 export const MoveButtons= (props) => {
-      const moveList = require('../../data/moves_lists/move_list.json');
+  const moveList = require('../../data/moves_lists/move_list.json');
+
+  const _handleMove = ( paddler, move,  direction, type) => () => {
+    var newScores = props.paddlerScores
+
+    console.log(newScores[paddler][move][direction][type])
+    newScores[paddler][move][direction][type] = !newScores[paddler][move][direction][type]
+    console.log("now " + newScores[paddler][move][direction][type])
+    props.updateScore(newScores);
+    // newScores[pa¬
+  }
       return (
         <View>
 
         <View style={{alignItems: 'center', top: 50}}>
-          {moveList.hole.map((item, key) =>
-            <Button
-              onPress={_handleMove(item.Move,  props.paddlerList[props.paddlerIndex])}
-              title={item.Move}
-              color="#841583"
-              key={key}
-          />
-            
-          )}
+            {moveList.hole.map((item, key) => {
+              if (!item.Reverse) {
+                return (
+                  <View key={key}>
+                    <Button
+                      onPress={_handleMove(props.paddlerList[props.paddlerIndex], item.Move, "left", "scored")}
+                      title={item.Move}
+                      color="#841583"
+                      
+                    />
+                    
+                  </View>
+                )
+              } else {
+                return (
+                  <View key={key}>
+                    <Button
+                      onPress={_handleMove(props.paddlerList[props.paddlerIndex], item.Move, "left", "scored")}
+                      title={item.Move + " left"}
+                      color="#841583"
+                    />
+                    <Button
+                      onPress={_handleMove(props.paddlerList[props.paddlerIndex], item.Move, "right", "scored")}
+                      title={item.Move + " right"}
+                      color="#841583"
+                    />
+                  </View>
+                )
+              }
+            }
+            )
+            }
         </View>
         <View>
-            <Text>{"We could put some scores here"}</Text>
+            <Text>
+              {"Scores?"}
+            </Text>
           </View>
           </View>
       );
@@ -38,16 +68,20 @@ export const MoveButtons= (props) => {
 const mapStateToProps = state => {
   return {
     paddlerIndex: state.paddlers.paddlerIndex,
-    paddlerList: state.paddlers.paddlerList
+    paddlerList: state.paddlers.paddlerList,
+    paddlerScores: state.paddlers.paddlerScores
   }
 }
 
 // not used currently, need to add an addmove function and redux pathway
 const mapDispatchToProps = dispatch => {
   return {
-    add: (score) => {
-      dispatch(incrementScore(score))
-    }
+      add: (score) => {
+        dispatch(incrementScore(score))
+    },
+      updateScore: (newScores) => {
+        dispatch(updatePaddlerScores(newScores))
+      }
   }
 }
 

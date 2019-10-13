@@ -1,12 +1,7 @@
-import { ADD_OR_REMOVE_PADDLER, CHANGE_PADDLER, INCREMENT_SCORE } from "./actionTypes";
+import { ADD_OR_REMOVE_PADDLER, CHANGE_PADDLER, UPDATE_PADDLER_SCORES } from "./actionTypes";
 
-export const incrementScore = score => {
-    return {
-    
-        type: INCREMENT_SCORE,
-        payload: score + 1
-    }
-}
+
+
   
 export const changePaddler= paddlerIndex => {
     return {
@@ -16,10 +11,18 @@ export const changePaddler= paddlerIndex => {
     }
 }
   
-export const addOrRemovePaddler= remainingPaddlers=> {
-    return {
+export const addOrRemovePaddlerName = remainingPaddlers => {
     
+    return {
         type: ADD_OR_REMOVE_PADDLER,
         payload: remainingPaddlers
+    }
+}
+
+export const updatePaddlerScores = (newPaddlerScores) => {
+    return {
+    
+        type: UPDATE_PADDLER_SCORES,
+        payload: newPaddlerScores
     }
 }

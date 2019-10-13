@@ -2,14 +2,60 @@ import React, { useState } from 'react';
 import { Button, ScrollView, Text, TextInput, View } from 'react-native';
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { connect } from 'react-redux';
-import { addOrRemovePaddler } from "../../actions";
+import { addOrRemovePaddlerName, updatePaddlerScores } from "../../actions";
 import { styles } from "../../styles";
+
+const moveList = require('../../data/moves_lists/move_list.json');
+
+const initialMoves = moveList.hole.map((item) => {
+    return (
+      {
+          id: item.Move,
+                left: {
+                    scored: false,
+                    air: false,
+                    huge: false,
+                    clean: false,
+                    superClean: false
+                },
+                right: {
+                    scored: false,
+                    air: false,
+                    huge: false,
+                    clean: false,
+                    superClean: false
+
+                }
+            }
+    );
+}
+);
+    
+const reducedInitialMoves = initialMoves.reduce((obj, item) => {
+     obj[item.id] = item
+     return obj
+}, {})
+   
 export const PaddlerManager = (props) => {
   const [newPaddler, setNewPaddler] = useState("");
   const [inputBorder, setInputBorder] = useState("black");
 
-  const _handleDeletePaddler = (paddler) => () => {
- props.addOrRemovePaddler(props.paddlerList.filter(e => e !== paddler))
+
+  
+  const addOrRemovePaddler = (remainingPaddlers, paddlerScores) => {
+    
+    var newPaddlerScores = paddlerScores
+    remainingPaddlers.map((paddler) => {
+      if (!newPaddlerScores[paddler])
+        newPaddlerScores[(paddler.toString())] = reducedInitialMoves
+    })
+
+    props.addOrRemovePaddlerName(remainingPaddlers);
+    props.updatePaddlerScores(newPaddlerScores);
+  }
+  const _handleDeletePaddler = (paddler, currentScores) => () => {
+    console.log(currentScores)
+  addOrRemovePaddler((props.paddlerList.filter(e => e !== paddler)), currentScores)
   }
 
 
@@ -21,7 +67,7 @@ export const PaddlerManager = (props) => {
       setInputBorder("black")
     }
   } 
-  const _handleAddPaddler = (newPaddler) => () => {
+  const _handleAddPaddler = (newPaddler, currentScores) => () => {
     if (newPaddler.length == 0) {
       alert("People like having names :)")
     } else {
@@ -29,7 +75,7 @@ export const PaddlerManager = (props) => {
         alert("You've already added this paddler")
       } else {
         setNewPaddler("")
-        props.addOrRemovePaddler([...props.paddlerList, newPaddler])
+        addOrRemovePaddler([...props.paddlerList, newPaddler], currentScores)
       }
     }
    }
@@ -48,7 +94,7 @@ export const PaddlerManager = (props) => {
                 </Col>
                 <Col>
                   <Button
-                    onPress={_handleDeletePaddler(paddler)}
+                    onPress={_handleDeletePaddler(paddler, props.currentScores)}
                     title="Delete"
                     color="red"
                     accessibilityLabel="Delete the paddler"
@@ -68,7 +114,7 @@ export const PaddlerManager = (props) => {
             placeholder="New Paddler Name"
             value={newPaddler}
             onChangeText={text => _handleAddChange(text)}
-            onSubmitEditing={_handleAddPaddler(newPaddler)}
+            onSubmitEditing={_handleAddPaddler(newPaddler, props.currentScores)}
             clearButtonMode="always"
             style={[{
               borderColor: inputBorder,
@@ -89,7 +135,8 @@ export const PaddlerManager = (props) => {
 const mapStateToProps = state => {
   return {
       paddlerIndex: state.paddlers.paddlerIndex,
-      paddlerList: state.paddlers.paddlerList
+      paddlerList: state.paddlers.paddlerList,
+      currentScores: state.paddlers.paddlerScores
   }
 }
 
@@ -97,9 +144,11 @@ const mapStateToProps = state => {
 // not used currently, need to add an addmove function and redux pathway
 const mapDispatchToProps = dispatch => {
   return {
-   addOrRemovePaddler: (index) => {
-      console.log("updating")
-      dispatch(addOrRemovePaddler(index))
+   addOrRemovePaddlerName: (paddlers) => {
+      dispatch(addOrRemovePaddlerName(paddlers))
+    },
+       updatePaddlerScores: (scores) => {
+      dispatch(updatePaddlerScores(scores))
     }
   }
 }
