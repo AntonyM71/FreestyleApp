@@ -46,7 +46,7 @@ export const PaddlerHandler = (props) => {
                             <Button
                                 onPress={_handlePressNext}
                                 title="Next Paddler"
-                                color="#000099"
+                                color="#223A5E"
                                 accessibilityLabel="Select Next Paddler"
                             />
                         </Col>

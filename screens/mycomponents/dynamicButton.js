@@ -3,36 +3,7 @@ import { updatePaddlerScores } from "../../actions";
 import React from 'react';
 import { Button} from 'react-native-elements';
 import { Col, Grid, Row } from "react-native-easy-grid";
-import { Platform, StyleSheet } from 'react-native';
-
-export const styles = StyleSheet.create({
-    noMove: {
-        backgroundColor:  "#0066cc",
-        marginLeft: 4,
-        marginRight: 4, 
-        marginTop: 10,
-        
-    },
-    noBonus: {
-        backgroundColor:  "#0066cc",
-        marginLeft: 4,
-        marginRight: 4, 
-        marginTop: 4,
-    },
-    moveScored: {
-        backgroundColor: "#000099",
-        marginLeft: 4,
-        marginRight: 4, 
-        marginTop: 10,
-        fontSize: 40
-    },
-    bonusScored: {
-        backgroundColor: "#000099",
-        marginLeft: 4,
-        marginRight: 4, 
-        marginTop:4,
-    },
-})
+import { styles } from "../../styles";
 const DynamicButtonPresentation = (props) => {
 
     const _handleMove = (paddler, move, direction, type) => () => {
@@ -44,7 +15,7 @@ const DynamicButtonPresentation = (props) => {
     }
 
     if (props.paddlerScores[props.paddler][props.move][props.direction].scored == false) {
- const buttonName = props.move === ("Loop" || "Back Loop") ? props.move : props.move + " " + props.direction       
+ const buttonName = (props.move ==("Loop") || props.move == ( "Back Loop")) ? props.move : props.move + " " + props.direction       
         return (
         
             <Button
@@ -54,7 +25,7 @@ const DynamicButtonPresentation = (props) => {
             />
         )
     } else {
-        const buttonName = props.move === ("Loop" || "Back Loop") ? props.move : props.move + " " + props.direction;
+        const buttonName = (props.move ==("Loop") || props.move == ( "Back Loop")) ? props.move : props.move + " " + props.direction;
         return (
             <Grid>
                 <Row>
@@ -95,6 +66,13 @@ const DynamicButtonPresentation = (props) => {
                             onPress={_handleMove(props.paddler, props.move, props.direction, "huge")}
                             title={"Huge"}
                             buttonStyle={props.paddlerScores[props.paddler][props.move][props.direction]["huge"] ? styles.bonusScored : styles.noBonus}
+                        />  
+                    </Col>
+                    <Col>
+                        <Button
+                            onPress={_handleMove(props.paddler, props.move, props.direction, "link")}
+                            title={"Link"}
+                            buttonStyle={props.paddlerScores[props.paddler][props.move][props.direction]["link"] ? styles.bonusScored : styles.noBonus}
                         />  
                     </Col>
                 </Row>

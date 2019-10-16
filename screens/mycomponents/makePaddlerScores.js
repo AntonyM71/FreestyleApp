@@ -13,14 +13,16 @@ const moveList = require('../../data/moves_lists/move_list.json');
                         air: false,
                         huge: false,
                         clean: false,
-                        superClean: false
+                        superClean: false,
+                        link: false
                     },
                     right: {
                         scored: false,
                         air: false,
                         huge: false,
                         clean: false,
-                        superClean: false
+                        superClean: false,
+                        link: false
 
                     }
                 }

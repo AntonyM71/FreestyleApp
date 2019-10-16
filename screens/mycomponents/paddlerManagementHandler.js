@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Button, ScrollView, Text, TextInput, View } from 'react-native';
+import { ScrollView, Text, TextInput, View } from 'react-native';
+import { Button } from "react-native-elements";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { connect } from 'react-redux';
 import { addOrRemovePaddlerName, updatePaddlerScores, changePaddler } from "../../actions";
 import { styles } from "../../styles";
 import { initialScoresheet } from './makePaddlerScores';
 import { DisplayScore } from './calculateScore';
+
 
 export const PaddlerManager = (props) => {
   const [newPaddler, setNewPaddler] = useState("");
@@ -18,7 +20,7 @@ export const PaddlerManager = (props) => {
     var newPaddlerScores = paddlerScores
     remainingPaddlers.map((paddler) => {
       if (!newPaddlerScores[paddler])
-        newPaddlerScores[(paddler.toString())] = initialScoresheet
+        newPaddlerScores[(paddler.toString())] = initialScoresheet()
     })
     props.updatePaddler(0)
     props.addOrRemovePaddlerName(remainingPaddlers);
@@ -69,8 +71,7 @@ export const PaddlerManager = (props) => {
                   <Button
                     onPress={_handleDeletePaddler(paddler, props.currentScores)}
                     title="Delete"
-                    color="red"
-                    accessibilityLabel="Delete the paddler"
+                    buttonStyle={styles.deleteButton}
                   />
                 </Col>
               </Row>
@@ -94,7 +95,10 @@ export const PaddlerManager = (props) => {
               borderWidth: 3,
               padding: 10,
               borderRadius: 3,
-              marginHorizontal: 5
+              marginHorizontal: 5,
+              marginLeft: 4,
+              marginRight: 4, 
+              marginTop:8
 
             }]}
             // onEndEditing={TextInput.clear()}
