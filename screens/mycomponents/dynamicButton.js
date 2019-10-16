@@ -14,24 +14,24 @@ const DynamicButtonPresentation = (props) => {
      
     }
 
-    if (props.paddlerScores[props.paddler][props.move][props.direction].scored == false) {
- const buttonName = (props.move ==("Loop") || props.move == ( "Back Loop")) ? props.move : props.move + " " + props.direction       
+    if (props.paddlerScores[props.paddler][props.move.Move][props.direction].scored == false) {
+ const buttonName = (props.move.Move ==("Loop") || props.move.Move == ( "Back Loop")) ? props.move.Move : props.move.Move + " " + props.direction       
         return (
         
             <Button
-                onPress={_handleMove(props.paddler, props.move, props.direction, "scored")}
+                onPress={_handleMove(props.paddler, props.move.Move, props.direction, "scored")}
                 title={buttonName}
                 buttonStyle={styles.noMove}
             />
         )
     } else {
-        const buttonName = (props.move ==("Loop") || props.move == ( "Back Loop")) ? props.move : props.move + " " + props.direction;
+        const buttonName = (props.move.Move ==("Loop") || props.move.Move == ( "Back Loop")) ? props.move.Move : props.move.Move + " " + props.direction;
         return (
             <Grid>
                 <Row>
                     <Col>
                         <Button
-                            onPress={_handleMove(props.paddler, props.move, props.direction, "scored")}
+                            onPress={_handleMove(props.paddler, props.move.Move, props.direction, "scored")}
                             title={buttonName}
                             buttonStyle={styles.moveScored}
                         />
@@ -40,39 +40,45 @@ const DynamicButtonPresentation = (props) => {
                 <Row>
                     <Col>
                         <Button
-                            onPress={_handleMove(props.paddler, props.move, props.direction, "clean")}
+                            onPress={_handleMove(props.paddler, props.move.Move, props.direction, "clean")}
                             title={"Clean"}
-                            buttonStyle={props.paddlerScores[props.paddler][props.move][props.direction]["clean"] ? styles.bonusScored : styles.noBonus}
+                            disabled={props.move.Clean ? false : true}
+                            buttonStyle={props.paddlerScores[props.paddler][props.move.Move][props.direction]["clean"] ? styles.bonusScored : styles.noBonus}
                         />
                     </Col>
                     <Col>
                         <Button
-                            onPress={_handleMove(props.paddler, props.move, props.direction, "superClean")}
+                            onPress={_handleMove(props.paddler, props.move.Move, props.direction, "superClean")}
                             title={"S Clean"}
-                            buttonStyle={props.paddlerScores[props.paddler][props.move][props.direction]["superClean"] ? styles.bonusScored : styles.noBonus}
+                            disabled={props.move.SuperClean ? false : true}
+                            buttonStyle={props.paddlerScores[props.paddler][props.move.Move][props.direction]["superClean"] ? styles.bonusScored : styles.noBonus}
                         />
                     </Col>
                 </Row>
                 <Row>
                     <Col>
                         <Button
-                            onPress={_handleMove(props.paddler, props.move, props.direction, "air")}
+                            onPress={_handleMove(props.paddler, props.move.Move, props.direction, "air")}
                             title={"Air"}
-                            buttonStyle={props.paddlerScores[props.paddler][props.move][props.direction]["air"] ? styles.bonusScored : styles.noBonus}
+                            disabled={props.move.Air ? false : true}
+                            buttonStyle={props.paddlerScores[props.paddler][props.move.Move][props.direction]["air"] ? styles.bonusScored : styles.noBonus}
                         />
                     </Col>
                     <Col>
                         <Button
-                            onPress={_handleMove(props.paddler, props.move, props.direction, "huge")}
+                            onPress={_handleMove(props.paddler, props.move.Move, props.direction, "huge")}
                             title={"Huge"}
-                            buttonStyle={props.paddlerScores[props.paddler][props.move][props.direction]["huge"] ? styles.bonusScored : styles.noBonus}
+                            disabled={props.move.Huge ? false : true}
+                            buttonStyle={props.paddlerScores[props.paddler][props.move.Move][props.direction]["huge"] ? styles.bonusScored : styles.noBonus}
                         />  
                     </Col>
                     <Col>
                         <Button
-                            onPress={_handleMove(props.paddler, props.move, props.direction, "link")}
+                            onPress={_handleMove(props.paddler, props.move.Move, props.direction, "link")}
                             title={"Link"}
-                            buttonStyle={props.paddlerScores[props.paddler][props.move][props.direction]["link"] ? styles.bonusScored : styles.noBonus}
+                            disabled={props.move.Link ? false : true}
+                            buttonStyle={props.paddlerScores[props.paddler][props.move.Move][props.direction]["link"] ? styles.bonusScored : styles.noBonus}
+                        
                         />  
                     </Col>
                 </Row>

@@ -17,7 +17,7 @@ export const MoveButtons= (props) => {
                 return (
                     <Row key={key}>
                       <Col>
-                        <DynamicButton paddler={props.paddlerList[props.paddlerIndex]} move={item.Move} direction={"left"} />
+                        <DynamicButton paddler={props.paddlerList[props.paddlerIndex]} move={item} direction={"left"} />
                       </Col>
                     </Row>
     
@@ -26,10 +26,10 @@ export const MoveButtons= (props) => {
                 return (
                   <Row key={key}>
                     <Col>
-                      <DynamicButton paddler={props.paddlerList[props.paddlerIndex]} move={item.Move} direction={"left"} />
+                      <DynamicButton paddler={props.paddlerList[props.paddlerIndex]} move={item} direction={"left"} />
                     </Col>
                     <Col>
-                      <DynamicButton paddler={props.paddlerList[props.paddlerIndex]} move={item.Move} direction={"right"} />
+                      <DynamicButton paddler={props.paddlerList[props.paddlerIndex]} move={item} direction={"right"} />
                     </Col>
                   </Row>
                 )

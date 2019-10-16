@@ -1,10 +1,11 @@
 import React from 'react';
-import { Button, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+import { Button } from 'react-native-elements';
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { connect } from 'react-redux';
 import { changePaddler } from "../../actions";
 import { DisplayScore } from './calculateScore';
-
+import { styles} from "../../styles"
 export const PaddlerHandler = (props) => {
 
     const numberOfPaddlers = props.paddlerList.length;
@@ -32,13 +33,12 @@ export const PaddlerHandler = (props) => {
                             <Button
                                 onPress={_handlePressPrevious}
                                 title="Previous"
-                                color="#000066"
-                                accessibilityLabel="Select Previous Paddler"
+                                buttonStyle={styles.changeButton}
                             />
                         </Col>
                         <Col>
                             <View>
-                                <Text>{props.paddlerList[props.paddlerIndex]}</Text>
+                                <Text style={{ ...styles.standardText, marginTop: 2 }}>{props.paddlerList[props.paddlerIndex]}</Text>
                                 <DisplayScore paddler={props.paddlerList[props.paddlerIndex]}/>
                             </View>
                         </Col>
@@ -46,8 +46,7 @@ export const PaddlerHandler = (props) => {
                             <Button
                                 onPress={_handlePressNext}
                                 title="Next Paddler"
-                                color="#223A5E"
-                                accessibilityLabel="Select Next Paddler"
+                                buttonStyle={styles.changeButton}
                             />
                         </Col>
                     </Row>

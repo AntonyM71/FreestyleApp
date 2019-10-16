@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView, Text, TextInput, View } from 'react-native';
-import { Button } from "react-native-elements";
+import { Button, Divider } from "react-native-elements";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { connect } from 'react-redux';
 import { addOrRemovePaddlerName, updatePaddlerScores, changePaddler } from "../../actions";
@@ -62,7 +62,8 @@ export const PaddlerManager = (props) => {
             {props.paddlerList.map((paddler, key) => 
               <Row key={key}>
                 <Col>
-                  <Text>{paddler}</Text>
+                  <Text style={{...styles.standardText, justifyContent: 'center', 
+alignItems: 'center' }}>{paddler}</Text>
                 </Col>
                 <Col>
                   <DisplayScore paddler={paddler} align="center"/>
@@ -74,6 +75,7 @@ export const PaddlerManager = (props) => {
                     buttonStyle={styles.deleteButton}
                   />
                 </Col>
+
               </Row>
             
             )

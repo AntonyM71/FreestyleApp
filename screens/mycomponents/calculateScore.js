@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import React from 'react';
 import { Text } from 'react-native';
+import { styles } from '../../styles.js';
 const moveList = require('../../data/moves_lists/move_list.json');
 
 const calculateScoreAndBonuses = (move, truth) => {
@@ -30,7 +31,7 @@ const DisplayScorePresenetation = (props) => {
     }
 
     return (
-        <Text>{paddlerScore.reduce((a, b) => a + b)}</Text>
+        <Text style={{...styles.standardText, textAlign: 'center', marginTop: 2}}>{paddlerScore.reduce((a, b) => a + b)}</Text>
     )
 }
 

@@ -33,11 +33,24 @@ export const styles = StyleSheet.create({
         marginRight: 4, 
         marginTop:8,
   },
-        deleteButton: {
+    deleteButton: {
         backgroundColor: "#DC4C46",
         marginLeft: 4,
         marginRight: 4, 
         marginTop:8,
+  },
+    changeButton: {
+        backgroundColor: "#D2691E",
+        marginLeft: 4,
+        marginRight: 4, 
+        marginTop:8,
+  },
+    standardText: {
+      fontSize: 20,
+        marginLeft: 8,
+        marginRight: 8, 
+      marginTop: 8,
+      
   },
 
   });
