@@ -2,40 +2,11 @@ import React, { useState } from 'react';
 import { Button, ScrollView, Text, TextInput, View } from 'react-native';
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { connect } from 'react-redux';
-import { addOrRemovePaddlerName, updatePaddlerScores } from "../../actions";
+import { addOrRemovePaddlerName, updatePaddlerScores, changePaddler } from "../../actions";
 import { styles } from "../../styles";
+import { initialScoresheet } from './makePaddlerScores';
+import { DisplayScore } from './calculateScore';
 
-const moveList = require('../../data/moves_lists/move_list.json');
-
-const initialMoves = moveList.hole.map((item) => {
-    return (
-      {
-          id: item.Move,
-                left: {
-                    scored: false,
-                    air: false,
-                    huge: false,
-                    clean: false,
-                    superClean: false
-                },
-                right: {
-                    scored: false,
-                    air: false,
-                    huge: false,
-                    clean: false,
-                    superClean: false
-
-                }
-            }
-    );
-}
-);
-    
-const reducedInitialMoves = initialMoves.reduce((obj, item) => {
-     obj[item.id] = item
-     return obj
-}, {})
-   
 export const PaddlerManager = (props) => {
   const [newPaddler, setNewPaddler] = useState("");
   const [inputBorder, setInputBorder] = useState("black");
@@ -47,14 +18,13 @@ export const PaddlerManager = (props) => {
     var newPaddlerScores = paddlerScores
     remainingPaddlers.map((paddler) => {
       if (!newPaddlerScores[paddler])
-        newPaddlerScores[(paddler.toString())] = reducedInitialMoves
+        newPaddlerScores[(paddler.toString())] = initialScoresheet
     })
-
+    props.updatePaddler(0)
     props.addOrRemovePaddlerName(remainingPaddlers);
     props.updatePaddlerScores(newPaddlerScores);
   }
   const _handleDeletePaddler = (paddler, currentScores) => () => {
-    console.log(currentScores)
   addOrRemovePaddler((props.paddlerList.filter(e => e !== paddler)), currentScores)
   }
 
@@ -91,6 +61,9 @@ export const PaddlerManager = (props) => {
               <Row key={key}>
                 <Col>
                   <Text>{paddler}</Text>
+                </Col>
+                <Col>
+                  <DisplayScore paddler={paddler} align="center"/>
                 </Col>
                 <Col>
                   <Button
@@ -149,6 +122,9 @@ const mapDispatchToProps = dispatch => {
     },
        updatePaddlerScores: (scores) => {
       dispatch(updatePaddlerScores(scores))
+    },
+    updatePaddler: (index) => {
+      dispatch(changePaddler(index))
     }
   }
 }

@@ -3,6 +3,7 @@ import { Button, Text, View } from 'react-native';
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { connect } from 'react-redux';
 import { changePaddler } from "../../actions";
+import { DisplayScore } from './calculateScore';
 
 export const PaddlerHandler = (props) => {
 
@@ -18,8 +19,6 @@ export const PaddlerHandler = (props) => {
     const _handlePressPrevious = () => {
         // -1 to account for zero indexing
         const newPaddlerIndex = ((props.paddlerIndex == 0) ? numberOfPaddlers -1 : props.paddlerIndex - 1 )
-        console.log(props.paddlerIndex)
-        console.log(newPaddlerIndex)
         props.updatePaddler(newPaddlerIndex)
 
       };
@@ -33,18 +32,21 @@ export const PaddlerHandler = (props) => {
                             <Button
                                 onPress={_handlePressPrevious}
                                 title="Previous"
-                                color="#649524"
+                                color="#000066"
                                 accessibilityLabel="Select Previous Paddler"
                             />
                         </Col>
                         <Col>
-                            <View><Text>{props.paddlerList[props.paddlerIndex]}</Text></View>
+                            <View>
+                                <Text>{props.paddlerList[props.paddlerIndex]}</Text>
+                                <DisplayScore paddler={props.paddlerList[props.paddlerIndex]}/>
+                            </View>
                         </Col>
                         <Col>
                             <Button
                                 onPress={_handlePressNext}
                                 title="Next Paddler"
-                                color="#649524"
+                                color="#000099"
                                 accessibilityLabel="Select Next Paddler"
                             />
                         </Col>
@@ -69,7 +71,6 @@ const mapStateToProps = state => {
   const mapDispatchToProps = dispatch => {
     return {
         updatePaddler: (index) => {
-            console.log("updating")
         dispatch(changePaddler(index))
       }
     }

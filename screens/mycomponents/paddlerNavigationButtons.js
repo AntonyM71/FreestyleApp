@@ -14,7 +14,6 @@ export class PaddlerButtons extends React.Component {
 
 _handlePressCount = () => {
 
-  console.log(this.props.score)
   this.props.add(this.props.score)
 }
 

@@ -1,4 +1,3 @@
-import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 import { styles } from "../styles";
@@ -16,30 +15,16 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <View>
-      {/* <PaddlerButtons /> */}
-          </View>
-          <View>
-            <PaddlerHandler state={this.state}/>
-          </View>
-      <View>
-        <MoveButtons />
-      </View>
-        </ScrollView>
-
-
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-
-        </View>
+          <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+            <View>
+              <PaddlerHandler state={this.state}/>
+            </View>
+            <View>
+              <MoveButtons />
+            </View>
+          </ScrollView>
       </View>
     );
   }
-  _handlePressNFL = () => {
-    WebBrowser.openBrowserAsync('https://www.facebook.com/nottinghamfreestyleleague');
-  };
 
-  _handlePressICF = () => {
-    WebBrowser.openBrowserAsync('https://www.canoeicf.com/discipline/canoe-freestyle');
-  };
 }
