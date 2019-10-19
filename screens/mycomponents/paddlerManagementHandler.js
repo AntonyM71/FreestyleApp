@@ -16,14 +16,17 @@ export const PaddlerManager = (props) => {
 
   
   const addOrRemovePaddler = (remainingPaddlers, paddlerScores) => {
-    
+    console.log(remainingPaddlers)
+    console.log((remainingPaddlers.length))
+    const newList = (remainingPaddlers.length == 0) ? ["default"] : remainingPaddlers
+    console.log(newList)
     var newPaddlerScores = paddlerScores
-    remainingPaddlers.map((paddler) => {
+    newList.map((paddler) => {
       if (!newPaddlerScores[paddler])
         newPaddlerScores[(paddler.toString())] = initialScoresheet()
     })
     props.updatePaddler(0)
-    props.addOrRemovePaddlerName(remainingPaddlers);
+    props.addOrRemovePaddlerName(newList);
     props.updatePaddlerScores(newPaddlerScores);
   }
   const _handleDeletePaddler = (paddler, currentScores) => () => {

@@ -5,15 +5,19 @@ import { styles } from '../../styles.js';
 const moveList = require('../../data/moves_lists/move_list.json');
 
 const calculateScoreAndBonuses = (move, truth) => {
-    const moveScore = [
-    
+    // the below is a bit of a hack for an unlikely scenario where we have huge but no air,  it will add in the air bonus
+    truth.air = truth.huge ? true : truth.air
+    truth.clean = truth.superClean ? true : truth.clean
+    const moveScore = truth.scored ?
+        [
         truth.scored == true ? move.Value : 0,
         truth.clean == true ? move.Clean : 0,
         truth.superClean == true ? move.SuperClean : 0,
         truth.air == true ? move.Air: 0,
         truth.huge == true ? move.Huge : 0,
         truth.link == true ? move.Link : 0
-    ].reduce((a, b) => a + b)
+        ].reduce((a, b) => a + b) 
+        : 0
     return moveScore
 }
 const DisplayScorePresenetation = (props) => {

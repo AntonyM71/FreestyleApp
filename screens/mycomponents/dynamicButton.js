@@ -8,8 +8,11 @@ const DynamicButtonPresentation = (props) => {
 
     const _handleMove = (paddler, move, direction, type) => () => {
         var newScores = { ...props.paddlerScores }
-
-        newScores[paddler][move][direction][type] = !newScores[paddler][move][direction][type]
+        const newField = !newScores[paddler][move][direction][type]
+        newScores[paddler][move][direction][type] = newField
+        if (type == "huge") { newScores[paddler][move][direction]["air"] = newField }
+        if (type == "superClean") {  newScores[paddler][move][direction]["clean"] = newField}
+        
         props.updateScore(newScores);
      
     }

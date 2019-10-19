@@ -2,7 +2,6 @@
 import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
-import { updatePaddlerScores } from "../../actions";
 import { DynamicButton } from "./dynamicButton";
 import { Col, Grid, Row } from "react-native-easy-grid";
   
@@ -47,21 +46,9 @@ const mapStateToProps = state => {
   return {
     paddlerIndex: state.paddlers.paddlerIndex,
     paddlerList: state.paddlers.paddlerList,
-    paddlerScores: state.paddlers.paddlerScores
-  }
-}
-
-// not used currently, need to add an addmove function and redux pathway
-const mapDispatchToProps = dispatch => {
-  return {
-      add: (score) => {
-        dispatch(incrementScore(score))
-    },
-      updateScore: (newScores) => {
-        dispatch(updatePaddlerScores(newScores))
-      }
   }
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(MoveButtons)
+
+export default connect(mapStateToProps, null)(MoveButtons)

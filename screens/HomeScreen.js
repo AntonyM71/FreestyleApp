@@ -3,6 +3,7 @@ import { ScrollView, View } from 'react-native';
 import { styles } from "../styles";
 import MoveButtons from './mycomponents/JsonButtons';
 import PaddlerHandler from "./mycomponents/paddlerHandler";
+import Timer from "./mycomponents/timer"
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     title: 'Scoring',
@@ -15,14 +16,17 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-          <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-            <View>
-              <PaddlerHandler state={this.state}/>
-            </View>
-            <View>
-              <MoveButtons />
-            </View>
-          </ScrollView>
+        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+          <View>
+            <Timer />
+          </View>
+          <View>
+            <PaddlerHandler state={this.state}/>
+          </View>
+          <View>
+            <MoveButtons />
+          </View>
+        </ScrollView>
       </View>
     );
   }

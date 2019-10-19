@@ -1,4 +1,4 @@
-import { ADD_OR_REMOVE_PADDLER, CHANGE_PADDLER, UPDATE_PADDLER_SCORES } from "./actionTypes";
+import { ADD_OR_REMOVE_PADDLER, CHANGE_PADDLER, UPDATE_PADDLER_SCORES, UPDATE_SHOW_TIMER } from "./actionTypes";
 
 
 
@@ -24,5 +24,12 @@ export const updatePaddlerScores = (newPaddlerScores) => {
     
         type: UPDATE_PADDLER_SCORES,
         payload: newPaddlerScores
+    }
+}
+export const updateShowTimer= (newShowTimer) => {
+    return {
+    
+        type: UPDATE_SHOW_TIMER,
+        payload: newShowTimer
     }
 }

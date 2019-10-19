@@ -1,8 +1,8 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView, View, ViewBase } from 'react-native';
 import { styles } from "../styles";
 import PaddlerManager from "./mycomponents/paddlerManagementHandler";
-
+import TimerOptions from "./mycomponents/timerOptions"
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     title: 'Paddler Management',
@@ -16,7 +16,9 @@ export default class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-
+          <View>
+            <TimerOptions />
+        </View>
           <PaddlerManager />
         </ScrollView>
 
