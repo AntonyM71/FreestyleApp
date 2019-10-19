@@ -7,108 +7,41 @@ import { addOrRemovePaddlerName, updatePaddlerScores, changePaddler } from "../.
 import { styles } from "../../styles";
 import { initialScoresheet } from './makePaddlerScores';
 import { DisplayScore } from './calculateScore';
+import PaddlerHeatManager from "./paddlerHeatManagementHandler"
 
-
+// pull out heat logic into another file
+// consider moving the button into another file
+// general filesystem tyidy up
 export const PaddlerManager = (props) => {
-  const [newPaddler, setNewPaddler] = useState("");
-  const [inputBorder, setInputBorder] = useState("black");
 
-
-  
-  const addOrRemovePaddler = (remainingPaddlers, paddlerScores) => {
-    console.log(remainingPaddlers)
-    console.log((remainingPaddlers.length))
-    const newList = (remainingPaddlers.length == 0) ? ["default"] : remainingPaddlers
-    console.log(newList)
-    var newPaddlerScores = paddlerScores
-    newList.map((paddler) => {
+  const addHeat = (heatKey) => {
+    const newHeatList = props.paddlerHeatList
+    newHeatList.push([`default ${heatKey}`])
+        var newPaddlerScores = props.paddlerScores
+    newHeatList.map((paddler) => {
       if (!newPaddlerScores[paddler])
         newPaddlerScores[(paddler.toString())] = initialScoresheet()
     })
+    console.log(newHeatList)
     props.updatePaddler(0)
-    props.addOrRemovePaddlerName(newList);
+    props.addOrRemovePaddlerName([...newHeatList]);
     props.updatePaddlerScores(newPaddlerScores);
   }
-  const _handleDeletePaddler = (paddler, currentScores) => () => {
-  addOrRemovePaddler((props.paddlerList.filter(e => e !== paddler)), currentScores)
-  }
+  
 
-
-  const _handleAddChange = (newPaddler) => {
-    setNewPaddler(newPaddler)
-    if ((props.paddlerList).indexOf(newPaddler) > -1) {
-      setInputBorder("red")
-    } else {
-      setInputBorder("black")
-    }
-  } 
-  const _handleAddPaddler = (newPaddler, currentScores) => () => {
-    if (newPaddler.length == 0) {
-      alert("People like having names :)")
-    } else {
-      if ((props.paddlerList).indexOf(newPaddler) > -1) {
-        alert("You've already added this paddler")
-      } else {
-        setNewPaddler("")
-        addOrRemovePaddler([...props.paddlerList, newPaddler], currentScores)
-      }
-    }
-   }
-    
   
   return (
     <ScrollView style={styles.container}>
       <View>
-
-        <View>
-          <Grid>
-            {props.paddlerList.map((paddler, key) => 
-              <Row key={key}>
-                <Col>
-                  <Text style={{...styles.standardText, justifyContent: 'center', 
-alignItems: 'center' }}>{paddler}</Text>
-                </Col>
-                <Col>
-                  <DisplayScore paddler={paddler} align="center"/>
-                </Col>
-                <Col>
-                  <Button
-                    onPress={_handleDeletePaddler(paddler, props.currentScores)}
-                    title="Delete"
-                    buttonStyle={styles.deleteButton}
-                  />
-                </Col>
-
-              </Row>
-            
-            )
-                }
-          </Grid>
-        </View>
-        <View>
-          <TextInput
-            blurOnSubmit={true}
-            autoCorrect={false}    
-            style={{height: 40}}
-            placeholder="New Paddler Name"
-            value={newPaddler}
-            onChangeText={text => _handleAddChange(text)}
-            onSubmitEditing={_handleAddPaddler(newPaddler, props.currentScores)}
-            clearButtonMode="always"
-            style={[{
-              borderColor: inputBorder,
-              borderWidth: 3,
-              padding: 10,
-              borderRadius: 3,
-              marginHorizontal: 5,
-              marginLeft: 4,
-              marginRight: 4, 
-              marginTop:8
-
-            }]}
-            // onEndEditing={TextInput.clear()}
-   />
-        </View>
+        {props.paddlerHeatList.map((paddlerList, heatKey) =>
+          
+          <PaddlerHeatManager paddlerList={paddlerList} heatKey={heatKey} />
+        )}
+        <Button
+          onPress={() => {addHeat(props.paddlerHeatList.length +1)}}
+          title="New Heat"
+          buttonStyle={styles.timerGreen}
+        />
       </View>
     </ScrollView>
   )
@@ -116,9 +49,8 @@ alignItems: 'center' }}>{paddler}</Text>
   
 const mapStateToProps = state => {
   return {
-      paddlerIndex: state.paddlers.paddlerIndex,
-      paddlerList: state.paddlers.paddlerList,
-      currentScores: state.paddlers.paddlerScores
+    paddlerHeatList: state.paddlers.paddlerList,
+    paddlerScores: state.paddlers.paddlerScores,
   }
 }
 

@@ -8,7 +8,7 @@ import { DisplayScore } from './calculateScore';
 import { styles} from "../../styles"
 export const PaddlerHandler = (props) => {
 
-    const numberOfPaddlers = props.paddlerList.length;
+    const numberOfPaddlers = (props.paddlerList[props.currentHeat]).length;
     
     const _handlePressNext = () => {
         // -1 to account for zero indexing
@@ -38,8 +38,8 @@ export const PaddlerHandler = (props) => {
                         </Col>
                         <Col>
                             <View>
-                                <Text style={{ ...styles.standardText, marginTop: 2 }}>{props.paddlerList[props.paddlerIndex]}</Text>
-                                <DisplayScore paddler={props.paddlerList[props.paddlerIndex]}/>
+                                <Text style={{ ...styles.standardText, marginTop: 2 }}>{props.paddlerList[props.currentHeat][props.paddlerIndex]}</Text>
+                                <DisplayScore paddler={props.paddlerList[props.currentHeat][props.paddlerIndex]}/>
                             </View>
                         </Col>
                         <Col>
@@ -62,7 +62,9 @@ export const PaddlerHandler = (props) => {
 const mapStateToProps = state => {
     return {
         paddlerIndex: state.paddlers.paddlerIndex,
-        paddlerList: state.paddlers.paddlerList
+        paddlerList: state.paddlers.paddlerList,
+        currentHeat: state.paddlers.currentHeat
+        
     }
 }
   

@@ -91,14 +91,14 @@ const DynamicButtonPresentation = (props) => {
 }
 
 
-
+// can we make this go deeper, so that we only update a single component when we add a move?
 const mapStateToProps = state => {
   return {
     paddlerScores: state.paddlers.paddlerScores
   }
 }
 
-// not used currently, need to add an addmove function and redux pathway
+
 const mapDispatchToProps = dispatch => {
   return {
       updateScore: (newScores) => {

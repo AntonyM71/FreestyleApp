@@ -39,6 +39,24 @@ export const styles = StyleSheet.create({
         marginRight: 4, 
         marginTop:8,
   },
+  timerRed: {
+        backgroundColor: "#DC4C46",
+        marginLeft: 4,
+        marginRight: 4, 
+        marginTop:8,
+  },
+  timerYellow: {
+        backgroundColor: "#F6D155",
+        marginLeft: 4,
+        marginRight: 4, 
+        marginTop:8,
+  },
+  timerGreen: {
+        backgroundColor: "#92B558",
+        marginLeft: 4,
+        marginRight: 4, 
+        marginTop:8,
+  },
     changeButton: {
         backgroundColor: "#D2691E",
         marginLeft: 4,
@@ -52,6 +70,12 @@ export const styles = StyleSheet.create({
       marginTop: 8,
       
   },
+  heatStyle: {
+    textAlign: 'center',
+    alignItems: 'center',
+    fontSize: 30,
+    paddingVertical: 4
+    }
 
   });
   

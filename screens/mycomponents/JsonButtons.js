@@ -16,7 +16,7 @@ export const MoveButtons= (props) => {
                 return (
                     <Row key={key}>
                       <Col>
-                        <DynamicButton paddler={props.paddlerList[props.paddlerIndex]} move={item} direction={"left"} />
+                        <DynamicButton paddler={props.paddlerList[props.currentHeat][props.paddlerIndex]} move={item} direction={"left"} />
                       </Col>
                     </Row>
     
@@ -25,10 +25,10 @@ export const MoveButtons= (props) => {
                 return (
                   <Row key={key}>
                     <Col>
-                      <DynamicButton paddler={props.paddlerList[props.paddlerIndex]} move={item} direction={"left"} />
+                      <DynamicButton paddler={props.paddlerList[props.currentHeat][props.paddlerIndex]} move={item} direction={"left"} />
                     </Col>
                     <Col>
-                      <DynamicButton paddler={props.paddlerList[props.paddlerIndex]} move={item} direction={"right"} />
+                      <DynamicButton paddler={props.paddlerList[props.currentHeat][props.paddlerIndex]} move={item} direction={"right"} />
                     </Col>
                   </Row>
                 )
@@ -46,6 +46,7 @@ const mapStateToProps = state => {
   return {
     paddlerIndex: state.paddlers.paddlerIndex,
     paddlerList: state.paddlers.paddlerList,
+    currentHeat: state.paddlers.currentHeat
   }
 }
 
