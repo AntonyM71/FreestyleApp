@@ -12,26 +12,26 @@ export const styles = StyleSheet.create({
         backgroundColor:  "#4F84C4",
         marginLeft: 4,
         marginRight: 4, 
-        marginTop: 15,
+        marginTop: 15
         
     },
     noBonus: {
         backgroundColor:  "#4F84C4",
         marginLeft: 4,
         marginRight: 4, 
-        marginTop: 8,
+        marginTop: 4
     },
     moveScored: {
         backgroundColor: "#223A5E",
         marginLeft: 4,
         marginRight: 4, 
-        marginTop: 15
+      marginTop: 15
     },
     bonusScored: {
         backgroundColor: "#223A5E",
         marginLeft: 4,
         marginRight: 4, 
-        marginTop:8,
+        marginTop:4
   },
     deleteButton: {
         backgroundColor: "#DC4C46",
