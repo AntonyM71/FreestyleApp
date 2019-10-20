@@ -1,4 +1,4 @@
-import { ADD_OR_REMOVE_PADDLER, CHANGE_PADDLER, UPDATE_PADDLER_SCORES, UPDATE_SHOW_TIMER } from "./actionTypes";
+import { ADD_OR_REMOVE_PADDLER, CHANGE_PADDLER, UPDATE_PADDLER_SCORES, UPDATE_SHOW_TIMER, CHANGE_HEAT } from "./actionTypes";
 
 
 
@@ -10,7 +10,13 @@ export const changePaddler= paddlerIndex => {
         payload: paddlerIndex
     }
 }
-  
+export const changeHeat = newHeat => {
+    return {
+    
+        type: CHANGE_HEAT,
+        payload: newHeat
+    }
+}
 export const addOrRemovePaddlerName = remainingPaddlers => {
     
     return {

@@ -1,4 +1,4 @@
-import { ADD_OR_REMOVE_PADDLER, CHANGE_PADDLER, UPDATE_PADDLER_SCORES, UPDATE_SHOW_TIMER } from './actionTypes';
+import { ADD_OR_REMOVE_PADDLER, CHANGE_PADDLER, UPDATE_PADDLER_SCORES, UPDATE_SHOW_TIMER, CHANGE_HEAT } from './actionTypes';
 import { initialScoresheet } from './screens/mycomponents/makePaddlerScores';
 
 // make our starting scoresheet from the list of paddlers
@@ -26,6 +26,11 @@ export const paddlerReducer = (state = initialState, action) => {
         return ({
           ...state,
           paddlerIndex: action.payload
+        });
+      case CHANGE_HEAT:
+        return ({
+          ...state,
+          currentHeat: action.payload
         });
       case ADD_OR_REMOVE_PADDLER:
         return ({

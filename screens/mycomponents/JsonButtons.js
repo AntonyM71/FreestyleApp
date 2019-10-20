@@ -1,42 +1,42 @@
 // Testing json import
 import React from 'react';
-import { View } from 'react-native';
+import { View, Dimensions} from 'react-native';
 import { connect } from 'react-redux';
 import { DynamicButton } from "./dynamicButton";
-import { Col, Grid, Row } from "react-native-easy-grid";
-  
+
 export const MoveButtons= (props) => {
   const moveList = require('../../data/moves_lists/move_list.json');
-
+  const screenWidth = Math.round(Dimensions.get('window').width);
+  const buttonPercentage = screenWidth > 600 ? "25%" : "50%"
       return (
-        <View>
-            <Grid>
+        <View style={{ flex: 1, flexDirection: 'row', flexWrap: true }}>
             {moveList.hole.map((item, key) => {
               if (!item.Reverse) {
                 return (
-                    <Row key={key}>
-                      <Col>
-                        <DynamicButton paddler={props.paddlerList[props.currentHeat][props.paddlerIndex]} move={item} direction={"left"} />
-                      </Col>
-                    </Row>
+                  <View style={{ width: buttonPercentage }} key={key}>
+                    <DynamicButton paddler={props.paddlerList[props.currentHeat][props.paddlerIndex]} move={item} direction={"left"} />
+                  </View>
+
     
                 )
               } else {
                 return (
-                  <Row key={key}>
-                    <Col>
+                  // <View key={key}>
+                  <>
+                    <View style={{ width: buttonPercentage }}>
                       <DynamicButton paddler={props.paddlerList[props.currentHeat][props.paddlerIndex]} move={item} direction={"left"} />
-                    </Col>
-                    <Col>
+                    </View>
+                    <View style={{ width: buttonPercentage }}>
                       <DynamicButton paddler={props.paddlerList[props.currentHeat][props.paddlerIndex]} move={item} direction={"right"} />
-                    </Col>
-                  </Row>
+                    </View>
+                   {/* </View> */}
+                  </>
+
                 )
               }
             }
             )
               }
-          </Grid>
         </View>
       );
     }

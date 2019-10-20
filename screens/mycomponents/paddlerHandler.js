@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { connect } from 'react-redux';
-import { changePaddler } from "../../actions";
+import { changePaddler, changeHeat } from "../../actions";
 import { DisplayScore } from './calculateScore';
 import { styles} from "../../styles"
 export const PaddlerHandler = (props) => {
@@ -22,23 +22,62 @@ export const PaddlerHandler = (props) => {
         const newPaddlerIndex = ((props.paddlerIndex == 0) ? numberOfPaddlers -1 : props.paddlerIndex - 1 )
         props.updatePaddler(newPaddlerIndex)
 
+    };
+        const numberOfHeats = (props.paddlerList).length;
+    
+    const _handlePressNextHeat = () => {
+        // -1 to account for zero indexing
+        const newHeat= ((props.currentHeat < (numberOfHeats - 1)) ? props.currentHeat + 1 : 0)
+        props.updatePaddler(0)
+        props.updateHeat(newHeat)
+
+    };
+    
+    const _handlePressPreviousHeat = () => {
+        // -1 to account for zero indexing
+        const newHeat = ((props.currentHeat== 0) ? numberOfHeats -1 : props.currentHeat - 1 )
+        props.updatePaddler(0)
+        props.updateHeat(newHeat)
+
       };
+    
     
   
         return (
             <View>
                 <Grid>
+                            <Row>
+                                <Col>
+                                    <Button
+                                        onPress={_handlePressPreviousHeat}
+                                        title="Last Heat"
+                                        buttonStyle={styles.changeButton}
+                                    />
+                                </Col>
+                                <Col>
+                                    <View>
+                                        <Text style={{ ...styles.standardText, marginTop: 10, textAlign: "center", fontSize: 25 }}>{`Heat ${props.currentHeat+1}`}</Text>
+                                    </View>
+                                </Col>
+                                <Col>
+                                    <Button
+                                        onPress={_handlePressNextHeat}
+                                        title="Next Heat"
+                                        buttonStyle={styles.changeButton}
+                                    />
+                                </Col>
+                            </Row>
                     <Row>
                         <Col>
                             <Button
                                 onPress={_handlePressPrevious}
-                                title="Previous"
+                                title="Last Paddler"
                                 buttonStyle={styles.changeButton}
                             />
                         </Col>
                         <Col>
                             <View>
-                                <Text style={{ ...styles.standardText, marginTop: 2 }}>{props.paddlerList[props.currentHeat][props.paddlerIndex]}</Text>
+                                <Text style={{ ...styles.standardText, marginTop: 2, textAlign: "center" }}>{props.paddlerList[props.currentHeat][props.paddlerIndex]}</Text>
                                 <DisplayScore paddler={props.paddlerList[props.currentHeat][props.paddlerIndex]}/>
                             </View>
                         </Col>
@@ -73,6 +112,9 @@ const mapStateToProps = state => {
     return {
         updatePaddler: (index) => {
         dispatch(changePaddler(index))
+        },
+        updateHeat: (index) => {
+        dispatch(changeHeat(index))
       }
     }
   }

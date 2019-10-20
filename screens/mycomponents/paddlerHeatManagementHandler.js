@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { ScrollView, Text, TextInput, View } from 'react-native';
-import { Button, Divider } from "react-native-elements";
-import { Col, Grid, Row } from "react-native-easy-grid";
+import { Text, TextInput, View } from 'react-native';
+import { Button } from "react-native-elements";
 import { connect } from 'react-redux';
 import { addOrRemovePaddlerName, updatePaddlerScores, changePaddler } from "../../actions";
 import { styles } from "../../styles";
@@ -62,31 +61,30 @@ const _handleDeletePaddler = (heatKey, paddlerList, paddler, paddlerScores) => (
         <View>
             <View>
                 <Text style={styles.heatStyle}>{`Heat ${props.heatKey+1}`}</Text>
-              <Grid>
+       
                 {props.paddlerList.map((paddler, key) =>
-                  <Row key={key}>
-                    <Col>
+                  <View style={{ flex: 1, flexDirection: 'row', flexWrap: true }} key={key}>
+                    <View style={{ width: "30%" }}>
                       <Text style={{
                         ...styles.standardText, justifyContent: 'center',
                         alignItems: 'center'
                       }}>{paddler}</Text>
-                    </Col>
-                    <Col>
+                    </View>
+                    <View style={{ width: "30%" }}>
                       <DisplayScore paddler={paddler} align="center" />
-                    </Col>
-                    <Col>
+                    </View>
+                    <View style={{ width: "40%" }}>
                       <Button
                         onPress={_handleDeletePaddler(props.heatKey, props.paddlerList, paddler, props.paddlerScores)}
                         title="Delete"
                         buttonStyle={styles.deleteButton}
                       />
-                    </Col>
+                    </View>
 
-                  </Row>
+                  </View>
             
                 )
                 }
-              </Grid>
             </View>
             <View>
               <TextInput

@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
-import { ScrollView, Text, TextInput, View } from 'react-native';
-import { Button, Divider } from "react-native-elements";
-import { Col, Grid, Row } from "react-native-easy-grid";
+import React from 'react';
+import { ScrollView, View } from 'react-native';
+import { Button } from "react-native-elements";
 import { connect } from 'react-redux';
-import { addOrRemovePaddlerName, updatePaddlerScores, changePaddler } from "../../actions";
+import { addOrRemovePaddlerName, updatePaddlerScores, changePaddler, changeHeat } from "../../actions";
 import { styles } from "../../styles";
 import { initialScoresheet } from './makePaddlerScores';
-import { DisplayScore } from './calculateScore';
 import PaddlerHeatManager from "./paddlerHeatManagementHandler"
 
 // pull out heat logic into another file
@@ -27,7 +25,25 @@ export const PaddlerManager = (props) => {
     props.addOrRemovePaddlerName([...newHeatList]);
     props.updatePaddlerScores(newPaddlerScores);
   }
-  
+  const clearPaddlers = () => {
+    const newHeatList = [["default"]]
+    const startingScoresheet = {}
+    newHeatList.flat().map((paddler) => {
+      startingScoresheet[(paddler.toString())] = initialScoresheet()
+    })
+    props.updatePaddler(0)
+    props.updateHeat(0)
+    props.addOrRemovePaddlerName(newHeatList);
+    props.updatePaddlerScores(startingScoresheet);
+  }
+  const clearScores = () => {
+
+    const startingScoresheet = {}
+    props.paddlerHeatList.flat().map((paddler) => {
+         startingScoresheet[(paddler.toString())] = initialScoresheet()
+    })
+    props.updatePaddlerScores(startingScoresheet);
+  }
 
   
   return (
@@ -37,11 +53,31 @@ export const PaddlerManager = (props) => {
           
           <PaddlerHeatManager paddlerList={paddlerList} heatKey={heatKey} />
         )}
+
+        <View style={{ flex: 1, flexDirection: 'row', flexWrap: true }}>
+          <View style={{ width: "100%" }}>
         <Button
           onPress={() => {addHeat(props.paddlerHeatList.length +1)}}
           title="New Heat"
           buttonStyle={styles.timerGreen}
-        />
+            />
+          </View>
+          <View style={{ width: "50%" }}>
+        <Button
+          onPress={() => {clearScores()}}
+          title="Clear Scores"
+          buttonStyle={styles.timerRed}
+            />
+          </View>
+
+                    <View style={{ width: "50%" }}>
+        <Button
+          onPress={clearPaddlers}
+          title="Clear Paddlers"
+          buttonStyle={styles.timerRed}
+            />
+            </View>
+          </View>
       </View>
     </ScrollView>
   )
@@ -51,6 +87,7 @@ const mapStateToProps = state => {
   return {
     paddlerHeatList: state.paddlers.paddlerList,
     paddlerScores: state.paddlers.paddlerScores,
+
   }
 }
 
@@ -66,7 +103,10 @@ const mapDispatchToProps = dispatch => {
     },
     updatePaddler: (index) => {
       dispatch(changePaddler(index))
-    }
+    },
+    updateHeat: (index) => {
+        dispatch(changeHeat(index))
+      }
   }
 }
 
