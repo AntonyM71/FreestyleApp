@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
 import { Button } from "react-native-elements";
-import { connect } from 'react-redux';
+import { connect, batch } from 'react-redux';
 import { addOrRemovePaddlerName, updatePaddlerScores, changePaddler } from "../../actions";
 import { styles } from "../../styles";
 import { initialScoresheet } from './makePaddlerScores';
