@@ -1,11 +1,12 @@
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 import { Button } from "react-native-elements";
-import { connect } from 'react-redux';
+import { connect, batch } from 'react-redux';
 import { addOrRemovePaddlerName, updatePaddlerScores, changePaddler, changeHeat } from "../../actions";
 import { styles } from "../../styles";
 import { initialScoresheet } from './makePaddlerScores';
 import PaddlerHeatManager from "./paddlerHeatManagementHandler"
+import { getScoresState } from '../../selectors';
 
 // pull out heat logic into another file
 // consider moving the button into another file
@@ -21,9 +22,11 @@ export const PaddlerManager = (props) => {
         newPaddlerScores[(paddler.toString())] = initialScoresheet()
     })
     console.log(newHeatList)
-    props.updatePaddler(0)
-    props.addOrRemovePaddlerName([...newHeatList]);
-    props.updatePaddlerScores(newPaddlerScores);
+    batch(() => {
+      props.updatePaddler(0)
+      props.addOrRemovePaddlerName([...newHeatList]);
+      props.updatePaddlerScores(newPaddlerScores);
+    })
   }
   const clearPaddlers = () => {
     const newHeatList = [["default"]]
@@ -31,10 +34,12 @@ export const PaddlerManager = (props) => {
     newHeatList.flat().map((paddler) => {
       startingScoresheet[(paddler.toString())] = initialScoresheet()
     })
-    props.updatePaddler(0)
-    props.updateHeat(0)
-    props.addOrRemovePaddlerName(newHeatList);
-    props.updatePaddlerScores(startingScoresheet);
+    batch(() => {
+      props.updatePaddler(0)
+      props.updateHeat(0)
+      props.addOrRemovePaddlerName(newHeatList);
+      props.updatePaddlerScores(startingScoresheet);
+    })
   }
   const clearScores = () => {
 
@@ -86,7 +91,7 @@ export const PaddlerManager = (props) => {
 const mapStateToProps = state => {
   return {
     paddlerHeatList: state.paddlers.paddlerList,
-    paddlerScores: state.paddlers.paddlerScores,
+    paddlerScores: getScoresState(state)
 
   }
 }

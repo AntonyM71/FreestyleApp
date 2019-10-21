@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Col, Grid, Row } from "react-native-easy-grid";
-import { connect } from 'react-redux';
+import { connect, batch } from 'react-redux';
 import { changePaddler, changeHeat } from "../../actions";
 import { styles} from "../../styles"
 export const PaddlerHandler = (props) => {
@@ -13,16 +13,20 @@ export const PaddlerHandler = (props) => {
     const _handlePressNextHeat = () => {
         // -1 to account for zero indexing
         const newHeat= ((props.currentHeat < (numberOfHeats - 1)) ? props.currentHeat + 1 : 0)
-        props.updatePaddler(0)
-        props.updateHeat(newHeat)
+        batch(() => {
+            props.updatePaddler(0)
+            props.updateHeat(newHeat)
+        })
 
     };
     
     const _handlePressPreviousHeat = () => {
         // -1 to account for zero indexing
         const newHeat = ((props.currentHeat== 0) ? numberOfHeats -1 : props.currentHeat - 1 )
-        props.updatePaddler(0)
-        props.updateHeat(newHeat)
+        batch(() => {
+            props.updatePaddler(0)
+            props.updateHeat(newHeat)
+        })
 
       };
     

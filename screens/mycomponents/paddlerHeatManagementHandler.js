@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
 import { Button } from "react-native-elements";
-import { connect } from 'react-redux';
+import { connect, batch } from 'react-redux';
 import { addOrRemovePaddlerName, updatePaddlerScores, changePaddler } from "../../actions";
 import { styles } from "../../styles";
 import { initialScoresheet } from './makePaddlerScores';
 import { DisplayScore } from './calculateScore';
+import { getScoresState } from '../../selectors';
 
 
 
@@ -33,8 +34,10 @@ const _handleDeletePaddler = (heatKey, paddlerList, paddler, paddlerScores) => (
       if ((props.paddlerHeatList.flat()).indexOf(newPaddler) > -1) {
         alert("You've already added this paddler")
       } else {
-        setNewPaddler("")
-        addOrRemovePaddler(heatKey, [...paddlerList, newPaddler], paddlerScores)
+        batch(() => {
+          setNewPaddler("")
+          addOrRemovePaddler(heatKey, [...paddlerList, newPaddler], paddlerScores)
+        })
       }
     }
   }
@@ -49,10 +52,12 @@ const _handleDeletePaddler = (heatKey, paddlerList, paddler, paddlerScores) => (
     })
 
     const newHeatList = props.paddlerHeatList
-    newHeatList[heatKey]=newList
-    props.updatePaddler(0)
-    props.addOrRemovePaddlerName([...newHeatList]);
-    props.updatePaddlerScores(newPaddlerScores);
+        newHeatList[heatKey] = newList
+        batch(() => {
+          props.updatePaddler(0)
+          props.addOrRemovePaddlerName([...newHeatList]);
+          props.updatePaddlerScores(newPaddlerScores);
+        })
   }
 
     
@@ -117,7 +122,7 @@ const mapStateToProps = state => {
   return {
     // paddlerIndex: state.paddlers.paddlerIndex,
     paddlerHeatList: state.paddlers.paddlerList,
-    paddlerScores: state.paddlers.paddlerScores,
+    paddlerScores: getScoresState(state)
 
   }
 }
