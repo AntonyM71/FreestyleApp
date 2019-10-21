@@ -4,6 +4,7 @@ import React from 'react';
 import { Button} from 'react-native-elements';
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { styles } from "../../styles";
+import { getScoresState} from "../../selectors"
 const DynamicButtonPresentation = (props) => {
 
     const _handleMove = (paddler, move, direction, type) => () => {
@@ -92,9 +93,9 @@ const DynamicButtonPresentation = (props) => {
 
 
 // can we make this go deeper, so that we only update a single component when we add a move?
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    paddlerScores: state.paddlers.paddlerScores
+    paddlerScores: getScoresState(state)
   }
 }
 

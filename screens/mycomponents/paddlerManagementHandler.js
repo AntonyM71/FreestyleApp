@@ -6,6 +6,7 @@ import { addOrRemovePaddlerName, updatePaddlerScores, changePaddler, changeHeat 
 import { styles } from "../../styles";
 import { initialScoresheet } from './makePaddlerScores';
 import PaddlerHeatManager from "./paddlerHeatManagementHandler"
+import { getScoresState } from '../../selectors';
 
 // pull out heat logic into another file
 // consider moving the button into another file
@@ -90,7 +91,7 @@ export const PaddlerManager = (props) => {
 const mapStateToProps = state => {
   return {
     paddlerHeatList: state.paddlers.paddlerList,
-    paddlerScores: state.paddlers.paddlerScores,
+    paddlerScores: getScoresState(state)
 
   }
 }

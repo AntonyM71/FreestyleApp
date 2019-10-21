@@ -6,6 +6,7 @@ import { addOrRemovePaddlerName, updatePaddlerScores, changePaddler } from "../.
 import { styles } from "../../styles";
 import { initialScoresheet } from './makePaddlerScores';
 import { DisplayScore } from './calculateScore';
+import { getScoresState } from '../../selectors';
 
 
 
@@ -121,7 +122,7 @@ const mapStateToProps = state => {
   return {
     // paddlerIndex: state.paddlers.paddlerIndex,
     paddlerHeatList: state.paddlers.paddlerList,
-    paddlerScores: state.paddlers.paddlerScores,
+    paddlerScores: getScoresState(state)
 
   }
 }
