@@ -33,8 +33,10 @@ const _handleDeletePaddler = (heatKey, paddlerList, paddler, paddlerScores) => (
       if ((props.paddlerHeatList.flat()).indexOf(newPaddler) > -1) {
         alert("You've already added this paddler")
       } else {
-        setNewPaddler("")
-        addOrRemovePaddler(heatKey, [...paddlerList, newPaddler], paddlerScores)
+        batch(() => {
+          setNewPaddler("")
+          addOrRemovePaddler(heatKey, [...paddlerList, newPaddler], paddlerScores)
+        })
       }
     }
   }
@@ -49,10 +51,12 @@ const _handleDeletePaddler = (heatKey, paddlerList, paddler, paddlerScores) => (
     })
 
     const newHeatList = props.paddlerHeatList
-    newHeatList[heatKey]=newList
-    props.updatePaddler(0)
-    props.addOrRemovePaddlerName([...newHeatList]);
-    props.updatePaddlerScores(newPaddlerScores);
+        newHeatList[heatKey] = newList
+        batch(() => {
+          props.updatePaddler(0)
+          props.addOrRemovePaddlerName([...newHeatList]);
+          props.updatePaddlerScores(newPaddlerScores);
+        })
   }
 
     
