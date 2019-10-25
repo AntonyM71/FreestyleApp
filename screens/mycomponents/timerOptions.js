@@ -8,7 +8,6 @@ import { styles } from "../../styles"
 const timerOptionsPresentation = (props) => {
     
     _handleTimerButtonPress = () => {
-        console.log(props.showTimer)
         props.updateShowTimer(!props.showTimer)
     }
         return (

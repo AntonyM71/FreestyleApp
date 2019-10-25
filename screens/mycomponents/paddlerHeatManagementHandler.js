@@ -122,7 +122,8 @@ const mapStateToProps = state => {
   return {
     // paddlerIndex: state.paddlers.paddlerIndex,
     paddlerHeatList: state.paddlers.paddlerList,
-    paddlerScores: getScoresState(state)
+    paddlerScores: getScoresState(state),
+    numberOfRuns: state.paddlers.numberOfRuns
 
   }
 }

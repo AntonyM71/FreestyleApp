@@ -1,6 +1,6 @@
 
 
-const moveList = Object.values(require('../../data/moves_lists/move_list.json'));
+const moveList = Object.values(require('../../data/moves_lists/move_list.json')).flat();
     
     export const initialScoresheet = () => {
     

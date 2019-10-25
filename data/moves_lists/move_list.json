@@ -26,7 +26,7 @@
     {"Move": "Flip Turn", "Value": 90, "Clean": 30, "SuperClean": 40, "Air": 0, "Huge": 40, "Link": 30, "Reverse": true},
     {"Move": "Donkey Flip", "Value": 90, "Clean": 30, "SuperClean": 40, "Air": 30, "Huge": 40, "Link": 30, "Reverse": true},
     {"Move": "Airscrew", "Value": 140, "Clean": 50, "SuperClean": 60, "Air": 0, "Huge": 40, "Link": 40, "Reverse": true},
-    {"Move": "Helix", "Value": 150, "Clean": 50, "SuperClean": 60, "Air": 0, "Huge": 40, "Link": 40, "Reverse": true}
+    {"Move": "Helix", "Value": 150, "Clean": 50, "SuperClean": 60, "Air": 0, "Huge": 40, "Link": 40, "Reverse": true},
     {"Move": "Pistol Flip", "Value": 120, "Clean": 50, "SuperClean": 60, "Air": 50, "Huge": 40, "Link": 40, "Reverse": true}
     
 

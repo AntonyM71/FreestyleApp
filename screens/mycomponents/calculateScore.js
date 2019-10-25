@@ -2,11 +2,10 @@ import { connect } from 'react-redux';
 import React from 'react';
 import { Text } from 'react-native';
 import { styles } from '../../styles.js';
-const moveList = Objject.values(require('../../data/moves_lists/move_list.json'));
+const moveList = Object.values(require('../../data/moves_lists/move_list.json')).flat();
 
 const calculateScoreAndBonuses = (move, truth) => {
-    // the below is a bit of a hack for an unlikely scenario where we have huge but no air,  it will add in the air bonus
-    truth.air = truth.huge ? true : truth.air
+   truth.air = truth.huge ? true : truth.air
     truth.clean = truth.superClean ? true : truth.clean
     const moveScore = truth.scored ?
         [
@@ -22,8 +21,8 @@ const calculateScoreAndBonuses = (move, truth) => {
 }
 const DisplayScorePresenetation = (props) => {
     const paddlerScore = [0]
-    if (props.paddlerScores[props.paddler]) {
-        const scoredMoves = (props.paddlerScores[props.paddler])
+    if (props.paddlerScores[props.paddler][props.run]) {
+        const scoredMoves = (props.paddlerScores[props.paddler][props.run])
 
         moveList.map((item) => {
             const moveTotal = (
@@ -41,7 +40,7 @@ const DisplayScorePresenetation = (props) => {
 
     const mapStateToProps = state => {
   return {
-    paddlerScores: state.paddlers.paddlerScores
+      paddlerScores: state.paddlers.paddlerScores
   }
 }
 
