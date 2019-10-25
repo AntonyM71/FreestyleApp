@@ -7,10 +7,11 @@ import { DynamicButton } from "./dynamicButton";
 export const MoveButtons= (props) => {
   const moveList = require('../../data/moves_lists/move_list.json');
   const screenWidth = Math.round(Dimensions.get('window').width);
+  const availableMoves = Object.values(moveList)
   const buttonPercentage = screenWidth > 600 ? "25%" : "50%"
       return (
         <View style={{ flex: 1, flexDirection: 'row', flexWrap: true }}>
-            {moveList.hole.map((item, key) => {
+            {availableMoves.map((item, key) => {
               if (!item.Reverse) {
                 return (
                   <View style={{ width: buttonPercentage }} key={key}>

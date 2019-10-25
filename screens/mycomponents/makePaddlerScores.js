@@ -1,10 +1,10 @@
 
 
-const moveList = require('../../data/moves_lists/move_list.json');
+const moveList = Object.values(require('../../data/moves_lists/move_list.json'));
     
     export const initialScoresheet = () => {
     
-        const initialMoves = moveList.hole.map((item) => {
+        const initialMoves = moveList.map((item) => {
             return (
                 {
                     id: item.Move,

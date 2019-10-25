@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 import { Text } from 'react-native';
 import { styles } from '../../styles.js';
-const moveList = require('../../data/moves_lists/move_list.json');
+const moveList = Objject.values(require('../../data/moves_lists/move_list.json'));
 
 const calculateScoreAndBonuses = (move, truth) => {
     // the below is a bit of a hack for an unlikely scenario where we have huge but no air,  it will add in the air bonus
@@ -25,7 +25,7 @@ const DisplayScorePresenetation = (props) => {
     if (props.paddlerScores[props.paddler]) {
         const scoredMoves = (props.paddlerScores[props.paddler])
 
-        moveList.hole.map((item) => {
+        moveList.map((item) => {
             const moveTotal = (
                 calculateScoreAndBonuses(item, scoredMoves[item.Move]["left"]) +
                 calculateScoreAndBonuses(item, scoredMoves[item.Move]["right"])

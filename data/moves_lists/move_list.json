@@ -1,16 +1,34 @@
-{"hole": [
-    {"Move": "Shuvit", "Value": 5, "Clean": 0, "SuperClean": 0, "Air": 0, "Huge": 0, "Link": 0, "Reverse": true},
-    {"Move": "Spin", "Value": 10, "Clean": 10, "SuperClean": 20, "Air": 10, "Huge": 20, "Link": 0, "Reverse": true},
-    {"Move": "Cartwheel", "Value": 30, "Clean": 10, "SuperClean": 20, "Air": 10, "Huge": 20, "Link": 0, "Reverse": true},
-    {"Move": "Splitwheel", "Value": 40, "Clean": 30, "SuperClean": 40, "Air": 30, "Huge": 40, "Link": 0, "Reverse": true},
-    {"Move": "Tricky Woo", "Value": 150, "Clean": 50, "SuperClean": 60, "Air": 50, "Huge": 60, "Link": 20, "Reverse": true},
-    {"Move": "Pirouette", "Value": 25, "Clean": 10, "SuperClean": 20, "Air": 10, "Huge": 20, "Link": 0, "Reverse": true},
-    {"Move": "Loop", "Value": 50, "Clean": 30, "SuperClean": 40, "Air": 30, "Huge": 40, "Link": 20, "Reverse": false},
-    {"Move": "Back Loop", "Value": 90, "Clean": 30, "SuperClean": 40, "Air": 30, "Huge": 40, "Link": 20, "Reverse": false},
-    {"Move": "Space Godzilla", "Value": 70, "Clean": 30, "SuperClean": 40, "Air": 30, "Huge": 40, "Link": 20, "Reverse": true},
-    {"Move": "Orbit", "Value": 100, "Clean": 30, "SuperClean": 40, "Air": 30, "Huge": 40, "Link": 20, "Reverse": true},
-    {"Move": "Lunar Orbit", "Value": 150, "Clean": 50, "SuperClean": 60, "Air": 50, "Huge": 40, "Link": 30, "Reverse": true},
-    {"Move": "McNasty", "Value": 120, "Clean": 50, "SuperClean": 60, "Air": 50, "Huge": 40, "Link": 0, "Reverse": true},
-    {"Move": "Phoenix Monkey", "Value": 150, "Clean": 0, "SuperClean": 60, "Air": 50, "Huge": 40, "Link": 0, "Reverse": true}
+{ "both": [
+    {"Move": "Shuvit", "Value": 5, "Clean": 0, "SuperClean": 0, "Air": 10, "Huge": 10, "Link": 10, "Reverse": true},
+    {"Move": "Spin", "Value": 10, "Clean": 10, "SuperClean": 20, "Air": 10, "Huge": 10, "Link": 10, "Reverse": true}
+],
+    "hole": [
+    {"Move": "Felix", "Value": 40, "Clean": 30, "SuperClean": 40, "Air": 0, "Huge": 40, "Link": 30, "Reverse": true},
+    {"Move": "Cartwheel", "Value": 30, "Clean": 10, "SuperClean": 20, "Air": 10, "Huge": 40, "Link": 10, "Reverse": true},
+    {"Move": "Splitwheel", "Value": 40, "Clean": 30, "SuperClean": 40, "Air": 30, "Huge": 40, "Link": 30, "Reverse": true},
+    {"Move": "Tricky Woo", "Value": 140, "Clean": 0, "SuperClean": 60, "Air": 50, "Huge": 40, "Link": 40, "Reverse": true},
+    {"Move": "Pirouette", "Value": 25, "Clean": 10, "SuperClean": 20, "Air": 10, "Huge": 40, "Link": 10, "Reverse": true},
+    {"Move": "Loop", "Value": 60, "Clean": 30, "SuperClean": 40, "Air": 30, "Huge": 40, "Link": 30, "Reverse": false},
+    {"Move": "Back Loop", "Value": 90, "Clean": 30, "SuperClean": 40, "Air": 30, "Huge": 40, "Link": 30, "Reverse": false},
+    {"Move": "Space Godzilla", "Value": 90, "Clean": 30, "SuperClean": 40, "Air": 0, "Huge": 40, "Link": 30, "Reverse": true},
+    {"Move": "Lunar Orbit", "Value": 150, "Clean": 50, "SuperClean": 60, "Air": 50, "Huge": 40, "Link": 40, "Reverse": true},
+    {"Move": "McNasty", "Value": 120, "Clean": 50, "SuperClean": 60, "Air": 50, "Huge": 40, "Link": 40, "Reverse": true},
+    {"Move": "Phonics Monkey", "Value": 140, "Clean": 50, "SuperClean": 60, "Air": 50, "Huge": 40, "Link": 40, "Reverse": true},
+    {"Move": "Reverse Phonics Monkey", "Value": 160, "Clean": 50, "SuperClean": 0, "Air": 50, "Huge": 40, "Link": 40, "Reverse": true}
+],
+"wave": [
+    {"Move": "Roundhouse", "Value": 15, "Clean": 10, "SuperClean": 20, "Air": 10, "Huge": 10, "Link": 10, "Reverse": true},
+    {"Move": "Back Roundhouse", "Value": 20, "Clean": 10, "SuperClean": 20, "Air": 10, "Huge": 10, "Link": 10, "Reverse": true},
+    {"Move": "Blunt", "Value": 50, "Clean": 30, "SuperClean": 40, "Air": 30, "Huge": 40, "Link": 30, "Reverse": true},
+    {"Move": "Back Blunt", "Value": 70, "Clean": 30, "SuperClean": 40, "Air": 30, "Huge": 40, "Link": 30, "Reverse": true},
+    {"Move": "Pan Am", "Value": 110, "Clean": 50, "SuperClean": 60, "Air": 0, "Huge": 40, "Link": 40, "Reverse": true},
+    {"Move": "Back Pan Am", "Value": 130, "Clean": 50, "SuperClean": 60, "Air": 0, "Huge": 40, "Link": 40, "Reverse": true},
+    {"Move": "Flip Turn", "Value": 90, "Clean": 30, "SuperClean": 40, "Air": 0, "Huge": 40, "Link": 30, "Reverse": true},
+    {"Move": "Donkey Flip", "Value": 90, "Clean": 30, "SuperClean": 40, "Air": 30, "Huge": 40, "Link": 30, "Reverse": true},
+    {"Move": "Airscrew", "Value": 140, "Clean": 50, "SuperClean": 60, "Air": 0, "Huge": 40, "Link": 40, "Reverse": true},
+    {"Move": "Helix", "Value": 150, "Clean": 50, "SuperClean": 60, "Air": 0, "Huge": 40, "Link": 40, "Reverse": true}
+    {"Move": "Pistol Flip", "Value": 120, "Clean": 50, "SuperClean": 60, "Air": 50, "Huge": 40, "Link": 40, "Reverse": true}
+    
+
 ]
 }
