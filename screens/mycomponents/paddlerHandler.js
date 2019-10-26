@@ -1,151 +1,161 @@
-import React from 'react';
-import { Text, View } from 'react-native';
-import { Button } from 'react-native-elements';
+import React from "react";
+import { Text, View } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
-import { connect, batch } from 'react-redux';
-import { changePaddler, changeHeat, changeNumberOfRuns, changeRun, updatePaddlerScores } from "../../actions";
-import { DisplayScore } from './calculateScore';
-import { styles } from "../../styles"
-import {getScoresState} from "../../selectors"
-import { initialScoresheet } from './makePaddlerScores';
+import { Button } from "react-native-elements";
+import { connect } from "react-redux";
+import { changeHeat, changeNumberOfRuns, changePaddler, changeRun, updatePaddlerScores } from "../../actions";
+import { getScoresState } from "../../selectors";
+import { styles } from "../../styles";
+import { DisplayScore } from "./calculateScore";
+import { initialScoresheet } from "./makePaddlerScores";
 
+export const PaddlerHandler = props => {
+  const numberOfPaddlers = props.paddlerList[props.currentHeat].length;
 
+  const _handlePressNext = () => {
+    // -1 to account for zero indexing
+    const newPaddlerIndex =
+      props.paddlerIndex < numberOfPaddlers - 1 ? props.paddlerIndex + 1 : 0;
+    props.updatePaddler(newPaddlerIndex);
+  };
 
-export const PaddlerHandler = (props) => {
+  const _handlePressPrevious = () => {
+    // -1 to account for zero indexing
+    const newPaddlerIndex =
+      props.paddlerIndex == 0 ? numberOfPaddlers - 1 : props.paddlerIndex - 1;
+    props.updatePaddler(newPaddlerIndex);
+  };
 
-    const numberOfPaddlers = (props.paddlerList[props.currentHeat]).length;
-    
-    const _handlePressNext = () => {
-        // -1 to account for zero indexing
-        const newPaddlerIndex = ((props.paddlerIndex < (numberOfPaddlers - 1)) ? props.paddlerIndex + 1 : 0)
-        props.updatePaddler(newPaddlerIndex)
+  const _handlePressNextRun = () => {
+    // -1 to account for zero indexing
+    const newRunIndex = props.run + 1;
+    handleChangeRun(newRunIndex);
+  };
 
-    };
-    
-    const _handlePressPrevious = () => {
-        // -1 to account for zero indexing
-        const newPaddlerIndex = ((props.paddlerIndex == 0) ? numberOfPaddlers -1 : props.paddlerIndex - 1 )
-        props.updatePaddler(newPaddlerIndex)
+  const _handlePressPreviousRun = () => {
+    const newRunIndex = props.run == 0 ? 0 : props.run - 1;
+    handleChangeRun(newRunIndex);
+  };
 
-    };
-
-    const _handlePressNextRun = () => {
-        // -1 to account for zero indexing
-        const newRunIndex = props.run + 1
-        handleChangeRun(newRunIndex)
-
-    };
-    
-    const _handlePressPreviousRun = () => {
-        
-        const newRunIndex = ((props.run == 0) ? 0: props.run - 1 )
-        handleChangeRun(newRunIndex)
-
-    };
-
-const handleChangeRun = (newRunIndex) => {
-       if (newRunIndex < props.numberOfRuns) {
-        props.updateRun(newRunIndex)
-       } else {
-           const scores = props.paddlerScores
-           props.paddlerList.flat().map((paddler) => {
-                    scores[(paddler.toString())].push(initialScoresheet())
-                })
-               props.updateNumberOfRuns(newRunIndex)
-           props.updateScore({ ...scores });
-               props.updateRun(newRunIndex)
-
-    }   
+  const handleChangeRun = newRunIndex => {
+    if (newRunIndex < props.numberOfRuns) {
+      props.updateRun(newRunIndex);
+    } else {
+      const scores = props.paddlerScores;
+      props.paddlerList.flat().map(paddler => {
+        scores[paddler.toString()].push(initialScoresheet());
+      });
+      props.updateNumberOfRuns(newRunIndex);
+      props.updateScore({ ...scores });
+      props.updateRun(newRunIndex);
     }
+  };
 
-
-        return (
+  return (
+    <View>
+      <Grid>
+        <Row>
+          <Col>
+            <Button
+              onPress={_handlePressPrevious}
+              title="Last Paddler"
+              buttonStyle={styles.changeButton}
+            />
+          </Col>
+          <Col>
             <View>
-                <Grid>
-                    <Row>
-                        <Col>
-                            <Button
-                                onPress={_handlePressPrevious}
-                                title="Last Paddler"
-                                buttonStyle={styles.changeButton}
-                            />
-                        </Col>
-                        <Col>
-                            <View>
-                                <Text style={{ ...styles.standardText, marginTop: 2, textAlign: "center" }}>{props.paddlerList[props.currentHeat][props.paddlerIndex]}</Text>
-                                <DisplayScore paddler={props.paddlerList[props.currentHeat][props.paddlerIndex]} run={0}/>
-                            </View>
-                        </Col>
-                        <Col>
-                            <Button
-                                onPress={_handlePressNext}
-                                title="Next Paddler"
-                                buttonStyle={styles.changeButton}
-                            />
-                        </Col>
-                    </Row>
-                      <Row>
-                        <Col>
-                            <Button
-                                onPress={_handlePressPreviousRun}
-                                title="Prev Run"
-                                buttonStyle={styles.changeButton}
-                            />
-                        </Col>
-                        <Col>
-                            <View>
-                                <Text style={{ ...styles.standardText, marginTop: 2, textAlign: "center" }}>{props.run+1}</Text>
-                            </View>
-                        </Col>
-                        <Col>
-                            <Button
-                                onPress={_handlePressNextRun}
-                                title="New Run"
-                                buttonStyle={styles.changeButton}
-                            />
-                        </Col>
-                    </Row>
-                </Grid>
+              <Text
+                style={{
+                  ...styles.standardText,
+                  marginTop: 2,
+                  textAlign: "center"
+                }}
+              >
+                {props.paddlerList[props.currentHeat][props.paddlerIndex]}
+              </Text>
+              <DisplayScore
+                paddler={
+                  props.paddlerList[props.currentHeat][props.paddlerIndex]
+                }
+                run={props.run}
+              />
             </View>
-        );
-    
-    
-    
-}
-
+          </Col>
+          <Col>
+            <Button
+              onPress={_handlePressNext}
+              title="Next Paddler"
+              buttonStyle={styles.changeButton}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Button
+              onPress={_handlePressPreviousRun}
+              title="Prev Run"
+              buttonStyle={styles.changeButton}
+            />
+          </Col>
+          <Col>
+            <View>
+              <Text
+                style={{
+                  ...styles.standardText,
+                  marginTop: 2,
+                  textAlign: "center"
+                }}
+              >
+                {props.run + 1}
+              </Text>
+            </View>
+          </Col>
+          <Col>
+            <Button
+              onPress={_handlePressNextRun}
+              title="New Run"
+              buttonStyle={styles.changeButton}
+            />
+          </Col>
+        </Row>
+      </Grid>
+    </View>
+  );
+};
 
 const mapStateToProps = state => {
-    return {
-        paddlerIndex: state.paddlers.paddlerIndex,
-        paddlerList: state.paddlers.paddlerList,
-        currentHeat: state.paddlers.currentHeat,
-        run: state.paddlers.run,
-        numberOfRuns: state.paddlers.numberOfRuns,
-        paddlerScores: getScoresState(state)
+  return {
+    paddlerIndex: state.paddlers.paddlerIndex,
+    paddlerList: state.paddlers.paddlerList,
+    currentHeat: state.paddlers.currentHeat,
+    run: state.paddlers.run,
+    numberOfRuns: state.paddlers.numberOfRuns,
+    paddlerScores: getScoresState(state)
+  };
+};
 
-        
+// not used currently, need to add an addmove function and redux pathway
+const mapDispatchToProps = dispatch => {
+  return {
+    updatePaddler: index => {
+      dispatch(changePaddler(index));
+    },
+    updateHeat: index => {
+      dispatch(changeHeat(index));
+    },
+    updateRun: run => {
+      dispatch(changeRun(run));
+    },
+    updateNumberOfRuns: numberOfRuns => {
+      dispatch(changeNumberOfRuns(numberOfRuns));
+    },
+    updateScore: newScores => {
+      dispatch(updatePaddlerScores(newScores));
     }
-}
-  
-  // not used currently, need to add an addmove function and redux pathway
-  const mapDispatchToProps = dispatch => {
-    return {
-        updatePaddler: (index) => {
-        dispatch(changePaddler(index))
-        },
-        updateHeat: (index) => {
-        dispatch(changeHeat(index))
-        },
-        updateRun: (run) => {
-            dispatch(changeRun(run))
-        },
-        updateNumberOfRuns: (numberOfRuns) => {
-            dispatch(changeNumberOfRuns(numberOfRuns))
-        },
-        updateScore: (newScores) => {
-            dispatch(updatePaddlerScores(newScores))
-        }
-    }
-  }
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(PaddlerHandler)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PaddlerHandler);

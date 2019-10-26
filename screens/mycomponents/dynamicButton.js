@@ -1,32 +1,48 @@
-import { connect } from 'react-redux';
+import React from "react";
+import { Col, Grid, Row } from "react-native-easy-grid";
+import { Button } from "react-native-elements";
+import { connect } from "react-redux";
 import { updatePaddlerScores } from "../../actions";
-import React from 'react';
-import { Button} from 'react-native-elements';
+import { getScoresState } from "../../selectors";
 import { styles } from "../../styles";
-import { View } from "react-native"
-import { getScoresState} from "../../selectors"
-const DynamicButtonPresentation = (props) => {
-
-    const _handleMove = (paddler,run, move, direction, type) => () => {
-        var newScores = { ...props.paddlerScores }
-        const newField = !(newScores[paddler][run][move][direction][type])
-        newScores[paddler][run][move][direction][type] = newField
-        if (type == "huge") { newScores[paddler][run][move][direction]["air"] = newField }
-        if (type == "superClean") {  newScores[paddler][run][move][direction]["clean"] = newField}
-        props.updateScore(newScores);
-     
+import { View } from "react-native" 
+const DynamicButtonPresentation = props => {
+  const _handleMove = (paddler, run, move, direction, type) => () => {
+    var newScores = { ...props.paddlerScores };
+    const newField = !newScores[paddler][run][move][direction][type];
+    newScores[paddler][run][move][direction][type] = newField;
+    if (type == "huge") {
+      newScores[paddler][run][move][direction]["air"] = newField;
     }
+    if (type == "superClean") {
+      newScores[paddler][run][move][direction]["clean"] = newField;
+    }
+    props.updateScore(newScores);
+  };
 
-    if (props.paddlerScores[props.paddler][props.run][props.move.Move][props.direction].scored == false) {
- const buttonName = (props.move.Move ==("Loop") || props.move.Move == ( "Back Loop")) ? props.move.Move : props.move.Move + " " + props.direction       
-        return (
-        
-            <Button
-                onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "scored")}
-                title={buttonName}
-                buttonStyle={styles.noMove}
-            />
-        )
+  if (
+    props.paddlerScores[props.paddler][props.run][props.move.Move][
+      props.direction
+    ].scored == false
+  ) {
+    const buttonName =
+      props.move.Move == "Loop" || props.move.Move == "Back Loop"
+        ? props.move.Move
+        : props.move.Move + " " + props.direction;
+    return (
+      <Button
+        onPress={_handleMove(
+          props.paddler,
+          props.run,
+          props.move.Move,
+          props.direction,
+          "scored"
+        )}
+        title={buttonName}
+        buttonStyle={styles.noMove}
+      />
+    );
+
     } else {
         const buttonName = (props.move.Move ==("Loop") || props.move.Move == ( "Back Loop")) ? props.move.Move : props.move.Move + " " + props.direction;
         return (
@@ -86,20 +102,21 @@ const DynamicButtonPresentation = (props) => {
 
 
 // can we make this go deeper, so that we only update a single component when we add a move?
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     paddlerScores: getScoresState(state)
-  }
-}
-
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
-      updateScore: (newScores) => {
-        dispatch(updatePaddlerScores(newScores))
-      }
-  }
-}
+    updateScore: newScores => {
+      dispatch(updatePaddlerScores(newScores));
+    }
+  };
+};
 
-
-export const DynamicButton =  connect(mapStateToProps, mapDispatchToProps)(DynamicButtonPresentation)
+export const DynamicButton = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DynamicButtonPresentation);
