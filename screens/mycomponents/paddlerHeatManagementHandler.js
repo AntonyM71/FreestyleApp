@@ -41,15 +41,19 @@ const _handleDeletePaddler = (heatKey, paddlerList, paddler, paddlerScores) => (
       }
     }
   }
-      const addOrRemovePaddler = (heatKey, remainingPaddlers, paddlerScores) => {
+  const addOrRemovePaddler = (heatKey, remainingPaddlers, paddlerScores) => {
 
     const newList = (remainingPaddlers.length == 0) ? ["default"] : remainingPaddlers
-
     var newPaddlerScores = paddlerScores
-    newList.map((paddler) => {
+    newList.flat().map((paddler) => {
       if (!newPaddlerScores[paddler])
-        newPaddlerScores[(paddler.toString())] = initialScoresheet()
-    })
+        newPaddlerScores[(paddler.toString())] = []
+      
+      for (i = 0; i < props.numberOfRuns+1; i++) {
+        // console.log("push")
+        (newPaddlerScores[(paddler.toString())]).push(initialScoresheet())
+      }
+ })
 
     const newHeatList = props.paddlerHeatList
         newHeatList[heatKey] = newList
@@ -75,10 +79,11 @@ const _handleDeletePaddler = (heatKey, paddlerList, paddler, paddlerScores) => (
                         alignItems: 'center'
                       }}>{paddler}</Text>
                     </View>
-                    <View style={{ width: "30%" }}>
-                      <DisplayScore paddler={paddler} align="center" />
+
+                    <View style={{ width: "20%" }}>
+                      <DisplayScore paddler={paddler} run={0}align="center" />
                     </View>
-                    <View style={{ width: "40%" }}>
+                    <View style={{ width: "30%" }}>
                       <Button
                         onPress={_handleDeletePaddler(props.heatKey, props.paddlerList, paddler, props.paddlerScores)}
                         title="Delete"

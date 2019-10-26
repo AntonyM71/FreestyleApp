@@ -11,12 +11,10 @@ export const PaddlerHandler = (props) => {
         const numberOfHeats = (props.paddlerList).length;
     
     const _handlePressNextHeat = () => {
-        console.log("next heat")
         // -1 to account for zero indexing
         const newHeat= ((props.currentHeat < (numberOfHeats - 1)) ? props.currentHeat + 1 : 0)
-        console.log("making new heat")
         batch(() => {
-            props.updatePaddler(0)
+        props.updatePaddler(0)
             props.updateHeat(newHeat)
         })
 

@@ -16,10 +16,15 @@ export const PaddlerManager = (props) => {
   const addHeat = (heatKey) => {
     const newHeatList = props.paddlerHeatList
     newHeatList.push([`default ${heatKey}`])
-        var newPaddlerScores = props.paddlerScores
-    newHeatList.map((paddler) => {
+    var newPaddlerScores = props.paddlerScores
+    console.log(newHeatList.flat())
+    newHeatList.flat().map((paddler) => {
       if (!newPaddlerScores[paddler])
-        newPaddlerScores[(paddler.toString())] = initialScoresheet()
+        newPaddlerScores[(paddler.toString())] = []
+      
+      for (i = 0; i < props.numberOfRuns+1; i++) {
+        (newPaddlerScores[(paddler.toString())]).push(initialScoresheet())
+      }
     })
     batch(() => {
       props.updatePaddler(0)
@@ -95,7 +100,8 @@ export const PaddlerManager = (props) => {
 const mapStateToProps = state => {
   return {
     paddlerHeatList: state.paddlers.paddlerList,
-    paddlerScores: getScoresState(state)
+    paddlerScores: getScoresState(state),
+    numberOfRuns: state.paddlers.numberOfRuns
 
   }
 }

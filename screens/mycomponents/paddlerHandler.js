@@ -73,7 +73,7 @@ const handleChangeRun = (newRunIndex) => {
                         <Col>
                             <View>
                                 <Text style={{ ...styles.standardText, marginTop: 2, textAlign: "center" }}>{props.paddlerList[props.currentHeat][props.paddlerIndex]}</Text>
-                                <DisplayScore paddler={props.paddlerList[props.currentHeat][props.paddlerIndex]} run={props.run}/>
+                                <DisplayScore paddler={props.paddlerList[props.currentHeat][props.paddlerIndex]} run={0}/>
                             </View>
                         </Col>
                         <Col>
