@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView, View } from 'react-native';
 import { Button } from "react-native-elements";
 import { connect, batch } from 'react-redux';
-import { addOrRemovePaddlerName, updatePaddlerScores, changePaddler, changeHeat } from "../../actions";
+import { addOrRemovePaddlerName, updatePaddlerScores, changePaddler, changeHeat, changeRun } from "../../actions";
 import { styles } from "../../styles";
 import { initialScoresheet } from './makePaddlerScores';
 import PaddlerHeatManager from "./paddlerHeatManagementHandler"
@@ -16,12 +16,16 @@ export const PaddlerManager = (props) => {
   const addHeat = (heatKey) => {
     const newHeatList = props.paddlerHeatList
     newHeatList.push([`default ${heatKey}`])
-        var newPaddlerScores = props.paddlerScores
-    newHeatList.map((paddler) => {
+    var newPaddlerScores = props.paddlerScores
+    console.log(newHeatList.flat())
+    newHeatList.flat().map((paddler) => {
       if (!newPaddlerScores[paddler])
-        newPaddlerScores[(paddler.toString())] = initialScoresheet()
+        newPaddlerScores[(paddler.toString())] = []
+      
+      for (i = 0; i < props.numberOfRuns+1; i++) {
+        (newPaddlerScores[(paddler.toString())]).push(initialScoresheet())
+      }
     })
-    console.log(newHeatList)
     batch(() => {
       props.updatePaddler(0)
       props.addOrRemovePaddlerName([...newHeatList]);
@@ -32,22 +36,27 @@ export const PaddlerManager = (props) => {
     const newHeatList = [["default"]]
     const startingScoresheet = {}
     newHeatList.flat().map((paddler) => {
-      startingScoresheet[(paddler.toString())] = initialScoresheet()
+      startingScoresheet[(paddler.toString())] = [initialScoresheet()]
     })
     batch(() => {
       props.updatePaddler(0)
       props.updateHeat(0)
+      props.updateRun(0)
       props.addOrRemovePaddlerName(newHeatList);
       props.updatePaddlerScores(startingScoresheet);
+      
     })
   }
   const clearScores = () => {
 
     const startingScoresheet = {}
     props.paddlerHeatList.flat().map((paddler) => {
-         startingScoresheet[(paddler.toString())] = initialScoresheet()
+         startingScoresheet[(paddler.toString())] = [initialScoresheet()]
     })
-    props.updatePaddlerScores(startingScoresheet);
+    batch(() => {
+      props.updateRun(0)
+      props.updatePaddlerScores(startingScoresheet);
+    })
   }
 
   
@@ -91,7 +100,8 @@ export const PaddlerManager = (props) => {
 const mapStateToProps = state => {
   return {
     paddlerHeatList: state.paddlers.paddlerList,
-    paddlerScores: getScoresState(state)
+    paddlerScores: getScoresState(state),
+    numberOfRuns: state.paddlers.numberOfRuns
 
   }
 }
@@ -109,6 +119,9 @@ const mapDispatchToProps = dispatch => {
     updatePaddler: (index) => {
       dispatch(changePaddler(index))
     },
+      updateRun: (run) => {
+            dispatch(changeRun(run))
+        },
     updateHeat: (index) => {
         dispatch(changeHeat(index))
       }

@@ -7,14 +7,15 @@ import { DynamicButton } from "./dynamicButton";
 export const MoveButtons= (props) => {
   const moveList = require('../../data/moves_lists/move_list.json');
   const screenWidth = Math.round(Dimensions.get('window').width);
+  const availableMoves = Object.values(moveList).flat()
   const buttonPercentage = screenWidth > 600 ? "25%" : "50%"
       return (
         <View style={{ flex: 1, flexDirection: 'row', flexWrap: true }}>
-            {moveList.hole.map((item, key) => {
+            {availableMoves.map((item, key) => {
               if (!item.Reverse) {
                 return (
                   <View style={{ width: buttonPercentage }} key={key}>
-                    <DynamicButton paddler={props.paddlerList[props.currentHeat][props.paddlerIndex]} move={item} direction={"left"} />
+                    <DynamicButton paddler={props.paddlerList[props.currentHeat][props.paddlerIndex]} run={props.run} move={item} direction={"left"} />
                   </View>
 
     
@@ -24,10 +25,10 @@ export const MoveButtons= (props) => {
                   // <View key={key}>
                   <>
                     <View style={{ width: buttonPercentage }}>
-                      <DynamicButton paddler={props.paddlerList[props.currentHeat][props.paddlerIndex]} move={item} direction={"left"} />
+                      <DynamicButton paddler={props.paddlerList[props.currentHeat][props.paddlerIndex]} run={props.run} move={item} direction={"left"} />
                     </View>
                     <View style={{ width: buttonPercentage }}>
-                      <DynamicButton paddler={props.paddlerList[props.currentHeat][props.paddlerIndex]} move={item} direction={"right"} />
+                      <DynamicButton paddler={props.paddlerList[props.currentHeat][props.paddlerIndex]} run={props.run} move={item} direction={"right"} />
                     </View>
                    {/* </View> */}
                   </>
@@ -46,7 +47,8 @@ const mapStateToProps = state => {
   return {
     paddlerIndex: state.paddlers.paddlerIndex,
     paddlerList: state.paddlers.paddlerList,
-    currentHeat: state.paddlers.currentHeat
+    currentHeat: state.paddlers.currentHeat,
+    run: state.paddlers.run
   }
 }
 

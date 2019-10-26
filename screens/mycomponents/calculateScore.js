@@ -22,8 +22,8 @@ const calculateScoreAndBonuses = (move, truth) => {
 }
 const DisplayScorePresenetation = (props) => {
     const paddlerScore = [0]
-    if (props.paddlerScores[props.paddler]) {
-        const scoredMoves = (props.paddlerScores[props.paddler])
+    if (props.paddlerScores[props.paddler][0]) {
+        const scoredMoves = (props.paddlerScores[props.paddler][0])
 
         moveList.hole.map((item) => {
             const moveTotal = (

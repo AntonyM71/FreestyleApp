@@ -2,20 +2,14 @@ import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { Col, Grid, Row } from "react-native-easy-grid";
-import { connect } from 'react-redux';
-import { incrementScore } from '../../actions';
 
 
-export class PaddlerButtons extends React.Component {
+export default class PaddlerButtons extends React.Component {
   
   _handlePressNFL = () => {
     WebBrowser.openBrowserAsync('https://www.facebook.com/nottinghamfreestyleleague');
   };
 
-_handlePressCount = () => {
-
-  this.props.add(this.props.score)
-}
 
   render() {
       return (
@@ -41,7 +35,6 @@ _handlePressCount = () => {
          </Row>
  
 </Grid>
- <View><Text>{this.props.score}</Text></View>
 
         </View>
       );
@@ -78,20 +71,3 @@ _handlePressCount = () => {
     },
   });
 }
-
-const mapStateToProps = state => {
-  return {
-    score: state.scores.score
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    add: (score) => {
-      dispatch(incrementScore(score))
-    }
-  }
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(PaddlerButtons)
