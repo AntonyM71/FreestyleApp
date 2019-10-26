@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 import { updatePaddlerScores } from "../../actions";
 import React from 'react';
 import { Button} from 'react-native-elements';
-import { Col, Grid, Row } from "react-native-easy-grid";
 import { styles } from "../../styles";
+import { View } from "react-native"
 import { getScoresState} from "../../selectors"
 const DynamicButtonPresentation = (props) => {
 
@@ -30,52 +30,47 @@ const DynamicButtonPresentation = (props) => {
     } else {
         const buttonName = (props.move.Move ==("Loop") || props.move.Move == ( "Back Loop")) ? props.move.Move : props.move.Move + " " + props.direction;
         return (
-            <Grid>
-                <Row>
-                    <Col>
+            <View style={{ flex: 1, flexDirection: 'row', flexWrap: true }}>
+                <View style={{ width: "100%" }}>
                         <Button
                             onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "scored")}
                             title={buttonName}
                             buttonStyle={styles.moveScored}
                         />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
+</View>
+<View style={{ width: "50%" }}>
                         <Button
                             onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "clean")}
                             title={"Clean"}
                             disabled={props.move.Clean ? false : true}
                             buttonStyle={props.paddlerScores[props.paddler][props.run][props.move.Move][props.direction]["clean"] ? styles.bonusScored : styles.noBonus}
                         />
-                    </Col>
-                    <Col>
+                </View>
+                <View style={{ width: "50%" }}>
                         <Button
                             onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "superClean")}
                             title={"S Clean"}
                             disabled={props.move.SuperClean ? false : true}
                             buttonStyle={props.paddlerScores[props.paddler][props.run][props.move.Move][props.direction]["superClean"] ? styles.bonusScored : styles.noBonus}
                         />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
+                </View>
+                <View style={{ width: "25%" }}>
                         <Button
                             onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "air")}
                             title={"Air"}
                             disabled={props.move.Air ? false : true}
                             buttonStyle={props.paddlerScores[props.paddler][props.run][props.move.Move][props.direction]["air"] ? styles.bonusScored : styles.noBonus}
                         />
-                    </Col>
-                    <Col>
+                    </View>
+                    <View style={{ width: "40%" }}>
                         <Button
                             onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "huge")}
                             title={"Huge"}
                             disabled={props.move.Huge ? false : true}
                             buttonStyle={props.paddlerScores[props.paddler][props.run][props.move.Move][props.direction]["huge"] ? styles.bonusScored : styles.noBonus}
                         />  
-                    </Col>
-                    <Col>
+                    </View>
+                    <View style={{ width: "35%" }}>
                         <Button
                             onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "link")}
                             title={"Link"}
@@ -83,9 +78,8 @@ const DynamicButtonPresentation = (props) => {
                             buttonStyle={props.paddlerScores[props.paddler][props.run][props.move.Move][props.direction]["link"] ? styles.bonusScored : styles.noBonus}
                         
                         />  
-                    </Col>
-                </Row>
-            </Grid>
+                    </View>
+</View>
         )
     }
 }
