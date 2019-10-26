@@ -1,11 +1,11 @@
-import { combineReducers, createStore } from 'redux';
-import { paddlerReducer, scoreReducer } from './reducers';
+import { combineReducers, createStore } from "redux";
+import { paddlerReducer } from "./reducers";
 const rootReducer = combineReducers({
-  paddlers:  paddlerReducer
+  paddlers: paddlerReducer
 });
 
 const configureStore = () => {
   return createStore(rootReducer);
-}
+};
 
 export default configureStore;
