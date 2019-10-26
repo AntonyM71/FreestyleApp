@@ -1,8 +1,8 @@
 { 
     "entry": [
-    {"Move": "Entry 1", "Value": 5, "Clean": 0, "SuperClean": 0, "Air": 10, "Huge": 10, "Link": 10, "Reverse": true},
-    {"Move": "Entry 2", "Value": 10, "Clean": 10, "SuperClean": 20, "Air": 10, "Huge": 10, "Link": 10, "Reverse": true},
-    {"Move": "Entry 3", "Value": 10, "Clean": 10, "SuperClean": 20, "Air": 10, "Huge": 10, "Link": 10, "Reverse": true}
+    {"Move": "Entry 1", "Value": 30, "Clean": 0, "SuperClean": 0, "Air": 0, "Huge": 0, "Link": 0, "Reverse": false},
+    {"Move": "Entry 2", "Value": 50, "Clean": 0, "SuperClean": 0, "Air": 0, "Huge": 0, "Link": 0, "Reverse": false},
+    {"Move": "Entry 3", "Value": 80, "Clean": 0, "SuperClean": 0, "Air": 0, "Huge": 0, "Link": 0, "Reverse": false}
 ],
 "both": [
     {"Move": "Shuvit", "Value": 5, "Clean": 0, "SuperClean": 0, "Air": 10, "Huge": 10, "Link": 10, "Reverse": true},
@@ -36,8 +36,8 @@
     {"Move": "Pistol Flip", "Value": 120, "Clean": 50, "SuperClean": 60, "Air": 50, "Huge": 40, "Link": 40, "Reverse": true}
 ],
 "trophy": [
-    {"Move": "Trophy 1", "Value": 5, "Clean": 0, "SuperClean": 0, "Air": 10, "Huge": 10, "Link": 10, "Reverse": false},
-    {"Move": "Trophy 2", "Value": 10, "Clean": 10, "SuperClean": 20, "Air": 10, "Huge": 10, "Link": 10, "Reverse": false},
-    {"Move": "Trophy 3", "Value": 10, "Clean": 10, "SuperClean": 20, "Air": 10, "Huge": 10, "Link": 10, "Reverse": false}
+    {"Move": "Trophy 1", "Value": 100, "Clean": 50, "SuperClean": 60, "Air": 50, "Huge": 40, "Link": 40, "Reverse": false},
+    {"Move": "Trophy 2", "Value": 170, "Clean": 50, "SuperClean": 60, "Air": 50, "Huge": 40, "Link": 40, "Reverse": false},
+    {"Move": "Trophy 3", "Value": 240, "Clean": 50, "SuperClean": 60, "Air": 50, "Huge": 40, "Link": 40, "Reverse": false}
 ]
 }
