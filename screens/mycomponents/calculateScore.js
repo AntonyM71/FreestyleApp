@@ -24,13 +24,23 @@ const DisplayScorePresenetation = props => {
   const paddlerScore = [0];
   if (props.paddlerScores[props.paddler][props.run]) {
     const scoredMoves = props.paddlerScores[props.paddler][props.run];
+      moveList.map((item) => {
+          if (Array.isArray(scoredMoves[item.Move])) {
+              (scoredMoves[item.Move]).map((arrayItem) => {
 
-        moveList.map((item) => {
-            const moveTotal = (
-                calculateScoreAndBonuses(item, scoredMoves[item.Move]["left"]) +
-                calculateScoreAndBonuses(item, scoredMoves[item.Move]["right"])
-            );
-            paddlerScore.push(moveTotal)
+                  const moveTotal = (
+                      calculateScoreAndBonuses(item, arrayItem["left"]) +
+                      calculateScoreAndBonuses(item, arrayItem["right"])
+                  );
+                  paddlerScore.push(moveTotal)
+              })
+          } else {
+                            const moveTotal = (
+                  calculateScoreAndBonuses(item, scoredMoves[item.Move]["left"]) +
+                  calculateScoreAndBonuses(item, scoredMoves[item.Move]["right"])
+              );
+              paddlerScore.push(moveTotal)
+          }
         })
     }
 

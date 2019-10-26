@@ -24,14 +24,20 @@ export const initialScoresheet = () => {
             }
         };
         if (item.Move == "Trophy 1" || item.Move == "Trophy 2" || item.Move == "Trophy 3") {
-            return [scoresObject]
+
+            return ([scoresObject])
         } else {
-            return scoresObject
+            return (scoresObject)
         }
   });
 
-  return initialMoves.reduce((obj, item) => {
-    obj[item.id] = item;
-    return obj;
+    return initialMoves.reduce((obj, item) => {
+        if (Array.isArray(item)) {
+            obj[item[0].id] = item;
+            return obj;
+        } else {
+            obj[item.id] = item;
+            return obj;
+        }
   }, {});
 };

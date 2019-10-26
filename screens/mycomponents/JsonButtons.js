@@ -9,9 +9,39 @@ export const MoveButtons = props => {
   const screenWidth = Math.round(Dimensions.get("window").width);
   const availableMoves = Object.values(moveList).flat();
   const buttonPercentage = screenWidth > 600 ? "25%" : "50%";
+  const entryButtonPercentage = screenWidth > 600 ? "16%" : "33%";
   return (
     <View style={{ flex: 1, flexDirection: "row", flexWrap: true }}>
       {availableMoves.map((item, key) => {
+        if (item.Move == "Trophy 1" || item.Move == "Trophy 2" || item.Move == "Trophy 3") {
+          return (
+            <View style={{ width: buttonPercentage }} key={key}>
+              <DynamicButton
+                paddler={
+                  props.paddlerList[props.currentHeat][props.paddlerIndex]
+                }
+                run={props.run}
+                move={item}
+                direction={"left"}
+              />
+            </View>
+          )
+
+        } else if (item.Move == "Entry 1" || item.Move == "Entry 2" || item.Move == "Entry 3") {
+        return (
+          <View style={{ width: entryButtonPercentage }} key={key}>
+            <DynamicButton
+              paddler={
+                props.paddlerList[props.currentHeat][props.paddlerIndex]
+              }
+              run={props.run}
+              move={item}
+              direction={"left"}
+            />
+          </View>
+        )
+      } else {
+
         if (!item.Reverse) {
           return (
             <View style={{ width: buttonPercentage }} key={key}>
@@ -27,9 +57,8 @@ export const MoveButtons = props => {
           );
         } else {
           return (
-            // <View key={key}>
-            <>
-              <View style={{ width: buttonPercentage }}>
+            <React.Fragment key={key}>
+              <View style={{ width: buttonPercentage }} >
                 <DynamicButton
                   paddler={
                     props.paddlerList[props.currentHeat][props.paddlerIndex]
@@ -49,9 +78,9 @@ export const MoveButtons = props => {
                   direction={"right"}
                 />
               </View>
-              {/* </View> */}
-            </>
+              </React.Fragment>
           );
+        }
         }
       })}
     </View>

@@ -30,8 +30,9 @@ export const ResultsView = props => {
                     {paddler.toString()}
                   </Text>
                 </View>
+                <>
                 <View style={{ flex: 1, flexDirection: "row", flexWrap: true }}>
-                  {props.paddlerScores[paddler].map((runScore, key) => {
+                  {props.paddlerScores[paddler].map(( key) => {
                     return (
                       <View style={{ width: buttonPercentage }} key={key}>
                         <DisplayScore
@@ -43,7 +44,8 @@ export const ResultsView = props => {
                     );
                   })}
                   {/* <Divider style={{ backgroundColor: 'blue' }} />; */}
-                </View>
+                  </View>
+                  </>
               </View>
             );
           })}

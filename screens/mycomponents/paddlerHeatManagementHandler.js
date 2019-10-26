@@ -58,13 +58,12 @@ export const PaddlerHeatManagerPresentation = props => {
   };
   const addOrRemovePaddler = (heatKey, remainingPaddlers, paddlerScores) => {
     const newList =
-      remainingPaddlers.length == 0 ? ["default"] : remainingPaddlers;
+      remainingPaddlers.length == 0 ? [`default ${heatKey+1}`]: remainingPaddlers;
     var newPaddlerScores = paddlerScores;
     newList.flat().map(paddler => {
       if (!newPaddlerScores[paddler]) newPaddlerScores[paddler.toString()] = [];
       if (props.numberOfRuns + 1 != (newPaddlerScores[paddler.toString()]).length) {
         for (i = 0; i < props.numberOfRuns + 1; i++) {
-          // console.log("push")
           newPaddlerScores[paddler.toString()].push(initialScoresheet());
         }
       }

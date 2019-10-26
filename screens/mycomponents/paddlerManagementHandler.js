@@ -18,8 +18,6 @@ export const PaddlerManager = props => {
     var newPaddlerScores = props.paddlerScores;
     newHeatList.flat().map(paddler => {
       if (!newPaddlerScores[paddler]) newPaddlerScores[paddler.toString()] = [initialScoresheet()];
-      console.log((newPaddlerScores[paddler]).length)
-      console.log("number of runs = " +props.numberOfRuns)
       if (props.numberOfRuns +1 != (newPaddlerScores[paddler.toString()]).length  ) {
       for (i = 0; i < (props.numberOfRuns ) ; i++) {
         newPaddlerScores[paddler.toString()].push(initialScoresheet());
@@ -60,8 +58,10 @@ export const PaddlerManager = props => {
   return (
     <ScrollView style={styles.container}>
       <View>
-        {props.paddlerHeatList.map((paddlerList, heatKey) => (
-          <PaddlerHeatManager paddlerList={paddlerList} heatKey={heatKey} />
+        {props.paddlerHeatList.map((paddlerList, heatKey, key) => (
+          <View key={heatKey}>
+            <PaddlerHeatManager paddlerList={paddlerList} heatKey={heatKey} />
+            </View>
         ))}
 
         <View style={{ flex: 1, flexDirection: "row", flexWrap: true }}>
