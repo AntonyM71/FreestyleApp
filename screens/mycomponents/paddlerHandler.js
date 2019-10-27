@@ -67,7 +67,7 @@ export const PaddlerHandler = props => {
               <Text
                 style={{
                   ...styles.standardText,
-                  marginTop: 2,
+                  marginTop: 4,
                   textAlign: "center"
                 }}
               >
@@ -84,40 +84,44 @@ export const PaddlerHandler = props => {
           <Col>
             <Button
               onPress={_handlePressNext}
-              title="Next Paddler"
+              title="Next"
               buttonStyle={styles.changeButton}
             />
           </Col>
         </Row>
-        <Row>
-          <Col>
-            <Button
-              onPress={_handlePressPreviousRun}
-              title="Prev Run"
-              buttonStyle={styles.changeButton}
-            />
-          </Col>
-          <Col>
-            <View>
-              <Text
-                style={{
-                  ...styles.standardText,
-                  marginTop: 2,
-                  textAlign: "center"
-                }}
-              >
-                {props.run + 1}
-              </Text>
-            </View>
-          </Col>
-          <Col>
-            <Button
-              onPress={_handlePressNextRun}
-              title="New Run"
-              buttonStyle={styles.changeButton}
-            />
-          </Col>
-        </Row>
+        {props.showRunHandler
+          ? (
+            <Row>
+              <Col>
+                <Button
+                  onPress={_handlePressPreviousRun}
+                  title="Prev Run"
+                  buttonStyle={styles.changeButton}
+                />
+              </Col>
+              <Col>
+                <View>
+                  <Text
+                    style={{
+                      ...styles.standardText,
+                      marginTop: 15,
+                      textAlign: "center"
+                    }}
+                  >
+                    {props.run + 1}
+                  </Text>
+                </View>
+              </Col>
+              <Col>
+                <Button
+                  onPress={_handlePressNextRun}
+                  title="New Run"
+                  buttonStyle={styles.changeButton}
+                />
+              </Col>
+            </Row>
+          )
+          : null}
       </Grid>
     </View>
   );
@@ -130,7 +134,8 @@ const mapStateToProps = state => {
     currentHeat: state.paddlers.currentHeat,
     run: state.paddlers.run,
     numberOfRuns: state.paddlers.numberOfRuns,
-    paddlerScores: getScoresState(state)
+    paddlerScores: getScoresState(state),
+    showRunHandler: state.paddlers.showRunHandler
   };
 };
 

@@ -1,4 +1,4 @@
-import { ADD_OR_REMOVE_PADDLER, CHANGE_HEAT, CHANGE_PADDLER, UPDATE_NUMBER_OF_RUNS, UPDATE_PADDLER_SCORES, UPDATE_RUN, UPDATE_SHOW_TIMER } from "./actionTypes";
+import { ADD_OR_REMOVE_PADDLER, CHANGE_HEAT, CHANGE_PADDLER, UPDATE_NUMBER_OF_RUNS, UPDATE_PADDLER_SCORES, UPDATE_RUN, UPDATE_SHOW_TIMER, UPDATE_SHOW_RUN } from "./actionTypes";
 
 export const changePaddler = paddlerIndex => {
   return {
@@ -42,5 +42,11 @@ export const updateShowTimer = newShowTimer => {
   return {
     type: UPDATE_SHOW_TIMER,
     payload: newShowTimer
+  };
+}
+export const updateShowRun = newShowRun => {
+  return {
+    type: UPDATE_SHOW_RUN,
+    payload: newShowRun
   };
 };

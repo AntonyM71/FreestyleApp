@@ -3,7 +3,8 @@ import React from "react";
 import { Dimensions, View } from "react-native";
 import { connect } from "react-redux";
 import { DynamicButton } from "./dynamicButton";
-
+import { EntryDynamicButton } from "./entryDynamicButton";
+import { TrophyDynamicButton } from "./trophyDynamicButton";
 export const MoveButtons = props => {
   const moveList = require("../../data/moves_lists/move_list.json");
   const screenWidth = Math.round(Dimensions.get("window").width);
@@ -11,12 +12,12 @@ export const MoveButtons = props => {
   const buttonPercentage = screenWidth > 600 ? "25%" : "50%";
   const entryButtonPercentage = screenWidth > 600 ? "16%" : "33%";
   return (
-    <View style={{ flex: 1, flexDirection: "row", flexWrap: true }}>
+    <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
       {availableMoves.map((item, key) => {
         if (item.Move == "Trophy 1" || item.Move == "Trophy 2" || item.Move == "Trophy 3") {
           return (
             <View style={{ width: buttonPercentage }} key={key}>
-              <DynamicButton
+              <TrophyDynamicButton
                 paddler={
                   props.paddlerList[props.currentHeat][props.paddlerIndex]
                 }
@@ -30,7 +31,7 @@ export const MoveButtons = props => {
         } else if (item.Move == "Entry 1" || item.Move == "Entry 2" || item.Move == "Entry 3") {
         return (
           <View style={{ width: entryButtonPercentage }} key={key}>
-            <DynamicButton
+            <EntryDynamicButton
               paddler={
                 props.paddlerList[props.currentHeat][props.paddlerIndex]
               }

@@ -16,8 +16,8 @@ const timerOptionsPresentation = props => {
         onPress={_handleTimerButtonPress}
         title={
           props.showTimer
-            ? "Hide Scoring Page Timer"
-            : "Show Scoring Page Timer"
+            ? "Hide Timer"
+            : "Show Timer"
         }
       />
     </View>

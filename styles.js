@@ -71,7 +71,7 @@ export const styles = StyleSheet.create({
   heatStyle: {
     textAlign: "center",
     alignItems: "center",
-    fontSize: 30,
+    fontSize: 25,
     paddingVertical: 4
   }
 });

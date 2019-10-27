@@ -45,7 +45,7 @@ const DisplayScorePresenetation = props => {
     }
 
   return (
-    <Text style={{ ...styles.standardText, textAlign: "center", marginTop: 2 }}>
+    <Text style={{ ...styles.standardText, textAlign: "center", marginTop: -2 }}>
       {paddlerScore.reduce((a, b) => a + b)}
     </Text>
   );

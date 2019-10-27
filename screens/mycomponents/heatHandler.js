@@ -46,9 +46,9 @@ export const PaddlerHandler = props => {
                 <Text
                   style={{
                     ...styles.standardText,
-                    marginTop: 10,
+                    marginTop: 15,
                     textAlign: "center",
-                    fontSize: 25
+                    fontSize: 23
                   }}
                 >{`Heat ${props.currentHeat + 1}`}</Text>
               </View>

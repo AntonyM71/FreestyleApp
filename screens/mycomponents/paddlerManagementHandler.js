@@ -58,13 +58,13 @@ export const PaddlerManager = props => {
   return (
     <ScrollView style={styles.container}>
       <View>
-        {props.paddlerHeatList.map((paddlerList, heatKey, key) => (
+        {props.paddlerHeatList.map((paddlerList, heatKey) => (
           <View key={heatKey}>
             <PaddlerHeatManager paddlerList={paddlerList} heatKey={heatKey} />
             </View>
         ))}
 
-        <View style={{ flex: 1, flexDirection: "row", flexWrap: true }}>
+        <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
           <View style={{ width: "100%" }}>
             <Button
               onPress={() => {

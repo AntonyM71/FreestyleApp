@@ -3,6 +3,7 @@ import { ScrollView, View } from "react-native";
 import { styles } from "../styles";
 import PaddlerManager from "./mycomponents/paddlerManagementHandler";
 import TimerOptions from "./mycomponents/timerOptions";
+import RunOptions from "./mycomponents/runOptions";
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     title: "Paddler Management"
@@ -19,8 +20,13 @@ export default class HomeScreen extends React.Component {
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
         >
-          <View>
-            <TimerOptions />
+          <View style={{ flex: 1, flexDirection: 'row', flexWrap: "wrap" }}>
+            <View style={{ width: "50%" }}>
+              <TimerOptions />
+            </View>
+            <View style={{ width: "50%" }}>
+              <RunOptions />
+            </View>
           </View>
           <PaddlerManager />
         </ScrollView>
