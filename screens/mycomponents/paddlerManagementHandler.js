@@ -64,7 +64,7 @@ export const PaddlerManager = props => {
             </View>
         ))}
 
-        <View style={{ flex: 1, flexDirection: "row", flexWrap: true }}>
+        <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
           <View style={{ width: "100%" }}>
             <Button
               onPress={() => {

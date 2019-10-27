@@ -11,7 +11,7 @@ export const MoveButtons = props => {
   const buttonPercentage = screenWidth > 600 ? "25%" : "50%";
   const entryButtonPercentage = screenWidth > 600 ? "16%" : "33%";
   return (
-    <View style={{ flex: 1, flexDirection: "row", flexWrap: true }}>
+    <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
       {availableMoves.map((item, key) => {
         if (item.Move == "Trophy 1" || item.Move == "Trophy 2" || item.Move == "Trophy 3") {
           return (

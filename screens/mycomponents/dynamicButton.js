@@ -94,7 +94,7 @@ const DynamicButtonPresentation = props => {
         } else {
             const buttonName = (props.move.Move == ("Loop") || props.move.Move == ("Back Loop")) ? props.move.Move : props.move.Move + " " + props.direction;
             return (
-                <View style={{ flex: 1, flexDirection: 'row', flexWrap: true }} key={key}>
+                <View style={{ flex: 1, flexDirection: 'row', flexWrap: "wrap" }} key={key}>
                     <View style={{ width: "100%" }}>
                         <Button
                             onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "scored", key)}
@@ -102,47 +102,52 @@ const DynamicButtonPresentation = props => {
                             buttonStyle={styles.moveScored}
                         />
                     </View>
-                    <View style={{ width: "50%" }}>
-                        <Button
-                            onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "clean", key)}
-                            title={"Clean"}
-                            disabled={props.move.Clean ? false : true}
-                            buttonStyle={thisMove[props.direction]["clean"] ? styles.bonusScored : styles.noBonus}
-                        />
-                    </View>
-                    <View style={{ width: "50%" }}>
-                        <Button
-                            onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "superClean", key)}
-                            title={"S Clean"}
-                            disabled={props.move.SuperClean ? false : true}
-                            buttonStyle={thisMove[props.direction]["superClean"] ? styles.bonusScored : styles.noBonus}
-                        />
-                    </View>
-                    <View style={{ width: "25%" }}>
-                        <Button
-                            onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "air", key)}
-                            title={"Air"}
-                            disabled={props.move.Air ? false : true}
-                            buttonStyle={thisMove[props.direction]["air"] ? styles.bonusScored : styles.noBonus}
-                        />
-                    </View>
-                    <View style={{ width: "40%" }}>
-                        <Button
-                            onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "huge", key)}
-                            title={"Huge"}
-                            disabled={props.move.Huge ? false : true}
-                            buttonStyle={thisMove[props.direction]["huge"] ? styles.bonusScored : styles.noBonus}
-                        />
-                    </View>
-                    <View style={{ width: "35%" }}>
-                        <Button
-                            onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "link", key)}
-                            title={"Link"}
-                            disabled={props.move.Link ? false : true}
-                            buttonStyle={thisMove[props.direction]["link"] ? styles.bonusScored : styles.noBonus}
+                
+                    {(props.move.Move == "Entry 1" || props.move.Move == "Entry 2" || props.move.Move == "Entry 3")
+                        ? <> (
+                        <View style={{ width: "50%" }}>
+                            <Button
+                                onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "clean", key)}
+                                title={"Clean"}
+                                disabled={props.move.Clean ? false : true}
+                                buttonStyle={thisMove[props.direction]["clean"] ? styles.bonusScored : styles.noBonus}
+                            />
+                        </View>
+                        <View style={{ width: "50%" }}>
+                            <Button
+                                onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "superClean", key)}
+                                title={"S Clean"}
+                                disabled={props.move.SuperClean ? false : true}
+                                buttonStyle={thisMove[props.direction]["superClean"] ? styles.bonusScored : styles.noBonus}
+                            />
+                        </View>
+                        <View style={{ width: "25%" }}>
+                            <Button
+                                onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "air", key)}
+                                title={"Air"}
+                                disabled={props.move.Air ? false : true}
+                                buttonStyle={thisMove[props.direction]["air"] ? styles.bonusScored : styles.noBonus}
+                            />
+                        </View>
+                        <View style={{ width: "40%" }}>
+                            <Button
+                                onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "huge", key)}
+                                title={"Huge"}
+                                disabled={props.move.Huge ? false : true}
+                                buttonStyle={thisMove[props.direction]["huge"] ? styles.bonusScored : styles.noBonus}
+                            />
+                        </View>
+                        <View style={{ width: "35%" }}>
+                            <Button
+                                onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "link", key)}
+                                title={"Link"}
+                                disabled={props.move.Link ? false : true}
+                                buttonStyle={thisMove[props.direction]["link"] ? styles.bonusScored : styles.noBonus}
                         
-                        />
-                    </View>
+                            />
+                        </View> )</>
+                        : null}
+                        
                 </View>
             )
         }

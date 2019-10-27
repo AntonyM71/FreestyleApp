@@ -31,13 +31,13 @@ export const ResultsView = props => {
                   </Text>
                 </View>
                 <>
-                <View style={{ flex: 1, flexDirection: "row", flexWrap: true }}>
-                  {props.paddlerScores[paddler].map(( key) => {
+                <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
+                  {props.paddlerScores[paddler].map(( runScore ,runKey) => {
                     return (
-                      <View style={{ width: buttonPercentage }} key={key}>
+                      <View style={{ width: buttonPercentage }} key={runKey}>
                         <DisplayScore
                           paddler={paddler}
-                          run={key}
+                          run={runKey}
                           align="center"
                         />
                       </View>

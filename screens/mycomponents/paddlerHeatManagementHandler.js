@@ -85,10 +85,10 @@ export const PaddlerHeatManagerPresentation = props => {
 
         {props.paddlerList.map((paddler, key) => (
           <View
-            style={{ flex: 1, flexDirection: "row", flexWrap: true }}
+            style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}
             key={key}
           >
-            <View style={{ width: "30%" }}>
+            <View style={{ width: "70%" }}>
               <Text
                 style={{
                   ...styles.standardText,
@@ -100,9 +100,6 @@ export const PaddlerHeatManagerPresentation = props => {
               </Text>
             </View>
 
-            <View style={{ width: "20%" }}>
-              <DisplayScore paddler={paddler} run={0} align="center" />
-            </View>
             <View style={{ width: "30%" }}>
               <Button
                 onPress={_handleDeletePaddler(

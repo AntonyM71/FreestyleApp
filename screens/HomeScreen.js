@@ -25,7 +25,7 @@ export default class HomeScreen extends React.Component {
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
         >
-          <View style={{ flex: 1, flexDirection: "row", flexWrap: true }}>
+          <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
             <View style={{ width: buttonPercentage(30) }}>
               <Timer />
             </View>
