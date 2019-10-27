@@ -10,13 +10,14 @@ export const MoveButtons = props => {
   const screenWidth = Math.round(Dimensions.get("window").width);
   const availableMoves = Object.values(moveList).flat();
   const buttonPercentage = screenWidth > 600 ? "25%" : "50%";
-  const entryButtonPercentage = screenWidth > 600 ? "16%" : "33%";
+  const entryButtonPercentage = screenWidth > 600 ? "33%" : "33%";
+  const trophyButtonPercentage = screenWidth > 600 ? "33%" : "50%";
   return (
-    <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
+    <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
       {availableMoves.map((item, key) => {
         if (item.Move == "Trophy 1" || item.Move == "Trophy 2" || item.Move == "Trophy 3") {
           return (
-            <View style={{ width: buttonPercentage }} key={key}>
+            <View style={{ width: trophyButtonPercentage }} key={key}>
               <TrophyDynamicButton
                 paddler={
                   props.paddlerList[props.currentHeat][props.paddlerIndex]
