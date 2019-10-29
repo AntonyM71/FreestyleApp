@@ -1,8 +1,8 @@
 import React from "react";
 import { View } from "react-native";
 import { Button } from "react-native-elements";
-import { connect, batch } from "react-redux";
-import { updateShowRun, changeRun } from "../../actions";
+import { batch, connect } from "react-redux";
+import { changeRun, updateShowRun } from "../../actions";
 import { styles } from "../../styles";
 
 const runOptionsPresentation = props => {

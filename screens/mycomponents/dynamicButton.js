@@ -1,10 +1,10 @@
 import React from "react";
+import { View } from "react-native";
 import { Button } from "react-native-elements";
 import { connect } from "react-redux";
 import { updatePaddlerScores } from "../../actions";
 import { getScoresState } from "../../selectors";
 import { styles } from "../../styles";
-import { View } from "react-native" 
 
 
 const DynamicButtonPresentation = props => {

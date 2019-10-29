@@ -1,6 +1,6 @@
-import { connect } from 'react-redux';
 import React from 'react';
 import { Text } from 'react-native';
+import { connect } from 'react-redux';
 import { styles } from '../../styles.js';
 const moveList = Object.values(require('../../data/moves_lists/move_list.json')).flat();
 
