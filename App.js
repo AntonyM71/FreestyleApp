@@ -37,7 +37,7 @@ export default class App extends React.Component {
   }
 
   _loadResourcesAsync = async () => {
-    return Promise([
+    return new Promise([
 
       Font.loadAsync({
         // This is the font that we are using for our tab bar
