@@ -27,9 +27,9 @@ export const PaddlerHandler = props => {
       props.updateHeat(newHeat);
     });
   };
-
+ 
   // only show the component if we have multiple heats (preverve vertical space for phones)
-  if (props.paddlerList.length != 1) {
+  if (props.paddlerList.length != 1 && props.paddlerList.flat().length != 0) {
     return (
       <View>
         <Grid>

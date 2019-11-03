@@ -14,42 +14,46 @@ export const ResultsView = props => {
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
       >
-        <View>
-          <Text style={styles.heatStyle}>{"Results"}</Text>
-          {props.paddlerHeatList.flat().map((paddler, key) => {
-            return (
-              <View key={key}>
-                <View>
-                  <Text
-                    style={{
-                      ...styles.standardText,
-                      justifyContent: "center",
-                      alignItems: "center"
-                    }}
-                  >
-                    {paddler.toString()}
-                  </Text>
-                </View>
-                <>
-                <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
-                  {props.paddlerScores[paddler].map(( runScore ,runKey) => {
-                    return (
-                      <View style={{ width: buttonPercentage }} key={runKey}>
-                        <DisplayScore
-                          paddler={paddler}
-                          run={runKey}
-                          align="center"
-                        />
-                      </View>
-                    );
-                  })}
-                  {/* <Divider style={{ backgroundColor: 'blue' }} />; */}
+        {props.paddlerHeatList.flat().length != 0
+          ?
+          <View>
+            <Text style={styles.heatStyle}>{"Results"}</Text>
+            {props.paddlerHeatList.flat().map((paddler, key) => {
+              return (
+                <View key={key}>
+                  <View>
+                    <Text
+                      style={{
+                        ...styles.standardText,
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                      {paddler.toString()}
+                    </Text>
                   </View>
+                  <>
+                    <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
+                      {props.paddlerScores[paddler].map((runScore, runKey) => {
+                        return (
+                          <View style={{ width: buttonPercentage }} key={runKey}>
+                            <DisplayScore
+                              paddler={paddler}
+                              run={runKey}
+                              align="center"
+                            />
+                          </View>
+                        );
+                      })}
+                      {/* <Divider style={{ backgroundColor: 'blue' }} />; */}
+                    </View>
                   </>
-              </View>
-            );
-          })}
-        </View>
+                </View>
+              );
+            })}
+          </View>
+          : <View align="center"><Text style={{ ...styles.standardText, textAlign: "center", marginTop: 10 }}>{"Please add a paddler."}</Text></View>
+        }
       </ScrollView>
     </View>
   );

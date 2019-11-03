@@ -12,81 +12,87 @@ export const MoveButtons = props => {
   const buttonPercentage = screenWidth > 600 ? "25%" : "50%";
   const entryButtonPercentage = screenWidth > 600 ? "33%" : "33%";
   const trophyButtonPercentage = screenWidth > 600 ? "33%" : "50%";
-  return (
-    <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
-      {availableMoves.map((item, key) => {
-        if (item.Move == "Trophy 1" || item.Move == "Trophy 2" || item.Move == "Trophy 3") {
-          return (
-            <View style={{ width: trophyButtonPercentage }} key={key}>
-              <TrophyDynamicButton
-                paddler={
-                  props.paddlerList[props.currentHeat][props.paddlerIndex]
-                }
-                run={props.run}
-                move={item}
-                direction={"left"}
-              />
-            </View>
-          )
+  {
+    if (props.paddlerList[props.currentHeat].length != 0) {
+      return (
+        <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
+          {availableMoves.map((item, key) => {
+            if (item.Move == "Trophy 1" || item.Move == "Trophy 2" || item.Move == "Trophy 3") {
+              return (
+                <View style={{ width: trophyButtonPercentage }} key={key}>
+                  <TrophyDynamicButton
+                    paddler={
+                      props.paddlerList[props.currentHeat][props.paddlerIndex]
+                    }
+                    run={props.run}
+                    move={item}
+                    direction={"left"}
+                  />
+                </View>
+              )
 
-        } else if (item.Move == "Entry 1" || item.Move == "Entry 2" || item.Move == "Entry 3") {
-        return (
-          <View style={{ width: entryButtonPercentage }} key={key}>
-            <EntryDynamicButton
-              paddler={
-                props.paddlerList[props.currentHeat][props.paddlerIndex]
+            } else if (item.Move == "Entry 1" || item.Move == "Entry 2" || item.Move == "Entry 3") {
+              return (
+                <View style={{ width: entryButtonPercentage }} key={key}>
+                  <EntryDynamicButton
+                    paddler={
+                      props.paddlerList[props.currentHeat][props.paddlerIndex]
+                    }
+                    run={props.run}
+                    move={item}
+                    direction={"left"}
+                  />
+                </View>
+              )
+            } else {
+
+              if (!item.Reverse) {
+                return (
+                  <View style={{ width: buttonPercentage }} key={key}>
+                    <DynamicButton
+                      paddler={
+                        props.paddlerList[props.currentHeat][props.paddlerIndex]
+                      }
+                      run={props.run}
+                      move={item}
+                      direction={"left"}
+                    />
+                  </View>
+                );
+              } else {
+                return (
+                  <React.Fragment key={key}>
+                    <View style={{ width: buttonPercentage }} >
+                      <DynamicButton
+                        paddler={
+                          props.paddlerList[props.currentHeat][props.paddlerIndex]
+                        }
+                        run={props.run}
+                        move={item}
+                        direction={"left"}
+                      />
+                    </View>
+                    <View style={{ width: buttonPercentage }}>
+                      <DynamicButton
+                        paddler={
+                          props.paddlerList[props.currentHeat][props.paddlerIndex]
+                        }
+                        run={props.run}
+                        move={item}
+                        direction={"right"}
+                      />
+                    </View>
+                  </React.Fragment>
+                );
               }
-              run={props.run}
-              move={item}
-              direction={"left"}
-            />
-          </View>
-        )
-      } else {
-
-        if (!item.Reverse) {
-          return (
-            <View style={{ width: buttonPercentage }} key={key}>
-              <DynamicButton
-                paddler={
-                  props.paddlerList[props.currentHeat][props.paddlerIndex]
-                }
-                run={props.run}
-                move={item}
-                direction={"left"}
-              />
-            </View>
-          );
-        } else {
-          return (
-            <React.Fragment key={key}>
-              <View style={{ width: buttonPercentage }} >
-                <DynamicButton
-                  paddler={
-                    props.paddlerList[props.currentHeat][props.paddlerIndex]
-                  }
-                  run={props.run}
-                  move={item}
-                  direction={"left"}
-                />
-              </View>
-              <View style={{ width: buttonPercentage }}>
-                <DynamicButton
-                  paddler={
-                    props.paddlerList[props.currentHeat][props.paddlerIndex]
-                  }
-                  run={props.run}
-                  move={item}
-                  direction={"right"}
-                />
-              </View>
-              </React.Fragment>
-          );
-        }
-        }
-      })}
-    </View>
-  );
+            }
+          })}
+        </View>
+      );
+    } else {
+      return(null)
+    }
+  }
 };
 
 const mapStateToProps = state => {

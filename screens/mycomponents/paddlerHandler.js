@@ -51,80 +51,84 @@ export const PaddlerHandler = props => {
     }
   };
 
-  return (
-    <View>
-      <Grid>
-        <Row>
-          <Col>
-            <Button
-              onPress={_handlePressPrevious}
-              title="Last Paddler"
-              buttonStyle={styles.changeButton}
-            />
-          </Col>
-          <Col>
-            <View>
-              <Text
-                style={{
-                  ...styles.standardText,
-                  marginTop: 4,
-                  textAlign: "center"
-                }}
-              >
-                {props.paddlerList[props.currentHeat][props.paddlerIndex]}
-              </Text>
-              <DisplayScore
-                paddler={
-                  props.paddlerList[props.currentHeat][props.paddlerIndex]
-                }
-                run={props.run}
+  if (props.paddlerList[props.currentHeat].length != 0) {
+    return (
+      <View>
+        <Grid>
+          <Row>
+            <Col>
+              <Button
+                onPress={_handlePressPrevious}
+                title="Last Paddler"
+                buttonStyle={styles.changeButton}
               />
-            </View>
-          </Col>
-          <Col>
-            <Button
-              onPress={_handlePressNext}
-              title="Next"
-              buttonStyle={styles.changeButton}
-            />
-          </Col>
-        </Row>
-        {props.showRunHandler
-          ? (
-            <Row>
-              <Col>
-                <Button
-                  onPress={_handlePressPreviousRun}
-                  title="Prev Run"
-                  buttonStyle={styles.changeButton}
+            </Col>
+            <Col>
+              <View>
+                <Text
+                  style={{
+                    ...styles.standardText,
+                    marginTop: 4,
+                    textAlign: "center"
+                  }}
+                >
+                  {props.paddlerList[props.currentHeat][props.paddlerIndex]}
+                </Text>
+                <DisplayScore
+                  paddler={
+                    props.paddlerList[props.currentHeat][props.paddlerIndex]
+                  }
+                  run={props.run}
                 />
-              </Col>
-              <Col>
-                <View>
-                  <Text
-                    style={{
-                      ...styles.standardText,
-                      marginTop: 15,
-                      textAlign: "center"
-                    }}
-                  >
-                    {props.run + 1}
-                  </Text>
-                </View>
-              </Col>
-              <Col>
-                <Button
-                  onPress={_handlePressNextRun}
-                  title="New Run"
-                  buttonStyle={styles.changeButton}
-                />
-              </Col>
-            </Row>
-          )
-          : null}
-      </Grid>
-    </View>
-  );
+              </View>
+            </Col>
+            <Col>
+              <Button
+                onPress={_handlePressNext}
+                title="Next"
+                buttonStyle={styles.changeButton}
+              />
+            </Col>
+          </Row>
+          {props.showRunHandler
+            ? (
+              <Row>
+                <Col>
+                  <Button
+                    onPress={_handlePressPreviousRun}
+                    title="Prev Run"
+                    buttonStyle={styles.changeButton}
+                  />
+                </Col>
+                <Col>
+                  <View>
+                    <Text
+                      style={{
+                        ...styles.standardText,
+                        marginTop: 15,
+                        textAlign: "center"
+                      }}
+                    >
+                      {props.run + 1}
+                    </Text>
+                  </View>
+                </Col>
+                <Col>
+                  <Button
+                    onPress={_handlePressNextRun}
+                    title="New Run"
+                    buttonStyle={styles.changeButton}
+                  />
+                </Col>
+              </Row>
+            )
+            : null}
+        </Grid>
+      </View>
+    );
+  } else {
+    return (<View align="center"><Text style={{ ...styles.standardText, textAlign: "center", marginTop: 10 }}>{"This heat has no paddlers."}</Text></View>)
+  }
 };
 
 const mapStateToProps = state => {

@@ -12,9 +12,9 @@ import PaddlerHeatManager from "./paddlerHeatManagementHandler";
 // consider moving the button into another file
 // general filesystem tyidy up
 export const PaddlerManager = props => {
-  const addHeat = heatKey => {
+  const addHeat = () => {
     const newHeatList = props.paddlerHeatList;
-    newHeatList.push([`default ${heatKey}`]);
+    newHeatList.push([]);
     var newPaddlerScores = props.paddlerScores;
     newHeatList.flat().map(paddler => {
       if (!newPaddlerScores[paddler]) newPaddlerScores[paddler.toString()] = [initialScoresheet()];
@@ -31,15 +31,16 @@ export const PaddlerManager = props => {
     });
   };
   const clearPaddlers = () => {
-    const newHeatList = [["default"]];
+    const newHeatList = [[]];
     const startingScoresheet = {};
     newHeatList.flat().map(paddler => {
       startingScoresheet[paddler.toString()] = [initialScoresheet()];
     });
+   
+    props.updatePaddler(0);
+    props.updateHeat(0);
+    props.updateRun(0);
     batch(() => {
-      props.updatePaddler(0);
-      props.updateHeat(0);
-      props.updateRun(0);
       props.addOrRemovePaddlerName(newHeatList);
       props.updatePaddlerScores(startingScoresheet);
     });
@@ -49,10 +50,8 @@ export const PaddlerManager = props => {
     props.paddlerHeatList.flat().map(paddler => {
       startingScoresheet[paddler.toString()] = [initialScoresheet()];
     });
-    batch(() => {
       props.updateRun(0);
       props.updatePaddlerScores(startingScoresheet);
-    });
   };
 
   return (
@@ -68,7 +67,7 @@ export const PaddlerManager = props => {
           <View style={{ width: "100%" }}>
             <Button
               onPress={() => {
-                addHeat(props.paddlerHeatList.length + 1);
+                addHeat();
               }}
               title="New Heat"
               buttonStyle={styles.timerGreen}
