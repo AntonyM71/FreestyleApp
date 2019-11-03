@@ -57,7 +57,7 @@ export const PaddlerHeatManagerPresentation = props => {
   };
   const addOrRemovePaddler = (heatKey, remainingPaddlers, paddlerScores) => {
     const newList =
-      remainingPaddlers.length == 0 ? [`default ${heatKey+1}`]: remainingPaddlers;
+      remainingPaddlers.length == 0 ? []: remainingPaddlers;
     var newPaddlerScores = paddlerScores;
     newList.flat().map(paddler => {
       if (!newPaddlerScores[paddler]) newPaddlerScores[paddler.toString()] = [];

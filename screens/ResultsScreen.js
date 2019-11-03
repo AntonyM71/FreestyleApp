@@ -4,7 +4,7 @@ import { styles } from "../styles";
 import ResultsView from "./mycomponents/resultsView";
 export default class ResultsScreen extends React.Component {
   static navigationOptions = {
-    title: "Links"
+    title: "Results"
   };
 
   render() {
