@@ -2,7 +2,7 @@ import { ADD_OR_REMOVE_PADDLER, CHANGE_HEAT, CHANGE_PADDLER, UPDATE_NUMBER_OF_RU
 import { initialScoresheet } from "./screens/mycomponents/makePaddlerScores";
 
 // make our starting scoresheet from the list of paddlers
-const listOfPaddlers = [["paddler1", "paddler2", "paddler3", "c1er"]];
+const listOfPaddlers = [["paddler1", "paddler2", "paddler3"]];
 const startingScoresheet = {};
 listOfPaddlers.flat().map(paddler => {
   startingScoresheet[paddler.toString()] = [initialScoresheet()];
