@@ -20,7 +20,14 @@ export default class HomeScreen extends React.Component {
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
         >
-          <PaddlerManager />
+          <View style={{ flex: 1, flexDirection: 'row', flexWrap: "wrap" }}>
+            <View style={{ width: "50%" }}>
+              <TimerOptions />
+            </View>
+            <View style={{ width: "50%" }}>
+              <RunOptions />
+            </View>
+          </View>
         </ScrollView>
 
         <View

@@ -5,7 +5,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import ResultsScreen from '../screens/ResultsScreen';
 import PaddlerManagerScreen from "../screens/PaddlerManagerScreen";
-
+import SettingsScreen from "../screens/SettingsScreen";
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
 });
@@ -17,33 +17,47 @@ HomeStack.navigationOptions = {
       focused={focused}
       name={
         Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
+          ? `ios-calculator`
+          : 'md-calculator'
       }
     />
   ),
 };
 
-const LinksStack = createStackNavigator({
+const ResultsStack = createStackNavigator({
   Links: ResultsScreen,
 });
 
-LinksStack.navigationOptions = {
+ResultsStack.navigationOptions = {
   tabBarLabel: 'Results',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'}
+      name={Platform.OS === 'ios' ? 'ios-trophy' : 'md-trophy'}
+    />
+  ),
+};
+const PaddlerStack = createStackNavigator({
+  Paddlers: PaddlerManagerScreen,
+});
+
+PaddlerStack.navigationOptions = {
+  tabBarLabel: 'Paddlers',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? 'ios-people' : 'md-people'}
     />
   ),
 };
 
 const SettingsStack = createStackNavigator({
-  Settings: PaddlerManagerScreen,
+  Settings: SettingsScreen,
 });
 
+
 SettingsStack.navigationOptions = {
-  tabBarLabel: 'Paddlers',
+  tabBarLabel: 'Settings',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -52,8 +66,10 @@ SettingsStack.navigationOptions = {
   ),
 };
 
+
 export default createBottomTabNavigator({
   HomeStack,
-  LinksStack,
+  ResultsStack,
+  PaddlerStack,
   SettingsStack,
 });
