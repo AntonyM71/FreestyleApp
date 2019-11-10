@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
@@ -6,7 +6,9 @@ export const styles = StyleSheet.create({
     backgroundColor: "#fff"
   },
   contentContainer: {
-    paddingTop: 10
+    paddingTop:         Platform.OS === 'ios'
+          ? 0
+          : 30
   },
   noMove: {
     backgroundColor: "#4F84C4",

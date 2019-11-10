@@ -33,11 +33,10 @@ export const MoveButtons = props => {
     if (props.paddlerList[props.currentHeat].length != 0) {
       return (
         <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
-
           <>
-            {availableMoves.entry.map((item, key) => {
+            {availableMoves.entry.map((item) => {
               return (
-                <View style={{ width: entryButtonPercentage }} key={key}>
+                <View style={{ width: entryButtonPercentage }} key={item.Move}>
                   <EntryDynamicButton
                     paddler={
                       props.paddlerList[props.currentHeat][props.paddlerIndex]
@@ -49,24 +48,47 @@ export const MoveButtons = props => {
                 </View>
               )
             })}
+          </>
+          <>
+            {availableMoves.both.map((item) => {
+              if (!item.Reverse) {
+                return (
+                  <View style={{ width: buttonPercentage }} key={item.Move}>
+                    <NormalMove item={item} run={props.run} paddlerList={props.paddlerList}  paddlerIndex={props.paddlerIndex} currentHeat={props.currentHeat} direction={"left"} />
+                  </View>
+                )
+              } else {
+                return (
+                  <>
+                    <View style={{ width: buttonPercentage }} key={item.Move}>
+                      <NormalMove item={item} run={props.run} paddlerList={props.paddlerList}  paddlerIndex={props.paddlerIndex} currentHeat={props.currentHeat} direction={"left"} />
+                    </View>
+                    <View style={{ width: buttonPercentage }} >
+                      <NormalMove item={item} run={props.run} paddlerList={props.paddlerList}  paddlerIndex={props.paddlerIndex} currentHeat={props.currentHeat} direction={"right"} />
+                    </View>
+                  </>
+                )
+              }
+            })
+            }
             </>
           <>
             
-            {props.showMoves.hole ? availableMoves.hole.map((item, key) => {
+            {props.showMoves.hole ? availableMoves.hole.map((item) => {
               if (!item.Reverse) {
                 return (
-                  <View style={{ width: buttonPercentage }} key={props.id}>
-                  <NormalMove item={item} run={props.run} paddlerList={props.paddlerList} id={key} paddlerIndex={props.paddlerIndex} currentHeat={props.currentHeat} direction={"left"} />
+                  <View style={{ width: buttonPercentage }} key={item.Move}>
+                  <NormalMove item={item} run={props.run} paddlerList={props.paddlerList}  paddlerIndex={props.paddlerIndex} currentHeat={props.currentHeat} direction={"left"} />
                 </View>
                 )
               } else {
                 return (
                   <>
-                  <View style={{ width: buttonPercentage }} key={props.id}>
-                  <NormalMove item={item} run={props.run} paddlerList={props.paddlerList} id={key} paddlerIndex={props.paddlerIndex} currentHeat={props.currentHeat} direction={"left"} />
+                  <View style={{ width: buttonPercentage }} key={item.Move}>
+                  <NormalMove item={item} run={props.run} paddlerList={props.paddlerList}  paddlerIndex={props.paddlerIndex} currentHeat={props.currentHeat} direction={"left"} />
                   </View>
-                  <View style={{ width: buttonPercentage }} key={props.id}>
-                    <NormalMove item={item} run={props.run} paddlerList={props.paddlerList} id={key} paddlerIndex={props.paddlerIndex} currentHeat={props.currentHeat} direction={"right"} />
+                  <View style={{ width: buttonPercentage }}>
+                    <NormalMove item={item} run={props.run} paddlerList={props.paddlerList}  paddlerIndex={props.paddlerIndex} currentHeat={props.currentHeat} direction={"right"} />
                     </View>
                     </>
                 )
@@ -78,21 +100,21 @@ export const MoveButtons = props => {
           </>
                     <>
             
-            {props.showMoves.wave ? availableMoves.wave.map((item, key) => {
+            {props.showMoves.wave ? availableMoves.wave.map((item) => {
               if (!item.Reverse) {
                 return (
-                  <View style={{ width: buttonPercentage }} key={props.id}>
-                  <NormalMove item={item} run={props.run} paddlerList={props.paddlerList} id={key} paddlerIndex={props.paddlerIndex} currentHeat={props.currentHeat} direction={"left"} />
+                  <View style={{ width: buttonPercentage }} key={item.Move}>
+                  <NormalMove item={item} run={props.run} paddlerList={props.paddlerList}  paddlerIndex={props.paddlerIndex} currentHeat={props.currentHeat} direction={"left"} />
                 </View>
                 )
               } else {
                 return (
                   <>
-                  <View style={{ width: buttonPercentage }} key={props.id}>
-                  <NormalMove item={item} run={props.run} paddlerList={props.paddlerList} id={key} paddlerIndex={props.paddlerIndex} currentHeat={props.currentHeat} direction={"left"} />
+                  <View style={{ width: buttonPercentage }} key={item.Move}>
+                  <NormalMove item={item} run={props.run} paddlerList={props.paddlerList}  paddlerIndex={props.paddlerIndex} currentHeat={props.currentHeat} direction={"left"} />
                   </View>
-                  <View style={{ width: buttonPercentage }} key={props.id}>
-                    <NormalMove item={item} run={props.run} paddlerList={props.paddlerList} id={key} paddlerIndex={props.paddlerIndex} currentHeat={props.currentHeat} direction={"right"} />
+                  <View style={{ width: buttonPercentage }}>
+                    <NormalMove item={item} run={props.run} paddlerList={props.paddlerList}  paddlerIndex={props.paddlerIndex} currentHeat={props.currentHeat} direction={"right"} />
                     </View>
                     </>
                 )
@@ -103,8 +125,8 @@ export const MoveButtons = props => {
             }
           </>
                     <>
-            {availableMoves.trophy.map((item, key) => {  return (
-                  <View style={{ width: trophyButtonPercentage }} key={key}>
+            {availableMoves.trophy.map((item) => {  return (
+                  <View style={{ width: trophyButtonPercentage }} key={item.Move}>
                     <TrophyDynamicButton
                       paddler={
                         props.paddlerList[props.currentHeat][props.paddlerIndex]
