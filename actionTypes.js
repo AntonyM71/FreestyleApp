@@ -6,3 +6,4 @@ export const UPDATE_RUN = "UPDATE_RUN";
 export const UPDATE_SHOW_RUN = "UPDATE_SHOW_RUN";
 export const UPDATE_NUMBER_OF_RUNS = "UPDATE_NUMBER_OF_RUNS";
 export const CHANGE_HEAT = "CHANGE_HEAT";
+export const ENABLED_MOVES = "ENABLED_MOVES";

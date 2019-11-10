@@ -7,7 +7,7 @@ import ResultsScreen from '../screens/ResultsScreen';
 import PaddlerManagerScreen from "../screens/PaddlerManagerScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 const HomeStack = createStackNavigator({
-  Home: HomeScreen,
+  Home: HomeScreen
 });
 
 HomeStack.navigationOptions = {

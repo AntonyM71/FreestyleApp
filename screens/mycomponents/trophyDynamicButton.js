@@ -28,7 +28,7 @@ const makeScoresObject = (move) => {
     })
 }
 
-const TrophyDynamicButtonPresentation = props => {
+const TrophyDynamicButtonPresentation = React.memo((props) => {
 const _handleMove = (paddler, run, move, direction, type, key) => () => {
         var newScores = { ...props.paddlerScores };
             const newField = !newScores[paddler][run][move][key][direction][type];
@@ -130,7 +130,7 @@ const _handleMove = (paddler, run, move, direction, type, key) => () => {
         }
     })
     )
-}
+})
 
 
 // can we make this go deeper, so that we only update a single component when we add a move?

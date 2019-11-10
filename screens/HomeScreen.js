@@ -1,17 +1,17 @@
 import React from "react";
-import { Dimensions, ScrollView, View } from "react-native";
+import { Dimensions, ScrollView, View, SafeAreaView } from "react-native";
 import { styles } from "../styles";
 import HeatHandler from "./mycomponents/heatHandler";
 import MoveButtons from "./mycomponents/JsonButtons";
 import PaddlerHandler from "./mycomponents/paddlerHandler";
 import Timer from "./mycomponents/timer";
 export default class HomeScreen extends React.Component {
-  static navigationOptions = {
-    title: "Scoring"
-  };
+  static navigationOptions= {
+      header: null
+    }
 
   state = {
-    paddlerList: ["paddler1", "paddler2", "c1er"],
+    paddlerList: ["paddler1", "paddler2"],
     paddlerIndex: 0
   };
   render() {
@@ -20,7 +20,9 @@ export default class HomeScreen extends React.Component {
         ? `${start * 0.5}%`
         : `${start}%`;
     return (
-      <View style={styles.container}>
+      
+      <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
         <ScrollView
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
@@ -40,7 +42,9 @@ export default class HomeScreen extends React.Component {
             </View>
           </View>
         </ScrollView>
-      </View>
+        </View>
+      </SafeAreaView>
+     
     );
   }
 }

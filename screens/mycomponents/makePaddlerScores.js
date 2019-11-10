@@ -1,9 +1,10 @@
-const moveList = Object.values(
-  require("../../data/moves_lists/move_list.json")
-).flat();
+import _ from 'lodash';
 
+moveListArray = Object.values(
+  require("../../data/moves_lists/move_list.json")
+).flat()
 export const initialScoresheet = () => {
-    const initialMoves = moveList.map(item => {
+const initialMoves = moveListArray.map(item => {
         const scoresObject = {
             id: item.Move,
             left: {
@@ -41,3 +42,4 @@ export const initialScoresheet = () => {
         }
   }, {});
 };
+
