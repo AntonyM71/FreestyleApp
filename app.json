@@ -21,7 +21,7 @@
     "android" : {
       "package": "com.kayakfreestyle.kayakfreestyleapp",
       "permissions" : [],
-      "versionCode": 2
+      "versionCode": 3
     },
     "assetBundlePatterns": [
       "**/*"
