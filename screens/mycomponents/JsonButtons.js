@@ -125,8 +125,8 @@ export const MoveButtons = props => {
             }
           </>
                     <>
-            {availableMoves.trophy.map((item) => {  return (
-                  <View style={{ width: trophyButtonPercentage }} key={item.Move}>
+            {availableMoves.trophy.map((item, key) => {  return (
+                  <View style={{ width: trophyButtonPercentage }} key={item.Move+ key}>
                     <TrophyDynamicButton
                       paddler={
                         props.paddlerList[props.currentHeat][props.paddlerIndex]

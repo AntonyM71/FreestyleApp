@@ -5,6 +5,7 @@ import { Button } from "react-native-elements";
 import { batch, connect } from "react-redux";
 import { changeHeat, changePaddler } from "../../actions";
 import { styles } from "../../styles";
+
 export const PaddlerHandler = props => {
   const numberOfHeats = props.paddlerList.length;
 
