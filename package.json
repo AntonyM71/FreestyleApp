@@ -19,7 +19,7 @@
     "eslint": "^5.16.0",
     "expo": "^35.0.1",
     "expo-asset": "~7.0.0",
-    "expo-cli": "^3.5.0",
+    "expo-cli": "^3.13.6",
     "expo-constants": "^7.0.1",
     "expo-font": "~7.0.0",
     "expo-web-browser": "~7.0.0",

@@ -20,7 +20,7 @@
     {"Move": "Space Godzilla", "Value": 90, "Clean": 30, "SuperClean": 40, "Air": 0, "Huge": 40, "Link": 30, "Reverse": true},
     {"Move": "Lunar Orbit", "Value": 150, "Clean": 50, "SuperClean": 60, "Air": 50, "Huge": 40, "Link": 40, "Reverse": true},
     {"Move": "McNasty", "Value": 120, "Clean": 50, "SuperClean": 60, "Air": 50, "Huge": 40, "Link": 40, "Reverse": true},
-    {"Move": "Phonics Monkey", "Value": 140, "Clean": 50, "SuperClean": 60, "Air": 50, "Huge": 40, "Link": 40, "Reverse": true},
+    {"Move": "Phonics Monkey", "Value": 140, "Clean": 50, "SuperClean": 60, "Air": 50, "Huge": 40, "Link": 40, "Reverse": true}
 ],
 "wave": [
     {"Move": "Roundhouse", "Value": 15, "Clean": 10, "SuperClean": 20, "Air": 10, "Huge": 10, "Link": 10, "Reverse": true},
