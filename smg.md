@@ -39,10 +39,10 @@ The following is a summary of the [expo documentation](https://docs.expo.io/vers
 
 1. Run `npm ci` and `npm audit fix` to install packages and fix vulterabilities.
 
-1. Update `version` in [app.json](./app.json), try to use semantic versioning
+1. Update `version` in [app.json](./app.json), try to use semantic versioning. And increment the `versionCode`
 
 1. Install the expo cli (If you don't already have it) using `npm install -g expo-cli`
 
-1. Build the APK using `sudo expo build:android -t apk`
+1. Build the APK using `expo build:android -t apk`
 
-1. Once the APK has build, upload it using `sudo expo upload:android --latest --key <relative-path-to-api-key>`
+1. Once the APK has build, upload it using `expo upload:android --latest --key <relative-path-to-api-key>` (currently, this is macOS only)
