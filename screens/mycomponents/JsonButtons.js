@@ -3,9 +3,8 @@ import React from "react";
 import { Dimensions, View } from "react-native";
 import { connect } from "react-redux";
 import { DynamicButton } from "./dynamicButton";
-import { EntryDynamicButton } from "./entryDynamicButton";
 import { TrophyDynamicButton } from "./trophyDynamicButton";
-
+import {EntryDynamicButton} from "./entryDynamicButton"
 const NormalMove = (props) => {
       return (
         
@@ -54,7 +53,13 @@ export const MoveButtons = props => {
               if (!item.Reverse) {
                 return (
                   <View style={{ width: buttonPercentage }} key={item.Move}>
-                    <NormalMove item={item} run={props.run} paddlerList={props.paddlerList}  paddlerIndex={props.paddlerIndex} currentHeat={props.currentHeat} direction={"left"} />
+                    <NormalMove
+                      item={item}
+                      run={props.run}
+                      paddlerList={props.paddlerList}
+                      paddlerIndex={props.paddlerIndex}
+                      currentHeat={props.currentHeat}
+                      direction={"left"} />
                   </View>
                 )
               } else {
