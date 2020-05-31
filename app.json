@@ -7,7 +7,7 @@
     "platforms": [
       "android"
     ],
-    "version": "1.1.4",
+    "version": "1.1.5",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {
@@ -18,10 +18,10 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "android" : {
+    "android": {
       "package": "com.kayakfreestyle.kayakfreestyleapp",
-      "permissions" : [],
-      "versionCode": 5
+      "permissions": [],
+      "versionCode": 6
     },
     "assetBundlePatterns": [
       "**/*"
