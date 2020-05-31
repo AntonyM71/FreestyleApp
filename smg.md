@@ -43,6 +43,6 @@ The following is a summary of the [expo documentation](https://docs.expo.io/vers
 
 1. Install the expo cli (If you don't already have it) using `npm install -g expo-cli`
 
-1. Build the APK using `expo build:android -t apk`
+1. Build the APK using `expo build:android -t app-bundle`
 
 1. Once the APK has build, upload it using `expo upload:android --latest --key <relative-path-to-api-key>` (currently, this is macOS only)
