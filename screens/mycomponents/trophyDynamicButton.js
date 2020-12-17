@@ -87,7 +87,7 @@ const _handleMove = (paddler, run, move, direction, type, key) => () => {
                         <View style={{ width: "50%" }}>
                                 <Button
                                     onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "clean", key)}
-                                    title={"Clean"}
+                                    title={"C"}
                                     disabled={props.move.Clean ? false : true}
                                     buttonStyle={thisMove[props.direction]["clean"] ? styles.bonusScored : styles.noBonus}
                                 />
@@ -95,31 +95,31 @@ const _handleMove = (paddler, run, move, direction, type, key) => () => {
                             <View style={{ width: "50%" }}>
                                 <Button
                                     onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "superClean", key)}
-                                    title={"S Clean"}
+                                    title={"SC"}
                                     disabled={props.move.SuperClean ? false : true}
                                     buttonStyle={thisMove[props.direction]["superClean"] ? styles.bonusScored : styles.noBonus}
                                 />
                             </View>
-                            <View style={{ width: "25%" }}>
+                            <View style={{ width: "33%" }}>
                                 <Button
                                     onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "air", key)}
-                                    title={"Air"}
+                                    title={"A"}
                                     disabled={props.move.Air ? false : true}
                                     buttonStyle={thisMove[props.direction]["air"] ? styles.bonusScored : styles.noBonus}
                                 />
                             </View>
-                            <View style={{ width: "40%" }}>
+                            <View style={{ width: "33%" }}>
                                 <Button
                                     onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "huge", key)}
-                                    title={"Huge"}
+                                    title={"H"}
                                     disabled={props.move.Huge ? false : true}
                                     buttonStyle={thisMove[props.direction]["huge"] ? styles.bonusScored : styles.noBonus}
                                 />
                             </View>
-                            <View style={{ width: "35%" }}>
+                            <View style={{ width: "33%" }}>
                                 <Button
                                     onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "link", key)}
-                                    title={"Link"}
+                                    title={"L"}
                                     disabled={props.move.Link ? false : true}
                                     buttonStyle={thisMove[props.direction]["link"] ? styles.bonusScored : styles.noBonus}
                         

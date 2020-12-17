@@ -57,7 +57,7 @@ export const PaddlerHeatManagerPresentation = props => {
   };
   const addOrRemovePaddler = (heatKey, remainingPaddlers, paddlerScores) => {
     const newList =
-      remainingPaddlers.length == 0 ? []: remainingPaddlers;
+      remainingPaddlers.length == 0 ? [] : remainingPaddlers;
     var newPaddlerScores = paddlerScores;
     newList.flat().map(paddler => {
       if (!newPaddlerScores[paddler]) newPaddlerScores[paddler.toString()] = [];
@@ -118,7 +118,6 @@ export const PaddlerHeatManagerPresentation = props => {
         <TextInput
           blurOnSubmit={true}
           autoCorrect={false}
-          style={{ height: 40 }}
           placeholder="New Paddler Name"
           value={newPaddler}
           onChangeText={text => _handleAddChange(text)}
@@ -131,6 +130,7 @@ export const PaddlerHeatManagerPresentation = props => {
           clearButtonMode="always"
           style={[
             {
+              height: 40,
               borderColor: inputBorder,
               borderWidth: 3,
               padding: 10,
