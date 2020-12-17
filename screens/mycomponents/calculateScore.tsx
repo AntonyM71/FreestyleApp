@@ -2,7 +2,7 @@ import React from 'react';
 import { Text } from 'react-native';
 import { connect } from 'react-redux';
 import { styles } from '../../styles.js';
-import { dataSourceMoveInterface, moveListArray, moveSideInterface } from './makePaddlerScores.jsx';
+import { dataSourceMoveInterface, moveListArray, moveSideInterface } from './makePaddlerScores';
 
 const calculateScoreAndBonuses = (move: dataSourceMoveInterface, truth: moveSideInterface) => {
   // the below is a bit of a hack for an unlikely scenario where we have huge but no air,  it will add in the air bonus
