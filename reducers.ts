@@ -5,10 +5,10 @@ import { initialScoresheet } from "./screens/mycomponents/makePaddlerScores";
 const listOfPaddlers = [["paddler1", "paddler2", "paddler3"]];
 const startingScoresheet = {};
 listOfPaddlers.flat().map(paddler => {
-  startingScoresheet[paddler.toString()] = [initialScoresheet({})];
+  startingScoresheet[paddler.toString()] = [initialScoresheet()];
 });
 
-const initialState = {
+const initialState: initialStateInterface = {
   places: [],
   paddlerIndex: 0,
   paddlerList: listOfPaddlers,
@@ -72,3 +72,16 @@ export const paddlerReducer = (state = initialState, action) => {
       return state;
   }
 };
+
+interface initialStateInterface {
+  places: [],
+  paddlerIndex: number,
+  paddlerList: any,
+  paddlerScores: any,
+  showTimer: boolean,
+  currentHeat: number,
+  run: number,
+  numberOfRuns: number,
+  showRunHandler: boolean,
+  enabledMoves: { wave: boolean, hole: boolean }
+}

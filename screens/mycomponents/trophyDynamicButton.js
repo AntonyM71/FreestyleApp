@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { Button } from "react-native-elements";
 import { connect } from "react-redux";
 import { updatePaddlerScores } from "../../actions";
-import { getScoresState } from "../../selectors";
+import { getScoresState } from "../../selectors.ts";
 import { styles } from "../../styles";
 
 const makeScoresObject = (move) => {
