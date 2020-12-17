@@ -76,7 +76,7 @@ export const paddlerReducer = (state = initialState, action) => {
 interface initialStateInterface {
   places: [],
   paddlerIndex: number,
-  paddlerList: any,
+  paddlerList: string[][],
   paddlerScores: any,
   showTimer: boolean,
   currentHeat: number,
