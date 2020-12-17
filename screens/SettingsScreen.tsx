@@ -28,21 +28,18 @@ export default class HomeScreen extends React.Component {
             <View style={{ width: "50%" }}>
               <RunOptions />
             </View>
-                        <View style={{ width: "100%" }}>
-              <Text style={{ ...styles.standardText, textAlign: "center", marginBottom: -15}}>
+            <View style={{ width: "100%" }}>
+              <Text style={{ ...styles.standardText, textAlign: "center", marginBottom: -15 }}>
                 {"Changing available moves will reset scores"}
               </Text>
             </View>
-              <View style={{ width: "100%" }}>
+            <View style={{ width: "100%" }}>
               <MoveSelection />
             </View>
           </View>
-          
+
         </ScrollView>
 
-        <View
-          style={[styles.codeHighlightContainer, styles.navigationFilename]}
-        ></View>
       </View>
     );
   }

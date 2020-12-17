@@ -96,7 +96,7 @@ const DynamicButtonPresentation = React.memo((props) => {
                         title={"L"}
                         disabled={props.move.Link ? false : true}
                         buttonStyle={thisMove[props.direction]["link"] ? styles.bonusScored : styles.noBonus}
-                        
+
                     />
                 </View>
             </View>
@@ -107,20 +107,20 @@ const DynamicButtonPresentation = React.memo((props) => {
 
 // can we make this go deeper, so that we only update a single component when we add a move?
 const mapStateToProps = state => {
-  return {
-    paddlerScores: getScoresState(state)
-  };
+    return {
+        paddlerScores: getScoresState(state)
+    };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    updateScore: newScores => {
-      dispatch(updatePaddlerScores(newScores));
-    }
-  };
+    return {
+        updateScore: newScores => {
+            dispatch(updatePaddlerScores(newScores));
+        }
+    };
 };
 
 export const DynamicButton = connect(
-  mapStateToProps,
-  mapDispatchToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(DynamicButtonPresentation);
