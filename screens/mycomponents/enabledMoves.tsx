@@ -8,42 +8,43 @@ import { initialScoresheet } from "./makePaddlerScores";
 
 const moveSelectionPresentation = props => {
 
-  _handleMoveButtonPress = (moveKey) => () => {
+  const handleMoveButtonPress = (moveKey) => () => {
     const newMoves = { ...props.enabledMovesList }
     newMoves[moveKey] = !(newMoves[moveKey])
     props.enabledMoves(newMoves);
-    clearScores(newMoves)
+    clearScores()
   };
 
 
-  const clearScores = (newMoves) => {
+  const clearScores = () => {
     const startingScoresheet = {};
     props.paddlerHeatList.flat().map(paddler => {
-      startingScoresheet[paddler.toString()] = [initialScoresheet(newMoves)];
+      startingScoresheet[paddler.toString()] = [initialScoresheet()];
     });
-      props.updateRun(0);
-      props.updatePaddlerScores(startingScoresheet);
+    props.updateRun(0);
+    props.updatePaddlerScores(startingScoresheet);
   };
 
   return (
     <View>
       <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
-            
+
         {Object.keys(props.enabledMovesList).map((moveKey, key) => {
           return (
-        <View style={{ width: "50%" }} key={key}>
-        <Button
-          buttonStyle={props.enabledMovesList[moveKey] ? styles.moveScored : styles.noMove}
-          onPress={_handleMoveButtonPress(moveKey)}
-          title={
-            props.enabledMovesList[moveKey]
-              ? `Hide ${moveKey}`
-              : `Show ${moveKey}`
-          }
-            
-          />
-        </View>
-        )})}
+            <View style={{ width: "50%" }} key={key}>
+              <Button
+                buttonStyle={props.enabledMovesList[moveKey] ? styles.moveScored : styles.noMove}
+                onPress={handleMoveButtonPress(moveKey)}
+                title={
+                  props.enabledMovesList[moveKey]
+                    ? `Hide ${moveKey}`
+                    : `Show ${moveKey}`
+                }
+
+              />
+            </View>
+          )
+        })}
       </View>
     </View>
   );
@@ -57,10 +58,10 @@ const mapStateToProps = state => {
 // not used currently, need to add an addmove function and redux pathway
 const mapDispatchToProps = dispatch => {
   return {
-    enabledMoves: key=> {
+    enabledMoves: key => {
       dispatch(enabledMoves(key));
     },
-        updatePaddlerScores: scores => {
+    updatePaddlerScores: scores => {
       dispatch(updatePaddlerScores(scores));
     },
     updateRun: run => {

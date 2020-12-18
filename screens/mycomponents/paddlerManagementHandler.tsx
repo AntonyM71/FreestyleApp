@@ -11,18 +11,19 @@ import PaddlerHeatManager from "./paddlerHeatManagementHandler";
 // pull out heat logic into another file
 // consider moving the button into another file
 // general filesystem tyidy up
-export const PaddlerManager = props => {
+export const PaddlerManager = (props) => {
   const addHeat = () => {
     const newHeatList = props.paddlerHeatList;
     newHeatList.push([]);
     var newPaddlerScores = props.paddlerScores;
     newHeatList.flat().map(paddler => {
       if (!newPaddlerScores[paddler]) newPaddlerScores[paddler.toString()] = [initialScoresheet()];
-      if (props.numberOfRuns +1 != (newPaddlerScores[paddler.toString()]).length  ) {
-      for (i = 0; i < (props.numberOfRuns ) ; i++) {
-        newPaddlerScores[paddler.toString()].push(initialScoresheet());
+      if (props.numberOfRuns + 1 != (newPaddlerScores[paddler.toString()]).length) {
+        let i = 0
+        for (i; i < (props.numberOfRuns); i++) {
+          newPaddlerScores[paddler.toString()].push(initialScoresheet());
+        }
       }
-    }
     });
     batch(() => {
       props.updatePaddler(0);
@@ -36,7 +37,7 @@ export const PaddlerManager = props => {
     newHeatList.flat().map(paddler => {
       startingScoresheet[paddler.toString()] = [initialScoresheet()];
     });
-   
+
     props.updatePaddler(0);
     props.updateHeat(0);
     props.updateRun(0);
@@ -50,8 +51,8 @@ export const PaddlerManager = props => {
     props.paddlerHeatList.flat().map(paddler => {
       startingScoresheet[paddler.toString()] = [initialScoresheet()];
     });
-      props.updateRun(0);
-      props.updatePaddlerScores(startingScoresheet);
+    props.updateRun(0);
+    props.updatePaddlerScores(startingScoresheet);
   };
 
   return (
@@ -60,7 +61,7 @@ export const PaddlerManager = props => {
         {props.paddlerHeatList.map((paddlerList, heatKey) => (
           <View key={heatKey}>
             <PaddlerHeatManager paddlerList={paddlerList} heatKey={heatKey} />
-            </View>
+          </View>
         ))}
 
         <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>

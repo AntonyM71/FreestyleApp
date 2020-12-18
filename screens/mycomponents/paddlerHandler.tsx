@@ -12,27 +12,27 @@ import { initialScoresheet } from "./makePaddlerScores";
 export const PaddlerHandler = props => {
   const numberOfPaddlers = props.paddlerList[props.currentHeat].length;
 
-  const _handlePressNext = () => {
+  const handlePressNext = () => {
     // -1 to account for zero indexing
-    const newPaddlerIndex =
+    const newPaddlerIndex: Number =
       props.paddlerIndex < numberOfPaddlers - 1 ? props.paddlerIndex + 1 : 0;
     props.updatePaddler(newPaddlerIndex);
   };
 
-  const _handlePressPrevious = () => {
+  const handlePressPrevious = () => {
     // -1 to account for zero indexing
     const newPaddlerIndex =
       props.paddlerIndex == 0 ? numberOfPaddlers - 1 : props.paddlerIndex - 1;
     props.updatePaddler(newPaddlerIndex);
   };
 
-  const _handlePressNextRun = () => {
+  const handlePressNextRun = () => {
     // -1 to account for zero indexing
     const newRunIndex = props.run + 1;
     handleChangeRun(newRunIndex);
   };
 
-  const _handlePressPreviousRun = () => {
+  const handlePressPreviousRun = () => {
     const newRunIndex = props.run == 0 ? 0 : props.run - 1;
     handleChangeRun(newRunIndex);
   };
@@ -58,7 +58,7 @@ export const PaddlerHandler = props => {
           <Row>
             <Col>
               <Button
-                onPress={_handlePressPrevious}
+                onPress={handlePressPrevious}
                 title="Last Paddler"
                 buttonStyle={styles.changeButton}
               />
@@ -84,7 +84,7 @@ export const PaddlerHandler = props => {
             </Col>
             <Col>
               <Button
-                onPress={_handlePressNext}
+                onPress={handlePressNext}
                 title="Next"
                 buttonStyle={styles.changeButton}
               />
@@ -95,7 +95,7 @@ export const PaddlerHandler = props => {
               <Row>
                 <Col>
                   <Button
-                    onPress={_handlePressPreviousRun}
+                    onPress={handlePressPreviousRun}
                     title="Prev Run"
                     buttonStyle={styles.changeButton}
                   />
@@ -115,7 +115,7 @@ export const PaddlerHandler = props => {
                 </Col>
                 <Col>
                   <Button
-                    onPress={_handlePressNextRun}
+                    onPress={handlePressNextRun}
                     title="New Run"
                     buttonStyle={styles.changeButton}
                   />
@@ -127,7 +127,12 @@ export const PaddlerHandler = props => {
       </View>
     );
   } else {
-    return (<View align="center"><Text style={{ ...styles.standardText, textAlign: "center", marginTop: 10 }}>{"This heat has no paddlers."}</Text></View>)
+    return (
+      <View>
+        <Text style={{ ...styles.standardText, textAlign: "center", marginTop: 10 }}>
+          {"This heat has no paddlers."}
+        </Text>
+      </View >)
   }
 };
 

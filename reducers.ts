@@ -2,13 +2,13 @@ import { ADD_OR_REMOVE_PADDLER, CHANGE_HEAT, CHANGE_PADDLER, UPDATE_NUMBER_OF_RU
 import { initialScoresheet } from "./screens/mycomponents/makePaddlerScores";
 
 // make our starting scoresheet from the list of paddlers
-const listOfPaddlers = [["paddler1", "paddler2", "paddler3"]];
+const listOfPaddlers: string[][] = [["paddler1", "paddler2", "paddler3"]];
 const startingScoresheet = {};
 listOfPaddlers.flat().map(paddler => {
-  startingScoresheet[paddler.toString()] = [initialScoresheet({})];
+  startingScoresheet[paddler.toString()] = [initialScoresheet()];
 });
 
-const initialState = {
+const initialState: initialStateInterface = {
   places: [],
   paddlerIndex: 0,
   paddlerList: listOfPaddlers,
@@ -72,3 +72,16 @@ export const paddlerReducer = (state = initialState, action) => {
       return state;
   }
 };
+
+interface initialStateInterface {
+  places: [],
+  paddlerIndex: number,
+  paddlerList: string[][],
+  paddlerScores: any,
+  showTimer: boolean,
+  currentHeat: number,
+  run: number,
+  numberOfRuns: number,
+  showRunHandler: boolean,
+  enabledMoves: { wave: boolean, hole: boolean }
+}
