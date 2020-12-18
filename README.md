@@ -6,7 +6,7 @@ This app is built using [npm](https://github.com/AntonyM71/FreestyleApp.git) and
 
 Try and keep to good programming practices, including:
 
-- linting using prettier (VSCode)
+- linting using eslint (VSCode)
 - testing (hah!) using jest
 - functional (arrow funciton) components wherever possible
 - redux-hooks on new components
