@@ -4,6 +4,10 @@ import Colors from '../constants/Colors';
 
 
 export default class TabBarIcon extends React.Component {
+  props: {
+    name: string
+    focused: any
+  }
   render() {
     return (
       <Ionicons

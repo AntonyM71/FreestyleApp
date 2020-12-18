@@ -7,7 +7,7 @@ import { getScoresState } from "../../selectors";
 import { styles } from "../../styles";
 
 
-const DynamicButtonPresentation = React.memo((props) => {
+const DynamicButtonPresentation = React.memo((props: any) => {
     const oneSidedMoves = ["Loop", "Back Loop"]
     const _handleMove = (paddler, run, move, direction, type) => () => {
         var newScores = { ...props.paddlerScores };

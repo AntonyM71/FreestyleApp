@@ -6,14 +6,14 @@ import { updateShowTimer } from "../../actions";
 import { styles } from "../../styles";
 
 const timerOptionsPresentation = props => {
-  _handleTimerButtonPress = () => {
+  const handleTimerButtonPress = () => {
     props.updateShowTimer(!props.showTimer);
   };
   return (
     <View>
       <Button
         buttonStyle={props.showTimer ? styles.moveScored : styles.noMove}
-        onPress={_handleTimerButtonPress}
+        onPress={handleTimerButtonPress}
         title={
           props.showTimer
             ? "Hide Timer"
