@@ -1,3 +1,4 @@
+
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import React from 'react';
