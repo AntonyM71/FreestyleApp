@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { connect } from 'react-redux';
-import { styles } from '../../styles.js';
+import { styles } from '../../styles';
 import { dataSourceMoveInterface, moveListArray, moveSideInterface } from './makePaddlerScores';
 
 const calculateScoreAndBonuses = (move: dataSourceMoveInterface, truth: moveSideInterface) => {
