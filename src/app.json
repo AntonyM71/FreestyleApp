@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "Kayak Freestyle App",
+    "slug": "freestyleapp",
+    "privacy": "public",
+    "sdkVersion": "37.0.0",
+    "platforms": [
+      "android"
+    ],
+    "version": "1.1.6",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "android": {
+      "package": "com.kayakfreestyle.kayakfreestyleapp",
+      "permissions": [],
+      "versionCode": 7
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
