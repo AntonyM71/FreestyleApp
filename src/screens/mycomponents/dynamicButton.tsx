@@ -8,9 +8,10 @@ import { styles } from "../../styles";
 
 
 const DynamicButtonPresentation = React.memo((props: any) => {
-    const oneSidedMoves = ["Loop", "Back Loop"]
-    const _handleMove = (paddler, run, move, direction, type) => () => {
-        var newScores = { ...props.paddlerScores };
+    const oneSidedMoves = ["Loop", "Back Loop"];
+    const _handleMove = (
+        paddler: string, run: number, move: string, direction: string, type: string) => () => {
+        const newScores = { ...props.paddlerScores };
 
         const newField = !newScores[paddler][run][move][direction][type];
         newScores[paddler][run][move][direction][type] = newField;
@@ -21,9 +22,9 @@ const DynamicButtonPresentation = React.memo((props: any) => {
             newScores[paddler][run][move][direction]["clean"] = true;
         }
         props.updateScore(newScores);
-    }
+    };
 
-    const thisMove = props.paddlerScores[props.paddler][props.run][props.move.Move]
+    const thisMove = props.paddlerScores[props.paddler][props.run][props.move.Move];
     if (
         thisMove[
             props.direction
@@ -48,9 +49,11 @@ const DynamicButtonPresentation = React.memo((props: any) => {
         );
 
     } else {
-        const buttonName = (props.move.Move == ("Loop") || props.move.Move == ("Back Loop")) ? props.move.Move : props.move.Move + " " + props.direction;
+        const buttonName = (props.move.Move == ("Loop") || props.move.Move == ("Back Loop"))
+            ? props.move.Move
+            : props.move.Move + " " + props.direction;
         return (
-            <View style={{ flex: 1, flexDirection: 'row', flexWrap: "wrap" }}>
+            <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
                 <View style={{ width: "100%" }}>
                     <Button
                         onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "scored")}
@@ -100,21 +103,21 @@ const DynamicButtonPresentation = React.memo((props: any) => {
                     />
                 </View>
             </View>
-        )
+        );
     }
 });
 
 
 // can we make this go deeper, so that we only update a single component when we add a move?
-const mapStateToProps = state => {
+const mapStateToProps = (state: any) => {
     return {
         paddlerScores: getScoresState(state)
     };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: (arg0: { type: string; payload: any; }) => void) => {
     return {
-        updateScore: newScores => {
+        updateScore: (newScores: any) => {
             dispatch(updatePaddlerScores(newScores));
         }
     };

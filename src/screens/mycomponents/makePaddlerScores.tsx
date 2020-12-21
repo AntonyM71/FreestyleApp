@@ -1,7 +1,8 @@
 
 export const moveListArray: dataSourceMoveInterface[] = Object.values(
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     require("../../data/moves_lists/move_list.json")
-).flat() as dataSourceMoveInterface[]
+).flat() as dataSourceMoveInterface[];
 
 export const initialScoresheet = () => {
     const initialMoves = moveListArray.map((item: dataSourceMoveInterface) => {
@@ -26,13 +27,13 @@ export const initialScoresheet = () => {
         };
         if (item.Move == "Trophy 1" || item.Move == "Trophy 2" || item.Move == "Trophy 3") {
 
-            return ([scoresObject])
+            return ([scoresObject]);
         } else {
-            return (scoresObject)
+            return (scoresObject);
         }
     });
 
-    return initialMoves.reduce((obj, item) => {
+    return initialMoves.reduce((obj: any, item: moveInterface | moveInterface[]) => {
         if (Array.isArray(item)) {
             obj[item[0].id] = item;
             return obj;
