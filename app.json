@@ -3,11 +3,18 @@
     "name": "Kayak Freestyle App",
     "slug": "freestyleapp",
     "privacy": "public",
+<<<<<<< HEAD
     "sdkVersion": "40.0.0",
     "platforms": [
       "android"
     ],
     "version": "0.0.2",
+=======
+    "platforms": [
+      "android"
+    ],
+    "version": "1.1.7",
+>>>>>>> origin/master
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
     "splash": {
@@ -21,7 +28,11 @@
     "android": {
       "package": "com.kayakfreestyle.kayakfreestyleapp",
       "permissions": [],
+<<<<<<< HEAD
       "versionCode": 400000002
+=======
+      "versionCode": 9
+>>>>>>> origin/master
     },
     "assetBundlePatterns": [
       "**/*"
