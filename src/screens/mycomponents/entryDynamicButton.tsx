@@ -7,10 +7,15 @@ import { getScoresState } from "../../selectors";
 import { styles } from "../../styles";
 
 
-const DynamicButtonPresentation = React.memo((props) => {
-    const oneSidedMoves = ["Loop", "Back Loop"]
-    const _handleMove = (paddler, run, move, direction, type) => () => {
-        var newScores = { ...props.paddlerScores };
+const DynamicButtonPresentation = React.memo((props: any) => {
+    const _handleMove = (
+        paddler: React.ReactText,
+        run: React.ReactText,
+        move: React.ReactText,
+        direction: React.ReactText,
+        type: string
+    ) => () => {
+        const newScores = { ...props.paddlerScores };
 
         const newField = !newScores[paddler][run][move][direction][type];
         newScores[paddler][run][move][direction][type] = newField;
@@ -21,15 +26,15 @@ const DynamicButtonPresentation = React.memo((props) => {
             newScores[paddler][run][move][direction]["clean"] = true;
         }
         props.updateScore(newScores);
-    }
+    };
 
-    const thisMove = props.paddlerScores[props.paddler][props.run][props.move.Move]
+    const thisMove = props.paddlerScores[props.paddler][props.run][props.move.Move];
     if (
         thisMove[
             props.direction
         ].scored == false
     ) {
-        const buttonName = props.move.Move
+        const buttonName = props.move.Move;
         return (
             <Button
                 onPress={_handleMove(
@@ -45,9 +50,9 @@ const DynamicButtonPresentation = React.memo((props) => {
         );
 
     } else {
-        const buttonName = props.move.Move 
+        const buttonName = props.move.Move;
         return (
-            <View style={{ flex: 1, flexDirection: 'row', flexWrap: "wrap" }}>
+            <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
                 <View style={{ width: "100%" }}>
                     <Button
                         onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "scored")}
@@ -93,31 +98,31 @@ const DynamicButtonPresentation = React.memo((props) => {
                         title={"L"}
                         disabled={props.move.Link ? false : true}
                         buttonStyle={thisMove[props.direction]["link"] ? styles.bonusScored : styles.noBonus}
-                        
+
                     />
                 </View>
             </View>
-        )
+        );
     }
 });
 
 
 // can we make this go deeper, so that we only update a single component when we add a move?
-const mapStateToProps = state => {
-  return {
-    paddlerScores: getScoresState(state)
-  };
+const mapStateToProps = (state: any) => {
+    return {
+        paddlerScores: getScoresState(state)
+    };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    updateScore: newScores => {
-      dispatch(updatePaddlerScores(newScores));
-    }
-  };
+const mapDispatchToProps = (dispatch: (arg0: { type: string; payload: any; }) => void) => {
+    return {
+        updateScore: (newScores: any) => {
+            dispatch(updatePaddlerScores(newScores));
+        }
+    };
 };
 
 export const EntryDynamicButton = connect(
-  mapStateToProps,
-  mapDispatchToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(DynamicButtonPresentation);

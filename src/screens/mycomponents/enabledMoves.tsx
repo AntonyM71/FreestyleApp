@@ -6,71 +6,78 @@ import { enabledMoves, updatePaddlerScores, changeRun } from "../../actions";
 import { styles } from "../../styles";
 import { initialScoresheet } from "./makePaddlerScores";
 
-const moveSelectionPresentation = props => {
+const moveSelectionPresentation = (props:
+    {
+        enabledMovesList: { [x: string]: any; };
+        enabledMoves: (arg0: any) => void;
+        paddlerHeatList: { flat: () => any[]; };
+        updateRun: (arg0: number) => void;
+        updatePaddlerScores: () => void;
+    }) => {
 
-  const handleMoveButtonPress = (moveKey) => () => {
-    const newMoves = { ...props.enabledMovesList }
-    newMoves[moveKey] = !(newMoves[moveKey])
-    props.enabledMoves(newMoves);
-    clearScores()
-  };
+    const handleMoveButtonPress = (moveKey: string) => () => {
+        const newMoves = { ...props.enabledMovesList };
+        newMoves[moveKey] = !(newMoves[moveKey]);
+        props.enabledMoves(newMoves);
+        clearScores();
+    };
 
 
-  const clearScores = () => {
-    const startingScoresheet = {};
-    props.paddlerHeatList.flat().map(paddler => {
-      startingScoresheet[paddler.toString()] = [initialScoresheet()];
-    });
-    props.updateRun(0);
-    props.updatePaddlerScores(startingScoresheet);
-  };
+    const clearScores = () => {
+        const startingScoresheet = {};
+        props.paddlerHeatList.flat().map((paddler: { toString: () => React.ReactText; }) => {
+            startingScoresheet[paddler.toString()] = [initialScoresheet()];
+        });
+        props.updateRun(0);
+        props.updatePaddlerScores(startingScoresheet);
+    };
 
-  return (
-    <View>
-      <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
+    return (
+        <View>
+            <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
 
-        {Object.keys(props.enabledMovesList).map((moveKey, key) => {
-          return (
-            <View style={{ width: "50%" }} key={key}>
-              <Button
-                buttonStyle={props.enabledMovesList[moveKey] ? styles.moveScored : styles.noMove}
-                onPress={handleMoveButtonPress(moveKey)}
-                title={
-                  props.enabledMovesList[moveKey]
-                    ? `Hide ${moveKey}`
-                    : `Show ${moveKey}`
-                }
+                {Object.keys(props.enabledMovesList).map((moveKey, key) => {
+                    return (
+                        <View style={{ width: "50%" }} key={key}>
+                            <Button
+                                buttonStyle={props.enabledMovesList[moveKey] ? styles.moveScored : styles.noMove}
+                                onPress={handleMoveButtonPress(moveKey)}
+                                title={
+                                    props.enabledMovesList[moveKey]
+                                        ? `Hide ${moveKey}`
+                                        : `Show ${moveKey}`
+                                }
 
-              />
+                            />
+                        </View>
+                    );
+                })}
             </View>
-          )
-        })}
-      </View>
-    </View>
-  );
+        </View>
+    );
 };
-const mapStateToProps = state => {
-  return {
-    enabledMovesList: state.paddlers.enabledMoves,
-    paddlerHeatList: state.paddlers.paddlerList
-  };
+const mapStateToProps = (state: { paddlers: { enabledMoves: any; paddlerList: any; }; }) => {
+    return {
+        enabledMovesList: state.paddlers.enabledMoves,
+        paddlerHeatList: state.paddlers.paddlerList
+    };
 };
 // not used currently, need to add an addmove function and redux pathway
-const mapDispatchToProps = dispatch => {
-  return {
-    enabledMoves: key => {
-      dispatch(enabledMoves(key));
-    },
-    updatePaddlerScores: scores => {
-      dispatch(updatePaddlerScores(scores));
-    },
-    updateRun: run => {
-      dispatch(changeRun(run));
-    }
-  };
+const mapDispatchToProps = (dispatch: (arg0: { type: string; payload: any; }) => void) => {
+    return {
+        enabledMoves: (key: any) => {
+            dispatch(enabledMoves(key));
+        },
+        updatePaddlerScores: (scores: any) => {
+            dispatch(updatePaddlerScores(scores));
+        },
+        updateRun: (run: any) => {
+            dispatch(changeRun(run));
+        }
+    };
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(moveSelectionPresentation);

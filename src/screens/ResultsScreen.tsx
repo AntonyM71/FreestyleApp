@@ -4,14 +4,14 @@ import { styles } from "../styles";
 import ResultsView from "./mycomponents/resultsView";
 export default class ResultsScreen extends React.Component {
   static navigationOptions = {
-    title: "Results"
+      title: "Results"
   };
 
   render() {
-    return (
-      <ScrollView style={styles.container}>
-        <ResultsView />
-      </ScrollView>
-    );
+      return (
+          <ScrollView style={styles.container}>
+              <ResultsView />
+          </ScrollView>
+      );
   }
 }
