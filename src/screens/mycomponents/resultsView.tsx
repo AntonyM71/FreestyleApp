@@ -52,7 +52,7 @@ export const ResultsView = props => {
               );
             })}
           </View>
-          : <View align="center"><Text style={{ ...styles.standardText, textAlign: "center", marginTop: 10 }}>{"Please add a paddler."}</Text></View>
+          : <View><Text style={{ ...styles.standardText, textAlign: "center", marginTop: 10 }}>{"Please add a paddler."}</Text></View>
         }
       </ScrollView>
     </View>
