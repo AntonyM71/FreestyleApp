@@ -8,7 +8,7 @@
     "eject": "expo eject",
     "lint": "eslint ./src",
     "lintfix": "npm run lint --fix",
-    "test": "node ./node_modules/jest/bin/jest.js",
+    "test": "node ./node_modules/jest/bin/jest.js --passWithNoTests",
     "testwatch": "node ./node_modules/jest/bin/jest.js --watchAll",
     "build": "npm ci && npm run lint && npm run test",
     "release": "npx standard-version npm run lint npm ci"
