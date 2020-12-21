@@ -9,7 +9,7 @@
     "lint": "eslint ./src",
     "lintfix": "npm run lint --fix",
     "test": "node ./node_modules/jest/bin/jest.js --watchAll",
-    "build": "expo build:android -t apk"
+    "build": "npx standard-version npm run lint"
   },
   "jest": {
     "preset": "jest-expo"
