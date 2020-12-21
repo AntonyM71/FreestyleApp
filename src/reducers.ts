@@ -7,7 +7,7 @@ import { initialScoresheet } from './screens/mycomponents/makePaddlerScores';
 const listOfPaddlers = [['paddler1', 'paddler2', 'paddler3']];
 const startingScoresheet = {};
 listOfPaddlers.flat().map((paddler) => {
-  startingScoresheet[paddler.toString()] = [initialScoresheet({})];
+  startingScoresheet[paddler.toString()] = [initialScoresheet()];
 });
 
 const initialState = {

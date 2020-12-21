@@ -1,5 +1,4 @@
-<<<<<<< HEAD:App.js
-import { AppLoading } from 'expo';
+import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import React from 'react';
 import {
@@ -8,15 +7,6 @@ import {
 import { Provider } from 'react-redux';
 import AppNavigator from './src/navigation/AppNavigator';
 import configureStore from './src/store';
-=======
-import AppLoading from "expo-app-loading";
-import * as Font from "expo-font";
-import React from "react";
-import { Platform, StatusBar, StyleSheet, View } from "react-native";
-import { Provider } from "react-redux";
-import AppNavigator from "./navigation/AppNavigator";
-import configureStore from "./store";
->>>>>>> origin/master:App.tsx
 
 const store = configureStore();
 
