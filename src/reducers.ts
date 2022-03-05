@@ -26,7 +26,7 @@ const initialState: IPaddlerStateType = {
 	paddlerScores: startingScoresheet,
 	showTimer: false,
 	currentHeat: 0,
-	run: 0,
+	currentRun: 0,
 	numberOfRuns: 0,
 	showRunHandler: true,
 	enabledMoves: { wave: true, hole: true }
@@ -94,7 +94,7 @@ export interface IPaddlerStateType {
 	paddlerScores: IPaddlerScores
 	showTimer: boolean
 	currentHeat: number
-	run: number
+	currentRun: number
 	numberOfRuns: number
 	showRunHandler: boolean
 	enabledMoves: IEnabledMoves
@@ -102,10 +102,12 @@ export interface IPaddlerStateType {
 
 export type IPaddlerScores = object
 export interface IEnabledMoves {
-	hole: true
-	wave: true
+	hole: boolean
+	wave: boolean
 }
 
 export type IPaddlerList = IPaddler[][]
 
 export type IPaddler = string
+
+export type IDirection = "left" | "right"

@@ -1,88 +1,72 @@
 import React from "react"
 import { View } from "react-native"
 import { Button } from "react-native-elements"
-import { connect } from "react-redux"
-import { changeRun, enabledMoves, updatePaddlerScores } from "../../actions"
+import { useDispatch, useSelector } from "react-redux"
+import {
+	changeRun,
+	updateEnabledMoves,
+	updatePaddlerScores
+} from "../../actions"
+import { IEnabledMoves } from "../../reducers"
+import { getPaddlerHeatList, getShowMoves } from "../../selectors"
 import { styles } from "../../styles"
 import { initialScoresheet } from "./makePaddlerScores"
 
-const moveSelectionPresentation = (props: {
-	enabledMovesList: { [x: string]: any }
-	enabledMoves: (arg0: any) => void
-	paddlerHeatList: { flat: () => any[] }
-	updateRun: (arg0: number) => void
-	updatePaddlerScores: (startingScoresheet: any) => void
-}) => {
-	const handleMoveButtonPress = (moveKey: string) => () => {
-		const newMoves = { ...props.enabledMovesList }
+const moveSelectionPresentation = () => {
+	const dispatch = useDispatch()
+
+	const enabledMovesList = useSelector(getShowMoves)
+	const handleMoveButtonPress = (moveKey: IEnabledMovesKeys) => () => {
+		const newMoves = { ...enabledMovesList }
+
 		newMoves[moveKey] = !newMoves[moveKey]
-		props.enabledMoves(newMoves)
+		dispatch(updateEnabledMoves(newMoves))
 		clearScores()
 	}
 
 	const clearScores = () => {
 		const startingScoresheet = {}
-		props.paddlerHeatList
+		const paddlerHeatList = useSelector(getPaddlerHeatList)
+		paddlerHeatList
 			.flat()
 			.map((paddler: { toString: () => React.ReactText }) => {
+				// @ts-ignore
 				startingScoresheet[paddler.toString()] = [initialScoresheet()]
 			})
-		props.updateRun(0)
-		props.updatePaddlerScores(startingScoresheet)
+		dispatch(changeRun(0))
+		dispatch(updatePaddlerScores(startingScoresheet))
 	}
-
+	const enabledMovesKeys = Object.keys(
+		enabledMovesList
+	) as IEnabledMovesKeys[] // both types are derived from the object so this cast is safe
 	return (
 		<View>
 			<View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
-				{Object.keys(props.enabledMovesList).map((moveKey, key) => {
-					return (
-						<View style={{ width: "50%" }} key={key}>
-							<Button
-								buttonStyle={
-									props.enabledMovesList[moveKey]
-										? styles.moveScored
-										: styles.noMove
-								}
-								onPress={handleMoveButtonPress(moveKey)}
-								title={
-									props.enabledMovesList[moveKey]
-										? `Hide ${moveKey}`
-										: `Show ${moveKey}`
-								}
-							/>
-						</View>
-					)
-				})}
+				{enabledMovesKeys.map(
+					(moveKey: IEnabledMovesKeys, key: number) => {
+						return (
+							<View style={{ width: "50%" }} key={key}>
+								<Button
+									buttonStyle={
+										enabledMovesList[moveKey]
+											? styles.moveScored
+											: styles.noMove
+									}
+									title={
+										enabledMovesList[moveKey]
+											? `Hide ${moveKey}`
+											: `Show ${moveKey}`
+									}
+								/>
+							</View>
+						)
+					}
+				)}
 			</View>
 		</View>
 	)
 }
-const mapStateToProps = (state: {
-	paddlers: { enabledMoves: any; paddlerList: any }
-}) => {
-	return {
-		enabledMovesList: state.paddlers.enabledMoves,
-		paddlerHeatList: state.paddlers.paddlerList
-	}
-}
-// not used currently, need to add an addmove function and redux pathway
-const mapDispatchToProps = (
-	dispatch: (arg0: { type: string; payload: any }) => void
-) => {
-	return {
-		enabledMoves: (key: any) => {
-			dispatch(enabledMoves(key))
-		},
-		updatePaddlerScores: (scores: any) => {
-			dispatch(updatePaddlerScores(scores))
-		},
-		updateRun: (run: any) => {
-			dispatch(changeRun(run))
-		}
-	}
-}
 
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(moveSelectionPresentation)
+type IEnabledMovesKeys = keyof IEnabledMoves
+
+export default moveSelectionPresentation

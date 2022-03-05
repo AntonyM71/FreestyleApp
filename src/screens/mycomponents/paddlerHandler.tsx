@@ -2,80 +2,80 @@ import React from "react"
 import { Text, View } from "react-native"
 import { Col, Grid, Row } from "react-native-easy-grid"
 import { Button } from "react-native-elements"
-import { connect } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import {
-	changeHeat,
 	changeNumberOfRuns,
 	changePaddler,
 	changeRun,
 	updatePaddlerScores
 } from "../../actions"
-import { getScoresState } from "../../selectors"
+import {
+	getCurrentHeat,
+	getCurrentRun,
+	getNumberOfPaddlers,
+	getNumberOfRuns,
+	getPaddlerHeatList,
+	getPaddlerIndex,
+	getPaddlerScores,
+	getShowRunHandler
+} from "../../selectors"
 import { styles } from "../../styles"
 import { DisplayScore } from "./calculateScore"
 import { initialScoresheet } from "./makePaddlerScores"
 
-export const PaddlerHandler = (props: {
-	paddlerList: { [x: string]: { [x: string]: any }; flat: () => any[] }
-	currentHeat: React.ReactText
-	paddlerIndex: number
-	updatePaddler: (arg0: number) => void
-	run: number
-	numberOfRuns: number
-	updateRun: (arg0: any) => void
-	paddlerScores: any
-	updateNumberOfRuns: (arg0: any) => void
-	updateScore: (arg0: any) => void
-	showRunHandler: boolean
-}) => {
-	const numberOfPaddlers = props.paddlerList[props.currentHeat].length
-
+export const PaddlerHandler = () => {
+	const dispatch = useDispatch()
+	const numberOfPaddlers = useSelector(getNumberOfPaddlers)
+	const numberOfRuns = useSelector(getNumberOfRuns)
+	const paddlerIndex = useSelector(getPaddlerIndex)
+	const paddlerScores = useSelector(getPaddlerScores)
+	const currentRun = useSelector(getCurrentRun)
+	const currentHeat = useSelector(getCurrentHeat)
+	const paddlerList = useSelector(getPaddlerHeatList)
+	const showRunHandler = useSelector(getShowRunHandler)
 	const handlePressNext = () => {
 		// -1 to account for zero indexing
 		const newPaddlerIndex: number =
-			props.paddlerIndex < numberOfPaddlers - 1
-				? props.paddlerIndex + 1
-				: 0
-		props.updatePaddler(newPaddlerIndex)
+			paddlerIndex < numberOfPaddlers - 1 ? paddlerIndex + 1 : 0
+		dispatch(changePaddler(newPaddlerIndex))
 	}
 
 	const handlePressPrevious = () => {
 		// -1 to account for zero indexing
 		const newPaddlerIndex =
-			props.paddlerIndex == 0
-				? numberOfPaddlers - 1
-				: props.paddlerIndex - 1
-		props.updatePaddler(newPaddlerIndex)
+			paddlerIndex == 0 ? numberOfPaddlers - 1 : paddlerIndex - 1
+		dispatch(changePaddler(newPaddlerIndex))
 	}
 
 	const handlePressNextRun = () => {
 		// -1 to account for zero indexing
-		const newRunIndex = props.run + 1
+		const newRunIndex = currentRun + 1
 		handleChangeRun(newRunIndex)
 	}
 
 	const handlePressPreviousRun = () => {
-		const newRunIndex = props.run == 0 ? 0 : props.run - 1
+		const newRunIndex = currentRun == 0 ? 0 : currentRun - 1
 		handleChangeRun(newRunIndex)
 	}
 
 	const handleChangeRun = (newRunIndex: number) => {
-		if (newRunIndex < props.numberOfRuns) {
-			props.updateRun(newRunIndex)
+		if (newRunIndex < numberOfRuns) {
+			dispatch(changeRun(newRunIndex))
 		} else {
-			const scores = props.paddlerScores
-			props.paddlerList
+			const scores = paddlerScores
+			paddlerList
 				.flat()
 				.map((paddler: { toString: () => React.ReactText }) => {
+					// @ts-ignore
 					scores[paddler.toString()].push(initialScoresheet())
 				})
-			props.updateNumberOfRuns(newRunIndex)
-			props.updateScore({ ...scores })
-			props.updateRun(newRunIndex)
+			dispatch(changeNumberOfRuns(newRunIndex))
+			dispatch(updatePaddlerScores({ ...scores }))
+			dispatch(changeRun(newRunIndex))
 		}
 	}
 
-	if (props.paddlerList[props.currentHeat].length != 0) {
+	if (paddlerList[currentHeat].length != 0) {
 		return (
 			<View>
 				<Grid>
@@ -96,19 +96,13 @@ export const PaddlerHandler = (props: {
 										textAlign: "center"
 									}}
 								>
-									{
-										props.paddlerList[props.currentHeat][
-											props.paddlerIndex
-										]
-									}
+									{paddlerList[currentHeat][paddlerIndex]}
 								</Text>
 								<DisplayScore
 									paddler={
-										props.paddlerList[props.currentHeat][
-											props.paddlerIndex
-										]
+										paddlerList[currentHeat][paddlerIndex]
 									}
-									run={props.run}
+									run={currentRun}
 								/>
 							</View>
 						</Col>
@@ -120,7 +114,7 @@ export const PaddlerHandler = (props: {
 							/>
 						</Col>
 					</Row>
-					{props.showRunHandler ? (
+					{showRunHandler ? (
 						<Row>
 							<Col>
 								<Button
@@ -138,7 +132,7 @@ export const PaddlerHandler = (props: {
 											textAlign: "center"
 										}}
 									>
-										{props.run + 1}
+										{currentRun + 1}
 									</Text>
 								</View>
 							</Col>
@@ -170,49 +164,3 @@ export const PaddlerHandler = (props: {
 		)
 	}
 }
-
-const mapStateToProps = (state: {
-	paddlers: {
-		paddlerIndex: any
-		paddlerList: any
-		currentHeat: any
-		run: any
-		numberOfRuns: any
-		showRunHandler: any
-	}
-}) => {
-	return {
-		paddlerIndex: state.paddlers.paddlerIndex,
-		paddlerList: state.paddlers.paddlerList,
-		currentHeat: state.paddlers.currentHeat,
-		run: state.paddlers.run,
-		numberOfRuns: state.paddlers.numberOfRuns,
-		paddlerScores: getScoresState(state),
-		showRunHandler: state.paddlers.showRunHandler
-	}
-}
-
-// not used currently, need to add an addmove function and redux pathway
-const mapDispatchToProps = (
-	dispatch: (arg0: { type: string; payload: any }) => void
-) => {
-	return {
-		updatePaddler: (index: any) => {
-			dispatch(changePaddler(index))
-		},
-		updateHeat: (index: any) => {
-			dispatch(changeHeat(index))
-		},
-		updateRun: (run: any) => {
-			dispatch(changeRun(run))
-		},
-		updateNumberOfRuns: (numberOfRuns: any) => {
-			dispatch(changeNumberOfRuns(numberOfRuns))
-		},
-		updateScore: (newScores: any) => {
-			dispatch(updatePaddlerScores(newScores))
-		}
-	}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PaddlerHandler)

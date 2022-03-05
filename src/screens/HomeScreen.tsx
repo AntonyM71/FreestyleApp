@@ -3,7 +3,7 @@ import { Dimensions, SafeAreaView, ScrollView, View } from "react-native"
 import { styles } from "../styles"
 import HeatHandler from "./mycomponents/heatHandler"
 import MoveButtons from "./mycomponents/JsonButtons"
-import PaddlerHandler from "./mycomponents/paddlerHandler"
+import { PaddlerHandler } from "./mycomponents/paddlerHandler"
 import Timer from "./mycomponents/timer"
 export default class HomeScreen extends React.Component {
 	static navigationOptions = {
@@ -37,10 +37,10 @@ export default class HomeScreen extends React.Component {
 								<Timer />
 							</View>
 							<View style={{ width: buttonPercentage(66.6) }}>
-								<HeatHandler state={this.state} />
+								<HeatHandler />
 							</View>
 							<View style={{ width: buttonPercentage(100) }}>
-								<PaddlerHandler state={this.state} />
+								<PaddlerHandler />
 							</View>
 							<View>
 								<MoveButtons />
