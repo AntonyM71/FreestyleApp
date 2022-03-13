@@ -32,11 +32,11 @@ export const PaddlerManager = () => {
 		const newPaddlerScores = paddlerScores
 		newHeatList.flat().map((paddler: any) => {
 			// @ts-ignore
-			if (!newPaddlerScores[paddler])
-				// @ts-ignore
+			if (!newPaddlerScores[paddler]) {
 				newPaddlerScores[paddler.toString()] = [initialScoresheet()]
+			}
 			if (
-				numberOfRuns + 1 !=
+				numberOfRuns + 1 !==
 				// @ts-ignore
 				newPaddlerScores[paddler.toString()].length
 			) {

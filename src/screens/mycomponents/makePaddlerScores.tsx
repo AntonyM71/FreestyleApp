@@ -25,9 +25,9 @@ export const initialScoresheet = () => {
 			}
 		}
 		if (
-			item.Move == "Trophy 1" ||
-			item.Move == "Trophy 2" ||
-			item.Move == "Trophy 3"
+			item.Move === "Trophy 1" ||
+			item.Move === "Trophy 2" ||
+			item.Move === "Trophy 3"
 		) {
 			return [scoresObject]
 		} else {
@@ -39,9 +39,11 @@ export const initialScoresheet = () => {
 		(obj: any, item: moveInterface | moveInterface[]) => {
 			if (Array.isArray(item)) {
 				obj[item[0].id] = item
+
 				return obj
 			} else {
 				obj[item.id] = item
+
 				return obj
 			}
 		},

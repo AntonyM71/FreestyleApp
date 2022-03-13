@@ -13,6 +13,7 @@ const timerOptionsPresentation = () => {
 	const handleTimerButtonPress = () => {
 		dispatch(updateShowTimer(!showTimer))
 	}
+
 	return (
 		<View>
 			<Button

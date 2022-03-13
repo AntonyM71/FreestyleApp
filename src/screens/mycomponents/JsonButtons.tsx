@@ -21,16 +21,14 @@ const NormalMove = (props: {
 	currentRun: number
 	item: any
 	direction: IDirection
-}) => {
-	return (
-		<DynamicButton
-			paddler={props.paddlerList[props.currentHeat][props.paddlerIndex]}
-			currentRun={props.currentRun}
-			move={props.item}
-			direction={props.direction}
-		/>
-	)
-}
+}) => (
+	<DynamicButton
+		paddler={props.paddlerList[props.currentHeat][props.paddlerIndex]}
+		currentRun={props.currentRun}
+		move={props.item}
+		direction={props.direction}
+	/>
+)
 
 export const MoveButtons = () => {
 	const currentRun = useSelector(getCurrentRun)
@@ -46,7 +44,7 @@ export const MoveButtons = () => {
 	const entryButtonPercentage = screenWidth > 600 ? "33%" : "33%"
 	const trophyButtonPercentage = screenWidth > 600 ? "33%" : "50%"
 	{
-		if (paddlerList[currentHeat].length != 0) {
+		if (paddlerList[currentHeat].length !== 0) {
 			return (
 				<View
 					style={{
@@ -57,25 +55,21 @@ export const MoveButtons = () => {
 					}}
 				>
 					<>
-						{availableMoves.entry.map((item) => {
-							return (
-								<View
-									style={{ width: entryButtonPercentage }}
-									key={item.Move}
-								>
-									<EntryDynamicButton
-										paddler={
-											paddlerList[currentHeat][
-												paddlerIndex
-											]
-										}
-										currentRun={currentRun}
-										move={item}
-										direction={"left"}
-									/>
-								</View>
-							)
-						})}
+						{availableMoves.entry.map((item) => (
+							<View
+								style={{ width: entryButtonPercentage }}
+								key={item.Move}
+							>
+								<EntryDynamicButton
+									paddler={
+										paddlerList[currentHeat][paddlerIndex]
+									}
+									currentRun={currentRun}
+									move={item}
+									direction={"left"}
+								/>
+							</View>
+						))}
 					</>
 					<>
 						{availableMoves.both.map((item) => {
@@ -271,25 +265,21 @@ export const MoveButtons = () => {
 							: null}
 					</>
 					<>
-						{availableMoves.trophy.map((item, key) => {
-							return (
-								<View
-									style={{ width: trophyButtonPercentage }}
-									key={item.Move + key}
-								>
-									<TrophyDynamicButton
-										paddler={
-											paddlerList[currentHeat][
-												paddlerIndex
-											]
-										}
-										currentRun={currentRun}
-										move={item}
-										direction={"left"}
-									/>
-								</View>
-							)
-						})}
+						{availableMoves.trophy.map((item, key) => (
+							<View
+								style={{ width: trophyButtonPercentage }}
+								key={item.Move + key.toString()}
+							>
+								<TrophyDynamicButton
+									paddler={
+										paddlerList[currentHeat][paddlerIndex]
+									}
+									currentRun={currentRun}
+									move={item}
+									direction={"left"}
+								/>
+							</View>
+						))}
 					</>
 				</View>
 			)

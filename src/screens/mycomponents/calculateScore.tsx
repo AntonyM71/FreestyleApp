@@ -18,14 +18,15 @@ const calculateScoreAndBonuses = (
 	truth.clean = truth.superClean ? true : truth.clean
 	const moveScore = truth.scored
 		? [
-				truth.scored == true ? move.Value : 0,
-				truth.clean == true ? move.Clean : 0,
-				truth.superClean == true ? move.SuperClean : 0,
-				truth.air == true ? move.Air : 0,
-				truth.huge == true ? move.Huge : 0,
-				truth.link == true ? move.Link : 0
+				truth.scored === true ? move.Value : 0,
+				truth.clean ? move.Clean : 0,
+				truth.superClean ? move.SuperClean : 0,
+				truth.air ? move.Air : 0,
+				truth.huge ? move.Huge : 0,
+				truth.link ? move.Link : 0
 		  ].reduce((a, b) => a + b)
 		: 0
+
 	return moveScore
 }
 
@@ -44,8 +45,8 @@ const DisplayScorePresenetation = (props: {
 				scoredMoves[item.Move].map(
 					(arrayItem: { [x: string]: moveSideInterface }) => {
 						const moveTotal =
-							calculateScoreAndBonuses(item, arrayItem["left"]) +
-							calculateScoreAndBonuses(item, arrayItem["right"])
+							calculateScoreAndBonuses(item, arrayItem.left) +
+							calculateScoreAndBonuses(item, arrayItem.right)
 						paddlerScore.push(moveTotal)
 					}
 				)
@@ -53,12 +54,9 @@ const DisplayScorePresenetation = (props: {
 				const moveTotal =
 					calculateScoreAndBonuses(
 						item,
-						scoredMoves[item.Move]["left"]
+						scoredMoves[item.Move].left
 					) +
-					calculateScoreAndBonuses(
-						item,
-						scoredMoves[item.Move]["right"]
-					)
+					calculateScoreAndBonuses(item, scoredMoves[item.Move].right)
 				paddlerScore.push(moveTotal)
 			}
 		})

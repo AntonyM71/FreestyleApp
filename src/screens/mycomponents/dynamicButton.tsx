@@ -8,11 +8,12 @@ import { getPaddlerScores } from "../../selectors"
 import { styles } from "../../styles"
 import { dataSourceMoveInterface } from "./makePaddlerScores"
 
+// eslint-disable-next-line complexity
 const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 	const dispatch = useDispatch()
 	const paddlerScores = useSelector(getPaddlerScores)
 	const oneSidedMoves = ["Loop", "Back Loop"]
-	const _handleMove =
+	const handleMove =
 		(
 			paddler: string,
 			currentRun: number,
@@ -28,14 +29,14 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 			// @ts-ignore
 			newScores[paddler][currentRun][move][direction][type] = newField
 			// @ts-ignore
-			if (newScores[paddler][currentRun][move][direction]["huge"]) {
+			if (newScores[paddler][currentRun][move][direction].huge) {
 				// @ts-ignore
-				newScores[paddler][currentRun][move][direction]["air"] = true
+				newScores[paddler][currentRun][move][direction].air = true
 			}
 			// @ts-ignore
-			if (newScores[paddler][currentRun][move][direction]["superClean"]) {
+			if (newScores[paddler][currentRun][move][direction].superClean) {
 				// @ts-ignore
-				newScores[paddler][currentRun][move][direction]["clean"] = true
+				newScores[paddler][currentRun][move][direction].clean = true
 			}
 			dispatch(updatePaddlerScores(newScores))
 		}
@@ -43,14 +44,15 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 	const thisMove =
 		// @ts-ignore
 		paddlerScores[props.paddler][props.currentRun][props.move.Move]
-	if (thisMove[props.direction].scored == false) {
+	if (thisMove[props.direction].scored === false) {
 		const buttonName =
 			oneSidedMoves.indexOf(props.move.Move) > -1
 				? props.move.Move
 				: props.move.Move + " " + props.direction
+
 		return (
 			<Button
-				onPress={_handleMove(
+				onPress={handleMove(
 					props.paddler,
 					props.currentRun,
 					props.move.Move,
@@ -63,14 +65,15 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 		)
 	} else {
 		const buttonName =
-			props.move.Move == "Loop" || props.move.Move == "Back Loop"
+			props.move.Move === "Loop" || props.move.Move === "Back Loop"
 				? props.move.Move
 				: props.move.Move + " " + props.direction
+
 		return (
 			<View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
 				<View style={{ width: "100%" }}>
 					<Button
-						onPress={_handleMove(
+						onPress={handleMove(
 							props.paddler,
 							props.currentRun,
 							props.move.Move,
@@ -83,7 +86,7 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 				</View>
 				<View style={{ width: "50%" }}>
 					<Button
-						onPress={_handleMove(
+						onPress={handleMove(
 							props.paddler,
 							props.currentRun,
 							props.move.Move,
@@ -93,7 +96,7 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 						title={"C"}
 						disabled={props.move.Clean ? false : true}
 						buttonStyle={
-							thisMove[props.direction]["clean"]
+							thisMove[props.direction].clean
 								? styles.bonusScored
 								: styles.noBonus
 						}
@@ -101,7 +104,7 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 				</View>
 				<View style={{ width: "50%" }}>
 					<Button
-						onPress={_handleMove(
+						onPress={handleMove(
 							props.paddler,
 							props.currentRun,
 							props.move.Move,
@@ -111,7 +114,7 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 						title={"SC"}
 						disabled={props.move.SuperClean ? false : true}
 						buttonStyle={
-							thisMove[props.direction]["superClean"]
+							thisMove[props.direction].superClean
 								? styles.bonusScored
 								: styles.noBonus
 						}
@@ -119,7 +122,7 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 				</View>
 				<View style={{ width: "33%" }}>
 					<Button
-						onPress={_handleMove(
+						onPress={handleMove(
 							props.paddler,
 							props.currentRun,
 							props.move.Move,
@@ -129,7 +132,7 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 						title={"A"}
 						disabled={props.move.Air ? false : true}
 						buttonStyle={
-							thisMove[props.direction]["air"]
+							thisMove[props.direction].air
 								? styles.bonusScored
 								: styles.noBonus
 						}
@@ -137,7 +140,7 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 				</View>
 				<View style={{ width: "33%" }}>
 					<Button
-						onPress={_handleMove(
+						onPress={handleMove(
 							props.paddler,
 							props.currentRun,
 							props.move.Move,
@@ -147,7 +150,7 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 						title={"H"}
 						disabled={props.move.Huge ? false : true}
 						buttonStyle={
-							thisMove[props.direction]["huge"]
+							thisMove[props.direction].huge
 								? styles.bonusScored
 								: styles.noBonus
 						}
@@ -155,7 +158,7 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 				</View>
 				<View style={{ width: "33%" }}>
 					<Button
-						onPress={_handleMove(
+						onPress={handleMove(
 							props.paddler,
 							props.currentRun,
 							props.move.Move,
@@ -165,7 +168,7 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 						title={"L"}
 						disabled={props.move.Link ? false : true}
 						buttonStyle={
-							thisMove[props.direction]["link"]
+							thisMove[props.direction].link
 								? styles.bonusScored
 								: styles.noBonus
 						}

@@ -7,7 +7,7 @@ import {
 	changePaddler,
 	updatePaddlerScores
 } from "../../actions"
-import { IPaddler, IPaddlerScores } from "../../reducers"
+import { IPaddler } from "../../reducers"
 import {
 	getNumberOfRuns,
 	getPaddlerHeatList,
@@ -18,74 +18,60 @@ import { initialScoresheet } from "./makePaddlerScores"
 
 export const PaddlerHeatManagerPresentation = (props: any): any => {
 	const dispatch = useDispatch()
-	const [newPaddler, setNewPaddler] = useState("")
+	const [currentPaddler, setCurrentPaddler] = useState("")
 	const [inputBorder, setInputBorder] = useState("black")
 	const paddlerScores = useSelector(getScoresState)
 	const paddlerHeatList = useSelector(getPaddlerHeatList)
 	const numberOfRuns = useSelector(getNumberOfRuns)
-	const _handleDeletePaddler =
-		(
-			heatKey: number,
-			paddlerList: IPaddler[],
-			paddler: IPaddler,
-			paddlerScores: IPaddlerScores
-		) =>
-		() => {
+	const handleDeletePaddler =
+		(heatKey: number, paddlerList: IPaddler[], paddler: IPaddler) => () => {
 			addOrRemovePaddler(
 				heatKey,
-				paddlerList.filter((e) => e !== paddler),
-				paddlerScores
+				paddlerList.filter((e) => e !== paddler)
 			)
 		}
 
-	const _handleAddChange = (newPaddler: IPaddler) => {
-		setNewPaddler(newPaddler)
+	const handleAddChange = (newPaddler: IPaddler) => {
+		setCurrentPaddler(newPaddler)
 		if (paddlerHeatList.flat().indexOf(newPaddler) > -1) {
 			setInputBorder("red")
 		} else {
 			setInputBorder("black")
 		}
 	}
-	const _handleAddPaddler =
-		(
-			heatKey: number,
-			paddlerList: IPaddler[],
-			newPaddler: IPaddler,
-			paddlerScores: IPaddlerScores
-		) =>
+	const handleAddPaddler =
+		(heatKey: number, paddlerList: IPaddler[], newPaddler: IPaddler) =>
 		() => {
-			if (newPaddler.length == 0) {
+			if (newPaddler.length === 0) {
 				alert("People like having names :)")
 			} else {
 				if (paddlerHeatList.flat().indexOf(newPaddler) > -1) {
 					alert("You've already added this paddler")
 				} else {
 					batch(() => {
-						setNewPaddler("")
-						addOrRemovePaddler(
-							heatKey,
-							[...paddlerList, newPaddler],
-							paddlerScores
-						)
+						setCurrentPaddler("")
+						addOrRemovePaddler(heatKey, [
+							...paddlerList,
+							newPaddler
+						])
 					})
 				}
 			}
 		}
 	const addOrRemovePaddler = (
 		heatKey: number,
-		remainingPaddlers: IPaddler[],
-		paddlerScores: IPaddlerScores
+		remainingPaddlers: IPaddler[]
 	) => {
-		const newList = remainingPaddlers.length == 0 ? [] : remainingPaddlers
+		const newList = remainingPaddlers.length === 0 ? [] : remainingPaddlers
 		const newPaddlerScores = paddlerScores
 		newList.flat().map((paddler) => {
 			// @ts-ignore
-			if (!newPaddlerScores[paddler])
-				// @ts-ignore
+			if (!newPaddlerScores[paddler]) {
 				newPaddlerScores[paddler.toString()] = []
+			}
 
 			if (
-				numberOfRuns + 1 !=
+				numberOfRuns + 1 !==
 				// @ts-ignore
 				newPaddlerScores[paddler.toString()].length
 			) {
@@ -111,7 +97,7 @@ export const PaddlerHeatManagerPresentation = (props: any): any => {
 		<View>
 			<View>
 				<Text style={styles.heatStyle}>{`Heat ${
-					props.heatKey + 1
+					(props.heatKey as number) + 1
 				}`}</Text>
 
 				{props.paddlerList.map((paddler: IPaddler, key: number) => (
@@ -137,11 +123,10 @@ export const PaddlerHeatManagerPresentation = (props: any): any => {
 
 						<View style={{ width: "30%" }}>
 							<Button
-								onPress={_handleDeletePaddler(
+								onPress={handleDeletePaddler(
 									props.heatKey,
 									props.paddlerList,
-									paddler,
-									paddlerScores
+									paddler
 								)}
 								title="Delete"
 								buttonStyle={styles.deleteButton}
@@ -155,13 +140,12 @@ export const PaddlerHeatManagerPresentation = (props: any): any => {
 					blurOnSubmit={true}
 					autoCorrect={false}
 					placeholder="New Paddler Name"
-					value={newPaddler}
-					onChangeText={(text) => _handleAddChange(text)}
-					onSubmitEditing={_handleAddPaddler(
+					value={currentPaddler}
+					onChangeText={handleAddChange}
+					onSubmitEditing={handleAddPaddler(
 						props.heatKey,
 						props.paddlerList,
-						newPaddler,
-						paddlerScores
+						currentPaddler
 					)}
 					clearButtonMode="always"
 					style={[

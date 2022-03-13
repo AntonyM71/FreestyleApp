@@ -11,13 +11,14 @@ export const ResultsView = () => {
 
 	const paddlerHeatList = useSelector(getPaddlerHeatList)
 	const paddlerScores = useSelector(getScoresState)
+
 	return (
 		<View style={styles.container}>
 			<ScrollView
 				style={styles.container}
 				contentContainerStyle={styles.contentContainer}
 			>
-				{paddlerHeatList.flat().length != 0 ? (
+				{paddlerHeatList.flat().length !== 0 ? (
 					<View>
 						<Text style={styles.heatStyle}>{"Results"}</Text>
 						{paddlerHeatList
@@ -26,61 +27,57 @@ export const ResultsView = () => {
 								(
 									paddler: string | number,
 									key: string | number
-								) => {
-									return (
-										<View key={key}>
-											<View>
-												<Text
-													style={{
-														...styles.standardText,
-														justifyContent:
-															"center",
-														alignItems: "center"
-													}}
-												>
-													{paddler.toString()}
-												</Text>
-											</View>
-											<>
-												<View
-													style={{
-														flex: 1,
-														flexDirection: "row",
-														flexWrap: "wrap"
-													}}
-												>
-													{paddlerScores[paddler].map(
+								) => (
+									<View key={key}>
+										<View>
+											<Text
+												style={{
+													...styles.standardText,
+													justifyContent: "center",
+													alignItems: "center"
+												}}
+											>
+												{paddler.toString()}
+											</Text>
+										</View>
+										<>
+											<View
+												style={{
+													flex: 1,
+													flexDirection: "row",
+													flexWrap: "wrap"
+												}}
+											>
+												{
+													// @ts-ignore
+													paddlerScores[paddler].map(
 														(
 															runScore: any,
 															runKey:
 																| string
 																| number
-														) => {
-															return (
-																<View
-																	style={{
-																		width: buttonPercentage
-																	}}
-																	key={runKey}
-																>
-																	<DisplayScore
-																		paddler={
-																			paddler
-																		}
-																		run={
-																			runKey
-																		}
-																	/>
-																</View>
-															)
-														}
-													)}
-													{/* <Divider style={{ backgroundColor: 'blue' }} />; */}
-												</View>
-											</>
-										</View>
-									)
-								}
+														) => (
+															<View
+																style={{
+																	width: buttonPercentage
+																}}
+																key={runKey}
+															>
+																<DisplayScore
+																	paddler={
+																		paddler
+																	}
+																	run={runKey}
+																/>
+															</View>
+														)
+													)
+												}
+												{/* <Divider style={{ backgroundColor: 'blue' }} />; */}
+											</View>
+										</>
+									</View>
+								)
 							)}
 					</View>
 				) : (

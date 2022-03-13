@@ -10,6 +10,7 @@ const timerPresentation = () => {
 	const showTimer = useSelector(getShowTimer)
 	useEffect(() => {
 		const timerID = setInterval(() => (time > 0 ? tick() : null), 1000)
+
 		return () => {
 			clearInterval(timerID)
 		}
@@ -27,7 +28,7 @@ const timerPresentation = () => {
 					}}
 					title={time.toString()}
 					buttonStyle={
-						time == 0
+						time === 0
 							? styles.timerRed
 							: time < 10
 							? styles.timerYellow

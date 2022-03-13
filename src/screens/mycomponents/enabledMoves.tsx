@@ -39,12 +39,12 @@ const moveSelectionPresentation = () => {
 	const enabledMovesKeys = Object.keys(
 		enabledMovesList
 	) as IEnabledMovesKeys[] // both types are derived from the object so this cast is safe
+
 	return (
 		<View>
 			<View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
 				{enabledMovesKeys.map(
-					(moveKey: IEnabledMovesKeys, key: number) => {
-						return (
+					(moveKey: IEnabledMovesKeys, key: number) => (
 							<View style={{ width: "50%" }} key={key}>
 								<Button
 									buttonStyle={
@@ -60,7 +60,6 @@ const moveSelectionPresentation = () => {
 								/>
 							</View>
 						)
-					}
 				)}
 			</View>
 		</View>

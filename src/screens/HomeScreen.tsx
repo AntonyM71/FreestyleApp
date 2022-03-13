@@ -19,6 +19,7 @@ export default class HomeScreen extends React.Component {
 			Math.round(Dimensions.get("window").width) > 600
 				? `${start * 0.5}%`
 				: `${start}%`
+
 		return (
 			<SafeAreaView style={styles.container}>
 				<View style={styles.container}>

@@ -43,7 +43,7 @@ export const PaddlerHandler = () => {
 	const handlePressPrevious = () => {
 		// -1 to account for zero indexing
 		const newPaddlerIndex =
-			paddlerIndex == 0 ? numberOfPaddlers - 1 : paddlerIndex - 1
+			paddlerIndex === 0 ? numberOfPaddlers - 1 : paddlerIndex - 1
 		dispatch(changePaddler(newPaddlerIndex))
 	}
 
@@ -54,7 +54,7 @@ export const PaddlerHandler = () => {
 	}
 
 	const handlePressPreviousRun = () => {
-		const newRunIndex = currentRun == 0 ? 0 : currentRun - 1
+		const newRunIndex = currentRun === 0 ? 0 : currentRun - 1
 		handleChangeRun(newRunIndex)
 	}
 
@@ -75,7 +75,7 @@ export const PaddlerHandler = () => {
 		}
 	}
 
-	if (paddlerList[currentHeat].length != 0) {
+	if (paddlerList[currentHeat].length !== 0) {
 		return (
 			<View>
 				<Grid>

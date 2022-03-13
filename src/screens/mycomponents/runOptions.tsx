@@ -10,17 +10,20 @@ const runOptionsPresentation = () => {
 	const dispatch = useDispatch()
 	const showRunHandler = useSelector(getShowRunHandler)
 
-	const _handleRunButtonPress = () => {
+	const handleRunButtonPress = () => {
 		batch(() => {
-			showRunHandler == true ? dispatch(changeRun(0)) : null
+			if (showRunHandler) {
+				dispatch(changeRun(0))
+			}
 			dispatch(updateShowRun(!showRunHandler))
 		})
 	}
+
 	return (
 		<View>
 			<Button
 				buttonStyle={showRunHandler ? styles.moveScored : styles.noMove}
-				onPress={_handleRunButtonPress}
+				onPress={handleRunButtonPress}
 				title={showRunHandler ? "Hide Runs" : "Show Runs"}
 			/>
 		</View>

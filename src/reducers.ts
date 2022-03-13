@@ -100,7 +100,7 @@ export interface IPaddlerStateType {
 	enabledMoves: IEnabledMoves
 }
 
-export type IPaddlerScores = object
+export type IPaddlerScores = Record<string, unknown>
 export interface IEnabledMoves {
 	hole: boolean
 	wave: boolean
