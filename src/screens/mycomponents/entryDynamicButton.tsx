@@ -3,12 +3,13 @@ import { View } from "react-native"
 import { Button } from "react-native-elements"
 import { useDispatch, useSelector } from "react-redux"
 import { updatePaddlerScores } from "../../actions"
-import { getPaddlerScores } from "../../selectors"
+import { getCurrentRun, getPaddlerScores } from "../../selectors"
 import { styles } from "../../styles"
 
 // eslint-disable-next-line complexity
 const DynamicButtonPresentation = React.memo((props: any) => {
 	const dispatch = useDispatch()
+	const currentRun = useSelector(getCurrentRun)
 	const paddlerScores = useSelector(getPaddlerScores)
 	const handleMove =
 		(
@@ -37,8 +38,12 @@ const DynamicButtonPresentation = React.memo((props: any) => {
 			}
 			dispatch(updatePaddlerScores(newScores))
 		}
+	console.log(paddlerScores)
+	console.log(currentRun)
+
+	console.log(props.move.Move)
 	// @ts-ignore
-	const thisMove = paddlerScores[props.paddler][props.run][props.move.Move]
+	const thisMove = paddlerScores[props.paddler][currentRun][props.move.Move]
 	if (thisMove[props.direction].scored === false) {
 		const buttonName = props.move.Move
 
@@ -46,7 +51,7 @@ const DynamicButtonPresentation = React.memo((props: any) => {
 			<Button
 				onPress={handleMove(
 					props.paddler,
-					props.run,
+					currentRun,
 					props.move.Move,
 					props.direction,
 					"scored"
@@ -64,7 +69,7 @@ const DynamicButtonPresentation = React.memo((props: any) => {
 					<Button
 						onPress={handleMove(
 							props.paddler,
-							props.run,
+							currentRun,
 							props.move.Move,
 							props.direction,
 							"scored"
@@ -77,7 +82,7 @@ const DynamicButtonPresentation = React.memo((props: any) => {
 					<Button
 						onPress={handleMove(
 							props.paddler,
-							props.run,
+							currentRun,
 							props.move.Move,
 							props.direction,
 							"clean"
@@ -95,7 +100,7 @@ const DynamicButtonPresentation = React.memo((props: any) => {
 					<Button
 						onPress={handleMove(
 							props.paddler,
-							props.run,
+							currentRun,
 							props.move.Move,
 							props.direction,
 							"superClean"
@@ -113,7 +118,7 @@ const DynamicButtonPresentation = React.memo((props: any) => {
 					<Button
 						onPress={handleMove(
 							props.paddler,
-							props.run,
+							currentRun,
 							props.move.Move,
 							props.direction,
 							"air"
@@ -131,7 +136,7 @@ const DynamicButtonPresentation = React.memo((props: any) => {
 					<Button
 						onPress={handleMove(
 							props.paddler,
-							props.run,
+							currentRun,
 							props.move.Move,
 							props.direction,
 							"huge"
@@ -149,7 +154,7 @@ const DynamicButtonPresentation = React.memo((props: any) => {
 					<Button
 						onPress={handleMove(
 							props.paddler,
-							props.run,
+							currentRun,
 							props.move.Move,
 							props.direction,
 							"link"

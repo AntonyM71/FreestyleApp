@@ -9,7 +9,10 @@ import {
 	UPDATE_SHOW_RUN,
 	UPDATE_SHOW_TIMER
 } from "./actionTypes"
-import { initialScoresheet } from "./screens/mycomponents/makePaddlerScores"
+import {
+	initialScoresheet,
+	moveSideInterface
+} from "./screens/mycomponents/makePaddlerScores"
 
 // make our starting scoresheet from the list of paddlers
 const listOfPaddlers = [["paddler1", "paddler2", "paddler3"]]
@@ -100,7 +103,16 @@ export interface IPaddlerStateType {
 	enabledMoves: IEnabledMoves
 }
 
-export type IPaddlerScores = Record<string, unknown>
+export type IPaddlerScores = Record<
+	string,
+	Record<string, Record<string, MoveType>>[]
+>
+export interface MoveType {
+	id: string
+	left: moveSideInterface
+	right: moveSideInterface
+}
+
 export interface IEnabledMoves {
 	hole: boolean
 	wave: boolean
@@ -108,6 +120,6 @@ export interface IEnabledMoves {
 
 export type IPaddlerList = IPaddler[][]
 
-export type IPaddler = string
+export type IPaddler = keyof IPaddlerScores
 
 export type IDirection = "left" | "right"

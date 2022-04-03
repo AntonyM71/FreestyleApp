@@ -359,3 +359,5 @@ export interface IMovesList {
 	hole: IMoves[]
 	trophy: IMoves[]
 }
+
+export default MovesList

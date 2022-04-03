@@ -1,9 +1,11 @@
+import { IPaddlerScores } from "../../reducers"
+
 export const moveListArray: dataSourceMoveInterface[] = Object.values(
 	// eslint-disable-next-line @typescript-eslint/no-var-requires
-	require("../../data/moves_lists/move_list.json")
+	require("../../data/moves_lists/move_list.ts")
 ).flat() as dataSourceMoveInterface[]
 
-export const initialScoresheet = () => {
+export const initialScoresheet = (): IPaddlerScores => {
 	const initialMoves = moveListArray.map((item: dataSourceMoveInterface) => {
 		const scoresObject: moveInterface = {
 			id: item.Move,
@@ -64,22 +66,8 @@ export interface dataSourceMoveInterface {
 
 export interface moveInterface {
 	id: string
-	left: {
-		scored: boolean
-		air: boolean
-		huge: boolean
-		clean: boolean
-		superClean: boolean
-		link: boolean
-	}
-	right: {
-		scored: boolean
-		air: boolean
-		huge: boolean
-		clean: boolean
-		superClean: boolean
-		link: boolean
-	}
+	left: moveSideInterface
+	right: moveSideInterface
 }
 
 export interface moveSideInterface {

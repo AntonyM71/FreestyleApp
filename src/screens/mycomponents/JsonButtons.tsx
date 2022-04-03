@@ -2,6 +2,7 @@
 import React from "react"
 import { Dimensions, View } from "react-native"
 import { useSelector } from "react-redux"
+import moveList from "../../data/moves_lists/move_list"
 import { IDirection, IPaddlerList } from "../../reducers"
 import {
 	getCurrentHeat,
@@ -12,8 +13,8 @@ import {
 } from "../../selectors"
 import { DynamicButton } from "./dynamicButton"
 import { EntryDynamicButton } from "./entryDynamicButton"
-import { dataSourceMoveInterface } from "./makePaddlerScores"
 import { TrophyDynamicButton } from "./trophyDynamicButton"
+
 const NormalMove = (props: {
 	paddlerList: IPaddlerList
 	currentHeat: number
@@ -37,7 +38,6 @@ export const MoveButtons = () => {
 	const currentHeat = useSelector(getCurrentHeat)
 	const showMoves = useSelector(getShowMoves)
 	// eslint-disable-next-line @typescript-eslint/no-var-requires
-	const moveList: moveListInterface = require("../../data/moves_lists/move_list.json")
 	const screenWidth = Math.round(Dimensions.get("window").width)
 	const availableMoves = moveList
 	const buttonPercentage = screenWidth > 600 ? "25%" : "50%"
@@ -290,10 +290,3 @@ export const MoveButtons = () => {
 }
 
 export default MoveButtons
-export interface moveListInterface {
-	entry: dataSourceMoveInterface[]
-	both: dataSourceMoveInterface[]
-	hole: dataSourceMoveInterface[]
-	wave: dataSourceMoveInterface[]
-	trophy: dataSourceMoveInterface[]
-}

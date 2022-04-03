@@ -3,7 +3,7 @@ import { View } from "react-native"
 import { Button } from "react-native-elements"
 import { useDispatch, useSelector } from "react-redux"
 import { updatePaddlerScores } from "../../actions"
-import { getScoresState } from "../../selectors"
+import { getCurrentRun, getScoresState } from "../../selectors"
 import { styles } from "../../styles"
 
 const makeScoresObject = (move: { toString: () => any }) => ({
@@ -29,6 +29,7 @@ const makeScoresObject = (move: { toString: () => any }) => ({
 const TrophyDynamicButtonPresentation = React.memo((props: any) => {
 	const paddlerScores = useSelector(getScoresState)
 	const dispatch = useDispatch()
+	const currentRun = useSelector(getCurrentRun)
 	const handleMove =
 		(
 			paddler: string | number,
@@ -68,7 +69,8 @@ const TrophyDynamicButtonPresentation = React.memo((props: any) => {
 			dispatch(updatePaddlerScores(newScores))
 		}
 	// @ts-ignore
-	const theMoves = paddlerScores[props.paddler][props.run][props.move.Move]
+	const theMoves = paddlerScores[props.paddler][currentRun][props.move.Move]
+	console.log(theMoves)
 
 	return theMoves.map(
 		// eslint-disable-next-line complexity
