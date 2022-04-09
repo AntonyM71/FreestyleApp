@@ -14,19 +14,20 @@ import { initialScoresheet } from "./makePaddlerScores"
 
 const moveSelectionPresentation = () => {
 	const dispatch = useDispatch()
-
+	const paddlerHeatList = useSelector(getPaddlerHeatList)
 	const enabledMovesList = useSelector(getShowMoves)
 	const handleMoveButtonPress = (moveKey: IEnabledMovesKeys) => () => {
 		const newMoves = { ...enabledMovesList }
 
 		newMoves[moveKey] = !newMoves[moveKey]
-		dispatch(updateEnabledMoves(newMoves))
 		clearScores()
+		dispatch(updateEnabledMoves(newMoves))
+		//
 	}
 
 	const clearScores = () => {
 		const startingScoresheet = {}
-		const paddlerHeatList = useSelector(getPaddlerHeatList)
+
 		paddlerHeatList
 			.flat()
 			.map((paddler: { toString: () => React.ReactText }) => {
@@ -45,21 +46,22 @@ const moveSelectionPresentation = () => {
 			<View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
 				{enabledMovesKeys.map(
 					(moveKey: IEnabledMovesKeys, key: number) => (
-							<View style={{ width: "50%" }} key={key}>
-								<Button
-									buttonStyle={
-										enabledMovesList[moveKey]
-											? styles.moveScored
-											: styles.noMove
-									}
-									title={
-										enabledMovesList[moveKey]
-											? `Hide ${moveKey}`
-											: `Show ${moveKey}`
-									}
-								/>
-							</View>
-						)
+						<View style={{ width: "50%" }} key={key}>
+							<Button
+								buttonStyle={
+									enabledMovesList[moveKey]
+										? styles.moveScored
+										: styles.noMove
+								}
+								title={
+									enabledMovesList[moveKey]
+										? `Hide ${moveKey}`
+										: `Show ${moveKey}`
+								}
+								onPress={handleMoveButtonPress(moveKey)}
+							/>
+						</View>
+					)
 				)}
 			</View>
 		</View>
