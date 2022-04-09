@@ -96,11 +96,15 @@ export const PaddlerHandler = () => {
 										textAlign: "center"
 									}}
 								>
-									{paddlerList[currentHeat][paddlerIndex]}
+									{
+										paddlerList[currentHeat][paddlerIndex]
+											.name
+									}
 								</Text>
 								<DisplayScore
 									paddler={
 										paddlerList[currentHeat][paddlerIndex]
+											.name
 									}
 									run={currentRun}
 								/>

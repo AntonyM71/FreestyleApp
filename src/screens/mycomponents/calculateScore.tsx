@@ -32,12 +32,12 @@ const calculateScoreAndBonuses = (
 
 const DisplayScorePresenetation = (props: {
 	paddler: string | number
-	run: string | number
+	run: number
 }) => {
 	const paddlerScores = useSelector(getScoresState)
 	const paddlerScore: number[] = [0]
 	// @ts-ignore
-	if (paddlerScores[props.paddler][props.run]) {
+	if (paddlerScores[props.paddler.name][props.run]) {
 		// @ts-ignore
 		const scoredMoves = paddlerScores[props.paddler][props.run]
 		moveListArray.map((item) => {

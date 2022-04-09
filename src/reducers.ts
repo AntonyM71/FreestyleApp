@@ -15,11 +15,13 @@ import {
 } from "./screens/mycomponents/makePaddlerScores"
 
 // make our starting scoresheet from the list of paddlers
-const listOfPaddlers = [["paddler1", "paddler2", "paddler3"]]
+const listOfPaddlers = [
+	[{ name: "paddler1" }, { name: "paddler2" }, { name: "paddler3" }]
+]
 const startingScoresheet = {}
 listOfPaddlers.flat().map((paddler) => {
 	// @ts-ignore
-	startingScoresheet[paddler.toString()] = [initialScoresheet()]
+	startingScoresheet[paddler.name] = [initialScoresheet()]
 })
 
 const initialState: IPaddlerStateType = {
@@ -104,7 +106,7 @@ export interface IPaddlerStateType {
 }
 
 export type IPaddlerScores = Record<
-	IPaddler,
+	IPaddler["name"],
 	Record<IMoveName, MoveType | MoveType[]>[]
 >
 export interface MoveType {
@@ -120,6 +122,8 @@ export interface IEnabledMoves {
 type IMoveName = string
 export type IPaddlerList = IPaddler[][]
 
-export type IPaddler = string
+export interface IPaddler {
+	name: string
+}
 
 export type IDirection = "left" | "right"

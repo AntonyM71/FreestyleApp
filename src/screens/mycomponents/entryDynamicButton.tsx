@@ -46,7 +46,8 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 			dispatch(updatePaddlerScores(newScores))
 		}
 	// @ts-ignore
-	const thisMove = paddlerScores[props.paddler][currentRun][props.move.Move]
+	const thisMove =
+		paddlerScores[props.paddler.name][currentRun][props.move.Move]
 	if (!Array.isArray(thisMove)) {
 		if (!thisMove[props.direction].scored) {
 			const buttonName = props.move.Move
@@ -54,7 +55,7 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 			return (
 				<Button
 					onPress={handleMove(
-						props.paddler,
+						props.paddler.name,
 						currentRun,
 						props.move.Move,
 						props.direction,
@@ -74,7 +75,7 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 					<View style={{ width: "100%" }}>
 						<Button
 							onPress={handleMove(
-								props.paddler,
+								props.paddler.name,
 								currentRun,
 								props.move.Move,
 								props.direction,
@@ -87,7 +88,7 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 					<View style={{ width: "50%" }}>
 						<Button
 							onPress={handleMove(
-								props.paddler,
+								props.paddler.name,
 								currentRun,
 								props.move.Move,
 								props.direction,
@@ -105,7 +106,7 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 					<View style={{ width: "50%" }}>
 						<Button
 							onPress={handleMove(
-								props.paddler,
+								props.paddler.name,
 								currentRun,
 								props.move.Move,
 								props.direction,
@@ -123,7 +124,7 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 					<View style={{ width: "33%" }}>
 						<Button
 							onPress={handleMove(
-								props.paddler,
+								props.paddler.name,
 								currentRun,
 								props.move.Move,
 								props.direction,
@@ -141,7 +142,7 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 					<View style={{ width: "33%" }}>
 						<Button
 							onPress={handleMove(
-								props.paddler,
+								props.paddler.name,
 								currentRun,
 								props.move.Move,
 								props.direction,
@@ -159,7 +160,7 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 					<View style={{ width: "33%" }}>
 						<Button
 							onPress={handleMove(
-								props.paddler,
+								props.paddler.name,
 								currentRun,
 								props.move.Move,
 								props.direction,
