@@ -3,11 +3,18 @@ import { View } from "react-native"
 import { Button } from "react-native-elements"
 import { useDispatch, useSelector } from "react-redux"
 import { updatePaddlerScores } from "../../actions"
+import { IDirection, IPaddler } from "../../reducers"
 import { getCurrentRun, getPaddlerScores } from "../../selectors"
 import { styles } from "../../styles"
+import { dataSourceMoveInterface } from "./makePaddlerScores"
 
+interface PropsType {
+	paddler: IPaddler
+	move: dataSourceMoveInterface
+	direction: IDirection
+}
 // eslint-disable-next-line complexity
-const DynamicButtonPresentation = React.memo((props: any) => {
+const DynamicButtonPresentation = React.memo((props: PropsType) => {
 	const dispatch = useDispatch()
 	const currentRun = useSelector(getCurrentRun)
 	const paddlerScores = useSelector(getPaddlerScores)
@@ -38,13 +45,11 @@ const DynamicButtonPresentation = React.memo((props: any) => {
 			}
 			dispatch(updatePaddlerScores(newScores))
 		}
-	console.log(paddlerScores)
-	console.log(currentRun)
-
-	console.log(props.move.Move)
 	// @ts-ignore
 	const thisMove = paddlerScores[props.paddler][currentRun][props.move.Move]
-	if (thisMove[props.direction].scored === false) {
+	console.log(props.move.Move)
+	console.log(thisMove)
+	if (!thisMove[props.direction].scored) {
 		const buttonName = props.move.Move
 
 		return (

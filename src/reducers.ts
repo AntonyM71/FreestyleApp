@@ -37,7 +37,7 @@ const initialState: IPaddlerStateType = {
 
 export const paddlerReducer = (
 	state = initialState,
-	action: { type: any; payload: any }
+	action: { type: string; payload: any }
 ) => {
 	switch (action.type) {
 		case CHANGE_PADDLER:
@@ -103,10 +103,7 @@ export interface IPaddlerStateType {
 	enabledMoves: IEnabledMoves
 }
 
-export type IPaddlerScores = Record<
-	string,
-	Record<string, Record<string, MoveType>>[]
->
+export type IPaddlerScores = Record<IPaddler, Record<IMoveName, MoveType>[]>
 export interface MoveType {
 	id: string
 	left: moveSideInterface
@@ -117,9 +114,9 @@ export interface IEnabledMoves {
 	hole: boolean
 	wave: boolean
 }
-
+type IMoveName = string
 export type IPaddlerList = IPaddler[][]
 
-export type IPaddler = keyof IPaddlerScores
+export type IPaddler = string
 
 export type IDirection = "left" | "right"

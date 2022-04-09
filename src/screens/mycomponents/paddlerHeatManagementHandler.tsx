@@ -16,7 +16,11 @@ import {
 import { styles } from "../../styles"
 import { initialScoresheet } from "./makePaddlerScores"
 
-export const PaddlerHeatManagerPresentation = (props: any): any => {
+interface PropsType {
+	paddlerList: IPaddler[]
+	heatKey: number
+}
+export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 	const dispatch = useDispatch()
 	const [currentPaddler, setCurrentPaddler] = useState("")
 	const [inputBorder, setInputBorder] = useState("black")
@@ -97,7 +101,7 @@ export const PaddlerHeatManagerPresentation = (props: any): any => {
 		<View>
 			<View>
 				<Text style={styles.heatStyle}>{`Heat ${
-					(props.heatKey as number) + 1
+					props.heatKey + 1
 				}`}</Text>
 
 				{props.paddlerList.map((paddler: IPaddler, key: number) => (

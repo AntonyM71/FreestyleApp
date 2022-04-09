@@ -1,12 +1,11 @@
 import React from "react"
-import { View } from "react-native"
-import { Button } from "react-native-elements"
 import { useDispatch, useSelector } from "react-redux"
 import { updatePaddlerScores } from "../../actions"
+import { IMoves } from "../../data/moves_lists/move_list"
+import { IDirection, IPaddler } from "../../reducers"
 import { getCurrentRun, getScoresState } from "../../selectors"
-import { styles } from "../../styles"
 
-const makeScoresObject = (move: { toString: () => any }) => ({
+const makeScoresObject = (move: string) => ({
 	id: move.toString(),
 	left: {
 		scored: false,
@@ -26,7 +25,13 @@ const makeScoresObject = (move: { toString: () => any }) => ({
 	}
 })
 
-const TrophyDynamicButtonPresentation = React.memo((props: any) => {
+export interface PropsType {
+	paddler: IPaddler
+	move: IMoves
+	direction: IDirection
+}
+
+const TrophyDynamicButtonPresentation = React.memo((props: PropsType) => {
 	const paddlerScores = useSelector(getScoresState)
 	const dispatch = useDispatch()
 	const currentRun = useSelector(getCurrentRun)
@@ -70,158 +75,155 @@ const TrophyDynamicButtonPresentation = React.memo((props: any) => {
 		}
 	// @ts-ignore
 	const theMoves = paddlerScores[props.paddler][currentRun][props.move.Move]
-	console.log(theMoves)
 
-	return theMoves.map(
-		// eslint-disable-next-line complexity
-		(
-			thisMove: { [x: string]: { [x: string]: any } },
-			key: string | number
-		) => {
-			if (thisMove[props.direction].scored === false) {
-				const buttonName = props.move.Move
+	// return theMoves.map(
+	// 	// eslint-disable-next-line complexity
+	// 	(thisMove: MoveType, key: React.Key) => {
+	// 		if (!thisMove[props.direction].scored) {
+	// 			const buttonName = props.move.Move
 
-				return (
-					<Button
-						onPress={handleMove(
-							props.paddler,
-							props.run,
-							props.move.Move,
-							props.direction,
-							"scored",
-							key
-						)}
-						title={buttonName}
-						buttonStyle={styles.noMove}
-						key={key}
-					/>
-				)
-			} else {
-				const buttonName = props.move.Move
+	// 			return (
+	// 				<Button
+	// 					onPress={handleMove(
+	// 						props.paddler,
+	// 						currentRun,
+	// 						props.move.Move,
+	// 						props.direction,
+	// 						"scored",
+	// 						key
+	// 					)}
+	// 					title={buttonName}
+	// 					buttonStyle={styles.noMove}
+	// 					key={key}
+	// 				/>
+	// 			)
+	// 		} else {
+	// 			const buttonName = props.move.Move
 
-				return (
-					<View
-						style={{
-							flex: 1,
-							flexDirection: "row",
-							flexWrap: "wrap"
-						}}
-						key={key}
-					>
-						<View style={{ width: "100%" }}>
-							<Button
-								onPress={handleMove(
-									props.paddler,
-									props.run,
-									props.move.Move,
-									props.direction,
-									"scored",
-									key
-								)}
-								title={buttonName}
-								buttonStyle={styles.moveScored}
-							/>
-						</View>
-						<View style={{ width: "50%" }}>
-							<Button
-								onPress={handleMove(
-									props.paddler,
-									props.run,
-									props.move.Move,
-									props.direction,
-									"clean",
-									key
-								)}
-								title={"C"}
-								disabled={props.move.Clean ? false : true}
-								buttonStyle={
-									thisMove[props.direction].clean
-										? styles.bonusScored
-										: styles.noBonus
-								}
-							/>
-						</View>
-						<View style={{ width: "50%" }}>
-							<Button
-								onPress={handleMove(
-									props.paddler,
-									props.run,
-									props.move.Move,
-									props.direction,
-									"superClean",
-									key
-								)}
-								title={"SC"}
-								disabled={props.move.SuperClean ? false : true}
-								buttonStyle={
-									thisMove[props.direction].superClean
-										? styles.bonusScored
-										: styles.noBonus
-								}
-							/>
-						</View>
-						<View style={{ width: "33%" }}>
-							<Button
-								onPress={handleMove(
-									props.paddler,
-									props.run,
-									props.move.Move,
-									props.direction,
-									"air",
-									key
-								)}
-								title={"A"}
-								disabled={props.move.Air ? false : true}
-								buttonStyle={
-									thisMove[props.direction].air
-										? styles.bonusScored
-										: styles.noBonus
-								}
-							/>
-						</View>
-						<View style={{ width: "33%" }}>
-							<Button
-								onPress={handleMove(
-									props.paddler,
-									props.run,
-									props.move.Move,
-									props.direction,
-									"huge",
-									key
-								)}
-								title={"H"}
-								disabled={props.move.Huge ? false : true}
-								buttonStyle={
-									thisMove[props.direction].huge
-										? styles.bonusScored
-										: styles.noBonus
-								}
-							/>
-						</View>
-						<View style={{ width: "33%" }}>
-							<Button
-								onPress={handleMove(
-									props.paddler,
-									props.run,
-									props.move.Move,
-									props.direction,
-									"link",
-									key
-								)}
-								title={"L"}
-								disabled={props.move.Link ? false : true}
-								buttonStyle={
-									thisMove[props.direction].link
-										? styles.bonusScored
-										: styles.noBonus
-								}
-							/>
-						</View>
-					</View>
-				)
-			}
-		}
-	)
+	// 			return (
+	// 				<View
+	// 					style={{
+	// 						flex: 1,
+	// 						flexDirection: "row",
+	// 						flexWrap: "wrap"
+	// 					}}
+	// 					key={key}
+	// 				>
+	// 					<View style={{ width: "100%" }}>
+	// 						<Button
+	// 							onPress={handleMove(
+	// 								props.paddler,
+	// 								currentRun,
+	// 								props.move.Move,
+	// 								props.direction,
+	// 								"scored",
+	// 								key
+	// 							)}
+	// 							title={buttonName}
+	// 							buttonStyle={styles.moveScored}
+	// 						/>
+	// 					</View>
+	// 					<View style={{ width: "50%" }}>
+	// 						<Button
+	// 							onPress={handleMove(
+	// 								props.paddler,
+	// 								currentRun,
+	// 								props.move.Move,
+	// 								props.direction,
+	// 								"clean",
+	// 								key
+	// 							)}
+	// 							title={"C"}
+	// 							disabled={props.move.Clean ? false : true}
+	// 							buttonStyle={
+	// 								thisMove[props.direction].clean
+	// 									? styles.bonusScored
+	// 									: styles.noBonus
+	// 							}
+	// 						/>
+	// 					</View>
+	// 					<View style={{ width: "50%" }}>
+	// 						<Button
+	// 							onPress={handleMove(
+	// 								props.paddler,
+	// 								currentRun,
+	// 								props.move.Move,
+	// 								props.direction,
+	// 								"superClean",
+	// 								key
+	// 							)}
+	// 							title={"SC"}
+	// 							disabled={props.move.SuperClean ? false : true}
+	// 							buttonStyle={
+	// 								thisMove[props.direction].superClean
+	// 									? styles.bonusScored
+	// 									: styles.noBonus
+	// 							}
+	// 						/>
+	// 					</View>
+	// 					<View style={{ width: "33%" }}>
+	// 						<Button
+	// 							onPress={handleMove(
+	// 								props.paddler,
+	// 								currentRun,
+	// 								props.move.Move,
+	// 								props.direction,
+	// 								"air",
+	// 								key
+	// 							)}
+	// 							title={"A"}
+	// 							disabled={props.move.Air ? false : true}
+	// 							buttonStyle={
+	// 								thisMove[props.direction].air
+	// 									? styles.bonusScored
+	// 									: styles.noBonus
+	// 							}
+	// 						/>
+	// 					</View>
+	// 					<View style={{ width: "33%" }}>
+	// 						<Button
+	// 							onPress={handleMove(
+	// 								props.paddler,
+	// 								currentRun,
+	// 								props.move.Move,
+	// 								props.direction,
+	// 								"huge",
+	// 								key
+	// 							)}
+	// 							title={"H"}
+	// 							disabled={props.move.Huge ? false : true}
+	// 							buttonStyle={
+	// 								thisMove[props.direction].huge
+	// 									? styles.bonusScored
+	// 									: styles.noBonus
+	// 							}
+	// 						/>
+	// 					</View>
+	// 					<View style={{ width: "33%" }}>
+	// 						<Button
+	// 							onPress={handleMove(
+	// 								props.paddler,
+	// 								currentRun,
+	// 								props.move.Move,
+	// 								props.direction,
+	// 								"link",
+	// 								key
+	// 							)}
+	// 							title={"L"}
+	// 							disabled={props.move.Link ? false : true}
+	// 							buttonStyle={
+	// 								thisMove[props.direction].link
+	// 									? styles.bonusScored
+	// 									: styles.noBonus
+	// 							}
+	// 						/>
+	// 					</View>
+	// 				</View>
+	// 			)
+	// 		}
+	// 	}
+	// )
+	return null
 })
 
 export const TrophyDynamicButton = TrophyDynamicButtonPresentation

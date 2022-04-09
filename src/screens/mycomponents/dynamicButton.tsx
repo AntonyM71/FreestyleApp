@@ -3,10 +3,10 @@ import { View } from "react-native"
 import { Button } from "react-native-elements"
 import { useDispatch, useSelector } from "react-redux"
 import { updatePaddlerScores } from "../../actions"
+import { IMoves } from "../../data/moves_lists/move_list"
 import { IDirection, IPaddler } from "../../reducers"
 import { getPaddlerScores } from "../../selectors"
 import { styles } from "../../styles"
-import { dataSourceMoveInterface } from "./makePaddlerScores"
 
 // eslint-disable-next-line complexity
 const DynamicButtonPresentation = React.memo((props: IPropsType) => {
@@ -42,8 +42,8 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 		}
 
 	const thisMove =
-		// @ts-ignore
 		paddlerScores[props.paddler][props.currentRun][props.move.Move]
+	// console.log(paddlerScores[props.paddler][props.currentRun])
 	if (thisMove[props.direction].scored === false) {
 		const buttonName =
 			oneSidedMoves.indexOf(props.move.Move) > -1
@@ -182,7 +182,7 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 interface IPropsType {
 	paddler: IPaddler
 	currentRun: number
-	move: dataSourceMoveInterface
+	move: IMoves
 	direction: IDirection
 }
 

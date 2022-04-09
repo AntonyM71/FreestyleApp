@@ -9,7 +9,7 @@ import {
 	UPDATE_SHOW_RUN,
 	UPDATE_SHOW_TIMER
 } from "./actionTypes"
-import { IEnabledMoves } from "./reducers"
+import { IEnabledMoves, IPaddlerList, IPaddlerScores } from "./reducers"
 
 export const changePaddler = (paddlerIndex: number) => ({
 	type: CHANGE_PADDLER,
@@ -28,12 +28,12 @@ export const changeHeat = (newHeatIndex: number) => ({
 	type: CHANGE_HEAT,
 	payload: newHeatIndex
 })
-export const addOrRemovePaddlerName = (remainingPaddlers: any) => ({
+export const addOrRemovePaddlerName = (remainingPaddlers: IPaddlerList) => ({
 	type: ADD_OR_REMOVE_PADDLER,
 	payload: remainingPaddlers
 })
 
-export const updatePaddlerScores = (newPaddlerScores: any) => ({
+export const updatePaddlerScores = (newPaddlerScores: IPaddlerScores) => ({
 	type: UPDATE_PADDLER_SCORES,
 	payload: newPaddlerScores
 })

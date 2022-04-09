@@ -1,56 +1,52 @@
-import { IPaddlerScores } from "../../reducers"
-
-export const moveListArray: dataSourceMoveInterface[] = Object.values(
-	// eslint-disable-next-line @typescript-eslint/no-var-requires
-	require("../../data/moves_lists/move_list.ts")
-).flat() as dataSourceMoveInterface[]
-
-export const initialScoresheet = (): IPaddlerScores => {
-	const initialMoves = moveListArray.map((item: dataSourceMoveInterface) => {
-		const scoresObject: moveInterface = {
-			id: item.Move,
-			left: {
-				scored: false,
-				air: false,
-				huge: false,
-				clean: false,
-				superClean: false,
-				link: false
-			},
-			right: {
-				scored: false,
-				air: false,
-				huge: false,
-				clean: false,
-				superClean: false,
-				link: false
+import moveList from "../../data/moves_lists/move_list"
+export const moveListArray = Object.values(moveList).flat()
+export const initialScoresheet = () => {
+	const initialMoves = moveListArray.map(
+		(item): moveInterface | moveInterface[] => {
+			const scoresObject = {
+				id: item.Move,
+				left: {
+					scored: false,
+					air: false,
+					huge: false,
+					clean: false,
+					superClean: false,
+					link: false
+				},
+				right: {
+					scored: false,
+					air: false,
+					huge: false,
+					clean: false,
+					superClean: false,
+					link: false
+				}
 			}
-		}
-		if (
-			item.Move === "Trophy 1" ||
-			item.Move === "Trophy 2" ||
-			item.Move === "Trophy 3"
-		) {
-			return [scoresObject]
-		} else {
-			return scoresObject
-		}
-	})
-
-	return initialMoves.reduce(
-		(obj: any, item: moveInterface | moveInterface[]) => {
-			if (Array.isArray(item)) {
-				obj[item[0].id] = item
-
-				return obj
+			if (
+				item.Move === "Trophy 1" ||
+				item.Move === "Trophy 2" ||
+				item.Move === "Trophy 3"
+			) {
+				return [scoresObject]
 			} else {
-				obj[item.id] = item
-
-				return obj
+				return scoresObject
 			}
-		},
-		{}
+		}
 	)
+
+	return initialMoves.reduce((obj, item) => {
+		if (Array.isArray(item)) {
+			// @ts-ignore
+			obj[item[0].id] = item
+
+			return obj
+		} else {
+			// @ts-ignore
+			obj[item.id] = item
+
+			return obj
+		}
+	}, {})
 }
 
 export interface dataSourceMoveInterface {

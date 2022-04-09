@@ -13,6 +13,7 @@ import {
 } from "../../selectors"
 import { DynamicButton } from "./dynamicButton"
 import { EntryDynamicButton } from "./entryDynamicButton"
+import { dataSourceMoveInterface } from "./makePaddlerScores"
 import { TrophyDynamicButton } from "./trophyDynamicButton"
 
 const NormalMove = (props: {
@@ -20,7 +21,7 @@ const NormalMove = (props: {
 	currentHeat: number
 	paddlerIndex: number
 	currentRun: number
-	item: any
+	item: dataSourceMoveInterface
 	direction: IDirection
 }) => (
 	<DynamicButton
@@ -274,7 +275,6 @@ export const MoveButtons = () => {
 									paddler={
 										paddlerList[currentHeat][paddlerIndex]
 									}
-									currentRun={currentRun}
 									move={item}
 									direction={"left"}
 								/>
