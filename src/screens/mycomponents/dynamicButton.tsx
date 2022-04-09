@@ -1,129 +1,200 @@
-import React from "react";
-import { View } from "react-native";
-import { Button } from "react-native-elements";
-import { connect } from "react-redux";
-import { updatePaddlerScores } from "../../actions";
-import { getScoresState } from "../../selectors";
-import { styles } from "../../styles";
+import React from "react"
+import { View } from "react-native"
+import { Button } from "react-native-elements"
+import { useDispatch, useSelector } from "react-redux"
+import { updatePaddlerScores } from "../../actions"
+import { IMoves } from "../../data/moves_lists/move_list"
+import { IDirection, IPaddler } from "../../reducers"
+import { getPaddlerScores } from "../../selectors"
+import { styles } from "../../styles"
 
+// eslint-disable-next-line complexity
+const DynamicButtonPresentation = React.memo((props: IPropsType) => {
+	const dispatch = useDispatch()
+	const paddlerScores = useSelector(getPaddlerScores)
+	const oneSidedMoves = ["Loop", "Back Loop"]
+	const handleMove =
+		(
+			paddler: string,
+			currentRun: number,
+			move: string,
+			direction: string,
+			type: string
+		) =>
+		() => {
+			const newScores = { ...paddlerScores }
+			const newField =
+				// @ts-ignore
+				!newScores[paddler][currentRun][move][direction][type]
+			// @ts-ignore
+			newScores[paddler][currentRun][move][direction][type] = newField
+			// @ts-ignore
+			if (newScores[paddler][currentRun][move][direction].huge) {
+				// @ts-ignore
+				newScores[paddler][currentRun][move][direction].air = true
+			}
+			// @ts-ignore
+			if (newScores[paddler][currentRun][move][direction].superClean) {
+				// @ts-ignore
+				newScores[paddler][currentRun][move][direction].clean = true
+			}
+			dispatch(updatePaddlerScores(newScores))
+		}
 
-const DynamicButtonPresentation = React.memo((props: any) => {
-    const oneSidedMoves = ["Loop", "Back Loop"];
-    const _handleMove = (
-        paddler: string, run: number, move: string, direction: string, type: string) => () => {
-        const newScores = { ...props.paddlerScores };
+	const thisMove =
+		paddlerScores[props.paddler][props.currentRun][props.move.Move]
+	if (!Array.isArray(thisMove)) {
+		if (!thisMove[props.direction].scored) {
+			const buttonName =
+				oneSidedMoves.indexOf(props.move.Move) > -1
+					? props.move.Move
+					: props.move.Move + " " + props.direction
 
-        const newField = !newScores[paddler][run][move][direction][type];
-        newScores[paddler][run][move][direction][type] = newField;
-        if (newScores[paddler][run][move][direction]["huge"]) {
-            newScores[paddler][run][move][direction]["air"] = true;
-        }
-        if (newScores[paddler][run][move][direction]["superClean"]) {
-            newScores[paddler][run][move][direction]["clean"] = true;
-        }
-        props.updateScore(newScores);
-    };
+			return (
+				<Button
+					onPress={handleMove(
+						props.paddler,
+						props.currentRun,
+						props.move.Move,
+						props.direction,
+						"scored"
+					)}
+					title={buttonName}
+					buttonStyle={styles.noMove}
+				/>
+			)
+		} else {
+			const buttonName =
+				props.move.Move === "Loop" || props.move.Move === "Back Loop"
+					? props.move.Move
+					: props.move.Move + " " + props.direction
 
-    const thisMove = props.paddlerScores[props.paddler][props.run][props.move.Move];
-    if (
-        thisMove[
-            props.direction
-        ].scored == false
-    ) {
-        const buttonName =
-            oneSidedMoves.indexOf(props.move.Move) > -1
-                ? props.move.Move
-                : props.move.Move + " " + props.direction;
-        return (
-            <Button
-                onPress={_handleMove(
-                    props.paddler,
-                    props.run,
-                    props.move.Move,
-                    props.direction,
-                    "scored",
-                )}
-                title={buttonName}
-                buttonStyle={styles.noMove}
-            />
-        );
+			return (
+				<View
+					style={{
+						flex: 1,
+						flexDirection: "row",
+						flexWrap: "wrap"
+					}}
+				>
+					<View style={{ width: "100%" }}>
+						<Button
+							onPress={handleMove(
+								props.paddler,
+								props.currentRun,
+								props.move.Move,
+								props.direction,
+								"scored"
+							)}
+							title={buttonName}
+							buttonStyle={styles.moveScored}
+						/>
+					</View>
+					<View style={{ width: "50%" }}>
+						<Button
+							onPress={handleMove(
+								props.paddler,
+								props.currentRun,
+								props.move.Move,
+								props.direction,
+								"clean"
+							)}
+							title={"C"}
+							disabled={props.move.Clean ? false : true}
+							buttonStyle={
+								thisMove[props.direction].clean
+									? styles.bonusScored
+									: styles.noBonus
+							}
+						/>
+					</View>
+					<View style={{ width: "50%" }}>
+						<Button
+							onPress={handleMove(
+								props.paddler,
+								props.currentRun,
+								props.move.Move,
+								props.direction,
+								"superClean"
+							)}
+							title={"SC"}
+							disabled={props.move.SuperClean ? false : true}
+							buttonStyle={
+								thisMove[props.direction].superClean
+									? styles.bonusScored
+									: styles.noBonus
+							}
+						/>
+					</View>
+					<View style={{ width: "33%" }}>
+						<Button
+							onPress={handleMove(
+								props.paddler,
+								props.currentRun,
+								props.move.Move,
+								props.direction,
+								"air"
+							)}
+							title={"A"}
+							disabled={props.move.Air ? false : true}
+							buttonStyle={
+								thisMove[props.direction].air
+									? styles.bonusScored
+									: styles.noBonus
+							}
+						/>
+					</View>
+					<View style={{ width: "33%" }}>
+						<Button
+							onPress={handleMove(
+								props.paddler,
+								props.currentRun,
+								props.move.Move,
+								props.direction,
+								"huge"
+							)}
+							title={"H"}
+							disabled={props.move.Huge ? false : true}
+							buttonStyle={
+								thisMove[props.direction].huge
+									? styles.bonusScored
+									: styles.noBonus
+							}
+						/>
+					</View>
+					<View style={{ width: "33%" }}>
+						<Button
+							onPress={handleMove(
+								props.paddler,
+								props.currentRun,
+								props.move.Move,
+								props.direction,
+								"link"
+							)}
+							title={"L"}
+							disabled={props.move.Link ? false : true}
+							buttonStyle={
+								thisMove[props.direction].link
+									? styles.bonusScored
+									: styles.noBonus
+							}
+						/>
+					</View>
+				</View>
+			)
+		}
+	}
 
-    } else {
-        const buttonName = (props.move.Move == ("Loop") || props.move.Move == ("Back Loop"))
-            ? props.move.Move
-            : props.move.Move + " " + props.direction;
-        return (
-            <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
-                <View style={{ width: "100%" }}>
-                    <Button
-                        onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "scored")}
-                        title={buttonName}
-                        buttonStyle={styles.moveScored}
-                    />
-                </View>
-                <View style={{ width: "50%" }}>
-                    <Button
-                        onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "clean")}
-                        title={"C"}
-                        disabled={props.move.Clean ? false : true}
-                        buttonStyle={thisMove[props.direction]["clean"] ? styles.bonusScored : styles.noBonus}
-                    />
-                </View>
-                <View style={{ width: "50%" }}>
-                    <Button
-                        onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "superClean")}
-                        title={"SC"}
-                        disabled={props.move.SuperClean ? false : true}
-                        buttonStyle={thisMove[props.direction]["superClean"] ? styles.bonusScored : styles.noBonus}
-                    />
-                </View>
-                <View style={{ width: "33%" }}>
-                    <Button
-                        onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "air")}
-                        title={"A"}
-                        disabled={props.move.Air ? false : true}
-                        buttonStyle={thisMove[props.direction]["air"] ? styles.bonusScored : styles.noBonus}
-                    />
-                </View>
-                <View style={{ width: "33%" }}>
-                    <Button
-                        onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "huge")}
-                        title={"H"}
-                        disabled={props.move.Huge ? false : true}
-                        buttonStyle={thisMove[props.direction]["huge"] ? styles.bonusScored : styles.noBonus}
-                    />
-                </View>
-                <View style={{ width: "33%" }}>
-                    <Button
-                        onPress={_handleMove(props.paddler, props.run, props.move.Move, props.direction, "link")}
-                        title={"L"}
-                        disabled={props.move.Link ? false : true}
-                        buttonStyle={thisMove[props.direction]["link"] ? styles.bonusScored : styles.noBonus}
+	return <> </>
+})
 
-                    />
-                </View>
-            </View>
-        );
-    }
-});
-
+interface IPropsType {
+	paddler: IPaddler
+	currentRun: number
+	move: IMoves
+	direction: IDirection
+}
 
 // can we make this go deeper, so that we only update a single component when we add a move?
-const mapStateToProps = (state: any) => {
-    return {
-        paddlerScores: getScoresState(state)
-    };
-};
 
-const mapDispatchToProps = (dispatch: (arg0: { type: string; payload: any; }) => void) => {
-    return {
-        updateScore: (newScores: any) => {
-            dispatch(updatePaddlerScores(newScores));
-        }
-    };
-};
-
-export const DynamicButton = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(DynamicButtonPresentation);
+export const DynamicButton = DynamicButtonPresentation

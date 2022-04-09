@@ -1,10 +1,14 @@
-import { combineReducers, createStore } from "redux";
-import { paddlerReducer } from "./reducers";
+import { combineReducers, createStore } from "redux"
+import { IPaddlerStateType, paddlerReducer } from "./reducers"
 
 const rootReducer = combineReducers({
-    paddlers: paddlerReducer,
-});
+	paddlers: paddlerReducer
+})
 
-const configureStore = () => createStore(rootReducer);
+const configureStore = () => createStore(rootReducer)
 
-export default configureStore;
+export default configureStore
+
+export interface IStoreType {
+	paddlers: IPaddlerStateType
+}
