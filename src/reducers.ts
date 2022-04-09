@@ -103,7 +103,10 @@ export interface IPaddlerStateType {
 	enabledMoves: IEnabledMoves
 }
 
-export type IPaddlerScores = Record<IPaddler, Record<IMoveName, MoveType>[]>
+export type IPaddlerScores = Record<
+	IPaddler,
+	Record<IMoveName, MoveType | MoveType[]>[]
+>
 export interface MoveType {
 	id: string
 	left: moveSideInterface
