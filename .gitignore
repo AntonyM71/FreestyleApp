@@ -8,3 +8,4 @@ npm-debug.*
 *.bashrc
 *.envrc
 api-key.json
+service-account.json
