@@ -1,7 +1,7 @@
 import React from "react"
 import { View } from "react-native"
 import { Button } from "react-native-elements"
-import { useDispatch, useSelector } from "react-redux"
+import { batch, useDispatch, useSelector } from "react-redux"
 import {
 	changeRun,
 	updateEnabledMoves,
@@ -20,8 +20,9 @@ const moveSelectionPresentation = () => {
 		const newMoves = { ...enabledMovesList }
 
 		newMoves[moveKey] = !newMoves[moveKey]
-		clearScores()
 		dispatch(updateEnabledMoves(newMoves))
+		clearScores()
+
 		//
 	}
 
@@ -32,10 +33,12 @@ const moveSelectionPresentation = () => {
 			.flat()
 			.map((paddler: { toString: () => React.ReactText }) => {
 				// @ts-ignore
-				startingScoresheet[paddler.toString()] = [initialScoresheet()]
+				startingScoresheet[paddler.name] = [initialScoresheet()]
 			})
-		dispatch(changeRun(0))
-		dispatch(updatePaddlerScores(startingScoresheet))
+		batch(() => {
+			dispatch(changeRun(0))
+			dispatch(updatePaddlerScores(startingScoresheet))
+		})
 	}
 	const enabledMovesKeys = Object.keys(
 		enabledMovesList

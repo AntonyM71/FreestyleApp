@@ -37,7 +37,11 @@ const DisplayScorePresenetation = (props: {
 	const paddlerScores = useSelector(getScoresState)
 	const paddlerScore: number[] = [0]
 	// @ts-ignore
-	if (paddlerScores[props.paddler.name][props.run]) {
+	if (
+		paddlerScores &&
+		paddlerScores[props.paddler] &&
+		paddlerScores[props.paddler][props.run]
+	) {
 		// @ts-ignore
 		const scoredMoves = paddlerScores[props.paddler][props.run]
 		moveListArray.map((item) => {
@@ -50,7 +54,7 @@ const DisplayScorePresenetation = (props: {
 						paddlerScore.push(moveTotal)
 					}
 				)
-			} else {
+			} else if (!Array.isArray(scoredMoves[item.Move])) {
 				const moveTotal =
 					calculateScoreAndBonuses(
 						item,

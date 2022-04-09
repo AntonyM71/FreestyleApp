@@ -65,7 +65,6 @@ export const MoveButtons = () => {
 									paddler={
 										paddlerList[currentHeat][paddlerIndex]
 									}
-									currentRun={currentRun}
 									move={item}
 									direction={"left"}
 								/>

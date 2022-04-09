@@ -9,6 +9,7 @@ import {
 	changeRun,
 	updatePaddlerScores
 } from "../../actions"
+import { IPaddler } from "../../reducers"
 import {
 	getNumberOfRuns,
 	getPaddlerHeatList,
@@ -33,19 +34,17 @@ export const PaddlerManager = () => {
 		newHeatList.flat().map((paddler: any) => {
 			// @ts-ignore
 			if (!newPaddlerScores[paddler]) {
-				newPaddlerScores[paddler.toString()] = [initialScoresheet()]
+				newPaddlerScores[paddler.name] = [initialScoresheet()]
 			}
 			if (
 				numberOfRuns + 1 !==
 				// @ts-ignore
-				newPaddlerScores[paddler.toString()].length
+				newPaddlerScores[paddler.name].length
 			) {
 				let i = 0
 				for (i; i < numberOfRuns; i++) {
 					// @ts-ignore
-					newPaddlerScores[paddler.toString()].push(
-						initialScoresheet()
-					)
+					newPaddlerScores[paddler.name].push(initialScoresheet())
 				}
 			}
 		})
@@ -60,7 +59,7 @@ export const PaddlerManager = () => {
 		const startingScoresheet = {}
 		newHeatList.flat().map((paddler: string) => {
 			// @ts-ignore
-			startingScoresheet[paddler.toString()] = [initialScoresheet()]
+			startingScoresheet[paddler.name] = [initialScoresheet()]
 		})
 
 		dispatch(changePaddler(0))
@@ -73,9 +72,9 @@ export const PaddlerManager = () => {
 	}
 	const clearScores = () => {
 		const startingScoresheet = {}
-		paddlerHeatList.flat().map((paddler: string) => {
+		paddlerHeatList.flat().map((paddler: IPaddler) => {
 			// @ts-ignore
-			startingScoresheet[paddler] = [initialScoresheet()]
+			startingScoresheet[paddler.name] = [initialScoresheet()]
 		})
 		dispatch(changeRun(0))
 		dispatch(updatePaddlerScores(startingScoresheet))
@@ -85,7 +84,7 @@ export const PaddlerManager = () => {
 		<ScrollView style={styles.container}>
 			<View>
 				{paddlerHeatList.map(
-					(paddlerList: string[], heatKey: number) => (
+					(paddlerList: IPaddler[], heatKey: number) => (
 						<View key={heatKey}>
 							<PaddlerHeatManager
 								paddlerList={paddlerList}

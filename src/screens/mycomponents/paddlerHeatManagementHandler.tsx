@@ -35,28 +35,38 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 			)
 		}
 
-	const handleAddChange = (newPaddler: IPaddler) => {
-		setCurrentPaddler(newPaddler)
-		if (paddlerHeatList.flat().indexOf(newPaddler) > -1) {
+	const handleAddChange = (newPaddlerName: string) => {
+		setCurrentPaddler(newPaddlerName)
+		if (
+			paddlerHeatList
+				.flat()
+				.map((p) => p.name)
+				.indexOf(newPaddlerName) > -1
+		) {
 			setInputBorder("red")
 		} else {
 			setInputBorder("black")
 		}
 	}
 	const handleAddPaddler =
-		(heatKey: number, paddlerList: IPaddler[], newPaddler: IPaddler) =>
+		(heatKey: number, paddlerList: IPaddler[], newPaddlerName: string) =>
 		() => {
-			if (newPaddler.length === 0) {
+			if (newPaddlerName.length === 0) {
 				alert("People like having names :)")
 			} else {
-				if (paddlerHeatList.flat().indexOf(newPaddler) > -1) {
+				if (
+					paddlerHeatList
+						.flat()
+						.map((p) => p.name)
+						.indexOf(newPaddlerName) > -1
+				) {
 					alert("You've already added this paddler")
 				} else {
 					batch(() => {
 						setCurrentPaddler("")
 						addOrRemovePaddler(heatKey, [
 							...paddlerList,
-							newPaddler
+							{ name: newPaddlerName }
 						])
 					})
 				}
@@ -71,19 +81,17 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 		newList.flat().map((paddler) => {
 			// @ts-ignore
 			if (!newPaddlerScores[paddler]) {
-				newPaddlerScores[paddler.toString()] = []
+				newPaddlerScores[paddler.name] = []
 			}
 
 			if (
 				numberOfRuns + 1 !==
 				// @ts-ignore
-				newPaddlerScores[paddler.toString()].length
+				newPaddlerScores[paddler.name].length
 			) {
 				for (let i = 0; i < numberOfRuns + 1; i++) {
 					// @ts-ignore
-					newPaddlerScores[paddler.toString()].push(
-						initialScoresheet()
-					)
+					newPaddlerScores[paddler.name].push(initialScoresheet())
 				}
 			}
 		})
@@ -121,7 +129,7 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 									alignItems: "center"
 								}}
 							>
-								{paddler}
+								{paddler.name}
 							</Text>
 						</View>
 

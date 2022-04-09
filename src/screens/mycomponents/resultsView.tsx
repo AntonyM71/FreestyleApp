@@ -2,6 +2,7 @@
 import React from "react"
 import { Dimensions, ScrollView, Text, View } from "react-native"
 import { useSelector } from "react-redux"
+import { IPaddler } from "../../reducers"
 import { getPaddlerHeatList, getScoresState } from "../../selectors"
 import { styles } from "../../styles"
 import { DisplayScore } from "./calculateScore"
@@ -23,62 +24,55 @@ export const ResultsView = () => {
 						<Text style={styles.heatStyle}>{"Results"}</Text>
 						{paddlerHeatList
 							.flat()
-							.map(
-								(
-									paddler: string | number,
-									key: string | number
-								) => (
-									<View key={key}>
-										<View>
-											<Text
-												style={{
-													...styles.standardText,
-													justifyContent: "center",
-													alignItems: "center"
-												}}
-											>
-												{paddler.toString()}
-											</Text>
-										</View>
-										<>
-											<View
-												style={{
-													flex: 1,
-													flexDirection: "row",
-													flexWrap: "wrap"
-												}}
-											>
-												{
-													// @ts-ignore
-													paddlerScores[paddler].map(
-														(
-															runScore: any,
-															runKey:
-																| string
-																| number
-														) => (
-															<View
-																style={{
-																	width: buttonPercentage
-																}}
-																key={runKey}
-															>
-																<DisplayScore
-																	paddler={
-																		paddler
-																	}
-																	run={runKey}
-																/>
-															</View>
-														)
-													)
-												}
-												{/* <Divider style={{ backgroundColor: 'blue' }} />; */}
-											</View>
-										</>
+							.map((paddler: IPaddler, key: string | number) => (
+								<View key={key}>
+									<View>
+										<Text
+											style={{
+												...styles.standardText,
+												justifyContent: "center",
+												alignItems: "center"
+											}}
+										>
+											{paddler.name}
+										</Text>
 									</View>
-								)
-							)}
+									<>
+										<View
+											style={{
+												flex: 1,
+												flexDirection: "row",
+												flexWrap: "wrap"
+											}}
+										>
+											{
+												// @ts-ignore
+												paddlerScores[paddler.name].map(
+													(
+														runScore: any,
+														runKey: string | number
+													) => (
+														<View
+															style={{
+																width: buttonPercentage
+															}}
+															key={runKey}
+														>
+															<DisplayScore
+																paddler={
+																	paddler.name
+																}
+																run={runKey}
+															/>
+														</View>
+													)
+												)
+											}
+											{/* <Divider style={{ backgroundColor: 'blue' }} />; */}
+										</View>
+									</>
+								</View>
+							))}
 					</View>
 				) : (
 					<View>

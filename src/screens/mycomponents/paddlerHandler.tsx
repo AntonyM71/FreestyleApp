@@ -67,7 +67,7 @@ export const PaddlerHandler = () => {
 				.flat()
 				.map((paddler: { toString: () => React.ReactText }) => {
 					// @ts-ignore
-					scores[paddler.toString()].push(initialScoresheet())
+					scores[paddler.name].push(initialScoresheet())
 				})
 			dispatch(changeNumberOfRuns(newRunIndex))
 			dispatch(updatePaddlerScores({ ...scores }))

@@ -77,7 +77,8 @@ const TrophyDynamicButtonPresentation = React.memo((props: PropsType) => {
 			dispatch(updatePaddlerScores(newScores))
 		}
 	// @ts-ignore
-	const theMoves = paddlerScores[props.paddler][currentRun][props.move.Move]
+	const theMoves =
+		paddlerScores[props.paddler.name][currentRun][props.move.Move]
 
 	return (
 		<>
