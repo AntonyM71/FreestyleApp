@@ -38,7 +38,7 @@ const initialState: IPaddlerStateType = {
 export const paddlerReducer = (
 	state = initialState,
 	action: { type: string; payload: any }
-) => {
+): IPaddlerStateType => {
 	switch (action.type) {
 		case CHANGE_PADDLER:
 			return {
@@ -63,7 +63,7 @@ export const paddlerReducer = (
 		case UPDATE_RUN:
 			return {
 				...state,
-				run: action.payload
+				currentRun: action.payload
 			}
 		case UPDATE_NUMBER_OF_RUNS:
 			return {
