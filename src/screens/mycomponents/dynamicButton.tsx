@@ -43,8 +43,7 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 
 	const thisMove =
 		paddlerScores[props.paddler][props.currentRun][props.move.Move]
-	// console.log(paddlerScores[props.paddler][props.currentRun])
-	if (thisMove[props.direction].scored === false) {
+	if (!thisMove[props.direction].scored) {
 		const buttonName =
 			oneSidedMoves.indexOf(props.move.Move) > -1
 				? props.move.Move

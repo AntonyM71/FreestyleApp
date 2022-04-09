@@ -47,8 +47,7 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 		}
 	// @ts-ignore
 	const thisMove = paddlerScores[props.paddler][currentRun][props.move.Move]
-	console.log(props.move.Move)
-	console.log(thisMove)
+
 	if (!thisMove[props.direction].scored) {
 		const buttonName = props.move.Move
 
