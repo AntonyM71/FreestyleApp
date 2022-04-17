@@ -3,13 +3,12 @@ import React from "react"
 import { Dimensions, View } from "react-native"
 import { useSelector } from "react-redux"
 import moveList from "../../data/moves_lists/move_list"
-import { IDirection, IPaddlerList } from "../../reducers"
+import { IDirection, IPaddler } from "../../reducers"
 import {
-	getCurrentHeat,
+	getAvailableMovesForPaddler,
+	getCurrentPaddler,
 	getCurrentRun,
-	getPaddlerHeatList,
-	getPaddlerIndex,
-	getShowMoves
+	getNumberOfPaddlersInHeat
 } from "../../selectors"
 import { DynamicButton } from "./dynamicButton"
 import { EntryDynamicButton } from "./entryDynamicButton"
@@ -17,15 +16,13 @@ import { dataSourceMoveInterface } from "./makePaddlerScores"
 import { TrophyDynamicButton } from "./trophyDynamicButton"
 
 const NormalMove = (props: {
-	paddlerList: IPaddlerList
-	currentHeat: number
-	paddlerIndex: number
+	currentPaddler: IPaddler
 	currentRun: number
 	item: dataSourceMoveInterface
 	direction: IDirection
 }) => (
 	<DynamicButton
-		paddler={props.paddlerList[props.currentHeat][props.paddlerIndex]}
+		paddler={props.currentPaddler}
 		currentRun={props.currentRun}
 		move={props.item}
 		direction={props.direction}
@@ -34,10 +31,9 @@ const NormalMove = (props: {
 
 export const MoveButtons = () => {
 	const currentRun = useSelector(getCurrentRun)
-	const paddlerIndex = useSelector(getPaddlerIndex)
-	const paddlerList = useSelector(getPaddlerHeatList)
-	const currentHeat = useSelector(getCurrentHeat)
-	const showMoves = useSelector(getShowMoves)
+	const currentPaddler = useSelector(getCurrentPaddler)
+	const numberOfPaddlersInCurrentHeat = useSelector(getNumberOfPaddlersInHeat)
+	const showMoves = useSelector(getAvailableMovesForPaddler)
 	// eslint-disable-next-line @typescript-eslint/no-var-requires
 	const screenWidth = Math.round(Dimensions.get("window").width)
 	const availableMoves = moveList
@@ -45,7 +41,7 @@ export const MoveButtons = () => {
 	const entryButtonPercentage = screenWidth > 600 ? "33%" : "33%"
 	const trophyButtonPercentage = screenWidth > 600 ? "33%" : "50%"
 	{
-		if (paddlerList[currentHeat].length !== 0) {
+		if (numberOfPaddlersInCurrentHeat !== 0) {
 			return (
 				<View
 					style={{
@@ -62,10 +58,7 @@ export const MoveButtons = () => {
 								key={item.Move}
 							>
 								<EntryDynamicButton
-									paddler={
-										paddlerList[currentHeat][paddlerIndex]
-									}
-									currentRun={currentRun}
+									paddler={currentPaddler}
 									move={item}
 									direction={"left"}
 								/>
@@ -83,9 +76,7 @@ export const MoveButtons = () => {
 										<NormalMove
 											item={item}
 											currentRun={currentRun}
-											paddlerList={paddlerList}
-											paddlerIndex={paddlerIndex}
-											currentHeat={currentHeat}
+											currentPaddler={currentPaddler}
 											direction={"left"}
 										/>
 									</View>
@@ -100,9 +91,7 @@ export const MoveButtons = () => {
 											<NormalMove
 												item={item}
 												currentRun={currentRun}
-												paddlerList={paddlerList}
-												paddlerIndex={paddlerIndex}
-												currentHeat={currentHeat}
+												currentPaddler={currentPaddler}
 												direction={"left"}
 											/>
 										</View>
@@ -112,9 +101,7 @@ export const MoveButtons = () => {
 											<NormalMove
 												item={item}
 												currentRun={currentRun}
-												paddlerList={paddlerList}
-												paddlerIndex={paddlerIndex}
-												currentHeat={currentHeat}
+												currentPaddler={currentPaddler}
 												direction={"right"}
 											/>
 										</View>
@@ -137,9 +124,9 @@ export const MoveButtons = () => {
 												<NormalMove
 													item={item}
 													currentRun={currentRun}
-													paddlerList={paddlerList}
-													paddlerIndex={paddlerIndex}
-													currentHeat={currentHeat}
+													currentPaddler={
+														currentPaddler
+													}
 													direction={"left"}
 												/>
 											</View>
@@ -156,14 +143,8 @@ export const MoveButtons = () => {
 													<NormalMove
 														item={item}
 														currentRun={currentRun}
-														paddlerList={
-															paddlerList
-														}
-														paddlerIndex={
-															paddlerIndex
-														}
-														currentHeat={
-															currentHeat
+														currentPaddler={
+															currentPaddler
 														}
 														direction={"left"}
 													/>
@@ -176,14 +157,8 @@ export const MoveButtons = () => {
 													<NormalMove
 														item={item}
 														currentRun={currentRun}
-														paddlerList={
-															paddlerList
-														}
-														paddlerIndex={
-															paddlerIndex
-														}
-														currentHeat={
-															currentHeat
+														currentPaddler={
+															currentPaddler
 														}
 														direction={"right"}
 													/>
@@ -208,9 +183,9 @@ export const MoveButtons = () => {
 												<NormalMove
 													item={item}
 													currentRun={currentRun}
-													paddlerList={paddlerList}
-													paddlerIndex={paddlerIndex}
-													currentHeat={currentHeat}
+													currentPaddler={
+														currentPaddler
+													}
 													direction={"left"}
 												/>
 											</View>
@@ -227,14 +202,8 @@ export const MoveButtons = () => {
 													<NormalMove
 														item={item}
 														currentRun={currentRun}
-														paddlerList={
-															paddlerList
-														}
-														paddlerIndex={
-															paddlerIndex
-														}
-														currentHeat={
-															currentHeat
+														currentPaddler={
+															currentPaddler
 														}
 														direction={"left"}
 													/>
@@ -247,14 +216,67 @@ export const MoveButtons = () => {
 													<NormalMove
 														item={item}
 														currentRun={currentRun}
-														paddlerList={
-															paddlerList
+														currentPaddler={
+															currentPaddler
 														}
-														paddlerIndex={
-															paddlerIndex
+														direction={"right"}
+													/>
+												</View>
+											</>
+										)
+									}
+							  })
+							: null}
+					</>
+					<>
+						{showMoves.nfl
+							? availableMoves.nfl.map((item) => {
+									if (!item.Reverse) {
+										return (
+											<View
+												style={{
+													width: buttonPercentage
+												}}
+												key={item.Move}
+											>
+												<NormalMove
+													item={item}
+													currentRun={currentRun}
+													currentPaddler={
+														currentPaddler
+													}
+													direction={"left"}
+												/>
+											</View>
+										)
+									} else {
+										return (
+											<>
+												<View
+													style={{
+														width: buttonPercentage
+													}}
+													key={item.Move}
+												>
+													<NormalMove
+														item={item}
+														currentRun={currentRun}
+														currentPaddler={
+															currentPaddler
 														}
-														currentHeat={
-															currentHeat
+														direction={"left"}
+													/>
+												</View>
+												<View
+													style={{
+														width: buttonPercentage
+													}}
+												>
+													<NormalMove
+														item={item}
+														currentRun={currentRun}
+														currentPaddler={
+															currentPaddler
 														}
 														direction={"right"}
 													/>
@@ -272,9 +294,7 @@ export const MoveButtons = () => {
 								key={item.Move + key.toString()}
 							>
 								<TrophyDynamicButton
-									paddler={
-										paddlerList[currentHeat][paddlerIndex]
-									}
+									paddler={currentPaddler}
 									move={item}
 									direction={"left"}
 								/>

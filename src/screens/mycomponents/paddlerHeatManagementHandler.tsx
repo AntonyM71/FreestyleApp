@@ -1,3 +1,5 @@
+import { Picker } from "@react-native-picker/picker"
+import _ from "lodash"
 import React, { useState } from "react"
 import { Text, TextInput, View } from "react-native"
 import { Button } from "react-native-elements"
@@ -9,6 +11,7 @@ import {
 } from "../../actions"
 import { IPaddler } from "../../reducers"
 import {
+	getCategories,
 	getNumberOfRuns,
 	getPaddlerHeatList,
 	getScoresState
@@ -22,11 +25,13 @@ interface PropsType {
 }
 export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 	const dispatch = useDispatch()
-	const [currentPaddler, setCurrentPaddler] = useState("")
+	const [newPaddler, setNewPaddler] = useState("")
 	const [inputBorder, setInputBorder] = useState("black")
 	const paddlerScores = useSelector(getScoresState)
 	const paddlerHeatList = useSelector(getPaddlerHeatList)
 	const numberOfRuns = useSelector(getNumberOfRuns)
+	const availableCategories = useSelector(getCategories)
+
 	const handleDeletePaddler =
 		(heatKey: number, paddlerList: IPaddler[], paddler: IPaddler) => () => {
 			addOrRemovePaddler(
@@ -35,28 +40,42 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 			)
 		}
 
-	const handleAddChange = (newPaddler: IPaddler) => {
-		setCurrentPaddler(newPaddler)
-		if (paddlerHeatList.flat().indexOf(newPaddler) > -1) {
+	const handleAddChange = (newPaddlerName: string) => {
+		setNewPaddler(newPaddlerName)
+		if (
+			paddlerHeatList
+				.flat()
+				.map((p) => p.name)
+				.indexOf(newPaddlerName) > -1
+		) {
 			setInputBorder("red")
 		} else {
 			setInputBorder("black")
 		}
 	}
 	const handleAddPaddler =
-		(heatKey: number, paddlerList: IPaddler[], newPaddler: IPaddler) =>
+		(heatKey: number, paddlerList: IPaddler[], newPaddlerName: string) =>
 		() => {
-			if (newPaddler.length === 0) {
+			if (newPaddlerName.length === 0) {
 				alert("People like having names :)")
 			} else {
-				if (paddlerHeatList.flat().indexOf(newPaddler) > -1) {
+				if (
+					paddlerHeatList
+						.flat()
+						.map((p) => p.name)
+						.indexOf(newPaddlerName) > -1
+				) {
 					alert("You've already added this paddler")
 				} else {
 					batch(() => {
-						setCurrentPaddler("")
+						setNewPaddler("")
 						addOrRemovePaddler(heatKey, [
 							...paddlerList,
-							newPaddler
+							{
+								name: newPaddlerName,
+								category: "",
+								heat: heatKey
+							}
 						])
 					})
 				}
@@ -71,25 +90,24 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 		newList.flat().map((paddler) => {
 			// @ts-ignore
 			if (!newPaddlerScores[paddler]) {
-				newPaddlerScores[paddler.toString()] = []
+				newPaddlerScores[paddler.name] = []
 			}
 
 			if (
 				numberOfRuns + 1 !==
 				// @ts-ignore
-				newPaddlerScores[paddler.toString()].length
+				newPaddlerScores[paddler.name].length
 			) {
 				for (let i = 0; i < numberOfRuns + 1; i++) {
 					// @ts-ignore
-					newPaddlerScores[paddler.toString()].push(
-						initialScoresheet()
-					)
+					newPaddlerScores[paddler.name].push(initialScoresheet())
 				}
 			}
 		})
-
-		const newHeatList = paddlerHeatList
-		newHeatList[heatKey] = newList
+		const paddlersInOtherHeats = paddlerHeatList.filter(
+			(p) => p.heat !== heatKey
+		)
+		const newHeatList = [...paddlersInOtherHeats, ...newList]
 		batch(() => {
 			dispatch(changePaddler(0))
 			dispatch(addOrRemovePaddlerName([...newHeatList]))
@@ -97,23 +115,42 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 		})
 	}
 
+	const handleCategoryChange = (paddlerName: string, newCategory: string) => {
+		if (newCategory !== "") {
+			const newPaddlerList = _.cloneDeep(paddlerHeatList)
+			const newPaddlerScores = _.cloneDeep(paddlerScores)
+
+			const changedPaddlerIndex = paddlerHeatList.findIndex(
+				(p) => p.name === paddlerName
+			)
+			newPaddlerList[changedPaddlerIndex].category = newCategory
+
+			newPaddlerScores[paddlerName] = [initialScoresheet()]
+			batch(() => {
+				dispatch(addOrRemovePaddlerName([...newPaddlerList]))
+				dispatch(updatePaddlerScores(newPaddlerScores))
+			})
+		}
+	}
+
 	return (
 		<View>
 			<View>
-				<Text style={styles.heatStyle}>{`Heat ${
-					props.heatKey + 1
-				}`}</Text>
+				<Text style={styles.headerText}>{`Heat ${props.heatKey}`}</Text>
 
 				{props.paddlerList.map((paddler: IPaddler, key: number) => (
 					<View
 						style={{
 							flex: 1,
 							flexDirection: "row",
-							flexWrap: "wrap"
+							flexWrap: "wrap",
+							borderBottomColor: "gray",
+							borderBottomWidth: 1,
+							paddingBottom: 5
 						}}
 						key={key}
 					>
-						<View style={{ width: "70%" }}>
+						<View style={{ width: "40%" }}>
 							<Text
 								style={{
 									...styles.standardText,
@@ -121,11 +158,8 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 									alignItems: "center"
 								}}
 							>
-								{paddler}
+								{paddler.name}
 							</Text>
-						</View>
-
-						<View style={{ width: "30%" }}>
 							<Button
 								onPress={handleDeletePaddler(
 									props.heatKey,
@@ -134,8 +168,35 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 								)}
 								title="Delete"
 								buttonStyle={styles.deleteButton}
+								style={{ paddingTop: 10 }}
 							/>
 						</View>
+						<View style={{ width: "60%" }}>
+							<Picker
+								selectedValue={paddler.category}
+								mode="dropdown"
+								onValueChange={(itemValue) =>
+									handleCategoryChange(
+										paddler.name,
+										itemValue
+									)
+								}
+								// style={{ height: 88 }}
+							>
+								<Picker.Item
+									label={"Select a Category"}
+									value={""}
+									enabled={false}
+								/>
+								{availableCategories.map((category) => (
+									<Picker.Item
+										label={category.name}
+										value={category.name}
+									/>
+								))}
+							</Picker>
+						</View>
+						<View style={{ width: "20%" }}></View>
 					</View>
 				))}
 			</View>
@@ -144,12 +205,12 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 					blurOnSubmit={true}
 					autoCorrect={false}
 					placeholder="New Paddler Name"
-					value={currentPaddler}
+					value={newPaddler}
 					onChangeText={handleAddChange}
 					onSubmitEditing={handleAddPaddler(
 						props.heatKey,
 						props.paddlerList,
-						currentPaddler
+						newPaddler
 					)}
 					clearButtonMode="always"
 					style={[

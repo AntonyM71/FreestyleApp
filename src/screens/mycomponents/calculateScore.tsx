@@ -32,16 +32,21 @@ const calculateScoreAndBonuses = (
 
 const DisplayScorePresenetation = (props: {
 	paddler: string | number
-	run: string | number
+	run: number
 }) => {
 	const paddlerScores = useSelector(getScoresState)
 	const paddlerScore: number[] = [0]
 	// @ts-ignore
-	if (paddlerScores[props.paddler][props.run]) {
+	if (
+		paddlerScores &&
+		paddlerScores[props.paddler] &&
+		paddlerScores[props.paddler][props.run]
+	) {
 		// @ts-ignore
 		const scoredMoves = paddlerScores[props.paddler][props.run]
 		moveListArray.map((item) => {
 			if (Array.isArray(scoredMoves[item.Move])) {
+				// @ts-ignore
 				scoredMoves[item.Move].map(
 					(arrayItem: { [x: string]: moveSideInterface }) => {
 						const moveTotal =
@@ -50,12 +55,14 @@ const DisplayScorePresenetation = (props: {
 						paddlerScore.push(moveTotal)
 					}
 				)
-			} else {
+			} else if (!Array.isArray(scoredMoves[item.Move])) {
 				const moveTotal =
 					calculateScoreAndBonuses(
 						item,
+						// @ts-ignore
 						scoredMoves[item.Move].left
 					) +
+					// @ts-ignore
 					calculateScoreAndBonuses(item, scoredMoves[item.Move].right)
 				paddlerScore.push(moveTotal)
 			}

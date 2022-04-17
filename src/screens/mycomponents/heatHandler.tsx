@@ -4,7 +4,11 @@ import { Col, Grid, Row } from "react-native-easy-grid"
 import { Button } from "react-native-elements"
 import { batch, useDispatch, useSelector } from "react-redux"
 import { changeHeat, changePaddler } from "../../actions"
-import { getCurrentHeat, getPaddlerHeatList } from "../../selectors"
+import {
+	getAvailableHeats,
+	getCurrentHeat,
+	getPaddlerHeatList
+} from "../../selectors"
 import { styles } from "../../styles"
 
 export const PaddlerHandler = () => {
@@ -12,11 +16,18 @@ export const PaddlerHandler = () => {
 
 	const paddlerList = useSelector(getPaddlerHeatList)
 	const currentHeat = useSelector(getCurrentHeat)
-	const numberOfHeats = paddlerList.length
 
+	const availableHeats = useSelector(getAvailableHeats)
+
+	const currentHeatIndex = availableHeats.findIndex((h) => h === currentHeat)
+
+	const numberOfHeats = availableHeats.length
 	const handlePressNextHeat = () => {
 		// -1 to account for zero indexing
-		const newHeat = currentHeat < numberOfHeats - 1 ? currentHeat + 1 : 0
+		const newHeatIndex =
+			currentHeatIndex < numberOfHeats - 1 ? currentHeatIndex + 1 : 0
+		const newHeat = availableHeats[newHeatIndex]
+
 		batch(() => {
 			dispatch(changePaddler(0))
 			dispatch(changeHeat(newHeat))
@@ -25,7 +36,9 @@ export const PaddlerHandler = () => {
 
 	const handlePressPreviousHeat = () => {
 		// -1 to account for zero indexing
-		const newHeat = currentHeat === 0 ? numberOfHeats - 1 : currentHeat - 1
+		const newHeatIndex =
+			currentHeatIndex === 0 ? numberOfHeats - 1 : currentHeatIndex - 1
+		const newHeat = availableHeats[newHeatIndex]
 		batch(() => {
 			dispatch(changePaddler(0))
 			dispatch(changeHeat(newHeat))
@@ -54,7 +67,7 @@ export const PaddlerHandler = () => {
 										textAlign: "center",
 										fontSize: 23
 									}}
-								>{`Heat ${currentHeat + 1}`}</Text>
+								>{`Heat ${currentHeat}`}</Text>
 							</View>
 						</Col>
 						<Col>

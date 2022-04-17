@@ -77,7 +77,8 @@ const TrophyDynamicButtonPresentation = React.memo((props: PropsType) => {
 			dispatch(updatePaddlerScores(newScores))
 		}
 	// @ts-ignore
-	const theMoves = paddlerScores[props.paddler][currentRun][props.move.Move]
+	const theMoves =
+		paddlerScores[props.paddler.name][currentRun][props.move.Move]
 
 	return (
 		<>
@@ -91,7 +92,7 @@ const TrophyDynamicButtonPresentation = React.memo((props: PropsType) => {
 							return (
 								<Button
 									onPress={handleMove(
-										props.paddler,
+										props.paddler.name,
 										currentRun,
 										props.move.Move,
 										props.direction,
@@ -119,7 +120,7 @@ const TrophyDynamicButtonPresentation = React.memo((props: PropsType) => {
 									<View style={{ width: "100%" }}>
 										<Button
 											onPress={handleMove(
-												props.paddler,
+												props.paddler.name,
 												currentRun,
 												props.move.Move,
 												props.direction,
@@ -133,7 +134,7 @@ const TrophyDynamicButtonPresentation = React.memo((props: PropsType) => {
 									<View style={{ width: "50%" }}>
 										<Button
 											onPress={handleMove(
-												props.paddler,
+												props.paddler.name,
 												currentRun,
 												props.move.Move,
 												props.direction,
@@ -154,7 +155,7 @@ const TrophyDynamicButtonPresentation = React.memo((props: PropsType) => {
 									<View style={{ width: "50%" }}>
 										<Button
 											onPress={handleMove(
-												props.paddler,
+												props.paddler.name,
 												currentRun,
 												props.move.Move,
 												props.direction,
@@ -178,7 +179,7 @@ const TrophyDynamicButtonPresentation = React.memo((props: PropsType) => {
 									<View style={{ width: "33%" }}>
 										<Button
 											onPress={handleMove(
-												props.paddler,
+												props.paddler.name,
 												currentRun,
 												props.move.Move,
 												props.direction,
@@ -199,7 +200,7 @@ const TrophyDynamicButtonPresentation = React.memo((props: PropsType) => {
 									<View style={{ width: "33%" }}>
 										<Button
 											onPress={handleMove(
-												props.paddler,
+												props.paddler.name,
 												currentRun,
 												props.move.Move,
 												props.direction,
@@ -220,7 +221,7 @@ const TrophyDynamicButtonPresentation = React.memo((props: PropsType) => {
 									<View style={{ width: "33%" }}>
 										<Button
 											onPress={handleMove(
-												props.paddler,
+												props.paddler.name,
 												currentRun,
 												props.move.Move,
 												props.direction,
