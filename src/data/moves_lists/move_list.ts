@@ -341,15 +341,115 @@ export const MovesList: IMovesList = {
 	],
 	nfl: [
 		{
-			Move: "NFLTestMove",
-			Value: 50,
-			Clean: 30,
-			SuperClean: 40,
-			Air: 30,
-			Huge: 40,
-			Link: 20,
+			Move: "Paddle Spin",
+			Value: 10,
+			Clean: 20,
+			SuperClean: 20,
+			Air: 10,
+			Huge: 20,
+			Link: 0,
 			Reverse: true
-		}
+		},
+		{
+			Move: "Shudder Rudder",
+			Value: 10,
+			Clean: 20,
+			SuperClean: 20,
+			Air: 10,
+			Huge: 20,
+			Link: 0,
+			Reverse: true
+		},
+		{
+			Move: "Hand Surf",
+			Value: 10,
+			Clean: 20,
+			SuperClean: 20,
+			Air: 10,
+			Huge: 20,
+			Link: 0,
+			Reverse: true
+		},
+		{
+			Move: "Endo",
+			Value: 15,
+			Clean: 10,
+			SuperClean: 20,
+			Air: 10,
+			Huge: 20,
+			Link: 0,
+			Reverse: true
+		},
+		{
+			Move: "Air Guitar",
+			Value: 20,
+			Clean: 20,
+			SuperClean: 20,
+			Air: 10,
+			Huge: 20,
+			Link: 0,
+			Reverse: true
+		},
+		{
+			Move: "Roll in Hole",
+			Value: 20,
+			Clean: 20,
+			SuperClean: 20,
+			Air: 10,
+			Huge: 20,
+			Link: 0,
+			Reverse: true
+		},
+		{
+			Move: "Cosmic Donkey",
+			Value: 30,
+			Clean: 20,
+			SuperClean: 20,
+			Air: 10,
+			Huge: 20,
+			Link: 0,
+			Reverse: true
+		},
+		{
+			Move: "Harry Potter",
+			Value: 40,
+			Clean: 20,
+			SuperClean: 20,
+			Air: 10,
+			Huge: 20,
+			Link: 0,
+			Reverse: true
+		},
+		{
+			Move: "Car Bomb",
+			Value: 50,
+			Clean: 20,
+			SuperClean: 20,
+			Air: 10,
+			Huge: 20,
+			Link: 0,
+			Reverse: true
+		},
+		{
+			Move: "Crowd Pleaser",
+			Value: 50,
+			Clean: 20,
+			SuperClean: 20,
+			Air: 10,
+			Huge: 20,
+			Link: 0,
+			Reverse: true
+		},
+		{
+			Move: "McNope",
+			Value: 70,
+			Clean: 20,
+			SuperClean: 20,
+			Air: 10,
+			Huge: 20,
+			Link: 0,
+			Reverse: true
+		},
 	]
 }
 
