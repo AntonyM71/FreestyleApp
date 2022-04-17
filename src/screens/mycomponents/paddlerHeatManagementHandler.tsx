@@ -136,9 +136,7 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 	return (
 		<View>
 			<View>
-				<Text style={styles.heatStyle}>{`Heat ${
-					props.heatKey + 1
-				}`}</Text>
+				<Text style={styles.headerText}>{`Heat ${props.heatKey}`}</Text>
 
 				{props.paddlerList.map((paddler: IPaddler, key: number) => (
 					<View
@@ -186,7 +184,7 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 								// style={{ height: 88 }}
 							>
 								<Picker.Item
-									label={"Select a Cetegory"}
+									label={"Select a Category"}
 									value={""}
 									enabled={false}
 								/>

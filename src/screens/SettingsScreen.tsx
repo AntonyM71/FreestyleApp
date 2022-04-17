@@ -40,7 +40,7 @@ export default class HomeScreen extends React.Component {
 					</View>
 					<Text
 						style={{
-							...styles.standardText,
+							...styles.headerText,
 							justifyContent: "space-around",
 							alignItems: "center",
 							borderBottomColor: "gray",

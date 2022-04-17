@@ -68,6 +68,13 @@ export const styles = StyleSheet.create({
 		marginRight: 8,
 		marginTop: 8
 	},
+	headerText: {
+		fontWeight: "bold",
+		fontSize: 30,
+		marginLeft: 12,
+		marginRight: 12,
+		marginTop: 12
+	},
 	heatStyle: {
 		textAlign: "center",
 		alignItems: "center",

@@ -54,7 +54,7 @@ const CategoryScores = ({
 		>
 			<Text
 				style={{
-					...styles.standardText
+					...styles.headerText
 				}}
 			>
 				{category}

@@ -341,14 +341,14 @@ export const MovesList: IMovesList = {
 	],
 	nfl: [
 		{
-			Move: "NFLMove",
+			Move: "NFLTestMove",
 			Value: 50,
 			Clean: 30,
 			SuperClean: 40,
 			Air: 30,
 			Huge: 40,
 			Link: 20,
-			Reverse: false
+			Reverse: true
 		}
 	]
 }
