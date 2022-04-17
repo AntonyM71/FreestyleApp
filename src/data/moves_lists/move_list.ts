@@ -338,6 +338,18 @@ export const MovesList: IMovesList = {
 			Link: 30,
 			Reverse: false
 		}
+	],
+	nfl: [
+		{
+			Move: "NFLMove",
+			Value: 50,
+			Clean: 30,
+			SuperClean: 40,
+			Air: 30,
+			Huge: 40,
+			Link: 20,
+			Reverse: false
+		}
 	]
 }
 
@@ -358,6 +370,7 @@ export interface IMovesList {
 	wave: IMoves[]
 	hole: IMoves[]
 	trophy: IMoves[]
+	nfl: IMoves[]
 }
 
 export default MovesList

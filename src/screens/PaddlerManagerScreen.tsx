@@ -7,10 +7,6 @@ export default class HomeScreen extends React.Component {
 		header: null
 	}
 
-	state = {
-		paddlerList: ["paddler1", "paddler2", "c1er"],
-		paddlerIndex: 0
-	}
 	render() {
 		return (
 			<SafeAreaView style={styles.container}>

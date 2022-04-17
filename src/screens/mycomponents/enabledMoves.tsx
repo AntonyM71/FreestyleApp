@@ -3,26 +3,31 @@ import { View } from "react-native"
 import { Button } from "react-native-elements"
 import { batch, useDispatch, useSelector } from "react-redux"
 import {
+	addOrRemoveCategory,
 	changeRun,
-	updateEnabledMoves,
 	updatePaddlerScores
 } from "../../actions"
-import { IEnabledMoves } from "../../reducers"
-import { getPaddlerHeatList, getShowMoves } from "../../selectors"
+import { ICategory, IEnabledMoves } from "../../reducers"
+import { getCategories, getPaddlerHeatList } from "../../selectors"
 import { styles } from "../../styles"
 import { initialScoresheet } from "./makePaddlerScores"
-
-const moveSelectionPresentation = () => {
+const moveSelectionPresentation = ({ category }: { category: ICategory }) => {
 	const dispatch = useDispatch()
 	const paddlerHeatList = useSelector(getPaddlerHeatList)
-	const enabledMovesList = useSelector(getShowMoves)
+	const enabledMovesList: IEnabledMoves = category.availableMoves
+	const categoryList = useSelector(getCategories)
+
 	const handleMoveButtonPress = (moveKey: IEnabledMovesKeys) => () => {
 		const newMoves = { ...enabledMovesList }
-
+		const newCategoryList = [...categoryList]
 		newMoves[moveKey] = !newMoves[moveKey]
-		dispatch(updateEnabledMoves(newMoves))
-		clearScores()
+		const categoryIndex = newCategoryList.findIndex(
+			(c) => c.name === category.name
+		)
 
+		newCategoryList[categoryIndex].availableMoves = newMoves
+		dispatch(addOrRemoveCategory(newCategoryList))
+		clearScores()
 		//
 	}
 
@@ -49,7 +54,7 @@ const moveSelectionPresentation = () => {
 			<View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
 				{enabledMovesKeys.map(
 					(moveKey: IEnabledMovesKeys, key: number) => (
-						<View style={{ width: "50%" }} key={key}>
+						<View style={{ width: "33%" }} key={key}>
 							<Button
 								buttonStyle={
 									enabledMovesList[moveKey]

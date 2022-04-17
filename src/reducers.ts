@@ -1,8 +1,9 @@
 import {
+	ADD_OR_REMOVE_CATEGORY,
+	ADD_OR_REMOVE_HEATS,
 	ADD_OR_REMOVE_PADDLER,
 	CHANGE_HEAT,
 	CHANGE_PADDLER,
-	ENABLED_MOVES,
 	UPDATE_NUMBER_OF_RUNS,
 	UPDATE_PADDLER_SCORES,
 	UPDATE_RUN,
@@ -16,8 +17,23 @@ import {
 
 // make our starting scoresheet from the list of paddlers
 const listOfPaddlers = [
-	[{ name: "paddler1" }, { name: "paddler2" }, { name: "paddler3" }]
+	{
+		name: "paddler1",
+		category: "category 1",
+		heat: 1
+	},
+	{
+		name: "paddler2",
+		category: "category 1",
+		heat: 1
+	},
+	{
+		name: "paddler3",
+		category: "category 1",
+		heat: 1
+	}
 ]
+
 const startingScoresheet = {}
 listOfPaddlers.flat().map((paddler) => {
 	// @ts-ignore
@@ -30,13 +46,20 @@ const initialState: IPaddlerStateType = {
 	paddlerList: listOfPaddlers,
 	paddlerScores: startingScoresheet,
 	showTimer: false,
-	currentHeat: 0,
+	currentHeat: 1,
 	currentRun: 0,
 	numberOfRuns: 0,
 	showRunHandler: true,
-	enabledMoves: { wave: true, hole: true }
+	categories: [
+		{
+			name: "category 1",
+			availableMoves: { hole: true, wave: false, nfl: false }
+		}
+	],
+	heats: Array.from(new Set(listOfPaddlers.map((p) => p.heat)))
 }
 
+// eslint-disable-next-line complexity
 export const paddlerReducer = (
 	state = initialState,
 	action: { type: string; payload: any }
@@ -82,10 +105,15 @@ export const paddlerReducer = (
 				...state,
 				showRunHandler: action.payload
 			}
-		case ENABLED_MOVES:
+		case ADD_OR_REMOVE_CATEGORY:
 			return {
 				...state,
-				enabledMoves: action.payload
+				categories: action.payload
+			}
+		case ADD_OR_REMOVE_HEATS:
+			return {
+				...state,
+				heats: action.payload
 			}
 		default:
 			return state
@@ -102,9 +130,14 @@ export interface IPaddlerStateType {
 	currentRun: number
 	numberOfRuns: number
 	showRunHandler: boolean
-	enabledMoves: IEnabledMoves
+	categories: ICategory[]
+	heats: number[]
 }
 
+export interface ICategory {
+	name: string
+	availableMoves: IEnabledMoves
+}
 export type IPaddlerScores = Record<
 	IPaddler["name"],
 	Record<IMoveName, MoveType | MoveType[]>[]
@@ -118,12 +151,15 @@ export interface MoveType {
 export interface IEnabledMoves {
 	hole: boolean
 	wave: boolean
+	nfl: boolean
 }
 type IMoveName = string
-export type IPaddlerList = IPaddler[][]
+export type IPaddlerList = IPaddler[]
 
 export interface IPaddler {
 	name: string
+	category: string
+	heat: number
 }
 
 export type IDirection = "left" | "right"

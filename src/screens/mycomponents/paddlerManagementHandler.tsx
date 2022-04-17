@@ -1,16 +1,19 @@
+import _ from "lodash"
 import React from "react"
 import { ScrollView, View } from "react-native"
 import { Button } from "react-native-elements"
 import { batch, useDispatch, useSelector } from "react-redux"
 import {
+	addOrRemoveHeat,
 	addOrRemovePaddlerName,
 	changeHeat,
 	changePaddler,
 	changeRun,
 	updatePaddlerScores
 } from "../../actions"
-import { IPaddler } from "../../reducers"
+import { IPaddler, IPaddlerList } from "../../reducers"
 import {
+	getAvailableHeats,
 	getNumberOfRuns,
 	getPaddlerHeatList,
 	getScoresState
@@ -27,37 +30,16 @@ export const PaddlerManager = () => {
 	const paddlerScores = useSelector(getScoresState)
 	const paddlerHeatList = useSelector(getPaddlerHeatList)
 	const numberOfRuns = useSelector(getNumberOfRuns)
+	const heats = useSelector(getAvailableHeats)
 	const addHeat = () => {
-		const newHeatList = paddlerHeatList
-		newHeatList.push([])
-		const newPaddlerScores = paddlerScores
-		newHeatList.flat().map((paddler: any) => {
-			// @ts-ignore
-			if (!newPaddlerScores[paddler]) {
-				newPaddlerScores[paddler.name] = [initialScoresheet()]
-			}
-			if (
-				numberOfRuns + 1 !==
-				// @ts-ignore
-				newPaddlerScores[paddler.name].length
-			) {
-				let i = 0
-				for (i; i < numberOfRuns; i++) {
-					// @ts-ignore
-					newPaddlerScores[paddler.name].push(initialScoresheet())
-				}
-			}
-		})
-		batch(() => {
-			dispatch(changePaddler(0))
-			dispatch(addOrRemovePaddlerName([...newHeatList]))
-			dispatch(updatePaddlerScores(newPaddlerScores))
-		})
+		const newHeatList = _.cloneDeep(heats)
+		const maxHeat = heats ? Math.max(...heats) : 0
+		dispatch(addOrRemoveHeat([...newHeatList, maxHeat + 1]))
 	}
 	const clearPaddlers = () => {
-		const newHeatList = [[]]
+		const newHeatList: IPaddlerList = []
 		const startingScoresheet = {}
-		newHeatList.flat().map((paddler: string) => {
+		newHeatList.flat().map((paddler: IPaddler) => {
 			// @ts-ignore
 			startingScoresheet[paddler.name] = [initialScoresheet()]
 		})
@@ -83,16 +65,16 @@ export const PaddlerManager = () => {
 	return (
 		<ScrollView style={styles.container}>
 			<View>
-				{paddlerHeatList.map(
-					(paddlerList: IPaddler[], heatKey: number) => (
-						<View key={heatKey}>
-							<PaddlerHeatManager
-								paddlerList={paddlerList}
-								heatKey={heatKey}
-							/>
-						</View>
-					)
-				)}
+				{heats.map((heat) => (
+					<View key={heat}>
+						<PaddlerHeatManager
+							paddlerList={paddlerHeatList.filter(
+								(p) => p.heat === heat
+							)}
+							heatKey={heat}
+						/>
+					</View>
+				))}
 
 				<View
 					style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}

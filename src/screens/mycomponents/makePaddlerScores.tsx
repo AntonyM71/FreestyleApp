@@ -1,5 +1,5 @@
-import moveList from "../../data/moves_lists/move_list"
-export const moveListArray = Object.values(moveList).flat()
+import moveList, { IMoves } from "../../data/moves_lists/move_list"
+export const moveListArray: IMoves[] = Object.values(moveList).flat()
 export const initialScoresheet = () => {
 	const initialMoves = moveListArray.map(
 		(item): moveInterface | moveInterface[] => {

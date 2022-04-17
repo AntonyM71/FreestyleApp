@@ -11,8 +11,9 @@ import {
 } from "../../actions"
 import {
 	getCurrentHeat,
+	getCurrentPaddler,
 	getCurrentRun,
-	getNumberOfPaddlers,
+	getNumberOfPaddlersInHeat,
 	getNumberOfRuns,
 	getPaddlerHeatList,
 	getPaddlerIndex,
@@ -25,9 +26,10 @@ import { initialScoresheet } from "./makePaddlerScores"
 
 export const PaddlerHandler = () => {
 	const dispatch = useDispatch()
-	const numberOfPaddlers = useSelector(getNumberOfPaddlers)
+	const numberOfPaddlersInCurrentHeat = useSelector(getNumberOfPaddlersInHeat)
 	const numberOfRuns = useSelector(getNumberOfRuns)
 	const paddlerIndex = useSelector(getPaddlerIndex)
+	const currentPaddler = useSelector(getCurrentPaddler)
 	const paddlerScores = useSelector(getPaddlerScores)
 	const currentRun = useSelector(getCurrentRun)
 	const currentHeat = useSelector(getCurrentHeat)
@@ -36,14 +38,18 @@ export const PaddlerHandler = () => {
 	const handlePressNext = () => {
 		// -1 to account for zero indexing
 		const newPaddlerIndex: number =
-			paddlerIndex < numberOfPaddlers - 1 ? paddlerIndex + 1 : 0
+			paddlerIndex < numberOfPaddlersInCurrentHeat - 1
+				? paddlerIndex + 1
+				: 0
 		dispatch(changePaddler(newPaddlerIndex))
 	}
 
 	const handlePressPrevious = () => {
 		// -1 to account for zero indexing
 		const newPaddlerIndex =
-			paddlerIndex === 0 ? numberOfPaddlers - 1 : paddlerIndex - 1
+			paddlerIndex === 0
+				? numberOfPaddlersInCurrentHeat - 1
+				: paddlerIndex - 1
 		dispatch(changePaddler(newPaddlerIndex))
 	}
 
@@ -75,7 +81,7 @@ export const PaddlerHandler = () => {
 		}
 	}
 
-	if (paddlerList[currentHeat].length !== 0) {
+	if (numberOfPaddlersInCurrentHeat !== 0) {
 		return (
 			<View>
 				<Grid>
@@ -96,16 +102,10 @@ export const PaddlerHandler = () => {
 										textAlign: "center"
 									}}
 								>
-									{
-										paddlerList[currentHeat][paddlerIndex]
-											.name
-									}
+									{currentPaddler.name}
 								</Text>
 								<DisplayScore
-									paddler={
-										paddlerList[currentHeat][paddlerIndex]
-											.name
-									}
+									paddler={currentPaddler.name}
 									run={currentRun}
 								/>
 							</View>

@@ -1,7 +1,7 @@
 import React from "react"
 import { ScrollView, Text, View } from "react-native"
 import { styles } from "../styles"
-import MoveSelection from "./mycomponents/enabledMoves"
+import CategoryManager from "./mycomponents/categoryManager"
 import RunOptions from "./mycomponents/runOptions"
 import TimerOptions from "./mycomponents/timerOptions"
 export default class HomeScreen extends React.Component {
@@ -24,7 +24,11 @@ export default class HomeScreen extends React.Component {
 						style={{
 							flex: 1,
 							flexDirection: "row",
-							flexWrap: "wrap"
+							flexWrap: "wrap",
+
+							borderBottomColor: "gray",
+							borderBottomWidth: 1,
+							paddingBottom: 5
 						}}
 					>
 						<View style={{ width: "50%" }}>
@@ -33,20 +37,21 @@ export default class HomeScreen extends React.Component {
 						<View style={{ width: "50%" }}>
 							<RunOptions />
 						</View>
-						<View style={{ width: "100%" }}>
-							<Text
-								style={{
-									...styles.standardText,
-									textAlign: "center",
-									marginBottom: -15
-								}}
-							>
-								{"Changing available moves will reset scores"}
-							</Text>
-						</View>
-						<View style={{ width: "100%" }}>
-							<MoveSelection />
-						</View>
+					</View>
+					<Text
+						style={{
+							...styles.standardText,
+							justifyContent: "space-around",
+							alignItems: "center",
+							borderBottomColor: "gray",
+							borderBottomWidth: 1,
+							paddingBottom: 5
+						}}
+					>
+						{"Categories"}
+					</Text>
+					<View style={{ width: "100%" }}>
+						<CategoryManager />
 					</View>
 				</ScrollView>
 			</View>
