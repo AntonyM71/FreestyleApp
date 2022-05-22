@@ -9,3 +9,4 @@ npm-debug.*
 *.envrc
 api-key.json
 service-account.json
+ios_distribution.cer
