@@ -47,5 +47,3 @@ The following is a summary of the [expo documentation](https://docs.expo.io/vers
 npx eas-cli build --platform android
 npx eas-cli submit --platform android
 ```
-
-1. Once the APK has build, upload it using `expo upload:android --latest --key <relative-path-to-api-key>` (currently, this is macOS only)

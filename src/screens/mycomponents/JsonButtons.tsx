@@ -43,15 +43,15 @@ export const MoveButtons = () => {
 	{
 		if (numberOfPaddlersInCurrentHeat !== 0) {
 			return (
-				<View
-					style={{
-						flex: 1,
-						flexDirection: "row",
-						flexWrap: "wrap",
-						justifyContent: "space-between"
-					}}
-				>
-					<>
+				<View>
+					<View
+						style={{
+							flex: 1,
+							flexDirection: "row",
+							flexWrap: "wrap",
+							justifyContent: "space-between"
+						}}
+					>
 						{availableMoves.entry.map((item) => (
 							<View
 								style={{ width: entryButtonPercentage }}
@@ -64,26 +64,19 @@ export const MoveButtons = () => {
 								/>
 							</View>
 						))}
-					</>
-					<>
-						{availableMoves.both.map((item) => {
-							if (!item.Reverse) {
-								return (
-									<View
-										style={{ width: buttonPercentage }}
-										key={item.Move}
-									>
-										<NormalMove
-											item={item}
-											currentRun={currentRun}
-											currentPaddler={currentPaddler}
-											direction={"left"}
-										/>
-									</View>
-								)
-							} else {
-								return (
-									<>
+					</View>
+					<View
+						style={{
+							flex: 1,
+							flexDirection: "row",
+							flexWrap: "wrap",
+							justifyContent: "flex-start"
+						}}
+					>
+						<>
+							{availableMoves.both.map((item) => {
+								if (!item.Reverse) {
+									return (
 										<View
 											style={{ width: buttonPercentage }}
 											key={item.Move}
@@ -95,26 +88,10 @@ export const MoveButtons = () => {
 												direction={"left"}
 											/>
 										</View>
-										<View
-											style={{ width: buttonPercentage }}
-										>
-											<NormalMove
-												item={item}
-												currentRun={currentRun}
-												currentPaddler={currentPaddler}
-												direction={"right"}
-											/>
-										</View>
-									</>
-								)
-							}
-						})}
-					</>
-					<>
-						{showMoves.hole
-							? availableMoves.hole.map((item) => {
-									if (!item.Reverse) {
-										return (
+									)
+								} else {
+									return (
+										<>
 											<View
 												style={{
 													width: buttonPercentage
@@ -130,55 +107,10 @@ export const MoveButtons = () => {
 													direction={"left"}
 												/>
 											</View>
-										)
-									} else {
-										return (
-											<>
-												<View
-													style={{
-														width: buttonPercentage
-													}}
-													key={item.Move}
-												>
-													<NormalMove
-														item={item}
-														currentRun={currentRun}
-														currentPaddler={
-															currentPaddler
-														}
-														direction={"left"}
-													/>
-												</View>
-												<View
-													style={{
-														width: buttonPercentage
-													}}
-												>
-													<NormalMove
-														item={item}
-														currentRun={currentRun}
-														currentPaddler={
-															currentPaddler
-														}
-														direction={"right"}
-													/>
-												</View>
-											</>
-										)
-									}
-							  })
-							: null}
-					</>
-					<>
-						{showMoves.wave
-							? availableMoves.wave.map((item) => {
-									if (!item.Reverse) {
-										return (
 											<View
 												style={{
 													width: buttonPercentage
 												}}
-												key={item.Move}
 											>
 												<NormalMove
 													item={item}
@@ -186,13 +118,19 @@ export const MoveButtons = () => {
 													currentPaddler={
 														currentPaddler
 													}
-													direction={"left"}
+													direction={"right"}
 												/>
 											</View>
-										)
-									} else {
-										return (
-											<>
+										</>
+									)
+								}
+							})}
+						</>
+						<>
+							{showMoves.hole
+								? availableMoves.hole.map((item) => {
+										if (!item.Reverse) {
+											return (
 												<View
 													style={{
 														width: buttonPercentage
@@ -208,50 +146,54 @@ export const MoveButtons = () => {
 														direction={"left"}
 													/>
 												</View>
-												<View
-													style={{
-														width: buttonPercentage
-													}}
-												>
-													<NormalMove
-														item={item}
-														currentRun={currentRun}
-														currentPaddler={
-															currentPaddler
-														}
-														direction={"right"}
-													/>
-												</View>
-											</>
-										)
-									}
-							  })
-							: null}
-					</>
-					<>
-						{showMoves.nfl
-							? availableMoves.nfl.map((item) => {
-									if (!item.Reverse) {
-										return (
-											<View
-												style={{
-													width: buttonPercentage
-												}}
-												key={item.Move}
-											>
-												<NormalMove
-													item={item}
-													currentRun={currentRun}
-													currentPaddler={
-														currentPaddler
-													}
-													direction={"left"}
-												/>
-											</View>
-										)
-									} else {
-										return (
-											<>
+											)
+										} else {
+											return (
+												<>
+													<View
+														style={{
+															width: buttonPercentage
+														}}
+														key={item.Move}
+													>
+														<NormalMove
+															item={item}
+															currentRun={
+																currentRun
+															}
+															currentPaddler={
+																currentPaddler
+															}
+															direction={"left"}
+														/>
+													</View>
+													<View
+														style={{
+															width: buttonPercentage
+														}}
+													>
+														<NormalMove
+															item={item}
+															currentRun={
+																currentRun
+															}
+															currentPaddler={
+																currentPaddler
+															}
+															direction={"right"}
+														/>
+													</View>
+												</>
+											)
+										}
+								  })
+								: null}
+						</>
+						<>
+							{showMoves.wave
+								? availableMoves.wave.map((item) => {
+										if (!item.Reverse) {
+											return (
 												<View
 													style={{
 														width: buttonPercentage
@@ -267,10 +209,59 @@ export const MoveButtons = () => {
 														direction={"left"}
 													/>
 												</View>
+											)
+										} else {
+											return (
+												<>
+													<View
+														style={{
+															width: buttonPercentage
+														}}
+														key={item.Move}
+													>
+														<NormalMove
+															item={item}
+															currentRun={
+																currentRun
+															}
+															currentPaddler={
+																currentPaddler
+															}
+															direction={"left"}
+														/>
+													</View>
+													<View
+														style={{
+															width: buttonPercentage
+														}}
+													>
+														<NormalMove
+															item={item}
+															currentRun={
+																currentRun
+															}
+															currentPaddler={
+																currentPaddler
+															}
+															direction={"right"}
+														/>
+													</View>
+												</>
+											)
+										}
+								  })
+								: null}
+						</>
+						<>
+							{showMoves.nfl
+								? availableMoves.nfl.map((item) => {
+										if (!item.Reverse) {
+											return (
 												<View
 													style={{
 														width: buttonPercentage
 													}}
+													key={item.Move}
 												>
 													<NormalMove
 														item={item}
@@ -278,16 +269,61 @@ export const MoveButtons = () => {
 														currentPaddler={
 															currentPaddler
 														}
-														direction={"right"}
+														direction={"left"}
 													/>
 												</View>
-											</>
-										)
-									}
-							  })
-							: null}
-					</>
-					<>
+											)
+										} else {
+											return (
+												<>
+													<View
+														style={{
+															width: buttonPercentage
+														}}
+														key={item.Move}
+													>
+														<NormalMove
+															item={item}
+															currentRun={
+																currentRun
+															}
+															currentPaddler={
+																currentPaddler
+															}
+															direction={"left"}
+														/>
+													</View>
+													<View
+														style={{
+															width: buttonPercentage
+														}}
+													>
+														<NormalMove
+															item={item}
+															currentRun={
+																currentRun
+															}
+															currentPaddler={
+																currentPaddler
+															}
+															direction={"right"}
+														/>
+													</View>
+												</>
+											)
+										}
+								  })
+								: null}
+						</>
+					</View>
+					<View
+						style={{
+							flex: 1,
+							flexDirection: "row",
+							flexWrap: "wrap",
+							justifyContent: "space-between"
+						}}
+					>
 						{availableMoves.trophy.map((item, key) => (
 							<View
 								style={{ width: trophyButtonPercentage }}
@@ -300,7 +336,7 @@ export const MoveButtons = () => {
 								/>
 							</View>
 						))}
-					</>
+					</View>
 				</View>
 			)
 		} else {
