@@ -188,10 +188,11 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 									value={""}
 									enabled={false}
 								/>
-								{availableCategories.map((category) => (
+								{availableCategories.map((category, i) => (
 									<Picker.Item
 										label={category.name}
 										value={category.name}
+										key={i}
 									/>
 								))}
 							</Picker>

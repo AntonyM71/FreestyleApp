@@ -11,7 +11,7 @@ import {
 	UPDATE_SHOW_TIMER
 } from "./actionTypes"
 import {
-	initialScoresheet,
+	makeScoresForHeat,
 	moveSideInterface
 } from "./screens/mycomponents/makePaddlerScores"
 
@@ -34,11 +34,7 @@ const listOfPaddlers = [
 	}
 ]
 
-const startingScoresheet = {}
-listOfPaddlers.flat().map((paddler) => {
-	// @ts-ignore
-	startingScoresheet[paddler.name] = [initialScoresheet()]
-})
+const startingScoresheet: IPaddlerScores = makeScoresForHeat(listOfPaddlers)
 
 const initialState: IPaddlerStateType = {
 	places: [],
@@ -138,10 +134,11 @@ export interface ICategory {
 	name: string
 	availableMoves: IEnabledMoves
 }
-export type IPaddlerScores = Record<
-	IPaddler["name"],
-	Record<IMoveName, MoveType | MoveType[]>[]
->
+export type IPaddlerScores = Record<IPaddler["name"], IPaddlerScoreCard[]>
+export interface IPaddlerScoreCard {
+	scoredMoves: Record<IMoveName, MoveType | MoveType[]>
+	multiplier: number
+}
 export interface MoveType {
 	id: string
 	left: moveSideInterface
@@ -153,7 +150,7 @@ export interface IEnabledMoves {
 	wave: boolean
 	nfl: boolean
 }
-type IMoveName = string
+export type IMoveName = string
 export type IPaddlerList = IPaddler[]
 
 export interface IPaddler {

@@ -22,33 +22,54 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 			type: string
 		) =>
 		() => {
-			const newScores = { ...paddlerScores }
+			const newScores = JSON.parse(JSON.stringify(paddlerScores))
+			console.log(paddler)
 			const newField =
 				// @ts-ignore
-				!newScores[paddler][currentRun][move][direction][type]
+				!newScores[paddler][currentRun].scoredMoves[move][direction][
+					type
+				]
+
 			// @ts-ignore
-			newScores[paddler][currentRun][move][direction][type] = newField
-			// @ts-ignore
-			if (newScores[paddler][currentRun][move][direction].huge) {
+			newScores[paddler][currentRun].scoredMoves[move][direction][type] =
+				newField
+
+			if (
 				// @ts-ignore
-				newScores[paddler][currentRun][move][direction].air = true
-			}
-			// @ts-ignore
-			if (newScores[paddler][currentRun][move][direction].superClean) {
+				newScores[paddler][currentRun].scoredMoves[move][direction].huge
+			) {
 				// @ts-ignore
-				newScores[paddler][currentRun][move][direction].clean = true
+				newScores[paddler][currentRun].scoredMoves[move][
+					direction
+				].air = true
 			}
+
+			if (
+				// @ts-ignore
+				newScores[paddler][currentRun].scoredMoves[move][direction]
+					.superClean
+			) {
+				// @ts-ignore
+				newScores[paddler][currentRun].scoredMoves[move][
+					direction
+				].clean = true
+			}
+			console.log(newScores.paddler1[currentRun].scoredMoves.Shuvit)
+			console.log(newScores.paddler2[currentRun].scoredMoves.Shuvit)
 			dispatch(updatePaddlerScores(newScores))
 		}
 
 	const thisMove =
-		paddlerScores[props.paddler.name][props.currentRun][props.move.Move]
+		paddlerScores[props.paddler.name][props.currentRun].scoredMoves[
+			props.move.Move
+		]
 	if (!Array.isArray(thisMove)) {
 		if (!thisMove[props.direction].scored) {
+			const directionInitial = props.direction[0].toUpperCase()
 			const buttonName =
 				oneSidedMoves.indexOf(props.move.Move) > -1
 					? props.move.Move
-					: props.move.Move + " " + props.direction
+					: props.move.Move + " " + directionInitial
 
 			return (
 				<Button

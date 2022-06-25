@@ -10,7 +10,7 @@ import {
 import { ICategory, IEnabledMoves } from "../../reducers"
 import { getCategories, getPaddlerHeatList } from "../../selectors"
 import { styles } from "../../styles"
-import { initialScoresheet } from "./makePaddlerScores"
+import { makeScoresForHeat } from "./makePaddlerScores"
 const moveSelectionPresentation = ({ category }: { category: ICategory }) => {
 	const dispatch = useDispatch()
 	const paddlerHeatList = useSelector(getPaddlerHeatList)
@@ -32,14 +32,8 @@ const moveSelectionPresentation = ({ category }: { category: ICategory }) => {
 	}
 
 	const clearScores = () => {
-		const startingScoresheet = {}
+		const startingScoresheet = makeScoresForHeat(paddlerHeatList)
 
-		paddlerHeatList
-			.flat()
-			.map((paddler: { toString: () => React.ReactText }) => {
-				// @ts-ignore
-				startingScoresheet[paddler.name] = [initialScoresheet()]
-			})
 		batch(() => {
 			dispatch(changeRun(0))
 			dispatch(updatePaddlerScores(startingScoresheet))

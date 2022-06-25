@@ -1,6 +1,17 @@
+import _ from "lodash"
 import moveList, { IMoves } from "../../data/moves_lists/move_list"
+import {
+	IMoveName,
+	IPaddler,
+	IPaddlerList,
+	IPaddlerScoreCard,
+	MoveType
+} from "../../reducers"
 export const moveListArray: IMoves[] = Object.values(moveList).flat()
-export const initialScoresheet = () => {
+export const initialScoresheet = (): Record<
+	IMoveName,
+	MoveType | MoveType[]
+> => {
 	const initialMoves = moveListArray.map(
 		(item): moveInterface | moveInterface[] => {
 			const scoresObject = {
@@ -27,9 +38,9 @@ export const initialScoresheet = () => {
 				item.Move === "Trophy 2" ||
 				item.Move === "Trophy 3"
 			) {
-				return [scoresObject]
+				return [_.cloneDeep(scoresObject)]
 			} else {
-				return scoresObject
+				return _.cloneDeep(scoresObject)
 			}
 		}
 	)
@@ -37,12 +48,12 @@ export const initialScoresheet = () => {
 	return initialMoves.reduce((obj, item) => {
 		if (Array.isArray(item)) {
 			// @ts-ignore
-			obj[item[0].id] = item
+			obj[item[0].id] = _.cloneDeep(item)
 
 			return obj
 		} else {
 			// @ts-ignore
-			obj[item.id] = item
+			obj[item.id] = _.cloneDeep(item)
 
 			return obj
 		}
@@ -73,4 +84,22 @@ export interface moveSideInterface {
 	clean: boolean
 	superClean: boolean
 	link: boolean
+}
+export const blankScoreCard: IPaddlerScoreCard = {
+	scoredMoves: JSON.parse(JSON.stringify(initialScoresheet())),
+	multiplier: 1
+}
+export const makeScoresForHeat = (paddlerList: IPaddlerList) => {
+	const startingScoresheet = {}
+	if (paddlerList.length === 0) {
+		throw new Error("Cant make a heat with no paddlers")
+	}
+	paddlerList.flat().map((paddler: IPaddler) => {
+		// @ts-ignore
+		startingScoresheet[paddler.name] = [
+			JSON.parse(JSON.stringify(blankScoreCard))
+		]
+	})
+
+	return JSON.parse(JSON.stringify(startingScoresheet))
 }

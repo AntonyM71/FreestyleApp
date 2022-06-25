@@ -51,27 +51,33 @@ const TrophyDynamicButtonPresentation = React.memo((props: PropsType) => {
 			const newScores = { ...paddlerScores }
 			const newField =
 				// @ts-ignore
-				!newScores[paddler][run][move][key][direction][type]
+				!newScores[paddler][run].scoredMoves[move][key][direction][type]
 			// @ts-ignore
-			newScores[paddler][run][move][key][direction][type] = newField
+			newScores[paddler][run].scoredMoves[move][key][direction][type] =
+				newField
 			if (type === "huge") {
 				// @ts-ignore
-				newScores[paddler][run][move][key][direction].air = newField
+				newScores[paddler][run].scoredMoves[move][key][direction].air =
+					newField
 			}
 			if (type === "superClean") {
 				// @ts-ignore
-				newScores[paddler][run][move][key][direction].clean = newField
+				newScores[paddler][run].scoredMoves[move][key][
+					direction
+				].clean = newField
 			}
 
 			if (
 				// @ts-ignore
-				newScores[paddler][run][move][
+				newScores[paddler][run].scoredMoves[move][
 					// @ts-ignore
-					newScores[paddler][run][move].length - 1
+					newScores[paddler][run].scoredMoves[move].length - 1
 				].left.scored === true
 			) {
 				// @ts-ignore
-				newScores[paddler][run][move].push(makeScoresObject(move))
+				newScores[paddler][run].scoredMoves[move].push(
+					makeScoresObject(move.toString())
+				)
 			}
 
 			dispatch(updatePaddlerScores(newScores))
@@ -80,11 +86,15 @@ const TrophyDynamicButtonPresentation = React.memo((props: PropsType) => {
 	if (
 		paddlerScores &&
 		paddlerScores[props.paddler.name] &&
-		paddlerScores[props.paddler.name][currentRun] &&
-		paddlerScores[props.paddler.name][currentRun][props.move.Move]
+		paddlerScores[props.paddler.name][currentRun].scoredMoves &&
+		paddlerScores[props.paddler.name][currentRun].scoredMoves[
+			props.move.Move
+		]
 	) {
 		const theMoves =
-			paddlerScores[props.paddler.name][currentRun][props.move.Move]
+			paddlerScores[props.paddler.name][currentRun].scoredMoves[
+				props.move.Move
+			]
 
 		return (
 			<>

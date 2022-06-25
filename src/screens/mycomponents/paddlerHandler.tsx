@@ -9,6 +9,7 @@ import {
 	changeRun,
 	updatePaddlerScores
 } from "../../actions"
+import { blankScoreCard } from "../../reducers"
 import {
 	getCurrentHeat,
 	getCurrentPaddler,
@@ -22,8 +23,6 @@ import {
 } from "../../selectors"
 import { styles } from "../../styles"
 import { DisplayScore } from "./calculateScore"
-import { initialScoresheet } from "./makePaddlerScores"
-
 export const PaddlerHandler = () => {
 	const dispatch = useDispatch()
 	const numberOfPaddlersInCurrentHeat = useSelector(getNumberOfPaddlersInHeat)
@@ -73,7 +72,7 @@ export const PaddlerHandler = () => {
 				.flat()
 				.map((paddler: { toString: () => React.ReactText }) => {
 					// @ts-ignore
-					scores[paddler.name].push(initialScoresheet())
+					scores[paddler.name].push(blankScoreCard)
 				})
 			dispatch(changeNumberOfRuns(newRunIndex))
 			dispatch(updatePaddlerScores({ ...scores }))

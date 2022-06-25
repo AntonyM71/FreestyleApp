@@ -28,20 +28,27 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 		) =>
 		() => {
 			const newScores = { ...paddlerScores }
+
+			const newField =
+				// @ts-ignore
+				!newScores[paddler][run].scoredMoves[move][direction][type]
 			// @ts-ignore
-			const newField = !newScores[paddler][run][move][direction][type]
-			// @ts-ignore
-			newScores[paddler][run][move][direction][type] = newField
+			newScores[paddler][run].scoredMoves[move][direction][type] =
+				newField
 
 			// @ts-ignore
-			if (newScores[paddler][run][move][direction].huge) {
+			if (newScores[paddler][run].scoredMoves[move][direction].huge) {
 				// @ts-ignore
-				newScores[paddler][run][move][direction].air = true
+				newScores[paddler][run].scoredMoves[move][direction].air = true
 			}
-			// @ts-ignore
-			if (newScores[paddler][run][move][direction].superClean) {
+
+			if (
 				// @ts-ignore
-				newScores[paddler][run][move][direction].clean = true
+				newScores[paddler][run].scoredMoves[move][direction].superClean
+			) {
+				// @ts-ignore
+				newScores[paddler][run].scoredMoves[move][direction].clean =
+					true
 			}
 			dispatch(updatePaddlerScores(newScores))
 		}
@@ -49,10 +56,15 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 		paddlerScores &&
 		paddlerScores[props.paddler.name] &&
 		paddlerScores[props.paddler.name][currentRun] &&
-		paddlerScores[props.paddler.name][currentRun][props.move.Move]
+		paddlerScores[props.paddler.name][currentRun].scoredMoves &&
+		paddlerScores[props.paddler.name][currentRun].scoredMoves[
+			props.move.Move
+		]
 	) {
 		const thisMove =
-			paddlerScores[props.paddler.name][currentRun][props.move.Move]
+			paddlerScores[props.paddler.name][currentRun].scoredMoves[
+				props.move.Move
+			]
 		if (!Array.isArray(thisMove)) {
 			if (!thisMove[props.direction].scored) {
 				const buttonName = props.move.Move
