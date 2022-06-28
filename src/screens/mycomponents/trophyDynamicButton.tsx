@@ -60,12 +60,6 @@ const TrophyDynamicButtonPresentation = React.memo((props: PropsType) => {
 				newScores[paddler][run].scoredMoves[move][key][direction].air =
 					newField
 			}
-			if (type === "superClean") {
-				// @ts-ignore
-				newScores[paddler][run].scoredMoves[move][key][
-					direction
-				].clean = newField
-			}
 
 			if (
 				// @ts-ignore

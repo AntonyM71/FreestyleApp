@@ -15,7 +15,6 @@ const calculateScoreAndBonuses = (
 ) => {
 	// the below is a bit of a hack for ascenario where we have huge but no air,  it will add in the air bonus
 	truth.air = truth.huge ? true : truth.air
-	truth.clean = truth.superClean ? true : truth.clean
 	const moveScore = truth.scored
 		? [
 				truth.scored === true ? move.Value : 0,
