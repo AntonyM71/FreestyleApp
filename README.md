@@ -47,3 +47,8 @@ The following is a summary of the [expo documentation](https://docs.expo.io/vers
 npx eas-cli build --platform android
 npx eas-cli submit --platform android
 ```
+
+```
+npx eas-cli build --platform ios
+npx eas-cli submit --platform ios
+```
