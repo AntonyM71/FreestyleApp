@@ -33,11 +33,6 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 				// @ts-ignore
 				newScores[paddler][currentRun][move][direction].air = true
 			}
-			// @ts-ignore
-			if (newScores[paddler][currentRun][move][direction].superClean) {
-				// @ts-ignore
-				newScores[paddler][currentRun][move][direction].clean = true
-			}
 			dispatch(updatePaddlerScores(newScores))
 		}
 
@@ -48,7 +43,7 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 			const buttonName =
 				oneSidedMoves.indexOf(props.move.Move) > -1
 					? props.move.Move
-					: props.move.Move + " " + props.direction
+					: props.move.Move + " " + props.direction[0].toUpperCase()
 
 			return (
 				<Button
@@ -67,7 +62,7 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 			const buttonName =
 				props.move.Move === "Loop" || props.move.Move === "Back Loop"
 					? props.move.Move
-					: props.move.Move + " " + props.direction
+					: props.move.Move + " " + props.direction[0].toUpperCase()
 
 			return (
 				<View

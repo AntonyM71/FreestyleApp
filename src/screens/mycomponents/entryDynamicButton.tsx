@@ -38,11 +38,7 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 				// @ts-ignore
 				newScores[paddler][run][move][direction].air = true
 			}
-			// @ts-ignore
-			if (newScores[paddler][run][move][direction].superClean) {
-				// @ts-ignore
-				newScores[paddler][run][move][direction].clean = true
-			}
+
 			dispatch(updatePaddlerScores(newScores))
 		}
 	if (
