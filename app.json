@@ -18,11 +18,11 @@
 		"android": {
 			"package": "com.kayakfreestyle.kayakfreestyleapp",
 			"permissions": [],
-			"versionCode": 400000009
+			"versionCode": 400000010
 		},
 		"assetBundlePatterns": ["**/*"],
 		"ios": {
-			"buildNumber": "1.1.4",
+			"buildNumber": "1.1.5",
 			"bundleIdentifier": "com.kayakfreestyle.kayakfreestyleapp"
 		}
 	}
