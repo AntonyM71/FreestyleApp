@@ -116,16 +116,20 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 	}
 
 	const handleCategoryChange = (paddlerName: string, newCategory: string) => {
-		if (newCategory !== "") {
+		const changedPaddlerIndex = paddlerHeatList.findIndex(
+			(p) => p.name === paddlerName
+		)
+		if (
+			newCategory !== "" &&
+			newCategory !== paddlerHeatList[changedPaddlerIndex].category
+		) {
 			const newPaddlerList = _.cloneDeep(paddlerHeatList)
 			const newPaddlerScores = _.cloneDeep(paddlerScores)
 
-			const changedPaddlerIndex = paddlerHeatList.findIndex(
-				(p) => p.name === paddlerName
-			)
 			newPaddlerList[changedPaddlerIndex].category = newCategory
 
 			newPaddlerScores[paddlerName] = [initialScoresheet()]
+
 			batch(() => {
 				dispatch(addOrRemovePaddlerName([...newPaddlerList]))
 				dispatch(updatePaddlerScores(newPaddlerScores))
@@ -184,12 +188,14 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 								// style={{ height: 88 }}
 							>
 								<Picker.Item
+									key={"default"}
 									label={"Select a Category"}
 									value={""}
 									enabled={false}
 								/>
 								{availableCategories.map((category) => (
 									<Picker.Item
+										key={category.name + paddler.name}
 										label={category.name}
 										value={category.name}
 									/>
