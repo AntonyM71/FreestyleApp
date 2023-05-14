@@ -1,10 +1,10 @@
 import React from "react"
 import { Dimensions, SafeAreaView, ScrollView, View } from "react-native"
 import { styles } from "../styles"
-import HeatHandler from "./mycomponents/heatHandler"
-import MoveButtons from "./mycomponents/JsonButtons"
-import { PaddlerHandler } from "./mycomponents/paddlerHandler"
-import Timer from "./mycomponents/timer"
+import HeatHandler from "./components/heatHandler"
+import MoveButtons from "./components/JsonButtons"
+import { PaddlerHandler } from "./components/paddlerHandler"
+import Timer from "./components/timer"
 export default class HomeScreen extends React.Component {
 	static navigationOptions = {
 		header: null

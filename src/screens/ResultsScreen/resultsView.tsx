@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 import { IPaddler, IPaddlerList } from "../../reducers"
 import { getPaddlerHeatList, getScoresState } from "../../selectors"
 import { styles } from "../../styles"
-import { DisplayScore } from "./calculateScore"
+import { DisplayScore } from "../components/calculateScore"
 export const ResultsView = () => {
 	const paddlerHeatList = useSelector(getPaddlerHeatList)
 

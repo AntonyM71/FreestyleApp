@@ -10,7 +10,7 @@ import {
 import { ICategory, IEnabledMoves } from "../../reducers"
 import { getCategories, getPaddlerHeatList } from "../../selectors"
 import { styles } from "../../styles"
-import { makeScoresForHeat } from "./makePaddlerScores"
+import { makeScoresForHeat } from "../PaddlerManagement/makePaddlerScores"
 const moveSelectionPresentation = ({ category }: { category: ICategory }) => {
 	const dispatch = useDispatch()
 	const paddlerHeatList = useSelector(getPaddlerHeatList)

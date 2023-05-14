@@ -23,7 +23,6 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 		) =>
 		() => {
 			const newScores = JSON.parse(JSON.stringify(paddlerScores))
-			console.log(paddler)
 			const newField =
 				// @ts-ignore
 				!newScores[paddler][currentRun].scoredMoves[move][direction][

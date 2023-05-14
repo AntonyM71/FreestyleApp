@@ -7,7 +7,7 @@ import {
 	dataSourceMoveInterface,
 	moveListArray,
 	moveSideInterface
-} from "./makePaddlerScores"
+} from "../PaddlerManagement/makePaddlerScores"
 
 const calculateScoreAndBonuses = (
 	move: dataSourceMoveInterface,

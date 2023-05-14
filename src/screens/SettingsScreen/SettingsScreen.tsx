@@ -1,9 +1,9 @@
 import React from "react"
 import { ScrollView, Text, View } from "react-native"
-import { styles } from "../styles"
-import CategoryManager from "./mycomponents/categoryManager"
-import RunOptions from "./mycomponents/runOptions"
-import TimerOptions from "./mycomponents/timerOptions"
+import { styles } from "../../styles"
+import CategoryManager from "./categoryManager"
+import RunOptions from "./runOptions"
+import TimerOptions from "./timerOptions"
 export default class HomeScreen extends React.Component {
 	static navigationOptions = {
 		title: "Settings"

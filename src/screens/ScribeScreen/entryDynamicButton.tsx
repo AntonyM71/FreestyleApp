@@ -6,7 +6,7 @@ import { updatePaddlerScores } from "../../actions"
 import { IDirection, IPaddler } from "../../reducers"
 import { getCurrentRun, getPaddlerScores } from "../../selectors"
 import { styles } from "../../styles"
-import { dataSourceMoveInterface } from "./makePaddlerScores"
+import { dataSourceMoveInterface } from "../PaddlerManagement/makePaddlerScores"
 
 interface PropsType {
 	paddler: IPaddler
@@ -44,6 +44,15 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 
 			dispatch(updatePaddlerScores(newScores))
 		}
+	const handleMoveBonus = (bonus: string) => () => {
+		handleMove(
+			props.paddler.name,
+			currentRun,
+			props.move.Move,
+			props.direction,
+			bonus
+		)
+	}
 	if (
 		paddlerScores &&
 		paddlerScores[props.paddler.name] &&
@@ -87,26 +96,14 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 					>
 						<View style={{ width: "100%" }}>
 							<Button
-								onPress={handleMove(
-									props.paddler.name,
-									currentRun,
-									props.move.Move,
-									props.direction,
-									"scored"
-								)}
+								onPress={handleMoveBonus("scored")}
 								title={buttonName}
 								buttonStyle={styles.moveScored}
 							/>
 						</View>
 						<View style={{ width: "50%" }}>
 							<Button
-								onPress={handleMove(
-									props.paddler.name,
-									currentRun,
-									props.move.Move,
-									props.direction,
-									"clean"
-								)}
+								onPress={handleMoveBonus("clean")}
 								title={"C"}
 								disabled={props.move.Clean ? false : true}
 								buttonStyle={
@@ -118,13 +115,7 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 						</View>
 						<View style={{ width: "50%" }}>
 							<Button
-								onPress={handleMove(
-									props.paddler.name,
-									currentRun,
-									props.move.Move,
-									props.direction,
-									"superClean"
-								)}
+								onPress={handleMoveBonus("superClean")}
 								title={"SC"}
 								disabled={props.move.SuperClean ? false : true}
 								buttonStyle={
@@ -136,13 +127,7 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 						</View>
 						<View style={{ width: "33%" }}>
 							<Button
-								onPress={handleMove(
-									props.paddler.name,
-									currentRun,
-									props.move.Move,
-									props.direction,
-									"air"
-								)}
+								onPress={handleMoveBonus("air")}
 								title={"A"}
 								disabled={props.move.Air ? false : true}
 								buttonStyle={
@@ -154,13 +139,7 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 						</View>
 						<View style={{ width: "33%" }}>
 							<Button
-								onPress={handleMove(
-									props.paddler.name,
-									currentRun,
-									props.move.Move,
-									props.direction,
-									"huge"
-								)}
+								onPress={handleMoveBonus("huge")}
 								title={"H"}
 								disabled={props.move.Huge ? false : true}
 								buttonStyle={
@@ -172,13 +151,7 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 						</View>
 						<View style={{ width: "33%" }}>
 							<Button
-								onPress={handleMove(
-									props.paddler.name,
-									currentRun,
-									props.move.Move,
-									props.direction,
-									"link"
-								)}
+								onPress={handleMoveBonus("link")}
 								title={"L"}
 								disabled={props.move.Link ? false : true}
 								buttonStyle={

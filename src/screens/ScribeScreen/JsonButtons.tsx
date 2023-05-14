@@ -10,9 +10,9 @@ import {
 	getCurrentRun,
 	getNumberOfPaddlersInHeat
 } from "../../selectors"
+import { dataSourceMoveInterface } from "../PaddlerManagement/makePaddlerScores"
 import { DynamicButton } from "./dynamicButton"
 import { EntryDynamicButton } from "./entryDynamicButton"
-import { dataSourceMoveInterface } from "./makePaddlerScores"
 import { TrophyDynamicButton } from "./trophyDynamicButton"
 
 const NormalMove = (props: {

@@ -13,7 +13,7 @@ import {
 import {
 	makeScoresForHeat,
 	moveSideInterface
-} from "./screens/mycomponents/makePaddlerScores"
+} from "./screens/PaddlerManagement/makePaddlerScores"
 
 // make our starting scoresheet from the list of paddlers
 const listOfPaddlers = [

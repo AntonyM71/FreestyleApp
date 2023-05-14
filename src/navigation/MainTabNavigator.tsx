@@ -4,9 +4,9 @@ import { createStackNavigator } from "react-navigation-stack"
 import { createBottomTabNavigator } from "react-navigation-tabs"
 import TabBarIcon from "../components/TabBarIcon"
 import HomeScreen from "../screens/HomeScreen"
-import PaddlerManagerScreen from "../screens/PaddlerManagerScreen"
-import ResultsScreen from "../screens/ResultsScreen"
-import SettingsScreen from "../screens/SettingsScreen"
+import PaddlerManagerScreen from "../screens/PaddlerManagement/PaddlerManagerScreen"
+import ResultsScreen from "../screens/ResultsScreen/ResultsScreen"
+import SettingsScreen from "../screens/SettingsScreen/SettingsScreen"
 const HomeStack = createStackNavigator({
 	Home: HomeScreen
 })

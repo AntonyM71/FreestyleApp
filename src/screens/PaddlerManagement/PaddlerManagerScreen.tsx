@@ -1,7 +1,7 @@
 import React from "react"
 import { SafeAreaView, ScrollView, View } from "react-native"
-import { styles } from "../styles"
-import PaddlerManager from "./mycomponents/paddlerManagementHandler"
+import { styles } from "../../styles"
+import PaddlerManager from "./paddlerManagementHandler"
 export default class HomeScreen extends React.Component {
 	static navigationOptions = {
 		header: null
