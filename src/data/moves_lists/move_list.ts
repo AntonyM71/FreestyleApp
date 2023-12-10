@@ -252,7 +252,7 @@ export const MovesList: IMovesList = {
 			Clean: 50,
 			SuperClean: 60,
 			Air: 0,
-			Huge: 40,
+			Huge: 50,
 			Link: 20,
 			Reverse: true
 		},
