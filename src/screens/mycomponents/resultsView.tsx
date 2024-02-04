@@ -26,6 +26,7 @@ export const ResultsView = () => {
 					<CategoryScores
 						paddlerHeatList={paddlersInCategory}
 						category={paddlerCategories[index]}
+						key={index}
 					/>
 				))}
 			</ScrollView>

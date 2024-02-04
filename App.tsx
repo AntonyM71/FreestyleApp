@@ -23,6 +23,7 @@ export default class App extends React.Component {
 				/>
 			)
 		}
+
 		return (
 			<Provider store={store}>
 				<View style={styles.container}>
@@ -34,7 +35,7 @@ export default class App extends React.Component {
 	}
 
 	_loadResourcesAsync = async () =>
-		new Promise([
+		new Promise(
 			Font.loadAsync({
 				// This is the font that we are using for our tab bar
 				// ...Icon.Ionicons.font,
@@ -42,9 +43,9 @@ export default class App extends React.Component {
 				// to remove this if you are not using it in your app
 				"space-mono": require("./src/assets/fonts/SpaceMono-Regular.ttf")
 			})
-		])
+		)
 
-	handleLoadingError = (error) => {
+	handleLoadingError = (error: any) => {
 		// In this case, you might want to report the error to your error
 		// reporting service, for example Sentry
 		console.warn(error)
