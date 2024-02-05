@@ -20,10 +20,10 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 	const paddlerScores = useSelector(getPaddlerScores)
 	const handleMove =
 		(
-			paddler: React.ReactText,
-			run: React.ReactText,
-			move: React.ReactText,
-			direction: React.ReactText,
+			paddler: string,
+			run: string,
+			move: string,
+			direction: string,
 			type: string
 		) =>
 		() => {

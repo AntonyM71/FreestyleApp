@@ -12,7 +12,8 @@ module.exports = {
 		"plugin:@typescript-eslint/recommended",
 		"plugin:@typescript-eslint/recommended-requiring-type-checking",
 		"plugin:jest-dom/recommended",
-		"plugin:testing-library/react"
+		"plugin:testing-library/react",
+		"plugin:sonar/recommended"
 	],
 	plugins: [
 		"@typescript-eslint",
