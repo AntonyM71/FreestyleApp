@@ -17,8 +17,6 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.3",
-    "@emotion/styled": "^11.11.0",
     "@expo/samples": "2.1.1",
     "@expo/vector-icons": "^14.0.0",
     "@mui/icons-material": "^5.15.7",
