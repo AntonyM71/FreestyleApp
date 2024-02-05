@@ -10,7 +10,7 @@ const store = configureStore()
 
 // Keep the splash screen visible while we fetch resources
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
-SplashScreen.preventAutoHideAsync()
+// SplashScreen.preventAutoHideAsync()
 
 export default function App() {
 	const [appIsReady, setAppIsReady] = useState(false)
