@@ -9,7 +9,8 @@ import configureStore from "./src/store"
 const store = configureStore()
 
 // Keep the splash screen visible while we fetch resources
-void SplashScreen.preventAutoHideAsync()
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
+SplashScreen.preventAutoHideAsync()
 
 export default function App() {
 	const [appIsReady, setAppIsReady] = useState(false)
@@ -17,7 +18,6 @@ export default function App() {
 	useEffect(() => {
 		async function prepare() {
 			try {
-				// Pre-load fonts, make any API calls you need to do here
 				await Font.loadAsync({
 					// This is the font that we are using for our tab bar
 					// ...Icon.Ionicons.font,
@@ -33,7 +33,8 @@ export default function App() {
 			}
 		}
 
-		void prepare()
+		// eslint-disable-next-line @typescript-eslint/no-floating-promises
+		prepare()
 	}, [])
 
 	const onLayoutRootView = useCallback(async () => {
@@ -52,12 +53,15 @@ export default function App() {
 	}
 
 	return (
-		<Provider store={store}>
-			<View style={styles.container} onLayout={onLayoutRootView}>
-				{Platform.OS === "ios" && <StatusBar barStyle="default" />}
-				<AppNavigator />
-			</View>
-		</Provider>
+		// eslint-disable-next-line @typescript-eslint/no-misused-promises
+		<View onLayout={onLayoutRootView}>
+			<Provider store={store}>
+				<View style={styles.container}>
+					{Platform.OS === "ios" && <StatusBar barStyle="default" />}
+					<AppNavigator />
+				</View>
+			</Provider>
+		</View>
 	)
 }
 
