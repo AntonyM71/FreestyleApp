@@ -13,7 +13,8 @@ module.exports = {
 		"plugin:@typescript-eslint/recommended-requiring-type-checking",
 		"plugin:jest-dom/recommended",
 		"plugin:testing-library/react",
-		"plugin:sonar/recommended"
+		"plugin:sonar/recommended",
+		"plugin:sonarjs/recommended"
 	],
 	plugins: [
 		"@typescript-eslint",
@@ -21,7 +22,9 @@ module.exports = {
 		"prefer-arrow",
 		"import",
 		"testing-library",
-		"jest-dom"
+		"jest-dom",
+		"sonar",
+		"sonarjs"
 	],
 	overrides: [
 		{

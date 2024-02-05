@@ -39,7 +39,6 @@
 		"core-js": "^3.6.4",
 		"eslint-config-airbnb": "^19.0.4",
 		"eslint-plugin-jest-dom": "^4.0.1",
-		"eslint-plugin-sonar": "^0.13.2",
 		"eslint-plugin-testing-library": "^5.2.1",
 		"expo": "~50.0.5",
 		"expo-asset": "~9.0.2",
@@ -80,6 +79,8 @@
 		"eslint-plugin-prefer-arrow": "^1.2.2",
 		"eslint-plugin-react": "^7.29.4",
 		"eslint-plugin-react-hooks": "^4.4.0",
+		"eslint-plugin-sonar": "^0.13.2",
+		"eslint-plugin-sonarjs": "^0.23.0",
 		"jest-expo": "^50.0.1",
 		"remote-redux-devtools": "^0.5.16",
 		"standard-version": "^9.0.0"
