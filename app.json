@@ -4,11 +4,11 @@
 		"slug": "freestyleapp",
 		"privacy": "public",
 		"platforms": ["android", "ios"],
-		"version": "1.2.1",
+		"version": "1.2.4",
 		"orientation": "portrait",
-		"icon": "./src/assets/images/icon.png",
+		"icon": "./assets/images/icon.png",
 		"splash": {
-			"image": "./src/assets/images/splash.png",
+			"image": "./assets/images/splash.png",
 			"resizeMode": "contain",
 			"backgroundColor": "#ffffff"
 		},
@@ -18,14 +18,16 @@
 		"android": {
 			"package": "com.kayakfreestyle.kayakfreestyleapp",
 			"permissions": [],
-			"versionCode": 400000012
+			"versionCode": 400000015
 		},
 		"assetBundlePatterns": ["**/*"],
 		"ios": {
-			"buildNumber": "1.2.1",
+			"buildNumber": "1.2.4",
 			"bundleIdentifier": "com.kayakfreestyle.kayakfreestyleapp"
 		},
-		"plugins": ["expo-font"],
+		"plugins": [
+			["expo-font", { "fonts": ["./assets/fonts/SpaceMono-Regular.ttf"] }]
+		],
 		"extra": {
 			"eas": {
 				"projectId": "8de4e141-3d11-46b7-a394-c163b149a4e3"

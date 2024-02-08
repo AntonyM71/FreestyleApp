@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import * as Font from "expo-font"
 import * as SplashScreen from "expo-splash-screen"
 import React, { useCallback, useEffect, useState } from "react"
@@ -18,12 +19,9 @@ export default function App() {
 	useEffect(() => {
 		async function prepare() {
 			try {
+				// Pre-load fonts, make any API calls you need to do here
 				await Font.loadAsync({
-					// This is the font that we are using for our tab bar
-					// ...Icon.Ionicons.font,
-					// We include SpaceMono because we use it in HomeScreen.js. Feel free
-					// to remove this if you are not using it in your app
-					"space-mono": require("./src/assets/fonts/SpaceMono-Regular.ttf")
+					"space-mono": require("./assets/fonts/SpaceMono-Regular.ttf")
 				})
 			} catch (e) {
 				console.warn(e)
@@ -53,13 +51,10 @@ export default function App() {
 	}
 
 	return (
-		// eslint-disable-next-line @typescript-eslint/no-misused-promises
-		<View onLayout={onLayoutRootView}>
+		<View style={styles.container} onLayout={onLayoutRootView}>
 			<Provider store={store}>
-				<View style={styles.container}>
-					{Platform.OS === "ios" && <StatusBar barStyle="default" />}
-					<AppNavigator />
-				</View>
+				{Platform.OS === "ios" && <StatusBar barStyle="default" />}
+				<AppNavigator />
 			</Provider>
 		</View>
 	)
