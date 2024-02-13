@@ -10,3 +10,6 @@ npm-debug.*
 api-key.json
 service-account.json
 ios_distribution.cer
+ios/*
+android/*
+KayakFreestyleApp.app/*
