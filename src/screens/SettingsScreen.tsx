@@ -26,11 +26,29 @@ export default class HomeScreen extends React.Component {
 							flexDirection: "row",
 							flexWrap: "wrap",
 
-							borderBottomColor: "gray",
-							borderBottomWidth: 1,
+							borderBottomColor: "lightgray",
+							borderBottomWidth: 2,
 							paddingBottom: 5
 						}}
 					>
+						<View
+							style={{
+								width: "100%"
+							}}
+						>
+							<Text
+								style={{
+									...styles.headerText,
+									justifyContent: "space-around",
+									alignItems: "center",
+									borderBottomColor: "lightgray",
+									borderBottomWidth: 1,
+									paddingBottom: 5
+								}}
+							>
+								{"Score Page Options"}
+							</Text>
+						</View>
 						<View style={{ width: "50%" }}>
 							<TimerOptions />
 						</View>
@@ -38,18 +56,20 @@ export default class HomeScreen extends React.Component {
 							<RunOptions />
 						</View>
 					</View>
-					<Text
-						style={{
-							...styles.headerText,
-							justifyContent: "space-around",
-							alignItems: "center",
-							borderBottomColor: "gray",
-							borderBottomWidth: 1,
-							paddingBottom: 5
-						}}
-					>
-						{"Categories"}
-					</Text>
+					<View style={{}}>
+						<Text
+							style={{
+								...styles.headerText,
+								justifyContent: "space-around",
+								alignItems: "center",
+								borderBottomColor: "lightgray",
+								borderBottomWidth: 1,
+								paddingBottom: 5
+							}}
+						>
+							{"Categories"}
+						</Text>
+					</View>
 					<View style={{ width: "100%" }}>
 						<CategoryManager />
 					</View>

@@ -139,7 +139,7 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 
 	return (
 		<View>
-			<View>
+			<View style={{ borderTopColor: "lightgray", borderTopWidth: 2 }}>
 				<Text style={styles.headerText}>{`Heat ${props.heatKey}`}</Text>
 
 				{props.paddlerList.map((paddler: IPaddler, key: number) => (
@@ -148,8 +148,8 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 							flex: 1,
 							flexDirection: "row",
 							flexWrap: "wrap",
-							borderBottomColor: "gray",
-							borderBottomWidth: 1,
+							borderTopColor: "lightgray",
+							borderTopWidth: 1,
 							paddingBottom: 5
 						}}
 						key={key}
@@ -206,7 +206,10 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 					</View>
 				))}
 			</View>
-			<View>
+			<View style={{ borderTopColor: "lightgray", borderTopWidth: 1 }}>
+				<Text
+					style={styles.headerText}
+				>{`Add Paddler to heat ${props.heatKey}`}</Text>
 				<TextInput
 					blurOnSubmit={true}
 					autoCorrect={false}

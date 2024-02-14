@@ -58,15 +58,23 @@ export const PaddlerHeatManagerPresentation = () => {
 
 	return (
 		<View>
-			<View>
+			<View
+				style={{
+					flex: 1,
+
+					borderBottomColor: "lightgray",
+					borderBottomWidth: 2,
+					paddingBottom: 5
+				}}
+			>
 				{categoryList.map((category: ICategory, key: number) => (
 					<View
 						style={{
 							flex: 1,
 							flexDirection: "row",
 							flexWrap: "wrap",
-							borderBottomColor: "gray",
-							borderBottomWidth: 1,
+							borderTopColor: "lightgray",
+							borderTopWidth: 1,
 							paddingBottom: 5
 						}}
 						key={key}
@@ -99,7 +107,25 @@ export const PaddlerHeatManagerPresentation = () => {
 					</View>
 				))}
 			</View>
-			<View>
+			<View
+				style={{
+					borderBottomColor: "lightgray",
+					borderBottomWidth: 1
+				}}
+			>
+				<Text
+					style={{
+						...styles.headerText,
+						justifyContent: "space-around",
+						alignItems: "center",
+						borderTopColor: "lightgray",
+						borderTopWidth: 1,
+						paddingBottom: 5
+					}}
+				>
+					{"Add New Category"}
+				</Text>
+
 				<TextInput
 					blurOnSubmit={true}
 					autoCorrect={false}

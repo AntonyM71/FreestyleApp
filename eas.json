@@ -3,12 +3,17 @@
 		"version": ">= 0.49.0"
 	},
 	"build": {
-		"development": {
+		"development-simulator": {
 			"developmentClient": true,
-			"distribution": "internal"
+			"distribution": "internal",
+			"ios": {
+				"simulator": true
+			}
 		},
 		"preview": {
-			"distribution": "internal"
+			"ios": {
+				"simulator": true
+			}
 		},
 		"production": {}
 	},

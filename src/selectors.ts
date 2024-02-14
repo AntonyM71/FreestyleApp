@@ -1,3 +1,4 @@
+import { createSelector } from "reselect"
 import { ICategory, IEnabledMoves, IPaddler } from "./reducers"
 import { IStoreType } from "./store"
 
@@ -52,8 +53,17 @@ export const getPaddlersInHeat = (state: IStoreType): IPaddler[] =>
 	state.paddlers.paddlerList.filter(
 		(p) => p.heat === state.paddlers.currentHeat // displayed heat numbers are not zero indexed
 	)
-export const getAvailableHeats = (state: IStoreType): number[] => {
-	const allHeats = state.paddlers.heats
 
-	return Array.from(new Set(allHeats))
-}
+const selectPaddlerHeats = (state: IStoreType) => state.paddlers.heats
+
+export const getAvailableHeats = createSelector(
+	selectPaddlerHeats,
+	(allHeats) =>
+		// do something with a, b, and c, and return a result
+		Array.from(new Set(allHeats))
+)
+// export const getAvailableHeats = (state: IStoreType): number[] => {
+// 	const allHeats = state.paddlers.heats
+
+// 	return Array.from(new Set(allHeats))
+// }

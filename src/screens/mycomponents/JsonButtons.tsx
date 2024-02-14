@@ -1,5 +1,5 @@
 // Testing json import
-import React from "react"
+import React, { Fragment } from "react"
 import { Dimensions, View } from "react-native"
 import { useSelector } from "react-redux"
 import moveList from "../../data/moves_lists/move_list"
@@ -52,10 +52,10 @@ export const MoveButtons = () => {
 							justifyContent: "space-between"
 						}}
 					>
-						{availableMoves.entry.map((item) => (
+						{availableMoves.entry.map((item, index) => (
 							<View
 								style={{ width: entryButtonPercentage }}
-								key={item.Move}
+								key={index}
 							>
 								<EntryDynamicButton
 									paddler={currentPaddler}
@@ -74,12 +74,12 @@ export const MoveButtons = () => {
 						}}
 					>
 						<>
-							{availableMoves.both.map((item) => {
+							{availableMoves.both.map((item, index) => {
 								if (!item.Reverse) {
 									return (
 										<View
 											style={{ width: buttonPercentage }}
-											key={item.Move}
+											key={index}
 										>
 											<NormalMove
 												item={item}
@@ -91,12 +91,11 @@ export const MoveButtons = () => {
 									)
 								} else {
 									return (
-										<>
+										<Fragment key={index}>
 											<View
 												style={{
 													width: buttonPercentage
 												}}
-												key={item.Move}
 											>
 												<NormalMove
 													item={item}
@@ -121,21 +120,21 @@ export const MoveButtons = () => {
 													direction={"right"}
 												/>
 											</View>
-										</>
+										</Fragment>
 									)
 								}
 							})}
 						</>
 						<>
 							{showMoves.hole
-								? availableMoves.hole.map((item) => {
+								? availableMoves.hole.map((item, index) => {
 										if (!item.Reverse) {
 											return (
 												<View
 													style={{
 														width: buttonPercentage
 													}}
-													key={item.Move}
+													key={index}
 												>
 													<NormalMove
 														item={item}
@@ -149,12 +148,11 @@ export const MoveButtons = () => {
 											)
 										} else {
 											return (
-												<>
+												<Fragment key={index}>
 													<View
 														style={{
 															width: buttonPercentage
 														}}
-														key={item.Move}
 													>
 														<NormalMove
 															item={item}
@@ -183,7 +181,7 @@ export const MoveButtons = () => {
 															direction={"right"}
 														/>
 													</View>
-												</>
+												</Fragment>
 											)
 										}
 								  })
@@ -191,14 +189,14 @@ export const MoveButtons = () => {
 						</>
 						<>
 							{showMoves.wave
-								? availableMoves.wave.map((item) => {
+								? availableMoves.wave.map((item, index) => {
 										if (!item.Reverse) {
 											return (
 												<View
 													style={{
 														width: buttonPercentage
 													}}
-													key={item.Move}
+													key={index}
 												>
 													<NormalMove
 														item={item}
@@ -212,12 +210,11 @@ export const MoveButtons = () => {
 											)
 										} else {
 											return (
-												<>
+												<Fragment key={index}>
 													<View
 														style={{
 															width: buttonPercentage
 														}}
-														key={item.Move}
 													>
 														<NormalMove
 															item={item}
@@ -246,7 +243,7 @@ export const MoveButtons = () => {
 															direction={"right"}
 														/>
 													</View>
-												</>
+												</Fragment>
 											)
 										}
 								  })
@@ -254,14 +251,14 @@ export const MoveButtons = () => {
 						</>
 						<>
 							{showMoves.nfl
-								? availableMoves.nfl.map((item) => {
+								? availableMoves.nfl.map((item, index) => {
 										if (!item.Reverse) {
 											return (
 												<View
 													style={{
 														width: buttonPercentage
 													}}
-													key={item.Move}
+													key={index}
 												>
 													<NormalMove
 														item={item}
@@ -275,12 +272,11 @@ export const MoveButtons = () => {
 											)
 										} else {
 											return (
-												<>
+												<Fragment key={index}>
 													<View
 														style={{
 															width: buttonPercentage
 														}}
-														key={item.Move}
 													>
 														<NormalMove
 															item={item}
@@ -309,7 +305,7 @@ export const MoveButtons = () => {
 															direction={"right"}
 														/>
 													</View>
-												</>
+												</Fragment>
 											)
 										}
 								  })
@@ -324,10 +320,10 @@ export const MoveButtons = () => {
 							justifyContent: "space-between"
 						}}
 					>
-						{availableMoves.trophy.map((item, key) => (
+						{availableMoves.trophy.map((item, index) => (
 							<View
 								style={{ width: trophyButtonPercentage }}
-								key={item.Move + key.toString()}
+								key={index}
 							>
 								<TrophyDynamicButton
 									paddler={currentPaddler}
