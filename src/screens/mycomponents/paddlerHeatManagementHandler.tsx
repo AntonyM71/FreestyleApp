@@ -209,7 +209,7 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 			<View style={{ borderTopColor: "lightgray", borderTopWidth: 1 }}>
 				<Text
 					style={styles.headerText}
-				>{`Add Paddler to heat ${props.heatKey}`}</Text>
+				>{`Add Paddler to Heat ${props.heatKey}`}</Text>
 				<TextInput
 					blurOnSubmit={true}
 					autoCorrect={false}
