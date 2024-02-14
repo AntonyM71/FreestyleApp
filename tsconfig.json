@@ -1,17 +1,15 @@
 {
-  "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "jsx": "react-native",
-    "lib": [
-      "dom",
-      "esnext",
-      "ES2019"
-    ],
-    "moduleResolution": "node",
-    "noEmit": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "strict": true
-  },
-  "extends": "expo/tsconfig.base"
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"jsx": "react-native",
+		"lib": ["dom", "esnext", "ES2019"],
+		"moduleResolution": "node",
+		"module": "esnext",
+
+		"noEmit": true,
+		"skipLibCheck": true,
+		"resolveJsonModule": true,
+		"strict": true
+	},
+	"extends": "expo/tsconfig.base"
 }

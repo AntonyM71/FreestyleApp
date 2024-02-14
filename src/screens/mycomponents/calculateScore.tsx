@@ -59,9 +59,11 @@ const DisplayScorePresenetation = (props: {
 					calculateScoreAndBonuses(
 						item,
 						// @ts-ignore
+						// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 						scoredMoves[item.Move].left
 					) +
 					// @ts-ignore
+					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 					calculateScoreAndBonuses(item, scoredMoves[item.Move].right)
 				paddlerScore.push(moveTotal)
 			}

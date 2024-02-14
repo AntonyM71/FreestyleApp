@@ -449,7 +449,7 @@ export const MovesList: IMovesList = {
 			Huge: 20,
 			Link: 0,
 			Reverse: true
-		},
+		}
 	]
 }
 

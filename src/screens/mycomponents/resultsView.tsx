@@ -26,6 +26,7 @@ export const ResultsView = () => {
 					<CategoryScores
 						paddlerHeatList={paddlersInCategory}
 						category={paddlerCategories[index]}
+						key={index}
 					/>
 				))}
 			</ScrollView>
@@ -47,20 +48,34 @@ const CategoryScores = ({
 	return (
 		<View
 			style={{
-				borderBottomColor: "gray",
-				borderBottomWidth: 1,
-				paddingBottom: 5
+				borderTopColor: "gray",
+				borderTopWidth: 2
 			}}
 		>
-			<Text
+			<View
 				style={{
-					...styles.headerText
+					borderBottomColor: "lightgray",
+					borderBottomWidth: 2,
+					justifyContent: "center"
 				}}
 			>
-				{category}
-			</Text>
+				<Text
+					style={{
+						...styles.headerText,
+						justifyContent: "center"
+					}}
+				>
+					{category}
+				</Text>
+			</View>
 			{paddlerHeatList.map((paddler: IPaddler, key: string | number) => (
-				<View key={key}>
+				<View
+					key={key}
+					style={{
+						borderBottomColor: "lightgray",
+						borderBottomWidth: 1
+					}}
+				>
 					<View>
 						<Text
 							style={{
@@ -98,7 +113,6 @@ const CategoryScores = ({
 									)
 								)
 							}
-							{/* <Divider style={{ backgroundColor: 'blue' }} />; */}
 						</View>
 					</>
 				</View>
