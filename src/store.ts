@@ -1,4 +1,4 @@
-import { combineReducers, createStore } from "redux"
+import { combineReducers, legacy_createStore as createStore } from "redux"
 import { IPaddlerStateType, paddlerReducer } from "./reducers"
 
 const rootReducer = combineReducers({

@@ -2,7 +2,7 @@ import React from "react"
 import { Text, View } from "react-native"
 import { Col, Grid, Row } from "react-native-easy-grid"
 import { Button } from "react-native-elements"
-import { batch, useDispatch, useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { changeHeat, changePaddler } from "../../actions"
 import {
 	getAvailableHeats,
@@ -28,10 +28,8 @@ export const PaddlerHandler = () => {
 			currentHeatIndex < numberOfHeats - 1 ? currentHeatIndex + 1 : 0
 		const newHeat = availableHeats[newHeatIndex]
 
-		batch(() => {
-			dispatch(changePaddler(0))
-			dispatch(changeHeat(newHeat))
-		})
+		dispatch(changePaddler(0))
+		dispatch(changeHeat(newHeat))
 	}
 
 	const handlePressPreviousHeat = () => {
@@ -39,10 +37,8 @@ export const PaddlerHandler = () => {
 		const newHeatIndex =
 			currentHeatIndex === 0 ? numberOfHeats - 1 : currentHeatIndex - 1
 		const newHeat = availableHeats[newHeatIndex]
-		batch(() => {
-			dispatch(changePaddler(0))
-			dispatch(changeHeat(newHeat))
-		})
+		dispatch(changePaddler(0))
+		dispatch(changeHeat(newHeat))
 	}
 
 	// only show the component if we have multiple heats (preverve vertical space for phones)

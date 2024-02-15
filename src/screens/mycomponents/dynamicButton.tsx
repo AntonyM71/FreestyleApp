@@ -8,7 +8,7 @@ import { IDirection, IPaddler } from "../../reducers"
 import { getPaddlerScores } from "../../selectors"
 import { styles } from "../../styles"
 
-// eslint-disable-next-line complexity
+// eslint-disable-next-line complexity, sonarjs/cognitive-complexity
 const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 	const dispatch = useDispatch()
 	const paddlerScores = useSelector(getPaddlerScores)

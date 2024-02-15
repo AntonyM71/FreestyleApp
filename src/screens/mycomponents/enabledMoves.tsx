@@ -1,7 +1,7 @@
 import React from "react"
 import { View } from "react-native"
 import { Button } from "react-native-elements"
-import { batch, useDispatch, useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import {
 	addOrRemoveCategory,
 	changeRun,
@@ -34,16 +34,12 @@ const moveSelectionPresentation = ({ category }: { category: ICategory }) => {
 	const clearScores = () => {
 		const startingScoresheet = {}
 
-		paddlerHeatList
-			.flat()
-			.map((paddler: { toString: () => React.ReactText }) => {
-				// @ts-ignore
-				startingScoresheet[paddler.name] = [initialScoresheet()]
-			})
-		batch(() => {
-			dispatch(changeRun(0))
-			dispatch(updatePaddlerScores(startingScoresheet))
+		paddlerHeatList.flat().map((paddler: { toString: () => string }) => {
+			// @ts-ignore
+			startingScoresheet[paddler.name] = [initialScoresheet()]
 		})
+		dispatch(changeRun(0))
+		dispatch(updatePaddlerScores(startingScoresheet))
 	}
 	const enabledMovesKeys = Object.keys(
 		enabledMovesList

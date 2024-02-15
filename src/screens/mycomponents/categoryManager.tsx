@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Text, TextInput, View } from "react-native"
 import { Button } from "react-native-elements"
-import { batch, useDispatch, useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { addOrRemoveCategory, addOrRemovePaddlerName } from "../../actions"
 import { ICategory } from "../../reducers"
 import { getCategories, getPaddlerHeatList } from "../../selectors"
@@ -50,10 +50,8 @@ export const PaddlerHeatManagerPresentation = () => {
 				return p
 			}
 		})
-		batch(() => {
-			dispatch(addOrRemoveCategory(newCategoryList))
-			dispatch(addOrRemovePaddlerName(newPaddlerList))
-		})
+		dispatch(addOrRemoveCategory(newCategoryList))
+		dispatch(addOrRemovePaddlerName(newPaddlerList))
 	}
 
 	return (

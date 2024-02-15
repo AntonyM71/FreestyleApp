@@ -86,7 +86,7 @@ const TrophyDynamicButtonPresentation = React.memo((props: PropsType) => {
 			<>
 				{Array.isArray(theMoves) ? (
 					theMoves.map(
-						// eslint-disable-next-line complexity
+						// eslint-disable-next-line complexity, sonarjs/cognitive-complexity
 						(thisMove: MoveType, key: number) => {
 							if (!thisMove[props.direction].scored) {
 								const buttonName = props.move.Move
