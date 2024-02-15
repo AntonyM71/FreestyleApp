@@ -13,17 +13,17 @@ interface PropsType {
 	move: dataSourceMoveInterface
 	direction: IDirection
 }
-// eslint-disable-next-line complexity
+// eslint-disable-next-line complexity, sonarjs/cognitive-complexity
 const DynamicButtonPresentation = React.memo((props: PropsType) => {
 	const dispatch = useDispatch()
 	const currentRun = useSelector(getCurrentRun)
 	const paddlerScores = useSelector(getPaddlerScores)
 	const handleMove =
 		(
-			paddler: React.ReactText,
-			run: React.ReactText,
-			move: React.ReactText,
-			direction: React.ReactText,
+			paddler: string,
+			run: string,
+			move: string,
+			direction: string,
 			type: string
 		) =>
 		() => {

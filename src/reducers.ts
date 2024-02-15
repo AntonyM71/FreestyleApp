@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 import {
 	ADD_OR_REMOVE_CATEGORY,
 	ADD_OR_REMOVE_HEATS,

@@ -10,7 +10,6 @@ import {
 	updatePaddlerScores
 } from "../../actions"
 import {
-	getCurrentHeat,
 	getCurrentPaddler,
 	getCurrentRun,
 	getNumberOfPaddlersInHeat,
@@ -32,7 +31,6 @@ export const PaddlerHandler = () => {
 	const currentPaddler = useSelector(getCurrentPaddler)
 	const paddlerScores = useSelector(getPaddlerScores)
 	const currentRun = useSelector(getCurrentRun)
-	const currentHeat = useSelector(getCurrentHeat)
 	const paddlerList = useSelector(getPaddlerHeatList)
 	const showRunHandler = useSelector(getShowRunHandler)
 	const handlePressNext = () => {
@@ -69,12 +67,10 @@ export const PaddlerHandler = () => {
 			dispatch(changeRun(newRunIndex))
 		} else {
 			const scores = paddlerScores
-			paddlerList
-				.flat()
-				.map((paddler: { toString: () => React.ReactText }) => {
-					// @ts-ignore
-					scores[paddler.name].push(initialScoresheet())
-				})
+			paddlerList.flat().map((paddler: { toString: () => string }) => {
+				// @ts-ignore
+				scores[paddler.name].push(initialScoresheet())
+			})
 			dispatch(changeNumberOfRuns(newRunIndex))
 			dispatch(updatePaddlerScores({ ...scores }))
 			dispatch(changeRun(newRunIndex))

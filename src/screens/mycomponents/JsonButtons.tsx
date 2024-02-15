@@ -38,7 +38,7 @@ export const MoveButtons = () => {
 	const screenWidth = Math.round(Dimensions.get("window").width)
 	const availableMoves = moveList
 	const buttonPercentage = screenWidth > 600 ? "25%" : "50%"
-	const entryButtonPercentage = screenWidth > 600 ? "33%" : "33%"
+	const entryButtonPercentage = "33%"
 	const trophyButtonPercentage = screenWidth > 600 ? "33%" : "50%"
 	{
 		if (numberOfPaddlersInCurrentHeat !== 0) {

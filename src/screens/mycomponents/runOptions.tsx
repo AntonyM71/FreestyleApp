@@ -1,7 +1,7 @@
 import React from "react"
 import { View } from "react-native"
 import { Button } from "react-native-elements"
-import { batch, useDispatch, useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { changeRun, updateShowRun } from "../../actions"
 import { getShowRunHandler } from "../../selectors"
 import { styles } from "../../styles"
@@ -11,12 +11,10 @@ const runOptionsPresentation = () => {
 	const showRunHandler = useSelector(getShowRunHandler)
 
 	const handleRunButtonPress = () => {
-		batch(() => {
-			if (showRunHandler) {
-				dispatch(changeRun(0))
-			}
-			dispatch(updateShowRun(!showRunHandler))
-		})
+		if (showRunHandler) {
+			dispatch(changeRun(0))
+		}
+		dispatch(updateShowRun(!showRunHandler))
 	}
 
 	return (

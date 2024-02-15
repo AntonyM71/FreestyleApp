@@ -32,6 +32,8 @@
     "@typescript-eslint/eslint-plugin-tslint": "^5.18.0",
     "braces": "^3.0.2",
     "eslint-plugin-jest-dom": "^4.0.1",
+    "eslint-plugin-sonar": "^0.13.2",
+    "eslint-plugin-sonarjs": "^0.24.0",
     "eslint-plugin-testing-library": "^5.2.1",
     "expo": "~50.0.6",
     "expo-dev-client": "~3.3.8",

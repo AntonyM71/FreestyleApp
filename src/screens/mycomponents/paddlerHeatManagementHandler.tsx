@@ -3,7 +3,7 @@ import _ from "lodash"
 import React, { useState } from "react"
 import { Text, TextInput, View } from "react-native"
 import { Button } from "react-native-elements"
-import { batch, useDispatch, useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import {
 	addOrRemovePaddlerName,
 	changePaddler,
@@ -67,17 +67,15 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 				) {
 					alert("You've already added this paddler")
 				} else {
-					batch(() => {
-						setNewPaddler("")
-						addOrRemovePaddler(heatKey, [
-							...paddlerList,
-							{
-								name: newPaddlerName,
-								category: "",
-								heat: heatKey
-							}
-						])
-					})
+					setNewPaddler("")
+					addOrRemovePaddler(heatKey, [
+						...paddlerList,
+						{
+							name: newPaddlerName,
+							category: "",
+							heat: heatKey
+						}
+					])
 				}
 			}
 		}
@@ -108,11 +106,9 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 			(p) => p.heat !== heatKey
 		)
 		const newHeatList = [...paddlersInOtherHeats, ...newList]
-		batch(() => {
-			dispatch(changePaddler(0))
-			dispatch(addOrRemovePaddlerName([...newHeatList]))
-			dispatch(updatePaddlerScores(newPaddlerScores))
-		})
+		dispatch(changePaddler(0))
+		dispatch(addOrRemovePaddlerName([...newHeatList]))
+		dispatch(updatePaddlerScores(newPaddlerScores))
 	}
 
 	const handleCategoryChange = (paddlerName: string, newCategory: string) => {
@@ -130,10 +126,8 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 
 			newPaddlerScores[paddlerName] = [initialScoresheet()]
 
-			batch(() => {
-				dispatch(addOrRemovePaddlerName([...newPaddlerList]))
-				dispatch(updatePaddlerScores(newPaddlerScores))
-			})
+			dispatch(addOrRemovePaddlerName([...newPaddlerList]))
+			dispatch(updatePaddlerScores(newPaddlerScores))
 		}
 	}
 
