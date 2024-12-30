@@ -2,16 +2,17 @@
 	"cli": {
 		"version": ">= 0.49.0"
 	},
+
 	"build": {
-		"development-simulator": {
-			"developmentClient": true,
-			"distribution": "internal",
-			"ios": {
-				"simulator": true
-			}
-		},
+    "development-simulator": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": {
+        "simulator": true
+      },
 		"preview": {
-			"ios": {
+			"distribution": "internal",
+						"ios": {
 				"simulator": true
 			}
 		},
