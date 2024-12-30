@@ -23,7 +23,7 @@ const calculateScoreAndBonuses = (
 				truth.air ? move.Air : 0,
 				truth.huge ? move.Huge : 0,
 				truth.link ? move.Link : 0
-		  ].reduce((a, b) => a + b)
+			].reduce((a, b) => a + b)
 		: 0
 
 	return moveScore

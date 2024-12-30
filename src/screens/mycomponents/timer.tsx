@@ -31,8 +31,8 @@ const timerPresentation = () => {
 						time === 0
 							? styles.timerRed
 							: time < 10
-							? styles.timerYellow
-							: styles.timerGreen
+								? styles.timerYellow
+								: styles.timerGreen
 					}
 				/>
 			</View>

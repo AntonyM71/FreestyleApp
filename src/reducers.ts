@@ -140,7 +140,7 @@ export interface ICategory {
 }
 export type IPaddlerScores = Record<
 	IPaddler["name"],
-	Record<IMoveName, MoveType | MoveType[]>[]
+	Record<IMoveName, MoveType >[]
 >
 export interface MoveType {
 	id: string
