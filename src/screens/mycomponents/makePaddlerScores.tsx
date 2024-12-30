@@ -22,15 +22,8 @@ export const initialScoresheet = () => {
 					link: false
 				}
 			}
-			if (
-				item.Move === "Trophy 1" ||
-				item.Move === "Trophy 2" ||
-				item.Move === "Trophy 3"
-			) {
-				return [scoresObject]
-			} else {
-				return scoresObject
-			}
+
+			return scoresObject
 		}
 	)
 
