@@ -4,7 +4,7 @@
 		"slug": "freestyleapp",
 		"privacy": "public",
 		"platforms": ["android", "ios"],
-		"version": "1.2.13",
+		"version": "1.2.14",
 		"orientation": "portrait",
 		"icon": "./assets/images/icon.png",
 		"splash": {
@@ -18,11 +18,11 @@
 		"android": {
 			"package": "com.kayakfreestyle.kayakfreestyleapp",
 			"permissions": [],
-			"versionCode": 400000023
+			"versionCode": 400000024
 		},
 		"assetBundlePatterns": ["**/*"],
 		"ios": {
-			"buildNumber": "1.2.13",
+			"buildNumber": "1.2.14",
 			"bundleIdentifier": "com.kayakfreestyle.kayakfreestyleapp"
 		},
 		"plugins": [
