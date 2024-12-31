@@ -39,7 +39,6 @@ export const MoveButtons = () => {
 	const availableMoves = moveList
 	const buttonPercentage = screenWidth > 600 ? "25%" : "50%"
 	const entryButtonPercentage = screenWidth > 600 ? "33%" : "33%"
-	const trophyButtonPercentage = screenWidth > 600 ? "33%" : "50%"
 	{
 		if (numberOfPaddlersInCurrentHeat !== 0) {
 			return (
@@ -184,7 +183,7 @@ export const MoveButtons = () => {
 												</Fragment>
 											)
 										}
-								  })
+									})
 								: null}
 						</>
 						<>
@@ -246,7 +245,7 @@ export const MoveButtons = () => {
 												</Fragment>
 											)
 										}
-								  })
+									})
 								: null}
 						</>
 						<>
@@ -308,7 +307,7 @@ export const MoveButtons = () => {
 												</Fragment>
 											)
 										}
-								  })
+									})
 								: null}
 						</>
 					</View>
@@ -321,16 +320,32 @@ export const MoveButtons = () => {
 						}}
 					>
 						{availableMoves.trophy.map((item, index) => (
-							<View
-								style={{ width: trophyButtonPercentage }}
-								key={index}
-							>
-								<TrophyDynamicButton
-									paddler={currentPaddler}
-									move={item}
-									direction={"left"}
-								/>
-							</View>
+							<Fragment key={index}>
+								<View
+									style={{
+										width: buttonPercentage
+									}}
+								>
+									<NormalMove
+										item={item}
+										currentRun={currentRun}
+										currentPaddler={currentPaddler}
+										direction={"left"}
+									/>
+								</View>
+								<View
+									style={{
+										width: buttonPercentage
+									}}
+								>
+									<NormalMove
+										item={item}
+										currentRun={currentRun}
+										currentPaddler={currentPaddler}
+										direction={"right"}
+									/>
+								</View>
+							</Fragment>
 						))}
 					</View>
 				</View>
