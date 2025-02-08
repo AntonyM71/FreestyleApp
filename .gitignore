@@ -13,3 +13,4 @@ ios_distribution.cer
 ios/*
 android/*
 KayakFreestyleApp.app/*
+coverage/**
