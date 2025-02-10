@@ -13,8 +13,6 @@ import {
 import { DynamicButton } from "./dynamicButton"
 import { EntryDynamicButton } from "./entryDynamicButton"
 import { dataSourceMoveInterface } from "./makePaddlerScores"
-import { TrophyDynamicButton } from "./trophyDynamicButton"
-
 const NormalMove = (props: {
 	currentPaddler: IPaddler
 	currentRun: number
@@ -42,7 +40,7 @@ export const MoveButtons = () => {
 	{
 		if (numberOfPaddlersInCurrentHeat !== 0) {
 			return (
-				<View>
+				<View testID="move-buttons">
 					<View
 						style={{
 							flex: 1,
@@ -53,6 +51,7 @@ export const MoveButtons = () => {
 					>
 						{availableMoves.entry.map((item, index) => (
 							<View
+								testID="entry-button-container"
 								style={{ width: entryButtonPercentage }}
 								key={index}
 							>
@@ -77,6 +76,7 @@ export const MoveButtons = () => {
 								if (!item.Reverse) {
 									return (
 										<View
+											testID="normal-button-container"
 											style={{ width: buttonPercentage }}
 											key={index}
 										>

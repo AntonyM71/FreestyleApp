@@ -16,7 +16,6 @@ module.exports = {
 	],
 	plugins: [
 		"@typescript-eslint",
-		"@typescript-eslint/tslint",
 		"prefer-arrow",
 		"import",
 		"testing-library",
@@ -198,25 +197,6 @@ module.exports = {
 		"spaced-comment": "error",
 		"use-isnan": "error",
 		"valid-typeof": "error",
-		"@typescript-eslint/tslint/config": [
-			"error",
-			{
-				rules: {
-					"import-spacing": true,
-					"jsdoc-format": true,
-					"no-boolean-literal-compare": true,
-					"no-reference-import": true,
-					"no-unnecessary-callback-wrapper": true,
-					"one-line": [
-						true,
-						"check-catch",
-						"check-finally",
-						"check-else",
-						"check-open-brace",
-						"check-whitespace"
-					]
-				}
-			}
-		]
+		
 	}
 }

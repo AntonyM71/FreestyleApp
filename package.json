@@ -7,15 +7,34 @@
     "ios": "expo run:ios",
     "eject": "expo eject",
     "lint": "eslint ./src",
-		"lintfix": "npx eslint ./src --fix",
-		"prettierfix": "npx prettier ./src -w",
-    "test": "node ./node_modules/jest/bin/jest.js --passWithNoTests",
+    "lintfix": "npx eslint ./src --fix",
+    "prettierfix": "npx prettier ./src -w",
+    "test": "node ./node_modules/jest/bin/jest.js --passWithNoTests --coverage",
     "testwatch": "node ./node_modules/jest/bin/jest.js --watchAll",
     "build": "npm ci && npm run lint && npm run test",
     "release": "npx standard-version npm run lint npm ci"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg|redux-mock-store|react-redux)"
+    ],
+    "setupFiles": [
+      "<rootDir>/jest.setup.js"
+    ],
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx,js,jsx}",
+      "!src/**/*.d.ts",
+      "!src/**/__tests__/**",
+      "!src/**/__mocks__/**"
+    ],
+    "coverageReporters": [
+      "text",
+      "lcov",
+      "html"
+    ],
+    "watchman": false
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",
@@ -23,8 +42,6 @@
     "@expo/samples": "2.1.1",
     "@expo/vector-icons": "^14.0.0",
     "@expo/webpack-config": "~19.0.1",
-    "@mui/icons-material": "^5.15.7",
-    "@mui/material": "^5.15.7",
     "@react-native-picker/picker": "^2.6.1",
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/native": "^6.1.10",
@@ -57,8 +74,10 @@
     "typescript": "^5.1.3"
   },
   "devDependencies": {
+    "@testing-library/react-native": "^13.0.1",
     "@types/react": "~18.2.45",
     "@types/react-redux": "^7.1.12",
+    "@types/redux-mock-store": "^1.5.0",
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@typescript-eslint/parser": "^6.19.0",
     "babel-preset-expo": "^10.0.1",
@@ -66,6 +85,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prefer-arrow": "^1.2.2",
     "jest-expo": "~50.0.2",
+    "redux-mock-store": "^1.5.5",
     "standard-version": "^9.0.0"
   },
   "private": true,

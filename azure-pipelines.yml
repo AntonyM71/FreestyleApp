@@ -17,5 +17,12 @@ steps:
       displayName: "Install Node.js"
 
     - script: |
-          npm run build
-      displayName: "npm install and build"
+          npm install --legacy-peer-deps
+      displayName: "npm install"
+
+    - script: |
+          npm test
+      displayName: "npm test"
+    - script: |
+          npm run lint
+      displayName: "npm run lint"
