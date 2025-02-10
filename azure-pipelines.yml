@@ -19,8 +19,10 @@ steps:
     - script: |
           npm install --legacy-peer-deps
       displayName: "npm install"
-    - task: NodeTool@0
 
     - script: |
           npm test
       displayName: "npm test"
+    - script: |
+          npm lint
+      displayName: "npm lint"
