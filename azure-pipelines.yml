@@ -25,4 +25,4 @@ steps:
       displayName: "npm test"
     - script: |
           npm lint
-      displayName: "npm lint"
+      displayName: "npm run lint"
