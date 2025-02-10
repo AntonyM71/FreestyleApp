@@ -38,7 +38,7 @@ export const MovesList: IMovesList = {
 			Clean: 0,
 			SuperClean: 0,
 			Air: 10,
-			Huge: 10,
+			Huge: 20,
 			Link: 10,
 			Reverse: true
 		},
@@ -59,7 +59,7 @@ export const MovesList: IMovesList = {
 			SuperClean: 0,
 			Air: 0,
 			Huge: 0,
-			Link: 30,
+			Link: 20,
 			Reverse: true
 		}
 	],
@@ -263,7 +263,7 @@ export const MovesList: IMovesList = {
 			SuperClean: 10,
 			Air: 0,
 			Huge: 50,
-			Link: 20,
+			Link: 30,
 			Reverse: true
 		},
 		{
@@ -272,8 +272,8 @@ export const MovesList: IMovesList = {
 			Clean: 30,
 			SuperClean: 10,
 			Air: 0,
-			Huge: 50,
-			Link: 30,
+			Huge: 40,
+			Link: 20,
 			Reverse: true
 		},
 		{
