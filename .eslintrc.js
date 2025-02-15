@@ -11,7 +11,7 @@ module.exports = {
 		"eslint:recommended",
 		"plugin:@typescript-eslint/recommended",
 		"plugin:@typescript-eslint/recommended-requiring-type-checking",
-		"plugin:jest-dom/recommended",
+
 		"plugin:testing-library/react"
 	],
 	plugins: [
@@ -19,7 +19,7 @@ module.exports = {
 		"prefer-arrow",
 		"import",
 		"testing-library",
-		"jest-dom"
+
 	],
 	overrides: [
 		{
@@ -30,10 +30,7 @@ module.exports = {
 		project: ["./tsconfig.json"] // Specify it only for TypeScript files
 	},
 	rules: {
-		"jest-dom/prefer-checked": "error",
-		"jest-dom/prefer-enabled-disabled": "error",
-		"jest-dom/prefer-required": "error",
-		"jest-dom/prefer-to-have-attribute": "error",
+
 		"@typescript-eslint/array-type": "error",
 		"@typescript-eslint/explicit-module-boundary-types": "off", // we're returning components, try and put return types on functions
 		"@typescript-eslint/consistent-type-definitions": "error",

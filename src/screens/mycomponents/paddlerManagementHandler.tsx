@@ -32,9 +32,10 @@ export const PaddlerManager = () => {
 	const numberOfRuns = useSelector(getNumberOfRuns)
 	const heats = useSelector(getAvailableHeats)
 	const addHeat = () => {
-		const newHeatList = _.cloneDeep(heats)
-		const maxHeat = heats ? Math.max(...heats) : 0
-		dispatch(addOrRemoveHeat([...newHeatList, maxHeat + 1]))
+		const newHeatList = _.cloneDeep(heats) || []
+		const maxHeat = newHeatList.length > 0 ? Math.max(...newHeatList) : 0
+		const newHeats = [...newHeatList, maxHeat + 1]
+		dispatch(addOrRemoveHeat(newHeats))
 	}
 	const clearPaddlers = () => {
 		const newHeatList: IPaddlerList = []
@@ -44,10 +45,10 @@ export const PaddlerManager = () => {
 			startingScoresheet[paddler.name] = [initialScoresheet()]
 		})
 
-		dispatch(changePaddler(0))
-		dispatch(changeHeat(0))
-		dispatch(changeRun(0))
 		batch(() => {
+			dispatch(changePaddler(0))
+			dispatch(changeHeat(0))
+			dispatch(changeRun(0))
 			dispatch(addOrRemovePaddlerName(newHeatList))
 			dispatch(updatePaddlerScores(startingScoresheet))
 		})
@@ -58,8 +59,10 @@ export const PaddlerManager = () => {
 			// @ts-ignore
 			startingScoresheet[paddler.name] = [initialScoresheet()]
 		})
-		dispatch(changeRun(0))
-		dispatch(updatePaddlerScores(startingScoresheet))
+		batch(() => {
+			dispatch(changeRun(0))
+			dispatch(updatePaddlerScores(startingScoresheet))
+		})
 	}
 
 	return (

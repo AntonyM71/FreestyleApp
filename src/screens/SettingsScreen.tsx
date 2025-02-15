@@ -4,32 +4,31 @@ import { styles } from "../styles"
 import CategoryManager from "./mycomponents/categoryManager"
 import RunOptions from "./mycomponents/runOptions"
 import TimerOptions from "./mycomponents/timerOptions"
-export default class HomeScreen extends React.Component {
+
+export default class SettingsScreen extends React.Component {
 	static navigationOptions = {
 		title: "Settings"
 	}
 
-	state = {
-		paddlerList: ["paddler1", "paddler2", "c1er"],
-		paddlerIndex: 0
-	}
 	render() {
 		return (
-			<View style={styles.container}>
+			<View style={styles.container} testID="settings-container">
 				<ScrollView
 					style={styles.container}
 					contentContainerStyle={styles.contentContainer}
+					testID="settings-scroll-view"
+					accessible={true}
 				>
 					<View
 						style={{
 							flex: 1,
 							flexDirection: "row",
 							flexWrap: "wrap",
-
 							borderBottomColor: "lightgray",
 							borderBottomWidth: 2,
 							paddingBottom: 5
 						}}
+						testID="score-options-container"
 					>
 						<View
 							style={{
@@ -45,18 +44,19 @@ export default class HomeScreen extends React.Component {
 									borderBottomWidth: 1,
 									paddingBottom: 5
 								}}
+								testID="score-options-header"
 							>
 								{"Score Page Options"}
 							</Text>
 						</View>
-						<View style={{ width: "50%" }}>
+						<View style={{ width: "50%" }} testID="timer-options-container">
 							<TimerOptions />
 						</View>
-						<View style={{ width: "50%" }}>
+						<View style={{ width: "50%" }} testID="run-options-container">
 							<RunOptions />
 						</View>
 					</View>
-					<View style={{}}>
+					<View>
 						<Text
 							style={{
 								...styles.headerText,
@@ -66,11 +66,12 @@ export default class HomeScreen extends React.Component {
 								borderBottomWidth: 1,
 								paddingBottom: 5
 							}}
+							testID="categories-header"
 						>
 							{"Categories"}
 						</Text>
 					</View>
-					<View style={{ width: "100%" }}>
+					<View style={{ width: "100%" }} testID="category-manager-container">
 						<CategoryManager />
 					</View>
 				</ScrollView>

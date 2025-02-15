@@ -179,6 +179,7 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 							<Picker
 								selectedValue={paddler.category}
 								mode="dropdown"
+								testID="category-picker"
 								onValueChange={(itemValue) =>
 									handleCategoryChange(
 										paddler.name,
