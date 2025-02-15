@@ -19,6 +19,9 @@
     "transformIgnorePatterns": [
       "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg|redux-mock-store|react-redux)"
     ],
+    "testMatch": [
+      "**/__tests__/**/*.test.[jt]s?(x)"
+    ],
     "setupFiles": [
       "<rootDir>/jest.setup.js"
     ],
@@ -27,7 +30,9 @@
       "src/**/*.{ts,tsx,js,jsx}",
       "!src/**/*.d.ts",
       "!src/**/__tests__/**",
-      "!src/**/__mocks__/**"
+      "!src/**/__mocks__/**",
+      "!src/**/*.mock.ts",
+      "!**/.eslintrc.js"
     ],
     "coverageReporters": [
       "text",
