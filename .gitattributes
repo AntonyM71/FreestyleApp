@@ -1,0 +1,2 @@
+# Use 'ours' merge strategy for lock files to avoid conflicts during major SDK upgrades
+package-lock.json merge=ours
