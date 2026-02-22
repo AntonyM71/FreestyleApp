@@ -11,9 +11,11 @@ Try and keep to good programming practices, including:
 -   functional (arrow funciton) components wherever possible
 -   redux-hooks on new components
 
-This app was developed using NPM 6.13.4 and Node 12.16.1, install from [here](https://nodejs.org/en/download/) I've been developing using VSCode for my IDE.
+This app was developed using Node 18 LTS or later, install from [here](https://nodejs.org/en/download/) I've been developing using VSCode for my IDE.
 
-Start developing by running `npm ci` and `npm install -g expo-cli`
+This project uses **Expo SDK 54** with React Native 0.81 and React 19.
+
+Start developing by running `npm ci`
 
 Some expo commands aren't allowed by the default powershell execution policies, update them using `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted` (see [here](https://stackoverflow.com/questions/41117421/ps1-cannot-be-loaded-because-running-scripts-is-disabled-on-this-system) for a discussion on this).
 
