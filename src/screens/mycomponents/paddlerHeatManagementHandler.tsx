@@ -1,7 +1,7 @@
 import { Picker } from "@react-native-picker/picker"
 import _ from "lodash"
-import React, { useState } from "react"
-import { Text, TextInput, View } from "react-native"
+import React, { useMemo, useState } from "react"
+import { Platform, Text, TextInput, View } from "react-native"
 import { Button } from "react-native-elements"
 import { batch, useDispatch, useSelector } from "react-redux"
 import {
@@ -31,6 +31,24 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 	const paddlerHeatList = useSelector(getPaddlerHeatList)
 	const numberOfRuns = useSelector(getNumberOfRuns)
 	const availableCategories = useSelector(getCategories)
+
+	const pickerCategoryNames = useMemo(() => {
+		const configuredCategoryNames = availableCategories
+			.map((category) => category.name)
+			.filter((name) => name.length > 0)
+
+		if (configuredCategoryNames.length > 0) {
+			return configuredCategoryNames
+		}
+
+		return Array.from(
+			new Set(
+				paddlerHeatList
+					.map((paddler) => paddler.category)
+					.filter((name) => name.length > 0)
+			)
+		)
+	}, [availableCategories, paddlerHeatList])
 
 	const handleDeletePaddler =
 		(heatKey: number, paddlerList: IPaddler[], paddler: IPaddler) => () => {
@@ -178,27 +196,38 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 						<View style={{ width: "60%" }}>
 							<Picker
 								selectedValue={paddler.category}
-								mode="dropdown"
+								mode={
+									Platform.OS === "android"
+										? "dropdown"
+										: undefined
+								}
 								testID="category-picker"
+								style={{
+									width: "100%",
+									minHeight: 48,
+									color: "black"
+								}}
+								itemStyle={{ color: "black" }}
 								onValueChange={(itemValue) =>
 									handleCategoryChange(
 										paddler.name,
-										itemValue
+										String(itemValue)
 									)
 								}
-								// style={{ height: 88 }}
 							>
 								<Picker.Item
 									key={"default"}
 									label={"Select a Category"}
 									value={""}
-									enabled={false}
+									enabled={true}
+									color={"black"}
 								/>
-								{availableCategories.map((category) => (
+								{pickerCategoryNames.map((categoryName) => (
 									<Picker.Item
-										key={category.name + paddler.name}
-										label={category.name}
-										value={category.name}
+										key={categoryName + paddler.name}
+										label={categoryName}
+										value={categoryName}
+										color={"black"}
 									/>
 								))}
 							</Picker>
