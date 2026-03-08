@@ -1,5 +1,6 @@
 import React from "react"
-import { SafeAreaView, ScrollView, View } from "react-native"
+import { ScrollView, View } from "react-native"
+import { SafeAreaView } from "react-native-safe-area-context"
 import { styles } from "../styles"
 import PaddlerManager from "./mycomponents/paddlerManagementHandler"
 

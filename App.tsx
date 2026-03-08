@@ -3,6 +3,7 @@ import "expo-dev-client"
 import * as SplashScreen from "expo-splash-screen"
 import React, { useCallback } from "react"
 import { Platform, StatusBar, StyleSheet, View } from "react-native"
+import { SafeAreaProvider } from "react-native-safe-area-context"
 import { Provider } from "react-redux"
 
 import { useFonts } from "expo-font"
@@ -29,12 +30,14 @@ export default function App() {
 	}
 
 	return (
-		<View style={styles.container} onLayout={onLayoutRootView}>
-			<Provider store={store}>
-				{Platform.OS === "ios" && <StatusBar barStyle="default" />}
-				<AppNavigator />
-			</Provider>
-		</View>
+		<SafeAreaProvider>
+			<View style={styles.container} onLayout={onLayoutRootView}>
+				<Provider store={store}>
+					{Platform.OS === "ios" && <StatusBar barStyle="default" />}
+					<AppNavigator />
+				</Provider>
+			</View>
+		</SafeAreaProvider>
 	)
 }
 
