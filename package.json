@@ -1,93 +1,93 @@
 {
-  "version": "0.0.3",
-  "main": "node_modules/expo/AppEntry.js",
-  "scripts": {
-    "start": "expo start",
-    "android": "expo run:android",
-    "ios": "expo run:ios",
-    "eject": "expo eject",
-    "lint": "eslint ./src",
-    "lintfix": "npx eslint ./src --fix",
-    "prettierfix": "npx prettier ./src -w",
-    "test": "node ./node_modules/jest/bin/jest.js --passWithNoTests --coverage",
-    "testwatch": "node ./node_modules/jest/bin/jest.js --watchAll",
-    "build": "npm ci && npm run lint && npm run test",
-    "release": "npx standard-version npm run lint npm ci"
-  },
-  "jest": {
-    "preset": "jest-expo",
-    "transformIgnorePatterns": [
-      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg|redux-mock-store|react-redux)"
-    ],
-    "testMatch": [
-      "**/__tests__/**/*.test.[jt]s?(x)"
-    ],
-    "setupFiles": [
-      "<rootDir>/jest.setup.js"
-    ],
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "src/**/*.{ts,tsx,js,jsx}",
-      "!src/**/*.d.ts",
-      "!src/**/__tests__/**",
-      "!src/**/__mocks__/**",
-      "!src/**/*.mock.ts",
-      "!**/.eslintrc.js"
-    ],
-    "coverageReporters": [
-      "text",
-      "lcov",
-      "html"
-    ],
-    "watchman": false
-  },
-  "dependencies": {
-    "@expo/vector-icons": "^15.0.3",
-    "@react-native-picker/picker": "2.11.1",
-    "@react-navigation/bottom-tabs": "^7.14.0",
-    "@react-navigation/native": "^7.1.28",
-    "@testing-library/react-native": "^13.0.1",
-    "@types/lodash": "^4.14.181",
-    "@typescript-eslint/eslint-plugin-tslint": "^5.18.0",
-    "braces": "^3.0.3",
-    "eslint-plugin-jest-dom": "^4.0.1",
-    "eslint-plugin-testing-library": "^5.2.1",
-    "expo": "~54.0.33",
-    "expo-dev-client": "~6.0.20",
-    "expo-font": "~14.0.11",
-    "expo-splash-screen": "~31.0.13",
-    "expo-system-ui": "~6.0.9",
-    "jest": "^29.2.1",
-    "lodash": "^4.17.23",
-    "react": "19.1.0",
-    "react-native": "0.81.5",
-    "react-native-easy-grid": "^0.2.2",
-    "react-native-elements": "^3.4.3",
-    "react-native-gesture-handler": "~2.28.0",
-    "react-native-picker-select": "^9.0.1",
-    "react-native-safe-area-context": "~5.6.0",
-    "react-native-screens": "~4.16.0",
-    "react-redux": "^9.2.0",
-    "react-test-renderer": "19.1.0",
-    "redux": "^5.0.1",
-    "reselect": "^5.1.0",
-    "typescript": "^5.1.3"
-  },
-  "devDependencies": {
-    "@types/jest": "^29.5.14",
-    "@types/react": "~19.1.10",
-    "@types/react-redux": "^7.1.12",
-    "@types/redux-mock-store": "^1.5.0",
-    "@typescript-eslint/eslint-plugin": "^6.19.0",
-    "@typescript-eslint/parser": "^6.19.0",
-    "babel-preset-expo": "~54.0.10",
-    "eslint": "^8.56.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-prefer-arrow": "^1.2.2",
-    "jest-expo": "~54.0.17",
-    "redux-mock-store": "^1.5.5",
-    "standard-version": "^9.0.0"
-  },
-  "private": true,
-  "name": "FreestyleApp"
+	"version": "0.0.3",
+	"main": "node_modules/expo/AppEntry.js",
+	"scripts": {
+		"start": "expo start",
+		"android": "expo run:android",
+		"ios": "expo run:ios",
+		"eject": "expo eject",
+		"lint": "eslint ./src",
+		"lintfix": "npx eslint ./src --fix",
+		"prettierfix": "npx prettier ./src -w",
+		"test": "node ./node_modules/jest/bin/jest.js --passWithNoTests --coverage",
+		"testwatch": "node ./node_modules/jest/bin/jest.js --watchAll",
+		"build": "npm ci && npm run lint && npm run test",
+		"release": "npx standard-version npm run lint npm ci"
+	},
+	"jest": {
+		"preset": "jest-expo",
+		"transformIgnorePatterns": [
+			"node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg|redux-mock-store|react-redux)"
+		],
+		"testMatch": [
+			"**/__tests__/**/*.test.[jt]s?(x)"
+		],
+		"setupFiles": [
+			"<rootDir>/jest.setup.js"
+		],
+		"collectCoverage": true,
+		"collectCoverageFrom": [
+			"src/**/*.{ts,tsx,js,jsx}",
+			"!src/**/*.d.ts",
+			"!src/**/__tests__/**",
+			"!src/**/__mocks__/**",
+			"!src/**/*.mock.ts",
+			"!**/.eslintrc.js"
+		],
+		"coverageReporters": [
+			"text",
+			"lcov",
+			"html"
+		],
+		"watchman": false
+	},
+	"dependencies": {
+		"@expo/vector-icons": "^15.0.3",
+		"@react-native-picker/picker": "2.11.1",
+		"@react-navigation/bottom-tabs": "^7.14.0",
+		"@react-navigation/native": "^7.1.28",
+		"@testing-library/react-native": "^13.0.1",
+		"@types/lodash": "^4.14.181",
+		"@typescript-eslint/eslint-plugin-tslint": "^5.18.0",
+		"braces": "^3.0.3",
+		"eslint-plugin-jest-dom": "^4.0.1",
+		"eslint-plugin-testing-library": "^5.2.1",
+		"expo": "~54.0.33",
+		"expo-dev-client": "~6.0.20",
+		"expo-font": "~14.0.11",
+		"expo-splash-screen": "~31.0.13",
+		"expo-system-ui": "~6.0.9",
+		"jest": "^29.2.1",
+		"lodash": "^4.17.23",
+		"react": "19.1.0",
+		"react-native": "0.81.5",
+		"react-native-easy-grid": "^0.2.2",
+		"react-native-elements": "^3.4.3",
+		"react-native-gesture-handler": "~2.28.0",
+		"react-native-picker-select": "^9.0.1",
+		"react-native-safe-area-context": "~5.6.0",
+		"react-native-screens": "~4.16.0",
+		"react-redux": "^9.2.0",
+		"react-test-renderer": "19.1.0",
+		"redux": "^5.0.1",
+		"reselect": "^5.1.0",
+		"typescript": "^5.1.3"
+	},
+	"devDependencies": {
+		"@types/jest": "^29.5.14",
+		"@types/react": "~19.1.10",
+		"@types/react-redux": "^7.1.12",
+		"@types/redux-mock-store": "^1.5.0",
+		"@typescript-eslint/eslint-plugin": "^6.19.0",
+		"@typescript-eslint/parser": "^6.19.0",
+		"babel-preset-expo": "~54.0.10",
+		"eslint": "^8.56.0",
+		"eslint-plugin-import": "^2.26.0",
+		"eslint-plugin-prefer-arrow": "^1.2.2",
+		"jest-expo": "~54.0.17",
+		"redux-mock-store": "^1.5.5",
+		"standard-version": "^9.0.0"
+	},
+	"private": true,
+	"name": "FreestyleApp"
 }
