@@ -3,7 +3,7 @@ import { render, fireEvent, screen, act } from "@testing-library/react-native"
 import { Provider } from "react-redux"
 import configureStore from "redux-mock-store"
 import Timer from "../timer"
-import { styles } from "../../../styles"
+import { paperButtonProps } from "../../../styles"
 
 const mockStore = configureStore([])
 
@@ -157,12 +157,12 @@ describe("Timer", () => {
     fireEvent.press(button)
 
     // Initial state (45 seconds) - green
-    const buttonElement = screen.getByText("45")
-    const buttonProps = buttonElement.parent.parent.props
     act(() => {
       jest.advanceTimersByTime(0)
     })
-    expect(buttonProps.style).toMatchObject(styles.timerGreen)
+    expect(screen.UNSAFE_getByProps({
+      buttonColor: paperButtonProps.timerGreen.buttonColor
+    })).toBeTruthy()
 
     // Run down to 9 seconds (yellow zone)
     for (let i = 45; i > 9; i--) {
@@ -170,13 +170,9 @@ describe("Timer", () => {
         jest.advanceTimersByTime(1000)
       })
     }
-    // Get fresh reference after state update
-    const yellowButtonElement = screen.getByText("9")
-    const yellowButtonProps = yellowButtonElement.parent.parent.props
-    act(() => {
-      jest.advanceTimersByTime(0)
-    })
-    expect(yellowButtonProps.style).toMatchObject(styles.timerYellow)
+    expect(screen.UNSAFE_getByProps({
+      buttonColor: paperButtonProps.timerYellow.buttonColor
+    })).toBeTruthy()
 
     // Run down to 0 seconds (red zone)
     for (let i = 9; i >= 0; i--) {
@@ -184,12 +180,8 @@ describe("Timer", () => {
         jest.advanceTimersByTime(1000)
       })
     }
-    // Get fresh reference after state update
-    const redButtonElement = screen.getByText("0")
-    const redButtonProps = redButtonElement.parent.parent.props
-    act(() => {
-      jest.advanceTimersByTime(0)
-    })
-    expect(redButtonProps.style).toMatchObject(styles.timerRed)
+    expect(screen.UNSAFE_getByProps({
+      buttonColor: paperButtonProps.timerRed.buttonColor
+    })).toBeTruthy()
   })
 })

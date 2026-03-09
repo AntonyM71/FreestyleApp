@@ -1,11 +1,11 @@
 import React, { useState } from "react"
 import { Text, View } from "react-native"
-import { Button, Input } from "react-native-elements"
+import { Button, HelperText, TextInput } from "react-native-paper"
 import { batch, useDispatch, useSelector } from "react-redux"
 import { addOrRemoveCategory, addOrRemovePaddlerName } from "../../actions"
 import { ICategory } from "../../reducers"
 import { getCategories, getPaddlerHeatList } from "../../selectors"
-import { styles } from "../../styles"
+import { paperButtonProps, styles } from "../../styles"
 import MoveSelection from "./enabledMoves"
 
 export const PaddlerHeatManagerPresentation = () => {
@@ -92,9 +92,10 @@ export const PaddlerHeatManagerPresentation = () => {
 								onPress={() =>
 									handleDeleteCategory(category.name)
 								}
-								title="Delete"
-								buttonStyle={styles.deleteButton}
-							/>
+								{...paperButtonProps.deleteButton}
+							>
+								{"Delete"}
+							</Button>
 						</View>
 
 						<View style={{ width: "100%" }}>
@@ -122,16 +123,19 @@ export const PaddlerHeatManagerPresentation = () => {
 					{"Add New Category"}
 				</Text>
 
-				<Input
-					blurOnSubmit={true}
+				<TextInput
+					mode="outlined"
 					autoCorrect={false}
 					placeholder="New Category Name"
 					value={newCategory}
 					onChangeText={handleAddChange}
 					onSubmitEditing={() => handleAddCategory(newCategory)}
 					clearButtonMode="always"
-					errorMessage={isDuplicate ? "Category already exists" : undefined}
+					error={isDuplicate}
 				/>
+				<HelperText type="error" visible={isDuplicate}>
+					{"Category already exists"}
+				</HelperText>
 			</View>
 		</View>
 	)

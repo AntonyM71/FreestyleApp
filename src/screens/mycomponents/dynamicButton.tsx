@@ -1,12 +1,12 @@
 import React from "react"
 import { View } from "react-native"
-import { Button } from "react-native-elements"
+import { Button } from "react-native-paper"
 import { useDispatch, useSelector } from "react-redux"
 import { updatePaddlerScores } from "../../actions"
 import { IMoves } from "../../data/moves_lists/move_list"
 import { IDirection, IPaddler } from "../../reducers"
 import { getPaddlerScores } from "../../selectors"
-import { styles } from "../../styles"
+import { paperButtonProps } from "../../styles"
 
 // eslint-disable-next-line complexity
 const DynamicButtonPresentation = React.memo((props: IPropsType) => {
@@ -54,9 +54,10 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 						props.direction,
 						"scored"
 					)}
-					title={buttonName}
-					buttonStyle={styles.noMove}
-				/>
+					{...paperButtonProps.noMove}
+				>
+					{buttonName}
+				</Button>
 			)
 		} else {
 			const buttonName =
@@ -81,9 +82,10 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 								props.direction,
 								"scored"
 							)}
-							title={buttonName}
-							buttonStyle={styles.moveScored}
-						/>
+							{...paperButtonProps.moveScored}
+						>
+							{buttonName}
+						</Button>
 					</View>
 					<View style={{ width: "50%" }}>
 						<Button
@@ -94,14 +96,13 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 								props.direction,
 								"clean"
 							)}
-							title={"C"}
 							disabled={props.move.Clean ? false : true}
-							buttonStyle={
-								thisMove[props.direction].clean
-									? styles.bonusScored
-									: styles.noBonus
-							}
-						/>
+							{...(thisMove[props.direction].clean
+								? paperButtonProps.bonusScored
+								: paperButtonProps.noBonus)}
+						>
+							{"C"}
+						</Button>
 					</View>
 					<View style={{ width: "50%" }}>
 						<Button
@@ -112,14 +113,13 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 								props.direction,
 								"superClean"
 							)}
-							title={"SC"}
 							disabled={props.move.SuperClean ? false : true}
-							buttonStyle={
-								thisMove[props.direction].superClean
-									? styles.bonusScored
-									: styles.noBonus
-							}
-						/>
+							{...(thisMove[props.direction].superClean
+								? paperButtonProps.bonusScored
+								: paperButtonProps.noBonus)}
+						>
+							{"SC"}
+						</Button>
 					</View>
 					<View style={{ width: "33%" }}>
 						<Button
@@ -130,14 +130,13 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 								props.direction,
 								"air"
 							)}
-							title={"A"}
 							disabled={props.move.Air ? false : true}
-							buttonStyle={
-								thisMove[props.direction].air
-									? styles.bonusScored
-									: styles.noBonus
-							}
-						/>
+							{...(thisMove[props.direction].air
+								? paperButtonProps.bonusScored
+								: paperButtonProps.noBonus)}
+						>
+							{"A"}
+						</Button>
 					</View>
 					<View style={{ width: "33%" }}>
 						<Button
@@ -148,14 +147,13 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 								props.direction,
 								"huge"
 							)}
-							title={"H"}
 							disabled={props.move.Huge ? false : true}
-							buttonStyle={
-								thisMove[props.direction].huge
-									? styles.bonusScored
-									: styles.noBonus
-							}
-						/>
+							{...(thisMove[props.direction].huge
+								? paperButtonProps.bonusScored
+								: paperButtonProps.noBonus)}
+						>
+							{"H"}
+						</Button>
 					</View>
 					<View style={{ width: "33%" }}>
 						<Button
@@ -166,14 +164,13 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 								props.direction,
 								"link"
 							)}
-							title={"L"}
 							disabled={props.move.Link ? false : true}
-							buttonStyle={
-								thisMove[props.direction].link
-									? styles.bonusScored
-									: styles.noBonus
-							}
-						/>
+							{...(thisMove[props.direction].link
+								? paperButtonProps.bonusScored
+								: paperButtonProps.noBonus)}
+						>
+							{"L"}
+						</Button>
 					</View>
 				</View>
 			)

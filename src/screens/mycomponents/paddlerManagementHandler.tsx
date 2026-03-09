@@ -1,7 +1,7 @@
 import _ from "lodash"
 import React from "react"
 import { ScrollView, View } from "react-native"
-import { Button } from "react-native-elements"
+import { Button } from "react-native-paper"
 import { batch, useDispatch, useSelector } from "react-redux"
 import {
 	addOrRemoveHeat,
@@ -18,7 +18,7 @@ import {
 	getPaddlerHeatList,
 	getScoresState
 } from "../../selectors"
-import { styles } from "../../styles"
+import { paperButtonProps, styles } from "../../styles"
 import { initialScoresheet } from "./makePaddlerScores"
 import PaddlerHeatManager from "./paddlerHeatManagementHandler"
 
@@ -87,26 +87,29 @@ export const PaddlerManager = () => {
 							onPress={() => {
 								addHeat()
 							}}
-							title="New Heat"
-							buttonStyle={styles.timerGreen}
-						/>
+							{...paperButtonProps.timerGreen}
+						>
+							{"New Heat"}
+						</Button>
 					</View>
 					<View style={{ width: "50%" }}>
 						<Button
 							onPress={() => {
 								clearScores()
 							}}
-							title="Clear Scores"
-							buttonStyle={styles.timerRed}
-						/>
+							{...paperButtonProps.timerRed}
+						>
+							{"Clear Scores"}
+						</Button>
 					</View>
 
 					<View style={{ width: "50%" }}>
 						<Button
 							onPress={clearPaddlers}
-							title="Clear Paddlers"
-							buttonStyle={styles.timerRed}
-						/>
+							{...paperButtonProps.timerRed}
+						>
+							{"Clear Paddlers"}
+						</Button>
 					</View>
 				</View>
 			</View>

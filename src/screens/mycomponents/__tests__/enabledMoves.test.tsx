@@ -5,7 +5,7 @@ import configureStore from "redux-mock-store"
 import EnabledMoves from "../enabledMoves"
 import { addOrRemoveCategory, changeRun, updatePaddlerScores } from "../../../actions"
 import { initialScoresheet } from "../makePaddlerScores"
-import { styles } from "../../../styles"
+import { paperButtonProps } from "../../../styles"
 import { IPaddlerScores } from "../../../reducers"
 
 const mockStore = configureStore([])
@@ -62,13 +62,16 @@ describe("EnabledMoves", () => {
       </Provider>
     )
 
-    const holeButton = screen.getByText("Hide hole").parent.parent
-    const waveButton = screen.getByText("Show wave").parent.parent
-    const nflButton = screen.getByText("Hide nfl").parent.parent
-
-    expect(holeButton.props.style).toMatchObject(styles.moveScored)
-    expect(waveButton.props.style).toMatchObject(styles.noMove)
-    expect(nflButton.props.style).toMatchObject(styles.moveScored)
+    // Verify buttons have the correct buttonColor by querying via their props
+    expect(screen.UNSAFE_getByProps({
+      buttonColor: paperButtonProps.moveScored.buttonColor, children: "Hide hole"
+    })).toBeTruthy()
+    expect(screen.UNSAFE_getByProps({
+      buttonColor: paperButtonProps.noMove.buttonColor, children: "Show wave"
+    })).toBeTruthy()
+    expect(screen.UNSAFE_getByProps({
+      buttonColor: paperButtonProps.moveScored.buttonColor, children: "Hide nfl"
+    })).toBeTruthy()
   })
 
   it("dispatches correct actions when move button is pressed", () => {

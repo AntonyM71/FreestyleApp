@@ -2,7 +2,7 @@ import { Picker } from "@react-native-picker/picker"
 import _ from "lodash"
 import React, { useMemo, useState } from "react"
 import { Platform, Text, View } from "react-native"
-import { Button, Input } from "react-native-elements"
+import { Button, HelperText, TextInput } from "react-native-paper"
 import { batch, useDispatch, useSelector } from "react-redux"
 import {
 	addOrRemovePaddlerName,
@@ -16,7 +16,7 @@ import {
 	getPaddlerHeatList,
 	getScoresState
 } from "../../selectors"
-import { styles } from "../../styles"
+import { paperButtonProps, styles } from "../../styles"
 import { initialScoresheet } from "./makePaddlerScores"
 
 interface PropsType {
@@ -184,10 +184,10 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 									props.paddlerList,
 									paddler
 								)}
-								title="Delete"
-								buttonStyle={styles.deleteButton}
-								style={{ paddingTop: 10 }}
-							/>
+								{...paperButtonProps.deleteButtonWithPadding}
+							>
+								{"Delete"}
+							</Button>
 						</View>
 						<View style={{ width: "60%" }}>
 							<Picker
@@ -236,8 +236,8 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 				<Text
 					style={styles.headerText}
 				>{`Add Paddler to Heat ${props.heatKey}`}</Text>
-				<Input
-					blurOnSubmit={true}
+				<TextInput
+					mode="outlined"
 					autoCorrect={false}
 					placeholder="New Paddler Name"
 					value={newPaddler}
@@ -248,8 +248,11 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 						newPaddler
 					)}
 					clearButtonMode="always"
-					errorMessage={isDuplicate ? "Paddler already exists" : undefined}
+					error={isDuplicate}
 				/>
+				<HelperText type="error" visible={isDuplicate}>
+					{"Paddler already exists"}
+				</HelperText>
 			</View>
 		</View>
 	)

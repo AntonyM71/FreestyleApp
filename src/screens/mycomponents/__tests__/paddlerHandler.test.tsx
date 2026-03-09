@@ -9,7 +9,7 @@ import {
   changeNumberOfRuns,
   updatePaddlerScores
 } from "../../../actions"
-import { styles } from "../../../styles"
+import { paperButtonProps } from "../../../styles"
 import { initialScoresheet } from "../makePaddlerScores"
 
 const mockStore = configureStore([])
@@ -97,11 +97,13 @@ describe("PaddlerHandler", () => {
       </Provider>
     )
 
-    const lastButton = screen.getByText("Last Paddler").parent.parent
-    const nextButton = screen.getByText("Next").parent.parent
-
-    expect(lastButton.props.style).toMatchObject(styles.changeButton)
-    expect(nextButton.props.style).toMatchObject(styles.changeButton)
+    // Verify buttons have the correct buttonColor by querying via their props
+    expect(screen.UNSAFE_getByProps({
+      buttonColor: paperButtonProps.changeButton.buttonColor, children: "Last Paddler"
+    })).toBeTruthy()
+    expect(screen.UNSAFE_getByProps({
+      buttonColor: paperButtonProps.changeButton.buttonColor, children: "Next"
+    })).toBeTruthy()
   })
 
   it("handles next paddler button press correctly", () => {

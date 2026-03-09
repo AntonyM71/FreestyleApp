@@ -7,7 +7,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context"
 import { Provider } from "react-redux"
 
 import { useFonts } from "expo-font"
-import { ThemeProvider } from "react-native-elements"
+import { Provider as PaperProvider } from "react-native-paper"
 import AppNavigator from "./src/navigation/AppNavigator"
 import configureStore from "./src/store"
 
@@ -32,14 +32,14 @@ export default function App() {
 
 	return (
 		<SafeAreaProvider>
-			<ThemeProvider>
+			<PaperProvider>
 				<View style={styles.container} onLayout={onLayoutRootView}>
 					<Provider store={store}>
 						{Platform.OS === "ios" && <StatusBar barStyle="default" />}
 						<AppNavigator />
 					</Provider>
 				</View>
-			</ThemeProvider>
+			</PaperProvider>
 		</SafeAreaProvider>
 	)
 }

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react"
 import { View } from "react-native"
-import { Button } from "react-native-elements"
+import { Button } from "react-native-paper"
 import { useSelector } from "react-redux"
 import { getShowTimer } from "../../selectors"
-import { styles } from "../../styles"
+import { paperButtonProps } from "../../styles"
 
 const timerPresentation = () => {
 	const [time, setTime] = useState(0)
@@ -26,15 +26,14 @@ const timerPresentation = () => {
 					onPress={() => {
 						setTime(45)
 					}}
-					title={time.toString()}
-					buttonStyle={
-						time === 0
-							? styles.timerRed
-							: time < 10
-								? styles.timerYellow
-								: styles.timerGreen
-					}
-				/>
+					{...(time === 0
+						? paperButtonProps.timerRed
+						: time < 10
+							? paperButtonProps.timerYellow
+							: paperButtonProps.timerGreen)}
+				>
+					{time.toString()}
+				</Button>
 			</View>
 		)
 	} else {

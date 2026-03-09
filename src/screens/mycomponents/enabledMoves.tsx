@@ -1,6 +1,6 @@
 import React from "react"
 import { View } from "react-native"
-import { Button } from "react-native-elements"
+import { Button } from "react-native-paper"
 import { batch, useDispatch, useSelector } from "react-redux"
 import {
 	addOrRemoveCategory,
@@ -9,7 +9,7 @@ import {
 } from "../../actions"
 import { ICategory, IEnabledMoves } from "../../reducers"
 import { getCategories, getPaddlerHeatList } from "../../selectors"
-import { styles } from "../../styles"
+import { paperButtonProps } from "../../styles"
 import { initialScoresheet } from "./makePaddlerScores"
 const moveSelectionPresentation = ({ category }: { category: ICategory }) => {
 	const dispatch = useDispatch()
@@ -56,18 +56,15 @@ const moveSelectionPresentation = ({ category }: { category: ICategory }) => {
 					(moveKey: IEnabledMovesKeys, key: number) => (
 						<View style={{ width: "33%" }} key={key}>
 							<Button
-								buttonStyle={
-									enabledMovesList[moveKey]
-										? styles.moveScored
-										: styles.noMove
-								}
-								title={
-									enabledMovesList[moveKey]
-										? `Hide ${moveKey}`
-										: `Show ${moveKey}`
-								}
+								{...(enabledMovesList[moveKey]
+									? paperButtonProps.moveScored
+									: paperButtonProps.noMove)}
 								onPress={handleMoveButtonPress(moveKey)}
-							/>
+							>
+								{enabledMovesList[moveKey]
+									? `Hide ${moveKey}`
+									: `Show ${moveKey}`}
+							</Button>
 						</View>
 					)
 				)}
