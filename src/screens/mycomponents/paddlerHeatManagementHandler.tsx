@@ -1,8 +1,8 @@
 import { Picker } from "@react-native-picker/picker"
 import _ from "lodash"
 import React, { useMemo, useState } from "react"
-import { Platform, Text, TextInput, View } from "react-native"
-import { Button } from "react-native-elements"
+import { Platform, Text, View } from "react-native"
+import { Button, Input } from "react-native-elements"
 import { batch, useDispatch, useSelector } from "react-redux"
 import {
 	addOrRemovePaddlerName,
@@ -26,7 +26,7 @@ interface PropsType {
 export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 	const dispatch = useDispatch()
 	const [newPaddler, setNewPaddler] = useState("")
-	const [inputBorder, setInputBorder] = useState("black")
+	const [isDuplicate, setIsDuplicate] = useState(false)
 	const paddlerScores = useSelector(getScoresState)
 	const paddlerHeatList = useSelector(getPaddlerHeatList)
 	const numberOfRuns = useSelector(getNumberOfRuns)
@@ -60,16 +60,12 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 
 	const handleAddChange = (newPaddlerName: string) => {
 		setNewPaddler(newPaddlerName)
-		if (
+		setIsDuplicate(
 			paddlerHeatList
 				.flat()
 				.map((p) => p.name)
 				.indexOf(newPaddlerName) > -1
-		) {
-			setInputBorder("red")
-		} else {
-			setInputBorder("black")
-		}
+		)
 	}
 	const handleAddPaddler =
 		(heatKey: number, paddlerList: IPaddler[], newPaddlerName: string) =>
@@ -240,7 +236,7 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 				<Text
 					style={styles.headerText}
 				>{`Add Paddler to Heat ${props.heatKey}`}</Text>
-				<TextInput
+				<Input
 					blurOnSubmit={true}
 					autoCorrect={false}
 					placeholder="New Paddler Name"
@@ -252,19 +248,7 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 						newPaddler
 					)}
 					clearButtonMode="always"
-					style={[
-						{
-							height: 40,
-							borderColor: inputBorder,
-							borderWidth: 3,
-							padding: 10,
-							borderRadius: 3,
-							marginHorizontal: 5,
-							marginLeft: 4,
-							marginRight: 4,
-							marginTop: 8
-						}
-					]}
+					errorMessage={isDuplicate ? "Paddler already exists" : undefined}
 				/>
 			</View>
 		</View>
