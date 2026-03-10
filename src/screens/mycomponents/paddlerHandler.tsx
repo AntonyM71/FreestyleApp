@@ -1,7 +1,6 @@
 import React from "react"
 import { Text, View } from "react-native"
-import { Col, Grid, Row } from "react-native-easy-grid"
-import { Button } from "react-native-elements"
+import { Button } from "react-native-paper"
 import { useDispatch, useSelector } from "react-redux"
 import {
 	changeNumberOfRuns,
@@ -20,7 +19,7 @@ import {
 	getPaddlerScores,
 	getShowRunHandler
 } from "../../selectors"
-import { styles } from "../../styles"
+import { paperButtonProps, styles } from "../../styles"
 import { DisplayScore } from "./calculateScore"
 import { initialScoresheet } from "./makePaddlerScores"
 
@@ -84,72 +83,70 @@ export const PaddlerHandler = () => {
 	if (numberOfPaddlersInCurrentHeat !== 0) {
 		return (
 			<View>
-				<Grid>
-					<Row>
-						<Col>
+				<View style={{ flexDirection: "row", alignItems: "center" }}>
+					<View style={{ flex: 1 }}>
+						<Button
+							onPress={handlePressPrevious}
+								{...paperButtonProps.changeButton}
+						>
+							{"Last Paddler"}
+						</Button>
+					</View>
+					<View style={{ flex: 1 }}>
+						<Text
+							style={{
+								...styles.standardText,
+								marginTop: 4,
+								textAlign: "center"
+							}}
+						>
+							{currentPaddler.name}
+						</Text>
+						<DisplayScore
+							paddler={currentPaddler.name}
+							run={currentRun}
+						/>
+					</View>
+					<View style={{ flex: 1 }}>
+						<Button
+							onPress={handlePressNext}
+								{...paperButtonProps.changeButton}
+						>
+							{"Next"}
+						</Button>
+					</View>
+				</View>
+				{showRunHandler ? (
+					<View style={{ flexDirection: "row", alignItems: "center" }}>
+						<View style={{ flex: 1 }}>
 							<Button
-								onPress={handlePressPrevious}
-								title="Last Paddler"
-								buttonStyle={styles.changeButton}
-							/>
-						</Col>
-						<Col>
-							<View>
-								<Text
-									style={{
-										...styles.standardText,
-										marginTop: 4,
-										textAlign: "center"
-									}}
-								>
-									{currentPaddler.name}
-								</Text>
-								<DisplayScore
-									paddler={currentPaddler.name}
-									run={currentRun}
-								/>
-							</View>
-						</Col>
-						<Col>
+								onPress={handlePressPreviousRun}
+								{...paperButtonProps.changeButton}
+							>
+								{"Prev Run"}
+							</Button>
+						</View>
+						<View style={{ flex: 1 }}>
+							<Text
+								style={{
+									...styles.standardText,
+									marginTop: 15,
+									textAlign: "center"
+								}}
+							>
+								{currentRun + 1}
+							</Text>
+						</View>
+						<View style={{ flex: 1 }}>
 							<Button
-								onPress={handlePressNext}
-								title="Next"
-								buttonStyle={styles.changeButton}
-							/>
-						</Col>
-					</Row>
-					{showRunHandler ? (
-						<Row>
-							<Col>
-								<Button
-									onPress={handlePressPreviousRun}
-									title="Prev Run"
-									buttonStyle={styles.changeButton}
-								/>
-							</Col>
-							<Col>
-								<View>
-									<Text
-										style={{
-											...styles.standardText,
-											marginTop: 15,
-											textAlign: "center"
-										}}
-									>
-										{currentRun + 1}
-									</Text>
-								</View>
-							</Col>
-							<Col>
-								<Button
-									onPress={handlePressNextRun}
-									title="New Run"
-									buttonStyle={styles.changeButton}
-								/>
-							</Col>
-						</Row>
-					) : null}
-				</Grid>
+								onPress={handlePressNextRun}
+								{...paperButtonProps.changeButton}
+							>
+								{"New Run"}
+							</Button>
+						</View>
+					</View>
+				) : null}
 			</View>
 		)
 	} else {

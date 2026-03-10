@@ -1,10 +1,10 @@
 import React from "react"
 import { View } from "react-native"
-import { Button } from "react-native-elements"
+import { Button } from "react-native-paper"
 import { useDispatch, useSelector } from "react-redux"
 import { updateShowTimer } from "../../actions"
 import { getShowTimer } from "../../selectors"
-import { styles } from "../../styles"
+import { paperButtonProps } from "../../styles"
 
 const timerOptionsPresentation = () => {
 	const showTimer = useSelector(getShowTimer)
@@ -17,10 +17,11 @@ const timerOptionsPresentation = () => {
 	return (
 		<View>
 			<Button
-				buttonStyle={showTimer ? styles.moveScored : styles.noMove}
+				{...(showTimer ? paperButtonProps.moveScored : paperButtonProps.noMove)}
 				onPress={handleTimerButtonPress}
-				title={showTimer ? "Hide Timer" : "Show Timer"}
-			/>
+			>
+				{showTimer ? "Hide Timer" : "Show Timer"}
+			</Button>
 		</View>
 	)
 }

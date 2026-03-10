@@ -1,8 +1,8 @@
 import { Picker } from "@react-native-picker/picker"
 import _ from "lodash"
 import React, { useMemo, useState } from "react"
-import { Platform, Text, TextInput, View } from "react-native"
-import { Button } from "react-native-elements"
+import { Platform, Text, View } from "react-native"
+import { Button, HelperText, TextInput } from "react-native-paper"
 import { batch, useDispatch, useSelector } from "react-redux"
 import {
 	addOrRemovePaddlerName,
@@ -16,7 +16,7 @@ import {
 	getPaddlerHeatList,
 	getScoresState
 } from "../../selectors"
-import { styles } from "../../styles"
+import { paperButtonProps, styles } from "../../styles"
 import { initialScoresheet } from "./makePaddlerScores"
 
 interface PropsType {
@@ -26,7 +26,7 @@ interface PropsType {
 export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 	const dispatch = useDispatch()
 	const [newPaddler, setNewPaddler] = useState("")
-	const [inputBorder, setInputBorder] = useState("black")
+	const [isDuplicate, setIsDuplicate] = useState(false)
 	const paddlerScores = useSelector(getScoresState)
 	const paddlerHeatList = useSelector(getPaddlerHeatList)
 	const numberOfRuns = useSelector(getNumberOfRuns)
@@ -60,16 +60,12 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 
 	const handleAddChange = (newPaddlerName: string) => {
 		setNewPaddler(newPaddlerName)
-		if (
+		setIsDuplicate(
 			paddlerHeatList
 				.flat()
 				.map((p) => p.name)
 				.indexOf(newPaddlerName) > -1
-		) {
-			setInputBorder("red")
-		} else {
-			setInputBorder("black")
-		}
+		)
 	}
 	const handleAddPaddler =
 		(heatKey: number, paddlerList: IPaddler[], newPaddlerName: string) =>
@@ -188,10 +184,10 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 									props.paddlerList,
 									paddler
 								)}
-								title="Delete"
-								buttonStyle={styles.deleteButton}
-								style={{ paddingTop: 10 }}
-							/>
+								{...paperButtonProps.deleteButtonWithPadding}
+							>
+								{"Delete"}
+							</Button>
 						</View>
 						<View style={{ width: "60%" }}>
 							<Picker
@@ -241,7 +237,7 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 					style={styles.headerText}
 				>{`Add Paddler to Heat ${props.heatKey}`}</Text>
 				<TextInput
-					blurOnSubmit={true}
+					mode="outlined"
 					autoCorrect={false}
 					placeholder="New Paddler Name"
 					value={newPaddler}
@@ -252,20 +248,11 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 						newPaddler
 					)}
 					clearButtonMode="always"
-					style={[
-						{
-							height: 40,
-							borderColor: inputBorder,
-							borderWidth: 3,
-							padding: 10,
-							borderRadius: 3,
-							marginHorizontal: 5,
-							marginLeft: 4,
-							marginRight: 4,
-							marginTop: 8
-						}
-					]}
+					error={isDuplicate}
 				/>
+				<HelperText type="error" visible={isDuplicate}>
+					{"Paddler already exists"}
+				</HelperText>
 			</View>
 		</View>
 	)

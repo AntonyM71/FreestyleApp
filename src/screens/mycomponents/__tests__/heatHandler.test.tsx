@@ -4,7 +4,6 @@ import { Provider } from "react-redux"
 import configureStore from "redux-mock-store"
 import HeatHandler from "../heatHandler"
 import { changeHeat, changePaddler } from "../../../actions"
-import { styles } from "../../../styles"
 
 const mockStore = configureStore([])
 
@@ -95,11 +94,9 @@ describe("HeatHandler", () => {
       </Provider>
     )
 
-    const lastButton = screen.getByText("Last").parent.parent
-    const nextButton = screen.getByText("Next").parent.parent
-
-    expect(lastButton.props.style).toMatchObject(styles.changeButton)
-    expect(nextButton.props.style).toMatchObject(styles.changeButton)
+    // Verify navigation buttons render with correct accessible labels and role
+    expect(screen.getByRole("button", { name: "Last" })).toBeTruthy()
+    expect(screen.getByRole("button", { name: "Next" })).toBeTruthy()
   })
 
   it("handles next heat button press correctly", () => {

@@ -1,30 +1,26 @@
 import React, { useState } from "react"
-import { Text, TextInput, View } from "react-native"
-import { Button } from "react-native-elements"
+import { Text, View } from "react-native"
+import { Button, HelperText, TextInput } from "react-native-paper"
 import { batch, useDispatch, useSelector } from "react-redux"
 import { addOrRemoveCategory, addOrRemovePaddlerName } from "../../actions"
 import { ICategory } from "../../reducers"
 import { getCategories, getPaddlerHeatList } from "../../selectors"
-import { styles } from "../../styles"
+import { paperButtonProps, styles } from "../../styles"
 import MoveSelection from "./enabledMoves"
 
 export const PaddlerHeatManagerPresentation = () => {
 	const dispatch = useDispatch()
 	const [newCategory, setNewCategory] = useState("")
-	const [inputBorder, setInputBorder] = useState("black")
+	const [isDuplicate, setIsDuplicate] = useState(false)
 	const categoryList = useSelector(getCategories)
 	const paddlerList = useSelector(getPaddlerHeatList)
 
 	const handleAddChange = (newCategoryName: string) => {
 		setNewCategory(newCategoryName)
-		if (categoryList.map((p) => p.name).indexOf(newCategoryName) > -1) {
-			setInputBorder("red")
-		} else {
-			setInputBorder("black")
-		}
+		setIsDuplicate(categoryList.map((p) => p.name).indexOf(newCategoryName) > -1)
 	}
 	const handleAddCategory = (newCategoryName: string) => {
-		if (inputBorder === "black") {
+		if (!isDuplicate) {
 			const newCategoryList: ICategory[] = [
 				...categoryList,
 				{
@@ -96,9 +92,10 @@ export const PaddlerHeatManagerPresentation = () => {
 								onPress={() =>
 									handleDeleteCategory(category.name)
 								}
-								title="Delete"
-								buttonStyle={styles.deleteButton}
-							/>
+								{...paperButtonProps.deleteButton}
+							>
+								{"Delete"}
+							</Button>
 						</View>
 
 						<View style={{ width: "100%" }}>
@@ -127,27 +124,18 @@ export const PaddlerHeatManagerPresentation = () => {
 				</Text>
 
 				<TextInput
-					blurOnSubmit={true}
+					mode="outlined"
 					autoCorrect={false}
 					placeholder="New Category Name"
 					value={newCategory}
 					onChangeText={handleAddChange}
 					onSubmitEditing={() => handleAddCategory(newCategory)}
 					clearButtonMode="always"
-					style={[
-						{
-							height: 40,
-							borderColor: inputBorder,
-							borderWidth: 3,
-							padding: 10,
-							borderRadius: 3,
-							marginHorizontal: 5,
-							marginLeft: 4,
-							marginRight: 4,
-							marginTop: 8
-						}
-					]}
+					error={isDuplicate}
 				/>
+				<HelperText type="error" visible={isDuplicate}>
+					{"Category already exists"}
+				</HelperText>
 			</View>
 		</View>
 	)

@@ -1,10 +1,10 @@
 import React from "react"
 import { View } from "react-native"
-import { Button } from "react-native-elements"
+import { Button } from "react-native-paper"
 import { batch, useDispatch, useSelector } from "react-redux"
 import { changeRun, updateShowRun } from "../../actions"
 import { getShowRunHandler } from "../../selectors"
-import { styles } from "../../styles"
+import { paperButtonProps } from "../../styles"
 
 const runOptionsPresentation = () => {
 	const dispatch = useDispatch()
@@ -22,10 +22,13 @@ const runOptionsPresentation = () => {
 	return (
 		<View>
 			<Button
-				buttonStyle={showRunHandler ? styles.moveScored : styles.noMove}
+				{...(showRunHandler
+					? paperButtonProps.moveScored
+					: paperButtonProps.noMove)}
 				onPress={handleRunButtonPress}
-				title={showRunHandler ? "Hide Runs" : "Show Runs"}
-			/>
+			>
+				{showRunHandler ? "Hide Runs" : "Show Runs"}
+			</Button>
 		</View>
 	)
 }
