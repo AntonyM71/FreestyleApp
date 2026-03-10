@@ -56,7 +56,7 @@ const moveSelectionPresentation = ({ category }: { category: ICategory }) => {
 					(moveKey: IEnabledMovesKeys, key: number) => (
 						<View style={{ width: "33%" }} key={key}>
 							<Button
-								{...(enabledMovesList[moveKey]
+									{...(enabledMovesList[moveKey]
 									? paperButtonProps.moveScored
 									: paperButtonProps.noMove)}
 								onPress={handleMoveButtonPress(moveKey)}

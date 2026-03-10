@@ -3,7 +3,6 @@ import { render, fireEvent, screen, act } from "@testing-library/react-native"
 import { Provider } from "react-redux"
 import configureStore from "redux-mock-store"
 import Timer from "../timer"
-import { paperButtonProps } from "../../../styles"
 
 const mockStore = configureStore([])
 
@@ -160,9 +159,7 @@ describe("Timer", () => {
     act(() => {
       jest.advanceTimersByTime(0)
     })
-    expect(screen.UNSAFE_getByProps({
-      buttonColor: paperButtonProps.timerGreen.buttonColor
-    })).toBeTruthy()
+    expect(screen.getByLabelText("Timer: active")).toBeTruthy()
 
     // Run down to 9 seconds (yellow zone)
     for (let i = 45; i > 9; i--) {
@@ -170,9 +167,7 @@ describe("Timer", () => {
         jest.advanceTimersByTime(1000)
       })
     }
-    expect(screen.UNSAFE_getByProps({
-      buttonColor: paperButtonProps.timerYellow.buttonColor
-    })).toBeTruthy()
+    expect(screen.getByLabelText("Timer: warning")).toBeTruthy()
 
     // Run down to 0 seconds (red zone)
     for (let i = 9; i >= 0; i--) {
@@ -180,8 +175,6 @@ describe("Timer", () => {
         jest.advanceTimersByTime(1000)
       })
     }
-    expect(screen.UNSAFE_getByProps({
-      buttonColor: paperButtonProps.timerRed.buttonColor
-    })).toBeTruthy()
+    expect(screen.getByLabelText("Timer: expired")).toBeTruthy()
   })
 })

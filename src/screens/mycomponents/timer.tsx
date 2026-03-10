@@ -23,6 +23,13 @@ const timerPresentation = () => {
 		return (
 			<View>
 				<Button
+					accessibilityLabel={
+						time === 0
+							? "Timer: expired"
+							: time < 10
+								? "Timer: warning"
+								: "Timer: active"
+					}
 					onPress={() => {
 						setTime(45)
 					}}

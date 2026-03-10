@@ -87,7 +87,7 @@ export const PaddlerHandler = () => {
 					<View style={{ flex: 1 }}>
 						<Button
 							onPress={handlePressPrevious}
-							{...paperButtonProps.changeButton}
+								{...paperButtonProps.changeButton}
 						>
 							{"Last Paddler"}
 						</Button>
@@ -110,7 +110,7 @@ export const PaddlerHandler = () => {
 					<View style={{ flex: 1 }}>
 						<Button
 							onPress={handlePressNext}
-							{...paperButtonProps.changeButton}
+								{...paperButtonProps.changeButton}
 						>
 							{"Next"}
 						</Button>

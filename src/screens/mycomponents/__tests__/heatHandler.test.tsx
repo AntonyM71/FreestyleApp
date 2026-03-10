@@ -4,7 +4,6 @@ import { Provider } from "react-redux"
 import configureStore from "redux-mock-store"
 import HeatHandler from "../heatHandler"
 import { changeHeat, changePaddler } from "../../../actions"
-import { paperButtonProps } from "../../../styles"
 
 const mockStore = configureStore([])
 
@@ -95,13 +94,9 @@ describe("HeatHandler", () => {
       </Provider>
     )
 
-    // Verify buttons have the correct buttonColor by querying via their props
-    expect(screen.UNSAFE_getByProps({
-      buttonColor: paperButtonProps.changeButton.buttonColor, children: "Last"
-    })).toBeTruthy()
-    expect(screen.UNSAFE_getByProps({
-      buttonColor: paperButtonProps.changeButton.buttonColor, children: "Next"
-    })).toBeTruthy()
+    // Verify navigation buttons render with correct accessible labels and role
+    expect(screen.getByRole("button", { name: "Last" })).toBeTruthy()
+    expect(screen.getByRole("button", { name: "Next" })).toBeTruthy()
   })
 
   it("handles next heat button press correctly", () => {

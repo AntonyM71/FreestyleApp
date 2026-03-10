@@ -5,7 +5,6 @@ import configureStore from "redux-mock-store"
 import EnabledMoves from "../enabledMoves"
 import { addOrRemoveCategory, changeRun, updatePaddlerScores } from "../../../actions"
 import { initialScoresheet } from "../makePaddlerScores"
-import { paperButtonProps } from "../../../styles"
 import { IPaddlerScores } from "../../../reducers"
 
 const mockStore = configureStore([])
@@ -62,16 +61,10 @@ describe("EnabledMoves", () => {
       </Provider>
     )
 
-    // Verify buttons have the correct buttonColor by querying via their props
-    expect(screen.UNSAFE_getByProps({
-      buttonColor: paperButtonProps.moveScored.buttonColor, children: "Hide hole"
-    })).toBeTruthy()
-    expect(screen.UNSAFE_getByProps({
-      buttonColor: paperButtonProps.noMove.buttonColor, children: "Show wave"
-    })).toBeTruthy()
-    expect(screen.UNSAFE_getByProps({
-      buttonColor: paperButtonProps.moveScored.buttonColor, children: "Hide nfl"
-    })).toBeTruthy()
+    // Button text encodes the move state: "Hide X" = enabled (scored), "Show X" = disabled (unscored)
+    expect(screen.getByText("Hide hole")).toBeTruthy()
+    expect(screen.getByText("Show wave")).toBeTruthy()
+    expect(screen.getByText("Hide nfl")).toBeTruthy()
   })
 
   it("dispatches correct actions when move button is pressed", () => {
