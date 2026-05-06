@@ -80,9 +80,7 @@ describe("DynamicButton", () => {
 				Air: 10,
 				Huge: 20,
 				Link: 10,
-
 				Style: 10,
-
 				Reverse: true
 			},
 			direction: "left" as IDirection
@@ -138,9 +136,7 @@ describe("DynamicButton", () => {
 				Air: 10,
 				Huge: 20,
 				Link: 10,
-
 				Style: 10,
-
 				Reverse: true
 			},
 			direction: "left" as IDirection

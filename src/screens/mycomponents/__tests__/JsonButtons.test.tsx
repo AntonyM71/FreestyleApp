@@ -16,9 +16,7 @@ jest.mock("../../../data/moves_lists/move_list", () => ({
     Air: 10,
     Huge: 20,
     Link: 10,
-
     Style: 10,
-
     Reverse: false
   }],
   both: [
@@ -30,9 +28,7 @@ jest.mock("../../../data/moves_lists/move_list", () => ({
       Air: 10,
       Huge: 20,
       Link: 10,
-
       Style: 10,
-
       Reverse: false
     },
     {
@@ -43,9 +39,7 @@ jest.mock("../../../data/moves_lists/move_list", () => ({
       Air: 10,
       Huge: 20,
       Link: 10,
-
       Style: 10,
-
       Reverse: true
     }
   ],
@@ -57,9 +51,7 @@ jest.mock("../../../data/moves_lists/move_list", () => ({
     Air: 10,
     Huge: 20,
     Link: 10,
-
     Style: 10,
-
     Reverse: false
   }],
   wave: [{
@@ -70,9 +62,7 @@ jest.mock("../../../data/moves_lists/move_list", () => ({
     Air: 10,
     Huge: 20,
     Link: 10,
-
     Style: 10,
-
     Reverse: true
   }],
   nfl: [{
@@ -83,9 +73,7 @@ jest.mock("../../../data/moves_lists/move_list", () => ({
     Air: 10,
     Huge: 20,
     Link: 10,
-
     Style: 10,
-
     Reverse: false
   }],
   trophy: [{
@@ -96,9 +84,7 @@ jest.mock("../../../data/moves_lists/move_list", () => ({
     Air: 10,
     Huge: 20,
     Link: 10,
-
     Style: 10,
-
     Reverse: false
   }]
 }));

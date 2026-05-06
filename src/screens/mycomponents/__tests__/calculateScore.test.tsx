@@ -18,9 +18,7 @@ const mockMoves: dataSourceMoveInterface[] = [
     Air: 5,
     Huge: 10,
     Link: 5,
-
     Style: 10,
-
     Reverse: false
   },
   {
@@ -31,9 +29,7 @@ const mockMoves: dataSourceMoveInterface[] = [
     Air: 7,
     Huge: 15,
     Link: 7,
-
     Style: 10,
-
     Reverse: true
   }
 ];
@@ -60,9 +56,7 @@ jest.mock("../makePaddlerScores", () => ({
       Air: 5,
       Huge: 10,
       Link: 5,
-
       Style: 10,
-
       Reverse: false
     }
   ],
@@ -88,9 +82,7 @@ jest.mock("../../../data/moves_lists/move_list", () => ({
         Air: 5,
         Huge: 10,
         Link: 5,
-
         Style: 10,
-
         Reverse: false
       }
     ],
