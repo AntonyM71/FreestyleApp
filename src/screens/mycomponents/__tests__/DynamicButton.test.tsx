@@ -20,7 +20,8 @@ describe("DynamicButton", () => {
 								superClean: false,
 								air: false,
 								huge: false,
-								link: false
+								link: false,
+								style: false
 							},
 							right: {
 								scored,
@@ -28,7 +29,8 @@ describe("DynamicButton", () => {
 								superClean: false,
 								air: false,
 								huge: false,
-								link: false
+								link: false,
+								style: false
 							}
 						}
 					}
@@ -78,6 +80,9 @@ describe("DynamicButton", () => {
 				Air: 10,
 				Huge: 20,
 				Link: 10,
+
+				Style: 10,
+
 				Reverse: true
 			},
 			direction: "left" as IDirection
@@ -133,6 +138,9 @@ describe("DynamicButton", () => {
 				Air: 10,
 				Huge: 20,
 				Link: 10,
+
+				Style: 10,
+
 				Reverse: true
 			},
 			direction: "left" as IDirection
@@ -150,6 +158,7 @@ describe("DynamicButton", () => {
 		expect(screen.getByText("A")).toBeOnTheScreen()
 		expect(screen.getByText("H")).toBeOnTheScreen()
 		expect(screen.getByText("L")).toBeOnTheScreen()
+		expect(screen.getByText("S")).toBeOnTheScreen()
 
 		// All bonus buttons should be enabled since the move supports them
 		expect(screen.getByText("C")).toBeEnabled()
@@ -157,6 +166,7 @@ describe("DynamicButton", () => {
 		expect(screen.getByText("A")).toBeEnabled()
 		expect(screen.getByText("H")).toBeEnabled()
 		expect(screen.getByText("L")).toBeEnabled()
+		expect(screen.getByText("S")).toBeEnabled()
 	})
 
 	it("shows disabled bonus buttons for unsupported bonuses", () => {
@@ -195,5 +205,6 @@ describe("DynamicButton", () => {
 		expect(screen.getByText("A")).toBeDisabled()
 		expect(screen.getByText("H")).toBeDisabled()
 		expect(screen.getByText("L")).toBeDisabled()
+		expect(screen.getByText("S")).toBeDisabled()
 	})
 })

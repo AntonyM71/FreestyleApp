@@ -22,7 +22,8 @@ const calculateScoreAndBonuses = (
 				truth.superClean ? move.SuperClean : 0,
 				truth.air ? move.Air : 0,
 				truth.huge ? move.Huge : 0,
-				truth.link ? move.Link : 0
+				truth.link ? move.Link : 0,
+				truth.style ? move.Style : 0
 			].reduce((a, b) => a + b)
 		: 0
 

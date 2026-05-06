@@ -16,6 +16,9 @@ jest.mock("../../../data/moves_lists/move_list", () => ({
     Air: 10,
     Huge: 20,
     Link: 10,
+
+    Style: 10,
+
     Reverse: false
   }],
   both: [
@@ -27,6 +30,9 @@ jest.mock("../../../data/moves_lists/move_list", () => ({
       Air: 10,
       Huge: 20,
       Link: 10,
+
+      Style: 10,
+
       Reverse: false
     },
     {
@@ -37,6 +43,9 @@ jest.mock("../../../data/moves_lists/move_list", () => ({
       Air: 10,
       Huge: 20,
       Link: 10,
+
+      Style: 10,
+
       Reverse: true
     }
   ],
@@ -48,6 +57,9 @@ jest.mock("../../../data/moves_lists/move_list", () => ({
     Air: 10,
     Huge: 20,
     Link: 10,
+
+    Style: 10,
+
     Reverse: false
   }],
   wave: [{
@@ -58,6 +70,9 @@ jest.mock("../../../data/moves_lists/move_list", () => ({
     Air: 10,
     Huge: 20,
     Link: 10,
+
+    Style: 10,
+
     Reverse: true
   }],
   nfl: [{
@@ -68,6 +83,9 @@ jest.mock("../../../data/moves_lists/move_list", () => ({
     Air: 10,
     Huge: 20,
     Link: 10,
+
+    Style: 10,
+
     Reverse: false
   }],
   trophy: [{
@@ -78,6 +96,9 @@ jest.mock("../../../data/moves_lists/move_list", () => ({
     Air: 10,
     Huge: 20,
     Link: 10,
+
+    Style: 10,
+
     Reverse: false
   }]
 }));
@@ -113,32 +134,32 @@ describe("MoveButtons", () => {
         "Test Paddler": {
           1: {
             "Entry Move 1": {
-              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false },
-              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false }
+              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false },
+              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false }
             },
             "Both Move 1": {
-              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false },
-              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false }
+              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false },
+              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false }
             },
             "Both Move 2": {
-              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false },
-              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false }
+              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false },
+              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false }
             },
             "Hole Move 1": {
-              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false },
-              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false }
+              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false },
+              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false }
             },
             "Wave Move 1": {
-              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false },
-              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false }
+              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false },
+              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false }
             },
             "NFL Move 1": {
-              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false },
-              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false }
+              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false },
+              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false }
             },
             "Trophy Move 1": {
-              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false },
-              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false }
+              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false },
+              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false }
             }
           }
         }

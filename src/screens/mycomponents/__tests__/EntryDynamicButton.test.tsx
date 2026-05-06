@@ -20,7 +20,8 @@ describe("EntryDynamicButton", () => {
 								superClean: false,
 								air: false,
 								huge: false,
-								link: false
+								link: false,
+								style: false
 							},
 							right: {
 								scored,
@@ -28,7 +29,8 @@ describe("EntryDynamicButton", () => {
 								superClean: false,
 								air: false,
 								huge: false,
-								link: false
+								link: false,
+								style: false
 							}
 						}
 					}
@@ -64,6 +66,9 @@ describe("EntryDynamicButton", () => {
 				Air: 10,
 				Huge: 20,
 				Link: 10,
+
+				Style: 10,
+
 				Reverse: true
 			},
 			direction: "left" as IDirection
@@ -97,6 +102,9 @@ describe("EntryDynamicButton", () => {
 				Air: 10,
 				Huge: 20,
 				Link: 10,
+
+				Style: 10,
+
 				Reverse: true
 			},
 			direction: "left" as IDirection
@@ -117,12 +125,14 @@ describe("EntryDynamicButton", () => {
 		expect(screen.getByText("A")).toBeOnTheScreen()
 		expect(screen.getByText("H")).toBeOnTheScreen()
 		expect(screen.getByText("L")).toBeOnTheScreen()
+		expect(screen.getByText("S")).toBeOnTheScreen()
 
 		expect(screen.getByText("C")).toBeEnabled()
 		expect(screen.getByText("SC")).toBeEnabled()
 		expect(screen.getByText("A")).toBeEnabled()
 		expect(screen.getByText("H")).toBeEnabled()
 		expect(screen.getByText("L")).toBeEnabled()
+		expect(screen.getByText("S")).toBeEnabled()
 	})
 
 	it("disables bonus buttons for unsupported bonuses", () => {
@@ -163,6 +173,7 @@ describe("EntryDynamicButton", () => {
 		expect(screen.getByText("A")).toBeDisabled()
 		expect(screen.getByText("H")).toBeDisabled()
 		expect(screen.getByText("L")).toBeDisabled()
+		expect(screen.getByText("S")).toBeDisabled()
 	})
 
 	it("dispatches action when scoring a move", () => {
@@ -183,6 +194,9 @@ describe("EntryDynamicButton", () => {
 				Air: 10,
 				Huge: 20,
 				Link: 10,
+
+				Style: 10,
+
 				Reverse: true
 			},
 			direction: "left" as IDirection
@@ -233,6 +247,9 @@ describe("EntryDynamicButton", () => {
 				Air: 10,
 				Huge: 20,
 				Link: 10,
+
+				Style: 10,
+
 				Reverse: true
 			},
 			direction: "left" as IDirection
