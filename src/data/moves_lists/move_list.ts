@@ -335,6 +335,61 @@ export const MovesList: IMovesList = {
 			Link: 30,
 			Style: 10,
 			Reverse: true
+		},
+		{
+			Move: "Side Kick",
+			Value: 80,
+			Clean: 30,
+			SuperClean: 10,
+			Air: 0,
+			Huge: 40,
+			Link: 20,
+			Style: 10,
+			Reverse: true
+		},
+		{
+			Move: "Sasquatch",
+			Value: 80,
+			Clean: 30,
+			SuperClean: 10,
+			Air: 0,
+			Huge: 40,
+			Link: 20,
+			Style: 10,
+			Reverse: false
+		},
+		{
+			Move: "Gedi Flip",
+			Value: 160,
+			Clean: 50,
+			SuperClean: 10,
+			Air: 0,
+			Huge: 50,
+			Link: 30,
+			Style: 10,
+			Reverse: true
+		},
+		{
+			Move: "Silly Flip",
+			Value: 170,
+			Clean: 50,
+			SuperClean: 10,
+			Air: 0,
+			Huge: 50,
+			Link: 30,
+			Style: 10,
+			Reverse: true
+		},
+		{
+			Move: "Vada Flip",
+			Value: 180,
+			Clean: 50,
+			SuperClean: 10,
+			Air: 0,
+			Huge: 50,
+			Link: 30,
+			Style: 10,
+			Reverse: true
 		}
 	],
 	trophy: [
