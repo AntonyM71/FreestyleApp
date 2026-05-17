@@ -125,13 +125,13 @@ describe("DisplayScore Component", () => {
           {
             Move1: {
               id: "Move1",
-              left: { scored: true, clean: false, superClean: false, air: false, huge: false, link: false, style: false },
-              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false }
+              left: { ...defaultSide, scored: true },
+              right: { ...defaultSide }
             } as MoveType,
             Move2: {
               id: "Move2",
-              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false },
-              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false }
+              left: { ...defaultSide },
+              right: { ...defaultSide }
             } as MoveType
           }
         ]
@@ -162,8 +162,8 @@ describe("DisplayScore Component", () => {
             } as MoveType,
             Move2: {
               id: "Move2",
-              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false },
-              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false }
+              left: { ...defaultSide },
+              right: { ...defaultSide }
             } as MoveType
           }
         ]
@@ -191,13 +191,13 @@ describe("DisplayScore Component", () => {
           {
             Move1: {
               id: "Move1",
-              left: { scored: true, clean: false, superClean: false, air: false, huge: true, link: false, style: false },
-              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false }
+              left: { ...defaultSide, scored: true, huge: true },
+              right: { ...defaultSide }
             } as MoveType,
             Move2: {
               id: "Move2",
-              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false },
-              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false }
+              left: { ...defaultSide },
+              right: { ...defaultSide }
             } as MoveType
           }
         ]
@@ -262,8 +262,8 @@ describe("DisplayScore Component", () => {
           {
             Move1: {
               id: "Move1",
-              left: { scored: true, clean: false, superClean: false, air: false, huge: false, link: false, style: false },
-              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false }
+              left: { ...defaultSide, scored: true },
+              right: { ...defaultSide }
             } as MoveType
           }
         ]
@@ -287,8 +287,8 @@ describe("DisplayScore Component", () => {
           {
             Move1: {
               id: "Move1",
-              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false },
-              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false, style: false }
+              left: { ...defaultSide },
+              right: { ...defaultSide }
             } as MoveType
           }
         ]
