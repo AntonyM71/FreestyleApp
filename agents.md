@@ -8,4 +8,4 @@ This repository can be worked on effectively by coding agents by following a few
 4. Prefer existing patterns in `src/` over introducing new approaches.
 5. Update docs when behavior or workflow changes.
 
-For project setup and release details, see `/home/runner/work/FreestyleApp/FreestyleApp/README.md`.
+For project setup and release details, see `README.md`.
