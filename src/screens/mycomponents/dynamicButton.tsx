@@ -175,6 +175,24 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 							}
 						/>
 					</View>
+					<View style={{ width: "33%" }}>
+						<Button
+							onPress={handleMove(
+								props.paddler.name,
+								props.currentRun,
+								props.move.Move,
+								props.direction,
+								"style"
+							)}
+							title={"S"}
+							disabled={props.move.Style ? false : true}
+							buttonStyle={
+								thisMove[props.direction].style
+									? styles.bonusScored
+									: styles.noBonus
+							}
+						/>
+					</View>
 				</View>
 			)
 		}

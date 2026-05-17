@@ -11,7 +11,8 @@ export const initialScoresheet = () => {
 					huge: false,
 					clean: false,
 					superClean: false,
-					link: false
+					link: false,
+					style: false
 				},
 				right: {
 					scored: false,
@@ -19,7 +20,8 @@ export const initialScoresheet = () => {
 					huge: false,
 					clean: false,
 					superClean: false,
-					link: false
+					link: false,
+					style: false
 				}
 			}
 
@@ -50,6 +52,7 @@ export interface dataSourceMoveInterface {
 	Air: number
 	Huge: number
 	Link: number
+	Style: number
 	Reverse: boolean
 }
 
@@ -66,4 +69,5 @@ export interface moveSideInterface {
 	clean: boolean
 	superClean: boolean
 	link: boolean
+	style: boolean
 }

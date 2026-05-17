@@ -16,6 +16,7 @@ jest.mock("../../../data/moves_lists/move_list", () => ({
         Air: 5,
         Huge: 10,
         Link: 5,
+        Style: 10,
         Reverse: false
       }
     ],
@@ -28,6 +29,7 @@ jest.mock("../../../data/moves_lists/move_list", () => ({
         Air: 10,
         Huge: 15,
         Link: 10,
+        Style: 10,
         Reverse: true
       }
     ],
@@ -52,7 +54,8 @@ describe("initialScoresheet", () => {
         huge: false,
         clean: false,
         superClean: false,
-        link: false
+        link: false,
+        style: false
       };
 
       // Act
@@ -84,7 +87,8 @@ describe("initialScoresheet", () => {
         huge: false,
         clean: false,
         superClean: false,
-        link: false
+        link: false,
+        style: false
       });
       expect(move.right).toEqual({
         scored: false,
@@ -92,7 +96,8 @@ describe("initialScoresheet", () => {
         huge: false,
         clean: false,
         superClean: false,
-        link: false
+        link: false,
+        style: false
       });
     });
 
