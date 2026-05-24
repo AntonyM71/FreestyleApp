@@ -6,6 +6,8 @@ import configureStore from "redux-mock-store";
 import { Dimensions } from "react-native";
 import MoveButtons from "../JsonButtons";
 import * as selectors from "../../../selectors";
+
+const defaultSide = { ...defaultSide };
 // Mock the move list data
 jest.mock("../../../data/moves_lists/move_list", () => ({
   entry: [{
@@ -16,6 +18,7 @@ jest.mock("../../../data/moves_lists/move_list", () => ({
     Air: 10,
     Huge: 20,
     Link: 10,
+    Style: 10,
     Reverse: false
   }],
   both: [
@@ -27,6 +30,7 @@ jest.mock("../../../data/moves_lists/move_list", () => ({
       Air: 10,
       Huge: 20,
       Link: 10,
+      Style: 10,
       Reverse: false
     },
     {
@@ -37,6 +41,7 @@ jest.mock("../../../data/moves_lists/move_list", () => ({
       Air: 10,
       Huge: 20,
       Link: 10,
+      Style: 10,
       Reverse: true
     }
   ],
@@ -48,6 +53,7 @@ jest.mock("../../../data/moves_lists/move_list", () => ({
     Air: 10,
     Huge: 20,
     Link: 10,
+    Style: 10,
     Reverse: false
   }],
   wave: [{
@@ -58,6 +64,7 @@ jest.mock("../../../data/moves_lists/move_list", () => ({
     Air: 10,
     Huge: 20,
     Link: 10,
+    Style: 10,
     Reverse: true
   }],
   nfl: [{
@@ -68,6 +75,7 @@ jest.mock("../../../data/moves_lists/move_list", () => ({
     Air: 10,
     Huge: 20,
     Link: 10,
+    Style: 10,
     Reverse: false
   }],
   trophy: [{
@@ -78,6 +86,7 @@ jest.mock("../../../data/moves_lists/move_list", () => ({
     Air: 10,
     Huge: 20,
     Link: 10,
+    Style: 10,
     Reverse: false
   }]
 }));
@@ -113,32 +122,32 @@ describe("MoveButtons", () => {
         "Test Paddler": {
           1: {
             "Entry Move 1": {
-              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false },
-              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false }
+              left: { ...defaultSide },
+              right: { ...defaultSide }
             },
             "Both Move 1": {
-              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false },
-              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false }
+              left: { ...defaultSide },
+              right: { ...defaultSide }
             },
             "Both Move 2": {
-              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false },
-              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false }
+              left: { ...defaultSide },
+              right: { ...defaultSide }
             },
             "Hole Move 1": {
-              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false },
-              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false }
+              left: { ...defaultSide },
+              right: { ...defaultSide }
             },
             "Wave Move 1": {
-              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false },
-              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false }
+              left: { ...defaultSide },
+              right: { ...defaultSide }
             },
             "NFL Move 1": {
-              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false },
-              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false }
+              left: { ...defaultSide },
+              right: { ...defaultSide }
             },
             "Trophy Move 1": {
-              left: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false },
-              right: { scored: false, clean: false, superClean: false, air: false, huge: false, link: false }
+              left: { ...defaultSide },
+              right: { ...defaultSide }
             }
           }
         }

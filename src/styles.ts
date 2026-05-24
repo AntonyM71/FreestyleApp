@@ -47,7 +47,7 @@ export const paperButtonProps = {
 	moveScored: btn("#223A5E", "white", 15),
 	bonusScored: btn("#223A5E", "white", 4),
 	deleteButton: btn("#DC4C46", "white", 8),
-	deleteButtonWithPadding: btn("#DC4C46", "white", 10),
+	deleteButtonSpaced: btn("#DC4C46", "white", 10),
 	timerRed: btn("#DC4C46", "white", 8),
 	timerYellow: btn("#F6D155", "#000000", 8),
 	timerGreen: btn("#92B558", "white", 8),

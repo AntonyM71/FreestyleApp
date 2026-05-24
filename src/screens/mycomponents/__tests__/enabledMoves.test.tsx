@@ -46,25 +46,47 @@ describe("EnabledMoves", () => {
     expect(screen.getByText("Hide nfl")).toBeTruthy()
   })
 
-  it("applies correct styles based on move state", () => {
-    const initialState = {
+  it("shows 'Hide X' for enabled moves and 'Show X' for disabled moves", () => {
+    const allEnabledState = {
       paddlers: {
         paddlerList: mockPaddlers,
-        categories: mockCategories
+        categories: [{
+          name: "Test Category",
+          availableMoves: { hole: true, wave: true, nfl: true }
+        }]
       }
     }
-    const store = mockStore(initialState)
+    const allDisabledState = {
+      paddlers: {
+        paddlerList: mockPaddlers,
+        categories: [{
+          name: "Test Category",
+          availableMoves: { hole: false, wave: false, nfl: false }
+        }]
+      }
+    }
 
-    render(
-      <Provider store={store}>
-        <EnabledMoves category={mockCategory} />
+    const { rerender } = render(
+      <Provider store={mockStore(allEnabledState)}>
+        <EnabledMoves category={allEnabledState.paddlers.categories[0]} />
       </Provider>
     )
 
-    // Button text encodes the move state: "Hide X" = enabled (scored), "Show X" = disabled (unscored)
+    // When all enabled, all buttons show "Hide X"
     expect(screen.getByText("Hide hole")).toBeTruthy()
-    expect(screen.getByText("Show wave")).toBeTruthy()
+    expect(screen.getByText("Hide wave")).toBeTruthy()
     expect(screen.getByText("Hide nfl")).toBeTruthy()
+
+    rerender(
+      <Provider store={mockStore(allDisabledState)}>
+        <EnabledMoves category={allDisabledState.paddlers.categories[0]} />
+      </Provider>
+    )
+
+    // When all disabled, all buttons show "Show X"
+    expect(screen.getByText("Show hole")).toBeTruthy()
+    expect(screen.getByText("Show wave")).toBeTruthy()
+    expect(screen.getByText("Show nfl")).toBeTruthy()
   })
 
   it("dispatches correct actions when move button is pressed", () => {

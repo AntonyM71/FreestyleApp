@@ -184,7 +184,7 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 									props.paddlerList,
 									paddler
 								)}
-								{...paperButtonProps.deleteButtonWithPadding}
+								{...paperButtonProps.deleteButtonSpaced}
 							>
 								{"Delete"}
 							</Button>

@@ -94,7 +94,7 @@ Rationale:
 2. It is actively maintained by a reputable team with a stable API.
 3. The migration cost from `react-native-elements` is low (button API and provider swap).
 4. `PaperProvider` at the root enables consistent theming and future customisation via MD3 colour tokens.
-5. The `Button` component accepts explicit `buttonColor` and `textColor` props, preserving the app's colour-coded state indicators (e.g. red = scored, dark blue = bonus scored) that encode meaningful domain information.
+5. The `Button` component accepts explicit `buttonColor` and `textColor` props, preserving the app's colour-coded state indicators (e.g. red = delete/expired timer, dark blue = scored states) that encode meaningful domain information.
 6. The `TextInput` component (with `HelperText`) replaces hand-crafted `TextInput` + `StyleSheet` patterns with a richer, accessible API.
 
 As part of this decision:

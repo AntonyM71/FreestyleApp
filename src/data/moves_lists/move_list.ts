@@ -8,6 +8,7 @@ export const MovesList: IMovesList = {
 			Air: 10,
 			Huge: 20,
 			Link: 10,
+			Style: 0,
 			Reverse: false
 		},
 		{
@@ -18,6 +19,7 @@ export const MovesList: IMovesList = {
 			Air: 30,
 			Huge: 40,
 			Link: 20,
+			Style: 20,
 			Reverse: false
 		},
 		{
@@ -28,6 +30,7 @@ export const MovesList: IMovesList = {
 			Air: 30,
 			Huge: 40,
 			Link: 20,
+			Style: 20,
 			Reverse: false
 		}
 	],
@@ -40,6 +43,7 @@ export const MovesList: IMovesList = {
 			Air: 10,
 			Huge: 20,
 			Link: 10,
+			Style: 0,
 			Reverse: true
 		},
 		{
@@ -50,6 +54,7 @@ export const MovesList: IMovesList = {
 			Air: 10,
 			Huge: 20,
 			Link: 10,
+			Style: 0,
 			Reverse: true
 		},
 		{
@@ -60,6 +65,7 @@ export const MovesList: IMovesList = {
 			Air: 0,
 			Huge: 0,
 			Link: 20,
+			Style: 20,
 			Reverse: true
 		}
 	],
@@ -72,6 +78,7 @@ export const MovesList: IMovesList = {
 			Air: 10,
 			Huge: 20,
 			Link: 10,
+			Style: 0,
 			Reverse: true
 		},
 		{
@@ -82,6 +89,7 @@ export const MovesList: IMovesList = {
 			Air: 30,
 			Huge: 40,
 			Link: 20,
+			Style: 20,
 			Reverse: true
 		},
 		{
@@ -92,6 +100,7 @@ export const MovesList: IMovesList = {
 			Air: 40,
 			Huge: 50,
 			Link: 30,
+			Style: 30,
 			Reverse: true
 		},
 		{
@@ -102,6 +111,7 @@ export const MovesList: IMovesList = {
 			Air: 40,
 			Huge: 50,
 			Link: 30,
+			Style: 30,
 			Reverse: true
 		},
 		{
@@ -112,6 +122,7 @@ export const MovesList: IMovesList = {
 			Air: 40,
 			Huge: 50,
 			Link: 30,
+			Style: 30,
 			Reverse: true
 		},
 		{
@@ -122,6 +133,7 @@ export const MovesList: IMovesList = {
 			Air: 10,
 			Huge: 20,
 			Link: 10,
+			Style: 0,
 			Reverse: true
 		},
 		{
@@ -132,6 +144,7 @@ export const MovesList: IMovesList = {
 			Air: 30,
 			Huge: 40,
 			Link: 20,
+			Style: 20,
 			Reverse: false
 		},
 		{
@@ -142,6 +155,7 @@ export const MovesList: IMovesList = {
 			Air: 30,
 			Huge: 40,
 			Link: 20,
+			Style: 20,
 			Reverse: false
 		},
 		{
@@ -152,6 +166,7 @@ export const MovesList: IMovesList = {
 			Air: 0,
 			Huge: 50,
 			Link: 30,
+			Style: 30,
 			Reverse: true
 		},
 		{
@@ -162,6 +177,7 @@ export const MovesList: IMovesList = {
 			Air: 40,
 			Huge: 50,
 			Link: 30,
+			Style: 30,
 			Reverse: true
 		},
 		{
@@ -172,6 +188,7 @@ export const MovesList: IMovesList = {
 			Air: 40,
 			Huge: 50,
 			Link: 30,
+			Style: 30,
 			Reverse: true
 		},
 		{
@@ -182,6 +199,7 @@ export const MovesList: IMovesList = {
 			Air: 40,
 			Huge: 50,
 			Link: 30,
+			Style: 30,
 			Reverse: true
 		},
 		{
@@ -192,16 +210,18 @@ export const MovesList: IMovesList = {
 			Air: 40,
 			Huge: 50,
 			Link: 30,
+			Style: 30,
 			Reverse: true
 		},
 		{
 			Move: "Three Point Loop",
 			Value: 170,
 			Clean: 50,
-			SuperClean: 0,
+			SuperClean: 10,
 			Air: 40,
 			Huge: 50,
 			Link: 30,
+			Style: 30,
 			Reverse: true
 		}
 	],
@@ -214,6 +234,7 @@ export const MovesList: IMovesList = {
 			Air: 10,
 			Huge: 20,
 			Link: 10,
+			Style: 0,
 			Reverse: true
 		},
 		{
@@ -224,6 +245,7 @@ export const MovesList: IMovesList = {
 			Air: 10,
 			Huge: 20,
 			Link: 10,
+			Style: 0,
 			Reverse: true
 		},
 		{
@@ -234,6 +256,7 @@ export const MovesList: IMovesList = {
 			Air: 30,
 			Huge: 40,
 			Link: 20,
+			Style: 20,
 			Reverse: true
 		},
 		{
@@ -244,6 +267,7 @@ export const MovesList: IMovesList = {
 			Air: 30,
 			Huge: 40,
 			Link: 20,
+			Style: 20,
 			Reverse: true
 		},
 		{
@@ -254,6 +278,7 @@ export const MovesList: IMovesList = {
 			Air: 0,
 			Huge: 50,
 			Link: 30,
+			Style: 30,
 			Reverse: true
 		},
 		{
@@ -264,6 +289,7 @@ export const MovesList: IMovesList = {
 			Air: 0,
 			Huge: 50,
 			Link: 30,
+			Style: 30,
 			Reverse: true
 		},
 		{
@@ -274,6 +300,7 @@ export const MovesList: IMovesList = {
 			Air: 0,
 			Huge: 40,
 			Link: 20,
+			Style: 20,
 			Reverse: true
 		},
 		{
@@ -284,6 +311,7 @@ export const MovesList: IMovesList = {
 			Air: 0,
 			Huge: 40,
 			Link: 20,
+			Style: 20,
 			Reverse: true
 		},
 		{
@@ -294,6 +322,7 @@ export const MovesList: IMovesList = {
 			Air: 0,
 			Huge: 50,
 			Link: 30,
+			Style: 30,
 			Reverse: true
 		},
 		{
@@ -304,38 +333,97 @@ export const MovesList: IMovesList = {
 			Air: 0,
 			Huge: 50,
 			Link: 30,
+			Style: 30,
+			Reverse: true
+		},
+		{
+			Move: "Side Kick",
+			Value: 80,
+			Clean: 30,
+			SuperClean: 10,
+			Air: 0,
+			Huge: 40,
+			Link: 20,
+			Style: 20,
+			Reverse: true
+		},
+		{
+			Move: "Sasquatch",
+			Value: 80,
+			Clean: 30,
+			SuperClean: 10,
+			Air: 0,
+			Huge: 40,
+			Link: 20,
+			Style: 20,
+			Reverse: false
+		},
+		{
+			Move: "Gedi Flip",
+			Value: 160,
+			Clean: 50,
+			SuperClean: 10,
+			Air: 40,
+			Huge: 50,
+			Link: 30,
+			Style: 30,
+			Reverse: true
+		},
+		{
+			Move: "Silly Flip",
+			Value: 170,
+			Clean: 50,
+			SuperClean: 10,
+			Air: 0,
+			Huge: 50,
+			Link: 30,
+			Style: 30,
+			Reverse: true
+		},
+		{
+			Move: "Vada Flip",
+			Value: 180,
+			Clean: 50,
+			SuperClean: 10,
+			Air: 40,
+			Huge: 50,
+			Link: 30,
+			Style: 30,
 			Reverse: true
 		}
 	],
 	trophy: [
 		{
 			Move: "Trophy 1",
-			Value: 50,
+			Value: 60,
 			Clean: 30,
 			SuperClean: 10,
 			Air: 30,
 			Huge: 40,
 			Link: 20,
+			Style: 20,
 			Reverse: true
 		},
 		{
 			Move: "Trophy 2",
-			Value: 170,
+			Value: 120,
 			Clean: 50,
 			SuperClean: 10,
 			Air: 40,
 			Huge: 50,
 			Link: 30,
+			Style: 30,
 			Reverse: true
 		},
 		{
 			Move: "Trophy 3",
-			Value: 240,
+			Value: 180,
 			Clean: 50,
 			SuperClean: 10,
 			Air: 40,
 			Huge: 50,
 			Link: 30,
+			Style: 30,
 			Reverse: true
 		}
 	],
@@ -348,6 +436,7 @@ export const MovesList: IMovesList = {
 			Air: 10,
 			Huge: 20,
 			Link: 0,
+			Style: 0,
 			Reverse: true
 		},
 		{
@@ -358,6 +447,7 @@ export const MovesList: IMovesList = {
 			Air: 10,
 			Huge: 20,
 			Link: 0,
+			Style: 0,
 			Reverse: true
 		},
 		{
@@ -368,6 +458,7 @@ export const MovesList: IMovesList = {
 			Air: 10,
 			Huge: 20,
 			Link: 0,
+			Style: 0,
 			Reverse: true
 		},
 		{
@@ -378,6 +469,7 @@ export const MovesList: IMovesList = {
 			Air: 10,
 			Huge: 20,
 			Link: 0,
+			Style: 0,
 			Reverse: true
 		},
 		{
@@ -388,6 +480,7 @@ export const MovesList: IMovesList = {
 			Air: 10,
 			Huge: 20,
 			Link: 0,
+			Style: 0,
 			Reverse: true
 		},
 		{
@@ -398,6 +491,7 @@ export const MovesList: IMovesList = {
 			Air: 10,
 			Huge: 20,
 			Link: 0,
+			Style: 0,
 			Reverse: true
 		},
 		{
@@ -408,6 +502,7 @@ export const MovesList: IMovesList = {
 			Air: 10,
 			Huge: 20,
 			Link: 0,
+			Style: 0,
 			Reverse: true
 		},
 		{
@@ -418,6 +513,7 @@ export const MovesList: IMovesList = {
 			Air: 10,
 			Huge: 20,
 			Link: 0,
+			Style: 0,
 			Reverse: true
 		},
 		{
@@ -428,6 +524,7 @@ export const MovesList: IMovesList = {
 			Air: 10,
 			Huge: 20,
 			Link: 0,
+			Style: 0,
 			Reverse: true
 		},
 		{
@@ -438,6 +535,7 @@ export const MovesList: IMovesList = {
 			Air: 10,
 			Huge: 20,
 			Link: 0,
+			Style: 0,
 			Reverse: true
 		},
 		{
@@ -448,6 +546,7 @@ export const MovesList: IMovesList = {
 			Air: 10,
 			Huge: 20,
 			Link: 0,
+			Style: 0,
 			Reverse: true
 		}
 	]
@@ -461,6 +560,7 @@ export interface IMoves {
 	Air: number
 	Huge: number
 	Link: number
+	Style: number
 	Reverse: boolean
 }
 

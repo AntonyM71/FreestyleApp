@@ -76,7 +76,7 @@ describe("PaddlerHandler", () => {
     expect(screen.getByText("Next")).toBeTruthy()
   })
 
-  it("applies correct styles to buttons", () => {
+  it("renders navigation buttons with accessible roles and labels", () => {
     const initialState = {
       paddlers: {
         paddlerList: mockPaddlers,

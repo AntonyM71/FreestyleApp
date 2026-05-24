@@ -15,7 +15,8 @@ const mockScoresheet = {
       huge: false,
       clean: false,
       superClean: false,
-      link: false
+      link: false,
+      style: false
     },
     right: {
       scored: false,
@@ -23,7 +24,8 @@ const mockScoresheet = {
       huge: false,
       clean: false,
       superClean: false,
-      link: false
+      link: false,
+      style: false
     }
   }
 }
