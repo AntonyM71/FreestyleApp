@@ -7,7 +7,15 @@ import { Dimensions } from "react-native";
 import MoveButtons from "../JsonButtons";
 import * as selectors from "../../../selectors";
 
-const defaultSide = { ...defaultSide };
+const defaultSide = {
+  scored: false,
+  clean: false,
+  superClean: false,
+  air: false,
+  huge: false,
+  link: false,
+  style: false
+};
 // Mock the move list data
 jest.mock("../../../data/moves_lists/move_list", () => ({
   entry: [{
