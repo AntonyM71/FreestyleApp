@@ -217,7 +217,7 @@ export const MovesList: IMovesList = {
 			Move: "Three Point Loop",
 			Value: 170,
 			Clean: 50,
-			SuperClean: 0,
+			SuperClean: 10,
 			Air: 40,
 			Huge: 50,
 			Link: 30,
