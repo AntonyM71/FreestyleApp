@@ -2,7 +2,7 @@
 	"expo": {
 		"name": "Kayak Freestyle App",
 		"slug": "freestyleapp",
-		"platforms": ["android", "ios"],
+		"platforms": ["android", "ios", "web"],
 		"version": "1.2.20",
 		"orientation": "portrait",
 		"newArchEnabled": true,
@@ -35,6 +35,9 @@
 				}
 			]
 		],
+		"web": {
+			"bundler": "metro"
+		},
 		"extra": {
 			"eas": {
 				"projectId": "8de4e141-3d11-46b7-a394-c163b149a4e3"
