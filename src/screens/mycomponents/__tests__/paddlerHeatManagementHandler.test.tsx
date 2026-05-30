@@ -225,7 +225,7 @@ describe("PaddlerHeatManagerPresentation", () => {
     expect(state.paddlerScores).toEqual(mockScores)
   })
 
-  it("handles deleting paddler", () => {
+  it("handles deleting paddler when confirmed", () => {
     const initialState = {
       categories: mockCategories,
       paddlerList: mockPaddlers,
@@ -239,8 +239,13 @@ describe("PaddlerHeatManagerPresentation", () => {
       store
     )
 
+    // Press Delete to open the confirmation modal
     const deleteButton = screen.getByText("Delete")
     fireEvent.press(deleteButton)
+
+    // Confirm the deletion
+    const confirmButton = screen.getByText("Confirm")
+    fireEvent.press(confirmButton)
 
     // Need to rerender with empty paddler list since component uses props
     rerender(
@@ -258,6 +263,35 @@ describe("PaddlerHeatManagerPresentation", () => {
 
     // Verify UI updates
     expect(screen.queryByText("paddler1")).toBeNull()
+  })
+
+  it("does not delete paddler when confirmation is cancelled", () => {
+    const initialState = {
+      categories: mockCategories,
+      paddlerList: mockPaddlers,
+      paddlerScores: mockScores,
+      numberOfRuns: 1
+    }
+    const store = createTestStore(initialState)
+
+    renderWithProviders(
+      <PaddlerHeatManagerPresentation {...defaultProps} />,
+      store
+    )
+
+    // Press Delete to open the confirmation modal
+    const deleteButton = screen.getByText("Delete")
+    fireEvent.press(deleteButton)
+
+    // Cancel the deletion
+    const cancelButton = screen.getByText("Cancel")
+    fireEvent.press(cancelButton)
+
+    const state = store.getState().paddlers
+
+    // Verify state is unchanged
+    expect(state.paddlerList).toEqual(mockPaddlers)
+    expect(state.paddlerScores).toEqual(mockScores)
   })
 
   it("handles changing paddler category", () => {

@@ -89,15 +89,19 @@ describe("PaddlerManager", () => {
     expect(state.paddlers.heats).toEqual([1, 2])
   })
 
-  it("clears scores when 'Clear Scores' button is clicked", () => {
+  it("clears scores when 'Clear Scores' button is clicked and confirmed", () => {
     const store = configureStore()
     renderWithProviders(<PaddlerManager />, store)
 
-    // Find and click the Clear Scores button
+    // Find and click the Clear Scores button to open the confirmation modal
     const clearScoresButton = screen.getByText("Clear Scores")
     fireEvent.press(clearScoresButton)
 
-    // After clicking, verify the store state
+    // Confirm the action in the dialog
+    const confirmButton = screen.getByText("Confirm")
+    fireEvent.press(confirmButton)
+
+    // After confirming, verify the store state
     const state = store.getState() as IStoreType
     expect(state.paddlers.numberOfRuns).toBe(0)
     expect(state.paddlers.paddlerScores).toEqual({
@@ -107,19 +111,59 @@ describe("PaddlerManager", () => {
     })
   })
 
-  it("clears paddlers when 'Clear Paddlers' button is clicked", () => {
+  it("does not clear scores when 'Clear Scores' confirmation is cancelled", () => {
     const store = configureStore()
     renderWithProviders(<PaddlerManager />, store)
 
-    // Find and click the Clear Paddlers button
+    const initialPaddlerScores = (store.getState() as IStoreType).paddlers.paddlerScores
+
+    const clearScoresButton = screen.getByText("Clear Scores")
+    fireEvent.press(clearScoresButton)
+
+    // Cancel the action in the dialog
+    const cancelButton = screen.getByText("Cancel")
+    fireEvent.press(cancelButton)
+
+    // State should be unchanged
+    const state = store.getState() as IStoreType
+    expect(state.paddlers.paddlerScores).toEqual(initialPaddlerScores)
+  })
+
+  it("clears paddlers when 'Clear Paddlers' button is clicked and confirmed", () => {
+    const store = configureStore()
+    renderWithProviders(<PaddlerManager />, store)
+
+    // Find and click the Clear Paddlers button to open the confirmation modal
     const clearPaddlersButton = screen.getByText("Clear Paddlers")
     fireEvent.press(clearPaddlersButton)
 
-    // After clicking, verify the store state
+    // Confirm the action in the dialog
+    const confirmButton = screen.getByText("Confirm")
+    fireEvent.press(confirmButton)
+
+    // After confirming, verify the store state
     const state = store.getState() as IStoreType
     expect(state.paddlers.paddlerList).toEqual([])
     expect(state.paddlers.paddlerScores).toEqual({})
     expect(state.paddlers.numberOfRuns).toBe(0)
+  })
+
+  it("does not clear paddlers when 'Clear Paddlers' confirmation is cancelled", () => {
+    const store = configureStore()
+    renderWithProviders(<PaddlerManager />, store)
+
+    const initialPaddlerList = (store.getState() as IStoreType).paddlers.paddlerList
+
+    const clearPaddlersButton = screen.getByText("Clear Paddlers")
+    fireEvent.press(clearPaddlersButton)
+
+    // Cancel the action in the dialog
+    const cancelButton = screen.getByText("Cancel")
+    fireEvent.press(cancelButton)
+
+    // State should be unchanged
+    const state = store.getState() as IStoreType
+    expect(state.paddlers.paddlerList).toEqual(initialPaddlerList)
   })
 
   it("handles empty state", () => {

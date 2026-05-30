@@ -1,5 +1,5 @@
 import _ from "lodash"
-import React from "react"
+import React, { useState } from "react"
 import { ScrollView, StyleSheet, View } from "react-native"
 import { Button } from "react-native-paper"
 import { batch, useDispatch, useSelector } from "react-redux"
@@ -19,6 +19,7 @@ import {
 	getScoresState
 } from "../../selectors"
 import { paperButtonProps, styles } from "../../styles"
+import ConfirmationModal from "./ConfirmationModal"
 import { initialScoresheet } from "./makePaddlerScores"
 import PaddlerHeatManager from "./paddlerHeatManagementHandler"
 
@@ -31,6 +32,29 @@ export const PaddlerManager = () => {
 	const paddlerHeatList = useSelector(getPaddlerHeatList)
 	const numberOfRuns = useSelector(getNumberOfRuns)
 	const heats = useSelector(getAvailableHeats)
+	const [confirmationVisible, setConfirmationVisible] = useState(false)
+	const [confirmationMessage, setConfirmationMessage] = useState("")
+	const [pendingAction, setPendingAction] = useState<(() => void) | null>(null)
+
+	const requestConfirmation = (message: string, action: () => void) => {
+		setConfirmationMessage(message)
+		setPendingAction(() => action)
+		setConfirmationVisible(true)
+	}
+
+	const handleConfirm = () => {
+		if (pendingAction) {
+			pendingAction()
+		}
+		setConfirmationVisible(false)
+		setPendingAction(null)
+	}
+
+	const handleCancel = () => {
+		setConfirmationVisible(false)
+		setPendingAction(null)
+	}
+
 	const addHeat = () => {
 		const newHeatList = _.cloneDeep(heats) || []
 		const maxHeat = newHeatList.length > 0 ? Math.max(...newHeatList) : 0
@@ -67,6 +91,12 @@ export const PaddlerManager = () => {
 
 	return (
 		<ScrollView style={styles.container} contentContainerStyle={layoutStyles.content}>
+			<ConfirmationModal
+				visible={confirmationVisible}
+				message={confirmationMessage}
+				onConfirm={handleConfirm}
+				onCancel={handleCancel}
+			/>
 			<View>
 				{heats.map((heat) => (
 					<View key={heat} style={layoutStyles.heatCard}>
@@ -93,7 +123,10 @@ export const PaddlerManager = () => {
 					<View style={layoutStyles.halfActionCell}>
 						<Button
 							onPress={() => {
-								clearScores()
+								requestConfirmation(
+									"Are you sure you want to clear all scores?",
+									clearScores
+								)
 							}}
 							{...paperButtonProps.timerRed}
 						>
@@ -103,7 +136,12 @@ export const PaddlerManager = () => {
 
 					<View style={layoutStyles.halfActionCell}>
 						<Button
-							onPress={clearPaddlers}
+							onPress={() => {
+								requestConfirmation(
+									"Are you sure you want to clear all paddlers?",
+									clearPaddlers
+								)
+							}}
 							{...paperButtonProps.timerRed}
 						>
 							{"Clear Paddlers"}

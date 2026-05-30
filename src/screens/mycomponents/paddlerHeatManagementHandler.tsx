@@ -16,6 +16,7 @@ import {
 	getScoresState
 } from "../../selectors"
 import { paperButtonProps, styles } from "../../styles"
+import ConfirmationModal from "./ConfirmationModal"
 import { initialScoresheet } from "./makePaddlerScores"
 
 interface PropsType {
@@ -27,6 +28,8 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 	const [newPaddler, setNewPaddler] = useState("")
 	const [isDuplicate, setIsDuplicate] = useState(false)
 	const [openCategoryMenuFor, setOpenCategoryMenuFor] = useState<string | null>(null)
+	const [deleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false)
+	const [paddlerToDelete, setPaddlerToDelete] = useState<IPaddler | null>(null)
 	const paddlerScores = useSelector(getScoresState)
 	const paddlerHeatList = useSelector(getPaddlerHeatList)
 	const numberOfRuns = useSelector(getNumberOfRuns)
@@ -52,11 +55,25 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 
 	const handleDeletePaddler =
 		(heatKey: number, paddlerList: IPaddler[], paddler: IPaddler) => () => {
+			setPaddlerToDelete(paddler)
+			setDeleteConfirmationVisible(true)
+		}
+
+	const handleDeleteConfirm = () => {
+		if (paddlerToDelete) {
 			addOrRemovePaddler(
-				heatKey,
-				paddlerList.filter((e) => e !== paddler)
+				props.heatKey,
+				props.paddlerList.filter((e) => e !== paddlerToDelete)
 			)
 		}
+		setDeleteConfirmationVisible(false)
+		setPaddlerToDelete(null)
+	}
+
+	const handleDeleteCancel = () => {
+		setDeleteConfirmationVisible(false)
+		setPaddlerToDelete(null)
+	}
 
 	const handleAddChange = (newPaddlerName: string) => {
 		setNewPaddler(newPaddlerName)
@@ -156,6 +173,12 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 
 	return (
 		<View style={layoutStyles.heatContent}>
+			<ConfirmationModal
+				visible={deleteConfirmationVisible}
+				message={`Are you sure you want to delete ${paddlerToDelete?.name ?? "this paddler"}?`}
+				onConfirm={handleDeleteConfirm}
+				onCancel={handleDeleteCancel}
+			/>
 			<View style={layoutStyles.heatHeaderWrap}>
 				<Text style={layoutStyles.heatHeaderText}>{`Heat ${props.heatKey}`}</Text>
 			</View>
