@@ -1,8 +1,7 @@
-import { Picker } from "@react-native-picker/picker"
 import _ from "lodash"
 import React, { useMemo, useState } from "react"
-import { Platform, StyleSheet, Text, View } from "react-native"
-import { Button, HelperText, TextInput } from "react-native-paper"
+import { Pressable, StyleSheet, Text, View } from "react-native"
+import { Button, HelperText, Menu, TextInput } from "react-native-paper"
 import { batch, useDispatch, useSelector } from "react-redux"
 import {
 	addOrRemovePaddlerName,
@@ -27,6 +26,7 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 	const dispatch = useDispatch()
 	const [newPaddler, setNewPaddler] = useState("")
 	const [isDuplicate, setIsDuplicate] = useState(false)
+	const [openCategoryMenuFor, setOpenCategoryMenuFor] = useState<string | null>(null)
 	const paddlerScores = useSelector(getScoresState)
 	const paddlerHeatList = useSelector(getPaddlerHeatList)
 	const numberOfRuns = useSelector(getNumberOfRuns)
@@ -151,6 +151,9 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 		}
 	}
 
+	const getCategoryLabel = (currentCategory: string) =>
+		currentCategory.length > 0 ? currentCategory : "Select a Category"
+
 	return (
 		<View style={layoutStyles.heatContent}>
 			<View style={layoutStyles.heatHeaderWrap}>
@@ -183,43 +186,49 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 						</Button>
 					</View>
 					<View style={layoutStyles.pickerCell}>
-						<Picker
-							selectedValue={paddler.category}
-							mode={
-								Platform.OS === "android"
-									? "dropdown"
-									: undefined
-							}
-							testID="category-picker"
-							style={{
-								width: "100%",
-								minHeight: 48,
-								color: "black"
-							}}
-							itemStyle={{ color: "black" }}
-							onValueChange={(itemValue) =>
-								handleCategoryChange(
-									paddler.name,
-									String(itemValue)
-								)
+						<Menu
+							visible={openCategoryMenuFor === paddler.name}
+							onDismiss={() => setOpenCategoryMenuFor(null)}
+							anchor={
+								<Pressable
+									testID="category-picker"
+									onPress={() => setOpenCategoryMenuFor(paddler.name)}
+									style={layoutStyles.categoryDropdownButton}
+								>
+									<Text style={layoutStyles.categoryFloatingLabel}>{"Category"}</Text>
+									<View style={layoutStyles.categoryDropdownRow}>
+										<Text
+											numberOfLines={1}
+											ellipsizeMode="tail"
+											style={layoutStyles.categoryDropdownText}
+										>
+											{getCategoryLabel(paddler.category)}
+										</Text>
+										<Text style={layoutStyles.categoryDropdownArrow}>{"\u25BE"}</Text>
+									</View>
+								</Pressable>
 							}
 						>
-							<Picker.Item
-								key={"default"}
-								label={"Select a Category"}
-								value={""}
-								enabled={true}
-								color={"black"}
+							<Menu.Item
+								testID={`category-option-none-${paddler.name}`}
+								onPress={() => {
+									handleCategoryChange(paddler.name, "")
+									setOpenCategoryMenuFor(null)
+								}}
+								title="Select a Category"
 							/>
 							{pickerCategoryNames.map((categoryName) => (
-								<Picker.Item
+								<Menu.Item
 									key={categoryName + paddler.name}
-									label={categoryName}
-									value={categoryName}
-									color={"black"}
+									testID={`category-option-${categoryName}-${paddler.name}`}
+									onPress={() => {
+										handleCategoryChange(paddler.name, categoryName)
+										setOpenCategoryMenuFor(null)
+									}}
+									title={categoryName}
 								/>
 							))}
-						</Picker>
+						</Menu>
 					</View>
 				</View>
 			))}
@@ -296,6 +305,42 @@ const layoutStyles = StyleSheet.create({
 		width: "58%",
 		paddingHorizontal: 2,
 		justifyContent: "flex-end"
+	},
+	categoryDropdownButton: {
+		width: "100%",
+		justifyContent: "center",
+		borderColor: "#C7CDD6",
+		borderWidth: 1,
+		borderRadius: 3,
+		paddingHorizontal: 10,
+		paddingTop: 10,
+		paddingBottom: 8,
+		backgroundColor: "#FFFFFF",
+		position: "relative"
+	},
+	categoryFloatingLabel: {
+		position: "absolute",
+		top: -8,
+		left: 8,
+		paddingHorizontal: 4,
+		backgroundColor: "#FFFFFF",
+		fontSize: 12,
+		color: "#6B7280"
+	},
+	categoryDropdownRow: {
+		minHeight: 29,
+		flexDirection: "row",
+		alignItems: "center"
+	},
+	categoryDropdownText: {
+		flex: 1,
+		fontSize: 16,
+		color: "#111827"
+	},
+	categoryDropdownArrow: {
+		fontSize: 14,
+		color: "#6B7280",
+		marginLeft: 8
 	},
 	addPaddlerCard: {
 		backgroundColor: "#FFFFFF",

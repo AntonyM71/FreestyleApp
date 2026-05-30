@@ -54,7 +54,8 @@ const btn = (
 		paddingVertical: 0
 	},
 	labelStyle: {
-		marginHorizontal: 2
+		marginHorizontal: 2,
+		fontSize: 18
 	}
 })
 

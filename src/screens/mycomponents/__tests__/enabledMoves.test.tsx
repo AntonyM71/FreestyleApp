@@ -26,7 +26,7 @@ describe("EnabledMoves", () => {
 
   const mockCategories = [mockCategory]
 
-  it("renders all move buttons correctly", () => {
+  it("renders all move toggles correctly", () => {
     const initialState = {
       paddlers: {
         paddlerList: mockPaddlers,
@@ -41,12 +41,15 @@ describe("EnabledMoves", () => {
       </Provider>
     )
 
-    expect(screen.getByText("Hide hole")).toBeTruthy()
-    expect(screen.getByText("Show wave")).toBeTruthy()
-    expect(screen.getByText("Hide nfl")).toBeTruthy()
+    expect(screen.getByText("HOLE")).toBeTruthy()
+    expect(screen.getByText("WAVE")).toBeTruthy()
+    expect(screen.getByText("NFL")).toBeTruthy()
+    expect(screen.getByTestId("move-options-switch-hole")).toBeTruthy()
+    expect(screen.getByTestId("move-options-switch-wave")).toBeTruthy()
+    expect(screen.getByTestId("move-options-switch-nfl")).toBeTruthy()
   })
 
-  it("shows 'Hide X' for enabled moves and 'Show X' for disabled moves", () => {
+  it("shows Shown for enabled moves and Hidden for disabled moves", () => {
     const allEnabledState = {
       paddlers: {
         paddlerList: mockPaddlers,
@@ -72,10 +75,8 @@ describe("EnabledMoves", () => {
       </Provider>
     )
 
-    // When all enabled, all buttons show "Hide X"
-    expect(screen.getByText("Hide hole")).toBeTruthy()
-    expect(screen.getByText("Hide wave")).toBeTruthy()
-    expect(screen.getByText("Hide nfl")).toBeTruthy()
+    // When all enabled, all toggles show "Shown"
+    expect(screen.getAllByText("Shown")).toHaveLength(3)
 
     rerender(
       <Provider store={mockStore(allDisabledState)}>
@@ -83,13 +84,11 @@ describe("EnabledMoves", () => {
       </Provider>
     )
 
-    // When all disabled, all buttons show "Show X"
-    expect(screen.getByText("Show hole")).toBeTruthy()
-    expect(screen.getByText("Show wave")).toBeTruthy()
-    expect(screen.getByText("Show nfl")).toBeTruthy()
+    // When all disabled, all toggles show "Hidden"
+    expect(screen.getAllByText("Hidden")).toHaveLength(3)
   })
 
-  it("dispatches correct actions when move button is pressed", () => {
+  it("dispatches correct actions when move toggle is changed", () => {
     const initialState = {
       paddlers: {
         paddlerList: mockPaddlers,
@@ -104,8 +103,8 @@ describe("EnabledMoves", () => {
       </Provider>
     )
 
-    const holeButton = screen.getByText("Hide hole")
-    fireEvent.press(holeButton)
+    const holeSwitch = screen.getByTestId("move-options-switch-hole")
+    fireEvent(holeSwitch, "valueChange", false)
 
     const expectedNewCategory = {
       ...mockCategory,
@@ -151,8 +150,8 @@ describe("EnabledMoves", () => {
     )
 
     // First toggle - hole from true to false
-    const hideHoleButton = screen.getByText("Hide hole")
-    fireEvent.press(hideHoleButton)
+    const holeSwitch = screen.getByTestId("move-options-switch-hole")
+    fireEvent(holeSwitch, "valueChange", false)
 
     // Update store state to reflect first toggle
     const stateAfterFirstToggle = {
@@ -180,7 +179,7 @@ describe("EnabledMoves", () => {
     )
 
     // Second toggle - wave from false to true
-    fireEvent.press(screen.getByText("Show wave"))
+    fireEvent(screen.getByTestId("move-options-switch-wave"), "valueChange", true)
 
     // Verify all dispatched actions
     const allActions = [...firstStoreActions, ...store2.getActions()]
