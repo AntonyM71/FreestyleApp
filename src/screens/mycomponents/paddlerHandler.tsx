@@ -83,7 +83,7 @@ export const PaddlerHandler = () => {
 	if (numberOfPaddlersInCurrentHeat !== 0) {
 		return (
 			<View style={layoutStyles.container}>
-				<View style={layoutStyles.controlRow}>
+				<View style={layoutStyles.primaryControlRow}>
 					<View style={layoutStyles.controlCell}>
 						<Button
 							onPress={handlePressPrevious}
@@ -98,7 +98,7 @@ export const PaddlerHandler = () => {
 							ellipsizeMode="tail"
 							style={{
 								...styles.standardText,
-								marginTop: 2,
+								marginTop: 0,
 								marginBottom: 0,
 								fontSize: 18,
 								textAlign: "center"
@@ -177,7 +177,13 @@ const layoutStyles = StyleSheet.create({
 	},
 	controlRow: {
 		flexDirection: "row",
-		alignItems: "center"
+		alignItems: "center",
+		minHeight: 52
+	},
+	primaryControlRow: {
+		flexDirection: "row",
+		alignItems: "flex-start",
+		minHeight: 52
 	},
 	controlCell: {
 		flex: 1,
