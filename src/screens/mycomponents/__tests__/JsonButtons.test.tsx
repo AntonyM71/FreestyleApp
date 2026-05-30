@@ -3,11 +3,19 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
-import { Dimensions } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import MoveButtons from "../JsonButtons";
 import * as selectors from "../../../selectors";
 
-const defaultSide = { ...defaultSide };
+const defaultSide = {
+  scored: false,
+  clean: false,
+  superClean: false,
+  air: false,
+  huge: false,
+  link: false,
+  style: false
+};
 // Mock the move list data
 jest.mock("../../../data/moves_lists/move_list", () => ({
   entry: [{
@@ -254,7 +262,7 @@ describe("MoveButtons", () => {
       // Find the container by testID since we need the container's width
       const containers = screen.getAllByTestId("normal-button-container");
 
-      return containers[0].props.style;
+      return StyleSheet.flatten(containers[0].props.style);
     };
 
     // Small screen should use 50% width

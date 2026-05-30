@@ -1,7 +1,6 @@
 import React from "react"
-import { Text, View } from "react-native"
-import { Col, Grid, Row } from "react-native-easy-grid"
-import { Button } from "react-native-elements"
+import { StyleSheet, Text, View } from "react-native"
+import { Button } from "react-native-paper"
 import { useDispatch, useSelector } from "react-redux"
 import {
 	changeNumberOfRuns,
@@ -20,7 +19,7 @@ import {
 	getPaddlerScores,
 	getShowRunHandler
 } from "../../selectors"
-import { styles } from "../../styles"
+import { paperButtonProps, styles } from "../../styles"
 import { DisplayScore } from "./calculateScore"
 import { initialScoresheet } from "./makePaddlerScores"
 
@@ -83,73 +82,76 @@ export const PaddlerHandler = () => {
 
 	if (numberOfPaddlersInCurrentHeat !== 0) {
 		return (
-			<View>
-				<Grid>
-					<Row>
-						<Col>
+			<View style={layoutStyles.container}>
+				<View style={layoutStyles.primaryControlRow}>
+					<View style={layoutStyles.controlCell}>
+						<Button
+							onPress={handlePressPrevious}
+								{...paperButtonProps.changeButton}
+						>
+							{"Last Paddler"}
+						</Button>
+					</View>
+					<View style={layoutStyles.centerCell}>
+						<Text
+							numberOfLines={1}
+							ellipsizeMode="tail"
+							style={{
+								...styles.standardText,
+								marginTop: 0,
+								marginBottom: 0,
+								fontSize: 18,
+								textAlign: "center"
+							}}
+						>
+							{currentPaddler.name}
+						</Text>
+						<DisplayScore
+							paddler={currentPaddler.name}
+							run={currentRun}
+							fontSize={18}
+						/>
+					</View>
+					<View style={layoutStyles.controlCell}>
+						<Button
+							onPress={handlePressNext}
+								{...paperButtonProps.changeButton}
+						>
+							{"Next"}
+						</Button>
+					</View>
+				</View>
+				{showRunHandler ? (
+					<View style={layoutStyles.controlRow}>
+						<View style={layoutStyles.controlCell}>
 							<Button
-								onPress={handlePressPrevious}
-								title="Last Paddler"
-								buttonStyle={styles.changeButton}
-							/>
-						</Col>
-						<Col>
-							<View>
-								<Text
-									style={{
-										...styles.standardText,
-										marginTop: 4,
-										textAlign: "center"
-									}}
-								>
-									{currentPaddler.name}
-								</Text>
-								<DisplayScore
-									paddler={currentPaddler.name}
-									run={currentRun}
-								/>
-							</View>
-						</Col>
-						<Col>
+								onPress={handlePressPreviousRun}
+								{...paperButtonProps.changeButton}
+							>
+								{"Prev Run"}
+							</Button>
+						</View>
+						<View style={layoutStyles.centerCell}>
+							<Text
+								style={{
+									...styles.standardText,
+									marginTop: 8,
+									textAlign: "center"
+								}}
+							>
+								{currentRun + 1}
+							</Text>
+						</View>
+						<View style={layoutStyles.controlCell}>
 							<Button
-								onPress={handlePressNext}
-								title="Next"
-								buttonStyle={styles.changeButton}
-							/>
-						</Col>
-					</Row>
-					{showRunHandler ? (
-						<Row>
-							<Col>
-								<Button
-									onPress={handlePressPreviousRun}
-									title="Prev Run"
-									buttonStyle={styles.changeButton}
-								/>
-							</Col>
-							<Col>
-								<View>
-									<Text
-										style={{
-											...styles.standardText,
-											marginTop: 15,
-											textAlign: "center"
-										}}
-									>
-										{currentRun + 1}
-									</Text>
-								</View>
-							</Col>
-							<Col>
-								<Button
-									onPress={handlePressNextRun}
-									title="New Run"
-									buttonStyle={styles.changeButton}
-								/>
-							</Col>
-						</Row>
-					) : null}
-				</Grid>
+								onPress={handlePressNextRun}
+								{...paperButtonProps.changeButton}
+							>
+								{"New Run"}
+							</Button>
+						</View>
+					</View>
+				) : null}
 			</View>
 		)
 	} else {
@@ -168,3 +170,29 @@ export const PaddlerHandler = () => {
 		)
 	}
 }
+
+const layoutStyles = StyleSheet.create({
+	container: {
+		width: "100%"
+	},
+	controlRow: {
+		flexDirection: "row",
+		alignItems: "center",
+		minHeight: 52
+	},
+	primaryControlRow: {
+		flexDirection: "row",
+		alignItems: "flex-start",
+		minHeight: 52
+	},
+	controlCell: {
+		flex: 1,
+		paddingHorizontal: 2
+	},
+	centerCell: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
+		paddingHorizontal: 2
+	}
+})

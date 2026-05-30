@@ -1,8 +1,7 @@
-import { Picker } from "@react-native-picker/picker"
 import _ from "lodash"
 import React, { useMemo, useState } from "react"
-import { Platform, Text, TextInput, View } from "react-native"
-import { Button } from "react-native-elements"
+import { Pressable, StyleSheet, Text, View } from "react-native"
+import { Button, HelperText, Menu, TextInput } from "react-native-paper"
 import { batch, useDispatch, useSelector } from "react-redux"
 import {
 	addOrRemovePaddlerName,
@@ -16,7 +15,7 @@ import {
 	getPaddlerHeatList,
 	getScoresState
 } from "../../selectors"
-import { styles } from "../../styles"
+import { paperButtonProps, styles } from "../../styles"
 import { initialScoresheet } from "./makePaddlerScores"
 
 interface PropsType {
@@ -26,7 +25,8 @@ interface PropsType {
 export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 	const dispatch = useDispatch()
 	const [newPaddler, setNewPaddler] = useState("")
-	const [inputBorder, setInputBorder] = useState("black")
+	const [isDuplicate, setIsDuplicate] = useState(false)
+	const [openCategoryMenuFor, setOpenCategoryMenuFor] = useState<string | null>(null)
 	const paddlerScores = useSelector(getScoresState)
 	const paddlerHeatList = useSelector(getPaddlerHeatList)
 	const numberOfRuns = useSelector(getNumberOfRuns)
@@ -60,16 +60,12 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 
 	const handleAddChange = (newPaddlerName: string) => {
 		setNewPaddler(newPaddlerName)
-		if (
+		setIsDuplicate(
 			paddlerHeatList
 				.flat()
 				.map((p) => p.name)
 				.indexOf(newPaddlerName) > -1
-		) {
-			setInputBorder("red")
-		} else {
-			setInputBorder("black")
-		}
+		)
 	}
 	const handleAddPaddler =
 		(heatKey: number, paddlerList: IPaddler[], newPaddlerName: string) =>
@@ -155,93 +151,92 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 		}
 	}
 
-	return (
-		<View>
-			<View style={{ borderTopColor: "lightgray", borderTopWidth: 2 }}>
-				<Text style={styles.headerText}>{`Heat ${props.heatKey}`}</Text>
+	const getCategoryLabel = (currentCategory: string) =>
+		currentCategory.length > 0 ? currentCategory : "Select a Category"
 
-				{props.paddlerList.map((paddler: IPaddler, key: number) => (
-					<View
-						style={{
-							flex: 1,
-							flexDirection: "row",
-							flexWrap: "wrap",
-							borderTopColor: "lightgray",
-							borderTopWidth: 1,
-							paddingBottom: 5
-						}}
-						key={key}
-					>
-						<View style={{ width: "40%" }}>
-							<Text
-								style={{
-									...styles.standardText,
-									justifyContent: "center",
-									alignItems: "center"
-								}}
-							>
-								{paddler.name}
-							</Text>
-							<Button
-								onPress={handleDeletePaddler(
-									props.heatKey,
-									props.paddlerList,
-									paddler
-								)}
-								title="Delete"
-								buttonStyle={styles.deleteButton}
-								style={{ paddingTop: 10 }}
-							/>
-						</View>
-						<View style={{ width: "60%" }}>
-							<Picker
-								selectedValue={paddler.category}
-								mode={
-									Platform.OS === "android"
-										? "dropdown"
-										: undefined
-								}
-								testID="category-picker"
-								style={{
-									width: "100%",
-									minHeight: 48,
-									color: "black"
-								}}
-								itemStyle={{ color: "black" }}
-								onValueChange={(itemValue) =>
-									handleCategoryChange(
-										paddler.name,
-										String(itemValue)
-									)
-								}
-							>
-								<Picker.Item
-									key={"default"}
-									label={"Select a Category"}
-									value={""}
-									enabled={true}
-									color={"black"}
-								/>
-								{pickerCategoryNames.map((categoryName) => (
-									<Picker.Item
-										key={categoryName + paddler.name}
-										label={categoryName}
-										value={categoryName}
-										color={"black"}
-									/>
-								))}
-							</Picker>
-						</View>
-						<View style={{ width: "20%" }}></View>
-					</View>
-				))}
+	return (
+		<View style={layoutStyles.heatContent}>
+			<View style={layoutStyles.heatHeaderWrap}>
+				<Text style={layoutStyles.heatHeaderText}>{`Heat ${props.heatKey}`}</Text>
 			</View>
-			<View style={{ borderTopColor: "lightgray", borderTopWidth: 1 }}>
-				<Text
-					style={styles.headerText}
-				>{`Add Paddler to Heat ${props.heatKey}`}</Text>
+
+			{props.paddlerList.map((paddler: IPaddler, key: number) => (
+				<View
+					style={layoutStyles.paddlerSubCard}
+					key={key}
+				>
+					<View style={layoutStyles.paddlerInfoCell}>
+						<Text
+							numberOfLines={1}
+							ellipsizeMode="tail"
+							style={layoutStyles.paddlerNameText}
+						>
+							{paddler.name}
+						</Text>
+						<Button
+							onPress={handleDeletePaddler(
+								props.heatKey,
+								props.paddlerList,
+								paddler
+							)}
+							{...paperButtonProps.deleteButtonSpaced}
+							contentStyle={{ minHeight: 48 }}
+						>
+							{"Delete"}
+						</Button>
+					</View>
+					<View style={layoutStyles.pickerCell}>
+						<Menu
+							visible={openCategoryMenuFor === paddler.name}
+							onDismiss={() => setOpenCategoryMenuFor(null)}
+							anchor={
+								<Pressable
+									testID="category-picker"
+									onPress={() => setOpenCategoryMenuFor(paddler.name)}
+									style={layoutStyles.categoryDropdownButton}
+								>
+									<Text style={layoutStyles.categoryFloatingLabel}>{"Category"}</Text>
+									<View style={layoutStyles.categoryDropdownRow}>
+										<Text
+											numberOfLines={1}
+											ellipsizeMode="tail"
+											style={layoutStyles.categoryDropdownText}
+										>
+											{getCategoryLabel(paddler.category)}
+										</Text>
+										<Text style={layoutStyles.categoryDropdownArrow}>{"\u25BE"}</Text>
+									</View>
+								</Pressable>
+							}
+						>
+							<Menu.Item
+								testID={`category-option-none-${paddler.name}`}
+								onPress={() => {
+									handleCategoryChange(paddler.name, "")
+									setOpenCategoryMenuFor(null)
+								}}
+								title="Select a Category"
+							/>
+							{pickerCategoryNames.map((categoryName) => (
+								<Menu.Item
+									key={categoryName + paddler.name}
+									testID={`category-option-${categoryName}-${paddler.name}`}
+									onPress={() => {
+										handleCategoryChange(paddler.name, categoryName)
+										setOpenCategoryMenuFor(null)
+									}}
+									title={categoryName}
+								/>
+							))}
+						</Menu>
+					</View>
+				</View>
+			))}
+			<View style={layoutStyles.addPaddlerCard}>
+				<Text style={layoutStyles.addPaddlerHeader}>{`Add Paddler to Heat ${props.heatKey}`}</Text>
 				<TextInput
-					blurOnSubmit={true}
+					style={layoutStyles.paddlerInput}
+					mode="outlined"
 					autoCorrect={false}
 					placeholder="New Paddler Name"
 					value={newPaddler}
@@ -252,23 +247,121 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 						newPaddler
 					)}
 					clearButtonMode="always"
-					style={[
-						{
-							height: 40,
-							borderColor: inputBorder,
-							borderWidth: 3,
-							padding: 10,
-							borderRadius: 3,
-							marginHorizontal: 5,
-							marginLeft: 4,
-							marginRight: 4,
-							marginTop: 8
-						}
-					]}
+					error={isDuplicate}
 				/>
+				<HelperText type="error" visible={isDuplicate}>
+					{"Paddler already exists"}
+				</HelperText>
 			</View>
 		</View>
 	)
 }
+
+const layoutStyles = StyleSheet.create({
+	heatContent: {
+		paddingTop: 0,
+		paddingBottom: 8
+	},
+	heatHeaderWrap: {
+		paddingHorizontal: 12,
+		paddingVertical: 10,
+		backgroundColor: "#F5F7FA",
+		borderBottomColor: "#E8EBEF",
+		borderBottomWidth: StyleSheet.hairlineWidth,
+		marginBottom: 8
+	},
+	heatHeaderText: {
+		...styles.headerText,
+		fontSize: 22,
+		marginTop: 0,
+		marginBottom: 0,
+		color: "#1F2937"
+	},
+	paddlerSubCard: {
+		flexDirection: "row",
+		flexWrap: "wrap",
+		alignItems: "flex-end",
+		backgroundColor: "#FFFFFF",
+		borderColor: "#E5E7EB",
+		borderWidth: 1,
+		borderRadius: 6,
+		paddingHorizontal: 8,
+		paddingVertical: 6,
+		marginHorizontal: 8,
+		marginBottom: 8
+	},
+	paddlerInfoCell: {
+		width: "42%",
+		justifyContent: "flex-end"
+	},
+	paddlerNameText: {
+		...styles.standardText,
+		marginTop: 2,
+		marginBottom: 2,
+		fontSize: 17,
+		color: "#111827"
+	},
+	pickerCell: {
+		width: "58%",
+		paddingHorizontal: 2,
+		justifyContent: "flex-end"
+	},
+	categoryDropdownButton: {
+		width: "100%",
+		justifyContent: "center",
+		borderColor: "#C7CDD6",
+		borderWidth: 1,
+		borderRadius: 3,
+		paddingHorizontal: 10,
+		paddingTop: 10,
+		paddingBottom: 8,
+		backgroundColor: "#FFFFFF",
+		position: "relative"
+	},
+	categoryFloatingLabel: {
+		position: "absolute",
+		top: -8,
+		left: 8,
+		paddingHorizontal: 4,
+		backgroundColor: "#FFFFFF",
+		fontSize: 12,
+		color: "#6B7280"
+	},
+	categoryDropdownRow: {
+		minHeight: 29,
+		flexDirection: "row",
+		alignItems: "center"
+	},
+	categoryDropdownText: {
+		flex: 1,
+		fontSize: 16,
+		color: "#111827"
+	},
+	categoryDropdownArrow: {
+		fontSize: 14,
+		color: "#6B7280",
+		marginLeft: 8
+	},
+	addPaddlerCard: {
+		backgroundColor: "#FFFFFF",
+		borderColor: "#E5E7EB",
+		borderWidth: 1,
+		borderRadius: 6,
+		paddingHorizontal: 8,
+		paddingTop: 6,
+		paddingBottom: 4,
+		marginHorizontal: 8
+	},
+	addPaddlerHeader: {
+		...styles.headerText,
+		fontSize: 20,
+		marginTop: 4,
+		marginBottom: 6,
+		color: "#1F2937"
+	},
+	paddlerInput: {
+		backgroundColor: "#FFFFFF"
+	}
+})
 
 export default PaddlerHeatManagerPresentation

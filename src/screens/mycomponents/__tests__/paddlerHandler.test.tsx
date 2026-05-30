@@ -9,7 +9,6 @@ import {
   changeNumberOfRuns,
   updatePaddlerScores
 } from "../../../actions"
-import { styles } from "../../../styles"
 import { initialScoresheet } from "../makePaddlerScores"
 
 const mockStore = configureStore([])
@@ -77,7 +76,7 @@ describe("PaddlerHandler", () => {
     expect(screen.getByText("Next")).toBeTruthy()
   })
 
-  it("applies correct styles to buttons", () => {
+  it("renders navigation buttons with accessible roles and labels", () => {
     const initialState = {
       paddlers: {
         paddlerList: mockPaddlers,
@@ -97,11 +96,9 @@ describe("PaddlerHandler", () => {
       </Provider>
     )
 
-    const lastButton = screen.getByText("Last Paddler").parent.parent
-    const nextButton = screen.getByText("Next").parent.parent
-
-    expect(lastButton.props.style).toMatchObject(styles.changeButton)
-    expect(nextButton.props.style).toMatchObject(styles.changeButton)
+    // Verify navigation buttons render with correct accessible labels and role
+    expect(screen.getByRole("button", { name: "Last Paddler" })).toBeTruthy()
+    expect(screen.getByRole("button", { name: "Next" })).toBeTruthy()
   })
 
   it("handles next paddler button press correctly", () => {

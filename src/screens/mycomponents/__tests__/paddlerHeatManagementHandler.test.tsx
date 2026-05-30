@@ -1,6 +1,8 @@
 import React from "react"
-import { fireEvent, render, screen, waitFor } from "@testing-library/react-native"
+import { fireEvent, render, screen } from "@testing-library/react-native"
 import { Provider } from "react-redux"
+import { SafeAreaProvider } from "react-native-safe-area-context"
+import { Provider as PaperProvider } from "react-native-paper"
 import { createStore, Store } from "redux"
 import { PaddlerHeatManagerPresentation } from "../paddlerHeatManagementHandler"
 import * as makePaddlerScores from "../makePaddlerScores"
@@ -72,6 +74,25 @@ const createTestStore = (initialState: Partial<IPaddlerStateType>): Store<RootSt
   return createStore(rootReducer, fullInitialState)
 }
 
+const safeAreaMetrics = {
+  frame: { x: 0, y: 0, width: 320, height: 640 },
+  insets: { top: 0, left: 0, right: 0, bottom: 0 }
+}
+
+const renderWithProviders = (
+  ui: React.ReactElement,
+  store: Store<RootState>
+) =>
+  render(ui, {
+    wrapper: ({ children }) => (
+      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+        <PaperProvider>
+          <Provider store={store}>{children}</Provider>
+        </PaperProvider>
+      </SafeAreaProvider>
+    )
+  })
+
 // Mock alert
 global.alert = jest.fn()
 
@@ -109,11 +130,7 @@ describe("PaddlerHeatManagerPresentation", () => {
     }
     const store = createTestStore(initialState)
 
-    render(
-      <Provider store={store}>
-        <PaddlerHeatManagerPresentation {...defaultProps} />
-      </Provider>
-    )
+    renderWithProviders(<PaddlerHeatManagerPresentation {...defaultProps} />, store)
 
     expect(screen.getByText("Heat 1")).toBeTruthy()
     expect(screen.getByText("paddler1")).toBeTruthy()
@@ -130,10 +147,9 @@ describe("PaddlerHeatManagerPresentation", () => {
     }
     const store = createTestStore(initialState)
 
-    const { rerender } = render(
-      <Provider store={store}>
-        <PaddlerHeatManagerPresentation {...defaultProps} />
-      </Provider>
+    const { rerender } = renderWithProviders(
+      <PaddlerHeatManagerPresentation {...defaultProps} />,
+      store
     )
 
     const input = screen.getByPlaceholderText("New Paddler Name")
@@ -142,12 +158,10 @@ describe("PaddlerHeatManagerPresentation", () => {
 
     // Need to rerender since the component uses props for rendering
     rerender(
-      <Provider store={store}>
-        <PaddlerHeatManagerPresentation
-          paddlerList={[...mockPaddlers, { name: "NewPaddler", category: "", heat: 1 }]}
-          heatKey={1}
-        />
-      </Provider>
+      <PaddlerHeatManagerPresentation
+        paddlerList={[...mockPaddlers, { name: "NewPaddler", category: "", heat: 1 }]}
+        heatKey={1}
+      />
     )
 
     const state = store.getState().paddlers
@@ -174,11 +188,7 @@ describe("PaddlerHeatManagerPresentation", () => {
     }
     const store = createTestStore(initialState)
 
-    render(
-      <Provider store={store}>
-        <PaddlerHeatManagerPresentation {...defaultProps} />
-      </Provider>
-    )
+    renderWithProviders(<PaddlerHeatManagerPresentation {...defaultProps} />, store)
 
     const input = screen.getByPlaceholderText("New Paddler Name")
     fireEvent.changeText(input, "paddler1")
@@ -201,11 +211,7 @@ describe("PaddlerHeatManagerPresentation", () => {
     }
     const store = createTestStore(initialState)
 
-    render(
-      <Provider store={store}>
-        <PaddlerHeatManagerPresentation {...defaultProps} />
-      </Provider>
-    )
+    renderWithProviders(<PaddlerHeatManagerPresentation {...defaultProps} />, store)
 
     const input = screen.getByPlaceholderText("New Paddler Name")
     fireEvent.changeText(input, "")
@@ -228,10 +234,9 @@ describe("PaddlerHeatManagerPresentation", () => {
     }
     const store = createTestStore(initialState)
 
-    const { rerender } = render(
-      <Provider store={store}>
-        <PaddlerHeatManagerPresentation {...defaultProps} />
-      </Provider>
+    const { rerender } = renderWithProviders(
+      <PaddlerHeatManagerPresentation {...defaultProps} />,
+      store
     )
 
     const deleteButton = screen.getByText("Delete")
@@ -239,12 +244,10 @@ describe("PaddlerHeatManagerPresentation", () => {
 
     // Need to rerender with empty paddler list since component uses props
     rerender(
-      <Provider store={store}>
-        <PaddlerHeatManagerPresentation
-          paddlerList={[]}
-          heatKey={1}
-        />
-      </Provider>
+      <PaddlerHeatManagerPresentation
+        paddlerList={[]}
+        heatKey={1}
+      />
     )
 
     const state = store.getState().paddlers
@@ -266,14 +269,13 @@ describe("PaddlerHeatManagerPresentation", () => {
     }
     const store = createTestStore(initialState)
 
-    const { rerender } = render(
-      <Provider store={store}>
-        <PaddlerHeatManagerPresentation {...defaultProps} />
-      </Provider>
-    )
+    renderWithProviders(<PaddlerHeatManagerPresentation {...defaultProps} />, store)
 
     const picker = screen.getByTestId("category-picker")
-    fireEvent(picker, "onValueChange", mockCategories[0].name)
+    fireEvent.press(picker)
+
+    const option = screen.getByTestId(`category-option-${mockCategories[0].name}-paddler1`)
+    fireEvent.press(option)
 
     const state = store.getState().paddlers
 

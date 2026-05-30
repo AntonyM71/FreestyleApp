@@ -18,7 +18,9 @@ describe("RunOptions", () => {
       </Provider>
     )
 
-    expect(screen.getByText("Show Runs")).toBeTruthy()
+    expect(screen.getByText("Runs")).toBeTruthy()
+    expect(screen.getByText("Hidden")).toBeTruthy()
+    expect(screen.getByTestId("run-options-switch")).toHaveProp("value", false)
   })
 
   it("renders correctly with runs shown", () => {
@@ -31,7 +33,9 @@ describe("RunOptions", () => {
       </Provider>
     )
 
-    expect(screen.getByText("Hide Runs")).toBeTruthy()
+    expect(screen.getByText("Runs")).toBeTruthy()
+    expect(screen.getByText("Shown")).toBeTruthy()
+    expect(screen.getByTestId("run-options-switch")).toHaveProp("value", true)
   })
 
   it("dispatches both actions when button is pressed with runs shown", () => {
@@ -44,8 +48,8 @@ describe("RunOptions", () => {
       </Provider>
     )
 
-    const button = screen.getByText("Hide Runs")
-    fireEvent.press(button)
+    const toggle = screen.getByTestId("run-options-switch")
+    fireEvent(toggle, "valueChange", false)
 
     const actions = store.getActions()
     expect(actions).toHaveLength(2)
@@ -63,8 +67,8 @@ describe("RunOptions", () => {
       </Provider>
     )
 
-    const button = screen.getByText("Show Runs")
-    fireEvent.press(button)
+    const toggle = screen.getByTestId("run-options-switch")
+    fireEvent(toggle, "valueChange", true)
 
     const actions = store.getActions()
     expect(actions).toHaveLength(1)

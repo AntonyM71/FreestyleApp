@@ -1,7 +1,6 @@
 import React from "react"
-import { Text, View } from "react-native"
-import { Col, Grid, Row } from "react-native-easy-grid"
-import { Button } from "react-native-elements"
+import { StyleSheet, Text, View } from "react-native"
+import { Button } from "react-native-paper"
 import { batch, useDispatch, useSelector } from "react-redux"
 import { changeHeat, changePaddler } from "../../actions"
 import {
@@ -9,7 +8,7 @@ import {
 	getCurrentHeat,
 	getPaddlerHeatList
 } from "../../selectors"
-import { styles } from "../../styles"
+import { paperButtonProps, styles } from "../../styles"
 
 export const PaddlerHandler = () => {
 	const dispatch = useDispatch()
@@ -48,42 +47,58 @@ export const PaddlerHandler = () => {
 	// only show the component if we have multiple heats (preverve vertical space for phones)
 	if (paddlerList.length !== 1 && paddlerList.flat().length !== 0) {
 		return (
-			<View>
-				<Grid>
-					<Row>
-						<Col>
-							<Button
-								onPress={handlePressPreviousHeat}
-								title="Last"
-								buttonStyle={styles.changeButton}
-							/>
-						</Col>
-						<Col>
-							<View>
-								<Text
-									style={{
-										...styles.standardText,
-										marginTop: 15,
-										textAlign: "center",
-										fontSize: 23
-									}}
-								>{`Heat ${currentHeat}`}</Text>
-							</View>
-						</Col>
-						<Col>
-							<Button
-								onPress={handlePressNextHeat}
-								title="Next"
-								buttonStyle={styles.changeButton}
-							/>
-						</Col>
-					</Row>
-				</Grid>
+			<View style={layoutStyles.controlRow}>
+				<View style={layoutStyles.controlCell}>
+					<Button
+						onPress={handlePressPreviousHeat}
+							{...paperButtonProps.changeButton}
+					>
+						{"Last"}
+					</Button>
+				</View>
+				<View style={layoutStyles.centerCell}>
+					<Text
+						numberOfLines={1}
+						ellipsizeMode="tail"
+						style={{
+							...styles.standardText,
+							marginTop: 8,
+							textAlign: "center",
+							fontSize: 18
+						}}
+					>{`Heat ${currentHeat}`}</Text>
+				</View>
+				<View style={layoutStyles.controlCell}>
+					<Button
+						onPress={handlePressNextHeat}
+							{...paperButtonProps.changeButton}
+					>
+						{"Next"}
+					</Button>
+				</View>
 			</View>
 		)
 	} else {
 		return null
 	}
 }
+
+const layoutStyles = StyleSheet.create({
+	controlRow: {
+		flexDirection: "row",
+		alignItems: "center",
+		minHeight: 52
+	},
+	controlCell: {
+		flex: 1,
+		paddingHorizontal: 2
+	},
+	centerCell: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
+		paddingHorizontal: 2
+	}
+})
 
 export default PaddlerHandler

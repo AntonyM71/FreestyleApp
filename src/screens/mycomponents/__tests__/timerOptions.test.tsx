@@ -18,7 +18,9 @@ describe("TimerOptions", () => {
       </Provider>
     )
 
-    expect(screen.getByText("Show Timer")).toBeTruthy()
+    expect(screen.getByText("Timer")).toBeTruthy()
+    expect(screen.getByText("Hidden")).toBeTruthy()
+    expect(screen.getByTestId("timer-options-switch")).toHaveProp("value", false)
   })
 
   it("renders correctly with timer shown", () => {
@@ -31,7 +33,9 @@ describe("TimerOptions", () => {
       </Provider>
     )
 
-    expect(screen.getByText("Hide Timer")).toBeTruthy()
+    expect(screen.getByText("Timer")).toBeTruthy()
+    expect(screen.getByText("Shown")).toBeTruthy()
+    expect(screen.getByTestId("timer-options-switch")).toHaveProp("value", true)
   })
 
   it("dispatches updateShowTimer action when button is pressed", () => {
@@ -44,8 +48,8 @@ describe("TimerOptions", () => {
       </Provider>
     )
 
-    const button = screen.getByText("Show Timer")
-    fireEvent.press(button)
+    const toggle = screen.getByTestId("timer-options-switch")
+    fireEvent(toggle, "valueChange", true)
 
     const actions = store.getActions()
     expect(actions).toHaveLength(1)

@@ -1,11 +1,11 @@
 import React from "react"
-import { View } from "react-native"
-import { Button } from "react-native-elements"
+import { StyleSheet, View } from "react-native"
+import { Button } from "react-native-paper"
 import { useDispatch, useSelector } from "react-redux"
 import { updatePaddlerScores } from "../../actions"
 import { IDirection, IPaddler } from "../../reducers"
 import { getCurrentRun, getPaddlerScores } from "../../selectors"
-import { styles } from "../../styles"
+import { paperButtonProps } from "../../styles"
 import { dataSourceMoveInterface } from "./makePaddlerScores"
 
 interface PropsType {
@@ -54,30 +54,29 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 				const buttonName = props.move.Move
 
 				return (
-					<Button
-						onPress={handleMove(
-							props.paddler.name,
-							currentRun,
-							props.move.Move,
-							props.direction,
-							"scored"
-						)}
-						title={buttonName}
-						buttonStyle={styles.noMove}
-					/>
+					<View style={layoutStyles.unscoredButtonWrap}>
+						<Button
+							onPress={handleMove(
+								props.paddler.name,
+								currentRun,
+								props.move.Move,
+								props.direction,
+								"scored"
+							)}
+							{...paperButtonProps.noMove}
+						>
+							{buttonName}
+						</Button>
+					</View>
 				)
 			} else {
 				const buttonName = props.move.Move
 
 				return (
 					<View
-						style={{
-							flex: 1,
-							flexDirection: "row",
-							flexWrap: "wrap"
-						}}
+						style={layoutStyles.buttonBlock}
 					>
-						<View style={{ width: "100%" }}>
+						<View style={layoutStyles.fullWidthCell}>
 							<Button
 								onPress={handleMove(
 									props.paddler.name,
@@ -86,117 +85,112 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 									props.direction,
 									"scored"
 								)}
-								title={buttonName}
-								buttonStyle={styles.moveScored}
-							/>
+								{...paperButtonProps.moveScored}
+							>
+								{buttonName}
+							</Button>
 						</View>
-						<View style={{ width: "50%" }}>
-							<Button
-								onPress={handleMove(
-									props.paddler.name,
-									currentRun,
-									props.move.Move,
-									props.direction,
-									"clean"
-								)}
-								title={"C"}
-								disabled={props.move.Clean ? false : true}
-								buttonStyle={
-									thisMove[props.direction].clean
-										? styles.bonusScored
-										: styles.noBonus
-								}
-							/>
+						<View style={layoutStyles.thirdWidthCell}>
+								<Button
+									onPress={handleMove(
+										props.paddler.name,
+										currentRun,
+										props.move.Move,
+										props.direction,
+										"clean"
+									)}
+									disabled={props.move.Clean ? false : true}
+									{...(thisMove[props.direction].clean
+										? paperButtonProps.bonusScored
+										: paperButtonProps.noBonus)}
+								>
+									{"C"}
+								</Button>
 						</View>
-						<View style={{ width: "50%" }}>
-							<Button
-								onPress={handleMove(
-									props.paddler.name,
-									currentRun,
-									props.move.Move,
-									props.direction,
-									"superClean"
-								)}
-								title={"SC"}
-								disabled={props.move.SuperClean ? false : true}
-								buttonStyle={
-									thisMove[props.direction].superClean
-										? styles.bonusScored
-										: styles.noBonus
-								}
-							/>
+						<View style={layoutStyles.thirdWidthCell}>
+								<Button
+									onPress={handleMove(
+										props.paddler.name,
+										currentRun,
+										props.move.Move,
+										props.direction,
+										"superClean"
+									)}
+									disabled={props.move.SuperClean ? false : true}
+									{...(thisMove[props.direction].superClean
+										? paperButtonProps.bonusScored
+										: paperButtonProps.noBonus)}
+								>
+									{"SC"}
+								</Button>
 						</View>
-						<View style={{ width: "33%" }}>
-							<Button
-								onPress={handleMove(
-									props.paddler.name,
-									currentRun,
-									props.move.Move,
-									props.direction,
-									"air"
-								)}
-								title={"A"}
-								disabled={props.move.Air ? false : true}
-								buttonStyle={
-									thisMove[props.direction].air
-										? styles.bonusScored
-										: styles.noBonus
-								}
-							/>
+						<View style={layoutStyles.thirdWidthCell}>
+								<Button
+									onPress={handleMove(
+										props.paddler.name,
+										currentRun,
+										props.move.Move,
+										props.direction,
+										"link"
+									)}
+									disabled={props.move.Link ? false : true}
+									{...(thisMove[props.direction].link
+										? paperButtonProps.bonusScored
+										: paperButtonProps.noBonus)}
+								>
+									{"L"}
+								</Button>
 						</View>
-						<View style={{ width: "33%" }}>
-							<Button
-								onPress={handleMove(
-									props.paddler.name,
-									currentRun,
-									props.move.Move,
-									props.direction,
-									"huge"
-								)}
-								title={"H"}
-								disabled={props.move.Huge ? false : true}
-								buttonStyle={
-									thisMove[props.direction].huge
-										? styles.bonusScored
-										: styles.noBonus
-								}
-							/>
+						<View style={layoutStyles.thirdWidthCell}>
+								<Button
+									onPress={handleMove(
+										props.paddler.name,
+										currentRun,
+										props.move.Move,
+										props.direction,
+										"air"
+									)}
+									disabled={props.move.Air ? false : true}
+									{...(thisMove[props.direction].air
+										? paperButtonProps.bonusScored
+										: paperButtonProps.noBonus)}
+								>
+									{"A"}
+								</Button>
 						</View>
-						<View style={{ width: "33%" }}>
-							<Button
-								onPress={handleMove(
-									props.paddler.name,
-									currentRun,
-									props.move.Move,
-									props.direction,
-									"link"
-								)}
-								title={"L"}
-								disabled={props.move.Link ? false : true}
-								buttonStyle={
-									thisMove[props.direction].link
-										? styles.bonusScored
-										: styles.noBonus
-								}
-							/>
+						<View style={layoutStyles.thirdWidthCell}>
+								<Button
+									onPress={handleMove(
+										props.paddler.name,
+										currentRun,
+										props.move.Move,
+										props.direction,
+										"huge"
+									)}
+									disabled={props.move.Huge ? false : true}
+									{...(thisMove[props.direction].huge
+										? paperButtonProps.bonusScored
+										: paperButtonProps.noBonus)}
+								>
+									{"H"}
+								</Button>
 						</View>
-						<View style={{ width: "33%" }}>
-							<Button
-								onPress={handleMove(
-									props.paddler.name,
-									currentRun,
-									props.move.Move,
-									props.direction,
-									"style"
-								)}
-								title={"S"}
-								disabled={props.move.Style ? false : true}
-								buttonStyle={
-									thisMove[props.direction].style
-										? styles.bonusScored
-										: styles.noBonus
-								}
-							/>
+						<View style={layoutStyles.thirdWidthCell}>
+								<Button
+									onPress={handleMove(
+										props.paddler.name,
+										currentRun,
+										props.move.Move,
+										props.direction,
+										"style"
+									)}
+									disabled={props.move.Style ? false : true}
+									{...(thisMove[props.direction].style
+										? paperButtonProps.bonusScored
+										: paperButtonProps.noBonus)}
+								>
+									{"S"}
+								</Button>
 						</View>
 					</View>
 				)
@@ -208,3 +202,28 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 })
 
 export const EntryDynamicButton = DynamicButtonPresentation
+
+const layoutStyles = StyleSheet.create({
+	unscoredButtonWrap: {
+		width: "100%",
+		marginTop: 4
+	},
+	buttonBlock: {
+		width: "100%",
+		flexDirection: "row",
+		flexWrap: "wrap",
+		marginTop: 4
+	},
+	fullWidthCell: {
+		width: "100%",
+		paddingHorizontal: 1.5
+	},
+	halfWidthCell: {
+		width: "50%",
+		paddingHorizontal: 1.5
+	},
+	thirdWidthCell: {
+		width: "33.33%",
+		paddingHorizontal: 1.5
+	}
+})

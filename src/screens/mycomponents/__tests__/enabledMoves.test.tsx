@@ -5,7 +5,6 @@ import configureStore from "redux-mock-store"
 import EnabledMoves from "../enabledMoves"
 import { addOrRemoveCategory, changeRun, updatePaddlerScores } from "../../../actions"
 import { initialScoresheet } from "../makePaddlerScores"
-import { styles } from "../../../styles"
 import { IPaddlerScores } from "../../../reducers"
 
 const mockStore = configureStore([])
@@ -27,7 +26,7 @@ describe("EnabledMoves", () => {
 
   const mockCategories = [mockCategory]
 
-  it("renders all move buttons correctly", () => {
+  it("renders all move toggles correctly", () => {
     const initialState = {
       paddlers: {
         paddlerList: mockPaddlers,
@@ -42,36 +41,54 @@ describe("EnabledMoves", () => {
       </Provider>
     )
 
-    expect(screen.getByText("Hide hole")).toBeTruthy()
-    expect(screen.getByText("Show wave")).toBeTruthy()
-    expect(screen.getByText("Hide nfl")).toBeTruthy()
+    expect(screen.getByText("HOLE")).toBeTruthy()
+    expect(screen.getByText("WAVE")).toBeTruthy()
+    expect(screen.getByText("NFL")).toBeTruthy()
+    expect(screen.getByTestId("move-options-switch-hole")).toBeTruthy()
+    expect(screen.getByTestId("move-options-switch-wave")).toBeTruthy()
+    expect(screen.getByTestId("move-options-switch-nfl")).toBeTruthy()
   })
 
-  it("applies correct styles based on move state", () => {
-    const initialState = {
+  it("shows Shown for enabled moves and Hidden for disabled moves", () => {
+    const allEnabledState = {
       paddlers: {
         paddlerList: mockPaddlers,
-        categories: mockCategories
+        categories: [{
+          name: "Test Category",
+          availableMoves: { hole: true, wave: true, nfl: true }
+        }]
       }
     }
-    const store = mockStore(initialState)
+    const allDisabledState = {
+      paddlers: {
+        paddlerList: mockPaddlers,
+        categories: [{
+          name: "Test Category",
+          availableMoves: { hole: false, wave: false, nfl: false }
+        }]
+      }
+    }
 
-    render(
-      <Provider store={store}>
-        <EnabledMoves category={mockCategory} />
+    const { rerender } = render(
+      <Provider store={mockStore(allEnabledState)}>
+        <EnabledMoves category={allEnabledState.paddlers.categories[0]} />
       </Provider>
     )
 
-    const holeButton = screen.getByText("Hide hole").parent.parent
-    const waveButton = screen.getByText("Show wave").parent.parent
-    const nflButton = screen.getByText("Hide nfl").parent.parent
+    // When all enabled, all toggles show "Shown"
+    expect(screen.getAllByText("Shown")).toHaveLength(3)
 
-    expect(holeButton.props.style).toMatchObject(styles.moveScored)
-    expect(waveButton.props.style).toMatchObject(styles.noMove)
-    expect(nflButton.props.style).toMatchObject(styles.moveScored)
+    rerender(
+      <Provider store={mockStore(allDisabledState)}>
+        <EnabledMoves category={allDisabledState.paddlers.categories[0]} />
+      </Provider>
+    )
+
+    // When all disabled, all toggles show "Hidden"
+    expect(screen.getAllByText("Hidden")).toHaveLength(3)
   })
 
-  it("dispatches correct actions when move button is pressed", () => {
+  it("dispatches correct actions when move toggle is changed", () => {
     const initialState = {
       paddlers: {
         paddlerList: mockPaddlers,
@@ -86,8 +103,8 @@ describe("EnabledMoves", () => {
       </Provider>
     )
 
-    const holeButton = screen.getByText("Hide hole")
-    fireEvent.press(holeButton)
+    const holeSwitch = screen.getByTestId("move-options-switch-hole")
+    fireEvent(holeSwitch, "valueChange", false)
 
     const expectedNewCategory = {
       ...mockCategory,
@@ -133,8 +150,8 @@ describe("EnabledMoves", () => {
     )
 
     // First toggle - hole from true to false
-    const hideHoleButton = screen.getByText("Hide hole")
-    fireEvent.press(hideHoleButton)
+    const holeSwitch = screen.getByTestId("move-options-switch-hole")
+    fireEvent(holeSwitch, "valueChange", false)
 
     // Update store state to reflect first toggle
     const stateAfterFirstToggle = {
@@ -162,7 +179,7 @@ describe("EnabledMoves", () => {
     )
 
     // Second toggle - wave from false to true
-    fireEvent.press(screen.getByText("Show wave"))
+    fireEvent(screen.getByTestId("move-options-switch-wave"), "valueChange", true)
 
     // Verify all dispatched actions
     const allActions = [...firstStoreActions, ...store2.getActions()]

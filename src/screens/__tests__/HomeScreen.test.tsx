@@ -21,14 +21,14 @@ const mockDimensions = (width: number) => {
 }
 
 describe("HomeScreen", () => {
-  const createTestStore = () => {
+  const createTestStore = (showTimer = false) => {
     const initialState = {
       paddlers: {
         places: [],
         paddlerIndex: 0,
         paddlerList: [],
         paddlerScores: {},
-        showTimer: false,
+        showTimer,
         currentHeat: 1,
         currentRun: 0,
         numberOfRuns: 0,
@@ -59,7 +59,7 @@ describe("HomeScreen", () => {
   })
 
   it("applies correct layout percentages for small screens", () => {
-    const store = createTestStore()
+    const store = createTestStore(true)
     mockDimensions(599)
 
     render(
@@ -78,7 +78,7 @@ describe("HomeScreen", () => {
   })
 
   it("applies correct layout percentages for large screens", () => {
-    const store = createTestStore()
+    const store = createTestStore(true)
     mockDimensions(601)
 
     render(
@@ -91,13 +91,13 @@ describe("HomeScreen", () => {
     const heatHandlerContainer = screen.getByTestId("heat-handler-container")
     const paddlerHandlerContainer = screen.getByTestId("paddler-handler-container")
 
-    expect(timerContainer).toHaveStyle({ width: "16.65%" })
-    expect(heatHandlerContainer).toHaveStyle({ width: "33.3%" })
+    expect(timerContainer).toHaveStyle({ width: "100%" })
+    expect(heatHandlerContainer).toHaveStyle({ width: "100%" })
     expect(paddlerHandlerContainer).toHaveStyle({ width: "50%" })
   })
 
   it("renders all child components", () => {
-    const store = createTestStore()
+    const store = createTestStore(true)
     render(
       <Provider store={store}>
         <HomeScreen />

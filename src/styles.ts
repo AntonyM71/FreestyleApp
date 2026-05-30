@@ -1,4 +1,4 @@
-import { Platform, StyleSheet } from "react-native"
+import { StyleSheet, TextStyle, ViewStyle } from "react-native"
 
 export const styles = StyleSheet.create({
 	container: {
@@ -6,61 +6,7 @@ export const styles = StyleSheet.create({
 		backgroundColor: "#fff"
 	},
 	contentContainer: {
-		paddingTop: Platform.OS === "ios" ? 0 : 30
-	},
-	noMove: {
-		backgroundColor: "#4F84C4",
-		marginLeft: 4,
-		marginRight: 4,
-		marginTop: 15
-	},
-	noBonus: {
-		backgroundColor: "#4F84C4",
-		marginLeft: 4,
-		marginRight: 4,
-		marginTop: 4
-	},
-	moveScored: {
-		backgroundColor: "#223A5E",
-		marginLeft: 4,
-		marginRight: 4,
-		marginTop: 15
-	},
-	bonusScored: {
-		backgroundColor: "#223A5E",
-		marginLeft: 4,
-		marginRight: 4,
-		marginTop: 4
-	},
-	deleteButton: {
-		backgroundColor: "#DC4C46",
-		marginLeft: 4,
-		marginRight: 4,
-		marginTop: 8
-	},
-	timerRed: {
-		backgroundColor: "#DC4C46",
-		marginLeft: 4,
-		marginRight: 4,
-		marginTop: 8
-	},
-	timerYellow: {
-		backgroundColor: "#F6D155",
-		marginLeft: 4,
-		marginRight: 4,
-		marginTop: 8
-	},
-	timerGreen: {
-		backgroundColor: "#92B558",
-		marginLeft: 4,
-		marginRight: 4,
-		marginTop: 8
-	},
-	changeButton: {
-		backgroundColor: "#D2691E",
-		marginLeft: 4,
-		marginRight: 4,
-		marginTop: 8
+		paddingTop: 0
 	},
 	standardText: {
 		fontSize: 20,
@@ -74,11 +20,55 @@ export const styles = StyleSheet.create({
 		marginLeft: 12,
 		marginRight: 12,
 		marginTop: 12
-	},
-	heatStyle: {
-		textAlign: "center",
-		alignItems: "center",
-		fontSize: 25,
-		paddingVertical: 4
 	}
 })
+
+interface PaperButtonProps {
+	mode: "contained"
+	buttonColor: string
+	textColor: string
+	style: ViewStyle
+	contentStyle: ViewStyle
+	labelStyle: TextStyle
+	compact: boolean
+}
+
+const btn = (
+	buttonColor: string,
+	textColor: string,
+	marginTop: number,
+	minHeight: number
+): PaperButtonProps => ({
+	mode: "contained",
+	buttonColor,
+	textColor,
+	compact: true,
+	style: {
+		width: "100%",
+		marginTop,
+		borderRadius: 3
+	},
+	contentStyle: {
+		minHeight,
+		paddingHorizontal: 2,
+		paddingVertical: 0
+	},
+	labelStyle: {
+		marginHorizontal: 2,
+		fontSize: 18
+	}
+})
+
+export const paperButtonProps = {
+	noMove: btn("#4F84C4", "white", 4, 34),
+	noBonus: btn("#4F84C4", "white", 3, 28),
+	moveScored: btn("#223A5E", "white", 4, 34),
+	bonusScored: btn("#223A5E", "white", 3, 28),
+	deleteButton: btn("#DC4C46", "white", 4, 34),
+	deleteButtonSpaced: btn("#DC4C46", "white", 5, 34),
+	timerRed: btn("#DC4C46", "white", 4, 34),
+	timerYellow: btn("#F6D155", "#000000", 4, 34),
+	timerGreen: btn("#92B558", "white", 4, 34),
+	changeButton: btn("#D2691E", "white", 4, 34)
+}
+

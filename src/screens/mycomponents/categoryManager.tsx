@@ -1,30 +1,26 @@
 import React, { useState } from "react"
-import { Text, TextInput, View } from "react-native"
-import { Button } from "react-native-elements"
+import { StyleSheet, Text, View } from "react-native"
+import { Button, HelperText, TextInput } from "react-native-paper"
 import { batch, useDispatch, useSelector } from "react-redux"
 import { addOrRemoveCategory, addOrRemovePaddlerName } from "../../actions"
 import { ICategory } from "../../reducers"
 import { getCategories, getPaddlerHeatList } from "../../selectors"
-import { styles } from "../../styles"
+import { paperButtonProps, styles } from "../../styles"
 import MoveSelection from "./enabledMoves"
 
 export const PaddlerHeatManagerPresentation = () => {
 	const dispatch = useDispatch()
 	const [newCategory, setNewCategory] = useState("")
-	const [inputBorder, setInputBorder] = useState("black")
+	const [isDuplicate, setIsDuplicate] = useState(false)
 	const categoryList = useSelector(getCategories)
 	const paddlerList = useSelector(getPaddlerHeatList)
 
 	const handleAddChange = (newCategoryName: string) => {
 		setNewCategory(newCategoryName)
-		if (categoryList.map((p) => p.name).indexOf(newCategoryName) > -1) {
-			setInputBorder("red")
-		} else {
-			setInputBorder("black")
-		}
+		setIsDuplicate(categoryList.map((p) => p.name).indexOf(newCategoryName) > -1)
 	}
 	const handleAddCategory = (newCategoryName: string) => {
-		if (inputBorder === "black") {
+		if (!isDuplicate) {
 			const newCategoryList: ICategory[] = [
 				...categoryList,
 				{
@@ -58,99 +54,112 @@ export const PaddlerHeatManagerPresentation = () => {
 
 	return (
 		<View>
-			<View
-				style={{
-					flex: 1,
-
-					borderBottomColor: "lightgray",
-					borderBottomWidth: 2,
-					paddingBottom: 5
-				}}
-			>
+			<View style={layoutStyles.categoryListWrap}>
 				{categoryList.map((category: ICategory, key: number) => (
 					<View
-						style={{
-							flex: 1,
-							flexDirection: "row",
-							flexWrap: "wrap",
-							borderTopColor: "lightgray",
-							borderTopWidth: 1,
-							paddingBottom: 5
-						}}
+						style={layoutStyles.categoryCard}
 						key={key}
 					>
-						<View style={{ width: "70%" }}>
+						<View style={layoutStyles.categoryHeaderRow}>
+							<View style={layoutStyles.categoryNameWrap}>
 							<Text
-								style={{
-									...styles.standardText,
-									justifyContent: "space-around",
-									alignItems: "center"
-								}}
+								style={layoutStyles.categoryNameText}
 							>
 								{category.name}
 							</Text>
-						</View>
-
-						<View style={{ width: "30%" }}>
+							</View>
+							<View style={layoutStyles.deleteButtonWrap}>
 							<Button
 								onPress={() =>
 									handleDeleteCategory(category.name)
 								}
-								title="Delete"
-								buttonStyle={styles.deleteButton}
-							/>
+								{...paperButtonProps.deleteButton}
+							>
+								{"Delete"}
+							</Button>
+						</View>
 						</View>
 
-						<View style={{ width: "100%" }}>
+						<View style={layoutStyles.movesWrap}>
 							<MoveSelection category={category} />
 						</View>
 					</View>
 				))}
 			</View>
-			<View
-				style={{
-					borderBottomColor: "lightgray",
-					borderBottomWidth: 1
-				}}
-			>
+			<View style={layoutStyles.addCategoryCard}>
 				<Text
-					style={{
-						...styles.headerText,
-						justifyContent: "space-around",
-						alignItems: "center",
-						borderTopColor: "lightgray",
-						borderTopWidth: 1,
-						paddingBottom: 5
-					}}
+					style={layoutStyles.addCategoryHeader}
 				>
 					{"Add New Category"}
 				</Text>
 
 				<TextInput
-					blurOnSubmit={true}
+					style={layoutStyles.categoryInput}
+					mode="outlined"
 					autoCorrect={false}
 					placeholder="New Category Name"
 					value={newCategory}
 					onChangeText={handleAddChange}
 					onSubmitEditing={() => handleAddCategory(newCategory)}
 					clearButtonMode="always"
-					style={[
-						{
-							height: 40,
-							borderColor: inputBorder,
-							borderWidth: 3,
-							padding: 10,
-							borderRadius: 3,
-							marginHorizontal: 5,
-							marginLeft: 4,
-							marginRight: 4,
-							marginTop: 8
-						}
-					]}
+					error={isDuplicate}
 				/>
+				<HelperText type="error" visible={isDuplicate}>
+					{"Category already exists"}
+				</HelperText>
 			</View>
 		</View>
 	)
 }
+
+const layoutStyles = StyleSheet.create({
+	categoryListWrap: {
+		paddingTop: 4
+	},
+	categoryCard: {
+		backgroundColor: "#F9FAFB",
+		borderColor: "#E5E7EB",
+		borderWidth: 1,
+		borderRadius: 6,
+		marginBottom: 8,
+		paddingHorizontal: 8,
+		paddingVertical: 6
+	},
+	categoryHeaderRow: {
+		flexDirection: "row",
+		alignItems: "center"
+	},
+	categoryNameWrap: {
+		width: "70%"
+	},
+	categoryNameText: {
+		...styles.standardText,
+		marginTop: 2,
+		fontSize: 18,
+		fontWeight: "500",
+		color: "#1F2937"
+	},
+	deleteButtonWrap: {
+		width: "30%"
+	},
+	movesWrap: {
+		width: "100%"
+	},
+	addCategoryCard: {
+		marginTop: 4,
+		paddingTop: 4,
+		paddingBottom: 8
+	},
+	addCategoryHeader: {
+		...styles.headerText,
+		fontSize: 22,
+		marginTop: 6,
+		marginBottom: 6,
+		color: "#1F2937"
+	},
+	categoryInput: {
+		backgroundColor: "#FFFFFF"
+	}
+})
 
 export default PaddlerHeatManagerPresentation
