@@ -34,25 +34,27 @@ export const PaddlerManager = () => {
 	const heats = useSelector(getAvailableHeats)
 	const [confirmationVisible, setConfirmationVisible] = useState(false)
 	const [confirmationMessage, setConfirmationMessage] = useState("")
-	const [pendingAction, setPendingAction] = useState<(() => void) | null>(null)
+	const [pendingActionKey, setPendingActionKey] = useState<"clearScores" | "clearPaddlers" | null>(null)
 
-	const requestConfirmation = (message: string, action: () => void) => {
+	const requestConfirmation = (message: string, actionKey: "clearScores" | "clearPaddlers") => {
 		setConfirmationMessage(message)
-		setPendingAction(() => action)
+		setPendingActionKey(actionKey)
 		setConfirmationVisible(true)
 	}
 
 	const handleConfirm = () => {
-		if (pendingAction) {
-			pendingAction()
+		if (pendingActionKey === "clearScores") {
+			clearScores()
+		} else if (pendingActionKey === "clearPaddlers") {
+			clearPaddlers()
 		}
 		setConfirmationVisible(false)
-		setPendingAction(null)
+		setPendingActionKey(null)
 	}
 
 	const handleCancel = () => {
 		setConfirmationVisible(false)
-		setPendingAction(null)
+		setPendingActionKey(null)
 	}
 
 	const addHeat = () => {
@@ -125,7 +127,7 @@ export const PaddlerManager = () => {
 							onPress={() => {
 								requestConfirmation(
 									"Are you sure you want to clear all scores?",
-									clearScores
+									"clearScores"
 								)
 							}}
 							{...paperButtonProps.timerRed}
@@ -139,7 +141,7 @@ export const PaddlerManager = () => {
 							onPress={() => {
 								requestConfirmation(
 									"Are you sure you want to clear all paddlers?",
-									clearPaddlers
+									"clearPaddlers"
 								)
 							}}
 							{...paperButtonProps.timerRed}

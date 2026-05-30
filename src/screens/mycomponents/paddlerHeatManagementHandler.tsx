@@ -30,6 +30,7 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 	const [openCategoryMenuFor, setOpenCategoryMenuFor] = useState<string | null>(null)
 	const [deleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false)
 	const [paddlerToDelete, setPaddlerToDelete] = useState<IPaddler | null>(null)
+	const [deleteContext, setDeleteContext] = useState<{ heatKey: number; paddlerList: IPaddler[] } | null>(null)
 	const paddlerScores = useSelector(getScoresState)
 	const paddlerHeatList = useSelector(getPaddlerHeatList)
 	const numberOfRuns = useSelector(getNumberOfRuns)
@@ -53,26 +54,28 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 		)
 	}, [availableCategories, paddlerHeatList])
 
-	const handleDeletePaddler =
-		(heatKey: number, paddlerList: IPaddler[], paddler: IPaddler) => () => {
-			setPaddlerToDelete(paddler)
-			setDeleteConfirmationVisible(true)
-		}
+	const handleDeletePaddler = (paddler: IPaddler) => () => {
+		setPaddlerToDelete(paddler)
+		setDeleteContext({ heatKey: props.heatKey, paddlerList: props.paddlerList })
+		setDeleteConfirmationVisible(true)
+	}
 
 	const handleDeleteConfirm = () => {
-		if (paddlerToDelete) {
+		if (paddlerToDelete && deleteContext) {
 			addOrRemovePaddler(
-				props.heatKey,
-				props.paddlerList.filter((e) => e !== paddlerToDelete)
+				deleteContext.heatKey,
+				deleteContext.paddlerList.filter((e) => e !== paddlerToDelete)
 			)
 		}
 		setDeleteConfirmationVisible(false)
 		setPaddlerToDelete(null)
+		setDeleteContext(null)
 	}
 
 	const handleDeleteCancel = () => {
 		setDeleteConfirmationVisible(false)
 		setPaddlerToDelete(null)
+		setDeleteContext(null)
 	}
 
 	const handleAddChange = (newPaddlerName: string) => {
@@ -197,11 +200,7 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 							{paddler.name}
 						</Text>
 						<Button
-							onPress={handleDeletePaddler(
-								props.heatKey,
-								props.paddlerList,
-								paddler
-							)}
+							onPress={handleDeletePaddler(paddler)}
 							{...paperButtonProps.deleteButtonSpaced}
 							contentStyle={{ minHeight: 48 }}
 						>
