@@ -206,7 +206,6 @@ export const EntryDynamicButton = DynamicButtonPresentation
 const layoutStyles = StyleSheet.create({
 	unscoredButtonWrap: {
 		width: "100%",
-		paddingHorizontal: 1.5,
 		marginTop: 4
 	},
 	buttonBlock: {
