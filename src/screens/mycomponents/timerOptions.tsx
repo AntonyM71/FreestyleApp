@@ -10,13 +10,7 @@ const timerOptionsPresentation = () => {
 	const inactiveTrackColor = "#C7CDD6"
 	const thumbColor = "#223A5E"
 	const thumbColorProps = {
-		thumbColor,
-		thumbTintColor: thumbColor,
-		activeThumbColor: thumbColor
-	} as {
-		thumbColor: string
-		thumbTintColor: string
-		activeThumbColor: string
+		thumbColor
 	}
 
 	const dispatch = useDispatch()
@@ -35,7 +29,7 @@ const timerOptionsPresentation = () => {
 				value={showTimer}
 				trackColor={{ false: inactiveTrackColor, true: activeTrackColor }}
 				{...thumbColorProps}
-				ios_backgroundColor={activeTrackColor}
+				ios_backgroundColor={inactiveTrackColor}
 				onValueChange={handleTimerToggle}
 			/>
 		</View>

@@ -11,13 +11,7 @@ const runOptionsPresentation = () => {
 	const inactiveTrackColor = "#C7CDD6"
 	const thumbColor = "#223A5E"
 	const thumbColorProps = {
-		thumbColor,
-		thumbTintColor: thumbColor,
-		activeThumbColor: thumbColor
-	} as {
-		thumbColor: string
-		thumbTintColor: string
-		activeThumbColor: string
+		thumbColor
 	}
 
 	const handleRunToggle = (newValue: boolean) => {
@@ -42,7 +36,7 @@ const runOptionsPresentation = () => {
 				value={showRunHandler}
 				trackColor={{ false: inactiveTrackColor, true: activeTrackColor }}
 				{...thumbColorProps}
-				ios_backgroundColor={activeTrackColor}
+				ios_backgroundColor={inactiveTrackColor}
 				onValueChange={handleRunToggle}
 			/>
 		</View>
