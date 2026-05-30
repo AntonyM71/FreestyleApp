@@ -1,9 +1,27 @@
 import React from "react"
 import { render, screen, fireEvent } from "@testing-library/react-native"
 import { Provider } from "react-redux"
+import { SafeAreaProvider } from "react-native-safe-area-context"
+import { Provider as PaperProvider } from "react-native-paper"
 import PaddlerManager from "../paddlerManagementHandler"
 import { initialScoresheet } from "../makePaddlerScores"
 import configureStore, { IStoreType } from "../../../store"
+
+const safeAreaMetrics = {
+  frame: { x: 0, y: 0, width: 320, height: 640 },
+  insets: { top: 0, left: 0, right: 0, bottom: 0 }
+}
+
+const renderWithProviders = (ui: React.ReactElement, store: ReturnType<typeof configureStore>) =>
+  render(ui, {
+    wrapper: ({ children }) => (
+      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+        <PaperProvider>
+          <Provider store={store}>{children}</Provider>
+        </PaperProvider>
+      </SafeAreaProvider>
+    )
+  })
 
 describe("PaddlerManager", () => {
   // Use the same initial state as defined in reducers.ts
@@ -44,11 +62,7 @@ describe("PaddlerManager", () => {
 
   it("renders heats with their paddlers", () => {
     const store = configureStore()
-    render(
-      <Provider store={store}>
-        <PaddlerManager />
-      </Provider>
-    )
+    renderWithProviders(<PaddlerManager />, store)
 
     // Each heat should be rendered with its paddlers
     const heat1Paddlers = testPaddlers.filter((p) => p.heat === 1)
@@ -64,11 +78,7 @@ describe("PaddlerManager", () => {
 
   it("adds a new heat when 'New Heat' button is clicked", () => {
     const store = configureStore()
-    render(
-      <Provider store={store}>
-        <PaddlerManager />
-      </Provider>
-    )
+    renderWithProviders(<PaddlerManager />, store)
 
     // Find and click the New Heat button
     const newHeatButton = screen.getByText("New Heat")
@@ -81,11 +91,7 @@ describe("PaddlerManager", () => {
 
   it("clears scores when 'Clear Scores' button is clicked", () => {
     const store = configureStore()
-    render(
-      <Provider store={store}>
-        <PaddlerManager />
-      </Provider>
-    )
+    renderWithProviders(<PaddlerManager />, store)
 
     // Find and click the Clear Scores button
     const clearScoresButton = screen.getByText("Clear Scores")
@@ -103,11 +109,7 @@ describe("PaddlerManager", () => {
 
   it("clears paddlers when 'Clear Paddlers' button is clicked", () => {
     const store = configureStore()
-    render(
-      <Provider store={store}>
-        <PaddlerManager />
-      </Provider>
-    )
+    renderWithProviders(<PaddlerManager />, store)
 
     // Find and click the Clear Paddlers button
     const clearPaddlersButton = screen.getByText("Clear Paddlers")
@@ -131,11 +133,7 @@ describe("PaddlerManager", () => {
       }
     }
     const store = configureStore()
-    render(
-      <Provider store={store}>
-        <PaddlerManager />
-      </Provider>
-    )
+    renderWithProviders(<PaddlerManager />, store)
 
     // Should still render buttons
     expect(screen.getByText("New Heat")).toBeTruthy()
