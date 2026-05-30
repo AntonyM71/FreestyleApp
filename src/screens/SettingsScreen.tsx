@@ -1,5 +1,6 @@
 import React from "react"
 import { ScrollView, StyleSheet, Text, View } from "react-native"
+import { SafeAreaView } from "react-native-safe-area-context"
 import { styles } from "../styles"
 import CategoryManager from "./mycomponents/categoryManager"
 import RunOptions from "./mycomponents/runOptions"
@@ -12,50 +13,52 @@ export default class SettingsScreen extends React.Component {
 
 	render() {
 		return (
-			<View style={styles.container} testID="settings-container">
-				<ScrollView
-					style={styles.container}
-					contentContainerStyle={layoutStyles.settingsContent}
-					testID="settings-scroll-view"
-					accessible={true}
-				>
-					<View
-						style={layoutStyles.card}
-						testID="score-options-container"
+			<SafeAreaView style={styles.container} testID="settings-safe-area" accessible={true}>
+				<View style={styles.container} testID="settings-container">
+					<ScrollView
+						style={styles.container}
+						contentContainerStyle={layoutStyles.settingsContent}
+						testID="settings-scroll-view"
+						accessible={true}
 					>
-						<View style={layoutStyles.cardHeader}>
-							<Text
-								style={layoutStyles.cardHeaderText}
-								testID="score-options-header"
+						<View
+							style={layoutStyles.card}
+							testID="score-options-container"
+						>
+							<View style={layoutStyles.cardHeader}>
+								<Text
+									style={layoutStyles.cardHeaderText}
+									testID="score-options-header"
+								>
+									{"Score Page Options"}
+								</Text>
+							</View>
+							<View
+								style={layoutStyles.halfWidthOption}
+								testID="timer-options-container"
 							>
-								{"Score Page Options"}
-							</Text>
+								<TimerOptions />
+							</View>
+							<View
+								style={layoutStyles.halfWidthOption}
+								testID="run-options-container"
+							>
+								<RunOptions />
+							</View>
 						</View>
-						<View
-							style={layoutStyles.halfWidthOption}
-							testID="timer-options-container"
-						>
-							<TimerOptions />
+						<View style={layoutStyles.card}>
+							<View style={layoutStyles.cardHeader}>
+								<Text style={layoutStyles.cardHeaderText} testID="categories-header">
+									{"Categories"}
+								</Text>
+							</View>
+							<View style={layoutStyles.categoryManagerWrap} testID="category-manager-container">
+								<CategoryManager />
+							</View>
 						</View>
-						<View
-							style={layoutStyles.halfWidthOption}
-							testID="run-options-container"
-						>
-							<RunOptions />
-						</View>
-					</View>
-					<View style={layoutStyles.card}>
-						<View style={layoutStyles.cardHeader}>
-							<Text style={layoutStyles.cardHeaderText} testID="categories-header">
-								{"Categories"}
-							</Text>
-						</View>
-						<View style={layoutStyles.categoryManagerWrap} testID="category-manager-container">
-							<CategoryManager />
-						</View>
-					</View>
-				</ScrollView>
-			</View>
+					</ScrollView>
+				</View>
+			</SafeAreaView>
 		)
 	}
 }
