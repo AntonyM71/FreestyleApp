@@ -33,6 +33,7 @@ const calculateScoreAndBonuses = (
 const DisplayScorePresenetation = (props: {
 	paddler: string | number
 	run: number
+	fontSize?: number
 }) => {
 	const paddlerScores = useSelector(getScoresState)
 	const paddlerScore: number[] = [0]
@@ -75,6 +76,7 @@ const DisplayScorePresenetation = (props: {
 		<Text
 			style={{
 				...styles.standardText,
+				fontSize: props.fontSize || styles.standardText.fontSize,
 				textAlign: "center",
 				marginTop: -2
 			}}

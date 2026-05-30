@@ -1,4 +1,4 @@
-import { Platform, StyleSheet, ViewStyle } from "react-native"
+import { StyleSheet, TextStyle, ViewStyle } from "react-native"
 
 export const styles = StyleSheet.create({
 	container: {
@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
 		backgroundColor: "#fff"
 	},
 	contentContainer: {
-		paddingTop: Platform.OS === "ios" ? 0 : 30
+		paddingTop: 0
 	},
 	standardText: {
 		fontSize: 20,
@@ -28,29 +28,46 @@ interface PaperButtonProps {
 	buttonColor: string
 	textColor: string
 	style: ViewStyle
+	contentStyle: ViewStyle
+	labelStyle: TextStyle
+	compact: boolean
 }
 
 const btn = (
 	buttonColor: string,
 	textColor: string,
-	marginTop: number
+	marginTop: number,
+	minHeight: number
 ): PaperButtonProps => ({
 	mode: "contained",
 	buttonColor,
 	textColor,
-	style: { marginLeft: 4, marginRight: 4, marginTop }
+	compact: true,
+	style: {
+		width: "100%",
+		marginTop,
+		borderRadius: 3
+	},
+	contentStyle: {
+		minHeight,
+		paddingHorizontal: 2,
+		paddingVertical: 0
+	},
+	labelStyle: {
+		marginHorizontal: 2
+	}
 })
 
 export const paperButtonProps = {
-	noMove: btn("#4F84C4", "white", 15),
-	noBonus: btn("#4F84C4", "white", 4),
-	moveScored: btn("#223A5E", "white", 15),
-	bonusScored: btn("#223A5E", "white", 4),
-	deleteButton: btn("#DC4C46", "white", 8),
-	deleteButtonSpaced: btn("#DC4C46", "white", 10),
-	timerRed: btn("#DC4C46", "white", 8),
-	timerYellow: btn("#F6D155", "#000000", 8),
-	timerGreen: btn("#92B558", "white", 8),
-	changeButton: btn("#D2691E", "white", 8)
+	noMove: btn("#4F84C4", "white", 4, 34),
+	noBonus: btn("#4F84C4", "white", 3, 28),
+	moveScored: btn("#223A5E", "white", 4, 34),
+	bonusScored: btn("#223A5E", "white", 3, 28),
+	deleteButton: btn("#DC4C46", "white", 4, 34),
+	deleteButtonSpaced: btn("#DC4C46", "white", 5, 34),
+	timerRed: btn("#DC4C46", "white", 4, 34),
+	timerYellow: btn("#F6D155", "#000000", 4, 34),
+	timerGreen: btn("#92B558", "white", 4, 34),
+	changeButton: btn("#D2691E", "white", 4, 34)
 }
 

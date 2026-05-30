@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Text, View } from "react-native"
+import { StyleSheet, Text, View } from "react-native"
 import { Button, HelperText, TextInput } from "react-native-paper"
 import { batch, useDispatch, useSelector } from "react-redux"
 import { addOrRemoveCategory, addOrRemovePaddlerName } from "../../actions"
@@ -54,40 +54,21 @@ export const PaddlerHeatManagerPresentation = () => {
 
 	return (
 		<View>
-			<View
-				style={{
-					flex: 1,
-
-					borderBottomColor: "lightgray",
-					borderBottomWidth: 2,
-					paddingBottom: 5
-				}}
-			>
+			<View style={layoutStyles.categoryListWrap}>
 				{categoryList.map((category: ICategory, key: number) => (
 					<View
-						style={{
-							flex: 1,
-							flexDirection: "row",
-							flexWrap: "wrap",
-							borderTopColor: "lightgray",
-							borderTopWidth: 1,
-							paddingBottom: 5
-						}}
+						style={layoutStyles.categoryCard}
 						key={key}
 					>
-						<View style={{ width: "70%" }}>
+						<View style={layoutStyles.categoryHeaderRow}>
+							<View style={layoutStyles.categoryNameWrap}>
 							<Text
-								style={{
-									...styles.standardText,
-									justifyContent: "space-around",
-									alignItems: "center"
-								}}
+								style={layoutStyles.categoryNameText}
 							>
 								{category.name}
 							</Text>
-						</View>
-
-						<View style={{ width: "30%" }}>
+							</View>
+							<View style={layoutStyles.deleteButtonWrap}>
 							<Button
 								onPress={() =>
 									handleDeleteCategory(category.name)
@@ -97,33 +78,23 @@ export const PaddlerHeatManagerPresentation = () => {
 								{"Delete"}
 							</Button>
 						</View>
+						</View>
 
-						<View style={{ width: "100%" }}>
+						<View style={layoutStyles.movesWrap}>
 							<MoveSelection category={category} />
 						</View>
 					</View>
 				))}
 			</View>
-			<View
-				style={{
-					borderBottomColor: "lightgray",
-					borderBottomWidth: 1
-				}}
-			>
+			<View style={layoutStyles.addCategoryCard}>
 				<Text
-					style={{
-						...styles.headerText,
-						justifyContent: "space-around",
-						alignItems: "center",
-						borderTopColor: "lightgray",
-						borderTopWidth: 1,
-						paddingBottom: 5
-					}}
+					style={layoutStyles.addCategoryHeader}
 				>
 					{"Add New Category"}
 				</Text>
 
 				<TextInput
+					style={layoutStyles.categoryInput}
 					mode="outlined"
 					autoCorrect={false}
 					placeholder="New Category Name"
@@ -140,5 +111,55 @@ export const PaddlerHeatManagerPresentation = () => {
 		</View>
 	)
 }
+
+const layoutStyles = StyleSheet.create({
+	categoryListWrap: {
+		paddingTop: 4
+	},
+	categoryCard: {
+		backgroundColor: "#F9FAFB",
+		borderColor: "#E5E7EB",
+		borderWidth: 1,
+		borderRadius: 6,
+		marginBottom: 8,
+		paddingHorizontal: 8,
+		paddingVertical: 6
+	},
+	categoryHeaderRow: {
+		flexDirection: "row",
+		alignItems: "center"
+	},
+	categoryNameWrap: {
+		width: "70%"
+	},
+	categoryNameText: {
+		...styles.standardText,
+		marginTop: 2,
+		fontSize: 18,
+		fontWeight: "500",
+		color: "#1F2937"
+	},
+	deleteButtonWrap: {
+		width: "30%"
+	},
+	movesWrap: {
+		width: "100%"
+	},
+	addCategoryCard: {
+		marginTop: 4,
+		paddingTop: 4,
+		paddingBottom: 8
+	},
+	addCategoryHeader: {
+		...styles.headerText,
+		fontSize: 22,
+		marginTop: 6,
+		marginBottom: 6,
+		color: "#1F2937"
+	},
+	categoryInput: {
+		backgroundColor: "#FFFFFF"
+	}
+})
 
 export default PaddlerHeatManagerPresentation

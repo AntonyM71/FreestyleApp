@@ -1,5 +1,5 @@
 import React from "react"
-import { View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import { Button } from "react-native-paper"
 import { useDispatch, useSelector } from "react-redux"
 import { updatePaddlerScores } from "../../actions"
@@ -67,13 +67,9 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 
 			return (
 				<View
-					style={{
-						flex: 1,
-						flexDirection: "row",
-						flexWrap: "wrap"
-					}}
+					style={layoutStyles.buttonBlock}
 				>
-					<View style={{ width: "100%" }}>
+					<View style={layoutStyles.fullWidthCell}>
 						<Button
 							onPress={handleMove(
 								props.paddler.name,
@@ -87,7 +83,7 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 							{buttonName}
 						</Button>
 					</View>
-					<View style={{ width: "50%" }}>
+					<View style={layoutStyles.thirdWidthCell}>
 						<Button
 							onPress={handleMove(
 								props.paddler.name,
@@ -104,7 +100,7 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 							{"C"}
 						</Button>
 					</View>
-					<View style={{ width: "50%" }}>
+					<View style={layoutStyles.thirdWidthCell}>
 						<Button
 							onPress={handleMove(
 								props.paddler.name,
@@ -121,41 +117,7 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 							{"SC"}
 						</Button>
 					</View>
-					<View style={{ width: "33%" }}>
-						<Button
-							onPress={handleMove(
-								props.paddler.name,
-								props.currentRun,
-								props.move.Move,
-								props.direction,
-								"air"
-							)}
-							disabled={props.move.Air ? false : true}
-							{...(thisMove[props.direction].air
-								? paperButtonProps.bonusScored
-								: paperButtonProps.noBonus)}
-						>
-							{"A"}
-						</Button>
-					</View>
-					<View style={{ width: "33%" }}>
-						<Button
-							onPress={handleMove(
-								props.paddler.name,
-								props.currentRun,
-								props.move.Move,
-								props.direction,
-								"huge"
-							)}
-							disabled={props.move.Huge ? false : true}
-							{...(thisMove[props.direction].huge
-								? paperButtonProps.bonusScored
-								: paperButtonProps.noBonus)}
-						>
-							{"H"}
-						</Button>
-					</View>
-					<View style={{ width: "33%" }}>
+					<View style={layoutStyles.thirdWidthCell}>
 						<Button
 							onPress={handleMove(
 								props.paddler.name,
@@ -172,7 +134,41 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 							{"L"}
 						</Button>
 					</View>
-					<View style={{ width: "33%" }}>
+					<View style={layoutStyles.thirdWidthCell}>
+						<Button
+							onPress={handleMove(
+								props.paddler.name,
+								props.currentRun,
+								props.move.Move,
+								props.direction,
+								"air"
+							)}
+							disabled={props.move.Air ? false : true}
+							{...(thisMove[props.direction].air
+								? paperButtonProps.bonusScored
+								: paperButtonProps.noBonus)}
+						>
+							{"A"}
+						</Button>
+					</View>
+					<View style={layoutStyles.thirdWidthCell}>
+						<Button
+							onPress={handleMove(
+								props.paddler.name,
+								props.currentRun,
+								props.move.Move,
+								props.direction,
+								"huge"
+							)}
+							disabled={props.move.Huge ? false : true}
+							{...(thisMove[props.direction].huge
+								? paperButtonProps.bonusScored
+								: paperButtonProps.noBonus)}
+						>
+							{"H"}
+						</Button>
+					</View>
+					<View style={layoutStyles.thirdWidthCell}>
 						<Button
 							onPress={handleMove(
 								props.paddler.name,
@@ -207,3 +203,23 @@ interface IPropsType {
 // can we make this go deeper, so that we only update a single component when we add a move?
 
 export const DynamicButton = DynamicButtonPresentation
+
+const layoutStyles = StyleSheet.create({
+	buttonBlock: {
+		width: "100%",
+		flexDirection: "row",
+		flexWrap: "wrap"
+	},
+	fullWidthCell: {
+		width: "100%",
+		paddingHorizontal: 1.5
+	},
+	halfWidthCell: {
+		width: "50%",
+		paddingHorizontal: 1.5
+	},
+	thirdWidthCell: {
+		width: "33.33%",
+		paddingHorizontal: 1.5
+	}
+})

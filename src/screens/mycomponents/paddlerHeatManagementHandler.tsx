@@ -1,7 +1,7 @@
 import { Picker } from "@react-native-picker/picker"
 import _ from "lodash"
 import React, { useMemo, useState } from "react"
-import { Platform, Text, View } from "react-native"
+import { Platform, StyleSheet, Text, View } from "react-native"
 import { Button, HelperText, TextInput } from "react-native-paper"
 import { batch, useDispatch, useSelector } from "react-redux"
 import {
@@ -152,91 +152,81 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 	}
 
 	return (
-		<View>
-			<View style={{ borderTopColor: "lightgray", borderTopWidth: 2 }}>
-				<Text style={styles.headerText}>{`Heat ${props.heatKey}`}</Text>
+		<View style={layoutStyles.heatContent}>
+			<View style={layoutStyles.heatHeaderWrap}>
+				<Text style={layoutStyles.heatHeaderText}>{`Heat ${props.heatKey}`}</Text>
+			</View>
 
-				{props.paddlerList.map((paddler: IPaddler, key: number) => (
-					<View
-						style={{
-							flex: 1,
-							flexDirection: "row",
-							flexWrap: "wrap",
-							borderTopColor: "lightgray",
-							borderTopWidth: 1,
-							paddingBottom: 5
-						}}
-						key={key}
-					>
-						<View style={{ width: "40%" }}>
-							<Text
-								style={{
-									...styles.standardText,
-									justifyContent: "center",
-									alignItems: "center"
-								}}
-							>
-								{paddler.name}
-							</Text>
-							<Button
-								onPress={handleDeletePaddler(
-									props.heatKey,
-									props.paddlerList,
-									paddler
-								)}
-								{...paperButtonProps.deleteButtonSpaced}
-							>
-								{"Delete"}
-							</Button>
-						</View>
-						<View style={{ width: "60%" }}>
-							<Picker
-								selectedValue={paddler.category}
-								mode={
-									Platform.OS === "android"
-										? "dropdown"
-										: undefined
-								}
-								testID="category-picker"
-								style={{
-									width: "100%",
-									minHeight: 48,
-									color: "black"
-								}}
-								itemStyle={{ color: "black" }}
-								onValueChange={(itemValue) =>
-									handleCategoryChange(
-										paddler.name,
-										String(itemValue)
-									)
-								}
-							>
+			{props.paddlerList.map((paddler: IPaddler, key: number) => (
+				<View
+					style={layoutStyles.paddlerSubCard}
+					key={key}
+				>
+					<View style={layoutStyles.paddlerInfoCell}>
+						<Text
+							numberOfLines={1}
+							ellipsizeMode="tail"
+							style={layoutStyles.paddlerNameText}
+						>
+							{paddler.name}
+						</Text>
+						<Button
+							onPress={handleDeletePaddler(
+								props.heatKey,
+								props.paddlerList,
+								paddler
+							)}
+							{...paperButtonProps.deleteButtonSpaced}
+							contentStyle={{ minHeight: 48 }}
+						>
+							{"Delete"}
+						</Button>
+					</View>
+					<View style={layoutStyles.pickerCell}>
+						<Picker
+							selectedValue={paddler.category}
+							mode={
+								Platform.OS === "android"
+									? "dropdown"
+									: undefined
+							}
+							testID="category-picker"
+							style={{
+								width: "100%",
+								minHeight: 48,
+								color: "black"
+							}}
+							itemStyle={{ color: "black" }}
+							onValueChange={(itemValue) =>
+								handleCategoryChange(
+									paddler.name,
+									String(itemValue)
+								)
+							}
+						>
+							<Picker.Item
+								key={"default"}
+								label={"Select a Category"}
+								value={""}
+								enabled={true}
+								color={"black"}
+							/>
+							{pickerCategoryNames.map((categoryName) => (
 								<Picker.Item
-									key={"default"}
-									label={"Select a Category"}
-									value={""}
-									enabled={true}
+									key={categoryName + paddler.name}
+									label={categoryName}
+									value={categoryName}
 									color={"black"}
 								/>
-								{pickerCategoryNames.map((categoryName) => (
-									<Picker.Item
-										key={categoryName + paddler.name}
-										label={categoryName}
-										value={categoryName}
-										color={"black"}
-									/>
-								))}
-							</Picker>
-						</View>
-						<View style={{ width: "20%" }}></View>
+							))}
+						</Picker>
 					</View>
-				))}
-			</View>
-			<View style={{ borderTopColor: "lightgray", borderTopWidth: 1 }}>
-				<Text
-					style={styles.headerText}
-				>{`Add Paddler to Heat ${props.heatKey}`}</Text>
+				</View>
+			))}
+			<View style={layoutStyles.addPaddlerCard}>
+				<Text style={layoutStyles.addPaddlerHeader}>{`Add Paddler to Heat ${props.heatKey}`}</Text>
 				<TextInput
+					style={layoutStyles.paddlerInput}
 					mode="outlined"
 					autoCorrect={false}
 					placeholder="New Paddler Name"
@@ -257,5 +247,76 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 		</View>
 	)
 }
+
+const layoutStyles = StyleSheet.create({
+	heatContent: {
+		paddingTop: 0,
+		paddingBottom: 8
+	},
+	heatHeaderWrap: {
+		paddingHorizontal: 12,
+		paddingVertical: 10,
+		backgroundColor: "#F5F7FA",
+		borderBottomColor: "#E8EBEF",
+		borderBottomWidth: StyleSheet.hairlineWidth,
+		marginBottom: 8
+	},
+	heatHeaderText: {
+		...styles.headerText,
+		fontSize: 22,
+		marginTop: 0,
+		marginBottom: 0,
+		color: "#1F2937"
+	},
+	paddlerSubCard: {
+		flexDirection: "row",
+		flexWrap: "wrap",
+		alignItems: "flex-end",
+		backgroundColor: "#FFFFFF",
+		borderColor: "#E5E7EB",
+		borderWidth: 1,
+		borderRadius: 6,
+		paddingHorizontal: 8,
+		paddingVertical: 6,
+		marginHorizontal: 8,
+		marginBottom: 8
+	},
+	paddlerInfoCell: {
+		width: "42%",
+		justifyContent: "flex-end"
+	},
+	paddlerNameText: {
+		...styles.standardText,
+		marginTop: 2,
+		marginBottom: 2,
+		fontSize: 17,
+		color: "#111827"
+	},
+	pickerCell: {
+		width: "58%",
+		paddingHorizontal: 2,
+		justifyContent: "flex-end"
+	},
+	addPaddlerCard: {
+		backgroundColor: "#FFFFFF",
+		borderColor: "#E5E7EB",
+		borderWidth: 1,
+		borderRadius: 6,
+		paddingHorizontal: 8,
+		paddingTop: 6,
+		paddingBottom: 4,
+		marginHorizontal: 8
+	},
+	addPaddlerHeader: {
+		...styles.headerText,
+		fontSize: 20,
+		marginTop: 4,
+		marginBottom: 6,
+		color: "#1F2937"
+	},
+	paddlerInput: {
+		backgroundColor: "#FFFFFF"
+	}
+})
 
 export default PaddlerHeatManagerPresentation

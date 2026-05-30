@@ -1,6 +1,6 @@
 // Testing json import
 import React, { Fragment } from "react"
-import { Dimensions, View } from "react-native"
+import { Dimensions, StyleSheet, View } from "react-native"
 import { useSelector } from "react-redux"
 import moveList from "../../data/moves_lists/move_list"
 import { IDirection, IPaddler } from "../../reducers"
@@ -36,23 +36,21 @@ export const MoveButtons = () => {
 	const screenWidth = Math.round(Dimensions.get("window").width)
 	const availableMoves = moveList
 	const buttonPercentage = screenWidth > 600 ? "25%" : "50%"
-	const entryButtonPercentage = screenWidth > 600 ? "33%" : "33%"
+	const entryButtonPercentage = screenWidth > 600 ? "33.33%" : "33.33%"
 	{
 		if (numberOfPaddlersInCurrentHeat !== 0) {
 			return (
-				<View testID="move-buttons">
+				<View testID="move-buttons" style={layoutStyles.container}>
 					<View
-						style={{
-							flex: 1,
-							flexDirection: "row",
-							flexWrap: "wrap",
-							justifyContent: "space-between"
-						}}
+						style={layoutStyles.rowWrap}
 					>
 						{availableMoves.entry.map((item, index) => (
 							<View
 								testID="entry-button-container"
-								style={{ width: entryButtonPercentage }}
+								style={[
+									layoutStyles.cell,
+									{ width: entryButtonPercentage }
+								]}
 								key={index}
 							>
 								<EntryDynamicButton
@@ -64,12 +62,7 @@ export const MoveButtons = () => {
 						))}
 					</View>
 					<View
-						style={{
-							flex: 1,
-							flexDirection: "row",
-							flexWrap: "wrap",
-							justifyContent: "flex-start"
-						}}
+						style={layoutStyles.rowWrap}
 					>
 						<>
 							{availableMoves.both.map((item, index) => {
@@ -77,7 +70,10 @@ export const MoveButtons = () => {
 									return (
 										<View
 											testID="normal-button-container"
-											style={{ width: buttonPercentage }}
+											style={[
+												layoutStyles.cell,
+												{ width: buttonPercentage }
+											]}
 											key={index}
 										>
 											<NormalMove
@@ -92,9 +88,10 @@ export const MoveButtons = () => {
 									return (
 										<Fragment key={index}>
 											<View
-												style={{
-													width: buttonPercentage
-												}}
+												style={[
+													layoutStyles.cell,
+													{ width: buttonPercentage }
+												]}
 											>
 												<NormalMove
 													item={item}
@@ -106,9 +103,10 @@ export const MoveButtons = () => {
 												/>
 											</View>
 											<View
-												style={{
-													width: buttonPercentage
-												}}
+												style={[
+													layoutStyles.cell,
+													{ width: buttonPercentage }
+												]}
 											>
 												<NormalMove
 													item={item}
@@ -130,9 +128,10 @@ export const MoveButtons = () => {
 										if (!item.Reverse) {
 											return (
 												<View
-													style={{
-														width: buttonPercentage
-													}}
+													style={[
+														layoutStyles.cell,
+														{ width: buttonPercentage }
+													]}
 													key={index}
 												>
 													<NormalMove
@@ -149,9 +148,10 @@ export const MoveButtons = () => {
 											return (
 												<Fragment key={index}>
 													<View
-														style={{
-															width: buttonPercentage
-														}}
+														style={[
+															layoutStyles.cell,
+															{ width: buttonPercentage }
+														]}
 													>
 														<NormalMove
 															item={item}
@@ -165,9 +165,10 @@ export const MoveButtons = () => {
 														/>
 													</View>
 													<View
-														style={{
-															width: buttonPercentage
-														}}
+														style={[
+															layoutStyles.cell,
+															{ width: buttonPercentage }
+														]}
 													>
 														<NormalMove
 															item={item}
@@ -192,9 +193,10 @@ export const MoveButtons = () => {
 										if (!item.Reverse) {
 											return (
 												<View
-													style={{
-														width: buttonPercentage
-													}}
+													style={[
+														layoutStyles.cell,
+														{ width: buttonPercentage }
+													]}
 													key={index}
 												>
 													<NormalMove
@@ -211,9 +213,10 @@ export const MoveButtons = () => {
 											return (
 												<Fragment key={index}>
 													<View
-														style={{
-															width: buttonPercentage
-														}}
+														style={[
+															layoutStyles.cell,
+															{ width: buttonPercentage }
+														]}
 													>
 														<NormalMove
 															item={item}
@@ -227,9 +230,10 @@ export const MoveButtons = () => {
 														/>
 													</View>
 													<View
-														style={{
-															width: buttonPercentage
-														}}
+														style={[
+															layoutStyles.cell,
+															{ width: buttonPercentage }
+														]}
 													>
 														<NormalMove
 															item={item}
@@ -254,9 +258,10 @@ export const MoveButtons = () => {
 										if (!item.Reverse) {
 											return (
 												<View
-													style={{
-														width: buttonPercentage
-													}}
+													style={[
+														layoutStyles.cell,
+														{ width: buttonPercentage }
+													]}
 													key={index}
 												>
 													<NormalMove
@@ -273,9 +278,10 @@ export const MoveButtons = () => {
 											return (
 												<Fragment key={index}>
 													<View
-														style={{
-															width: buttonPercentage
-														}}
+														style={[
+															layoutStyles.cell,
+															{ width: buttonPercentage }
+														]}
 													>
 														<NormalMove
 															item={item}
@@ -289,9 +295,10 @@ export const MoveButtons = () => {
 														/>
 													</View>
 													<View
-														style={{
-															width: buttonPercentage
-														}}
+														style={[
+															layoutStyles.cell,
+															{ width: buttonPercentage }
+														]}
 													>
 														<NormalMove
 															item={item}
@@ -312,19 +319,15 @@ export const MoveButtons = () => {
 						</>
 					</View>
 					<View
-						style={{
-							flex: 1,
-							flexDirection: "row",
-							flexWrap: "wrap",
-							justifyContent: "space-between"
-						}}
+						style={layoutStyles.rowWrap}
 					>
 						{availableMoves.trophy.map((item, index) => (
 							<Fragment key={index}>
 								<View
-									style={{
-										width: buttonPercentage
-									}}
+									style={[
+										layoutStyles.cell,
+										{ width: buttonPercentage }
+									]}
 								>
 									<NormalMove
 										item={item}
@@ -334,9 +337,10 @@ export const MoveButtons = () => {
 									/>
 								</View>
 								<View
-									style={{
-										width: buttonPercentage
-									}}
+									style={[
+										layoutStyles.cell,
+										{ width: buttonPercentage }
+									]}
 								>
 									<NormalMove
 										item={item}
@@ -357,3 +361,17 @@ export const MoveButtons = () => {
 }
 
 export default MoveButtons
+
+const layoutStyles = StyleSheet.create({
+	container: {
+		width: "100%"
+	},
+	rowWrap: {
+		flexDirection: "row",
+		flexWrap: "wrap",
+		justifyContent: "flex-start"
+	},
+	cell: {
+		paddingHorizontal: 2
+	}
+})

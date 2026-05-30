@@ -1,5 +1,5 @@
 import React from "react"
-import { View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import { Button } from "react-native-paper"
 import { batch, useDispatch, useSelector } from "react-redux"
 import {
@@ -51,10 +51,10 @@ const moveSelectionPresentation = ({ category }: { category: ICategory }) => {
 
 	return (
 		<View>
-			<View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
+			<View style={layoutStyles.toggleGrid}>
 				{enabledMovesKeys.map(
 					(moveKey: IEnabledMovesKeys, key: number) => (
-						<View style={{ width: "33%" }} key={key}>
+						<View style={layoutStyles.toggleCell} key={key}>
 							<Button
 									{...(enabledMovesList[moveKey]
 									? paperButtonProps.moveScored
@@ -74,5 +74,16 @@ const moveSelectionPresentation = ({ category }: { category: ICategory }) => {
 }
 
 type IEnabledMovesKeys = keyof IEnabledMoves
+
+const layoutStyles = StyleSheet.create({
+	toggleGrid: {
+		flexDirection: "row",
+		flexWrap: "wrap"
+	},
+	toggleCell: {
+		width: "33.33%",
+		paddingHorizontal: 2
+	}
+})
 
 export default moveSelectionPresentation

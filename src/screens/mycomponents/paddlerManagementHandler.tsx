@@ -1,6 +1,6 @@
 import _ from "lodash"
 import React from "react"
-import { ScrollView, View } from "react-native"
+import { ScrollView, StyleSheet, View } from "react-native"
 import { Button } from "react-native-paper"
 import { batch, useDispatch, useSelector } from "react-redux"
 import {
@@ -66,10 +66,10 @@ export const PaddlerManager = () => {
 	}
 
 	return (
-		<ScrollView style={styles.container}>
+		<ScrollView style={styles.container} contentContainerStyle={layoutStyles.content}>
 			<View>
 				{heats.map((heat) => (
-					<View key={heat}>
+					<View key={heat} style={layoutStyles.heatCard}>
 						<PaddlerHeatManager
 							paddlerList={paddlerHeatList.filter(
 								(p) => p.heat === heat
@@ -79,10 +79,8 @@ export const PaddlerManager = () => {
 					</View>
 				))}
 
-				<View
-					style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}
-				>
-					<View style={{ width: "100%" }}>
+				<View style={layoutStyles.actionsCard}>
+					<View style={layoutStyles.fullActionCell}>
 						<Button
 							onPress={() => {
 								addHeat()
@@ -92,7 +90,7 @@ export const PaddlerManager = () => {
 							{"New Heat"}
 						</Button>
 					</View>
-					<View style={{ width: "50%" }}>
+					<View style={layoutStyles.halfActionCell}>
 						<Button
 							onPress={() => {
 								clearScores()
@@ -103,7 +101,7 @@ export const PaddlerManager = () => {
 						</Button>
 					</View>
 
-					<View style={{ width: "50%" }}>
+					<View style={layoutStyles.halfActionCell}>
 						<Button
 							onPress={clearPaddlers}
 							{...paperButtonProps.timerRed}
@@ -116,5 +114,46 @@ export const PaddlerManager = () => {
 		</ScrollView>
 	)
 }
+
+const layoutStyles = StyleSheet.create({
+	content: {
+		paddingHorizontal: 10,
+		paddingTop: 8,
+		paddingBottom: 20
+	},
+	heatCard: {
+		backgroundColor: "#FFFFFF",
+		borderColor: "#D9DDE3",
+		borderWidth: 1,
+		borderRadius: 8,
+		marginBottom: 12,
+		elevation: 2,
+		shadowColor: "#000000",
+		shadowOpacity: 0.08,
+		shadowRadius: 4,
+		shadowOffset: {
+			width: 0,
+			height: 1
+		}
+	},
+	actionsCard: {
+		flexDirection: "row",
+		flexWrap: "wrap",
+		backgroundColor: "#F9FAFB",
+		borderColor: "#E5E7EB",
+		borderWidth: 1,
+		borderRadius: 8,
+		paddingHorizontal: 4,
+		paddingVertical: 6
+	},
+	fullActionCell: {
+		width: "100%",
+		paddingHorizontal: 2
+	},
+	halfActionCell: {
+		width: "50%",
+		paddingHorizontal: 2
+	}
+})
 
 export default PaddlerManager

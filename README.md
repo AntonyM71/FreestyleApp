@@ -4,6 +4,30 @@ This app is built using [npm](https://github.com/AntonyM71/FreestyleApp.git) and
 
 ## Development process
 
+
+### Install Node
+
+Install node, for example using the instructions for your OS [here](https://nodejs.org/en/download)
+
+### Install Dependencies
+Install the dependencies with:
+`npm install`
+### Start the App in Expo
+Start the app in development mode using:
+`npx expo start`
+
+### Emulating
+We can emulate iOS devices (on a mac), and Android devices (just about anywhere):
+
+#### iOS
+Download XCode on your mac from the app store.
+
+#### Android
+
+Follow the instructions [here](https://developer.android.com/studio/install#linux) for your Operating System.
+
+### Development practices
+
 Try and keep to good programming practices, including:
 
 -   linting using eslint (VSCode)
@@ -12,18 +36,6 @@ Try and keep to good programming practices, including:
 -   redux-hooks on new components
 
 This app was developed using Node 18 LTS or later, install from [here](https://nodejs.org/en/download/) I've been developing using VSCode for my IDE.
-
-This project uses **Expo SDK 54** with React Native 0.81 and React 19.
-
-Start developing by running `npm ci`
-
-Some expo commands aren't allowed by the default powershell execution policies, update them using `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted` (see [here](https://stackoverflow.com/questions/41117421/ps1-cannot-be-loaded-because-running-scripts-is-disabled-on-this-system) for a discussion on this).
-
-1. `sudo apt-get install curl`
-1. `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh | bash`
-1. Restart your terminal and run the command `nvm install --lts`
-
-You'll need an expo installed on an [Android](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en_GB) or [iOS](https://apps.apple.com/gb/app/expo-client/id982107779). If you have a mac you can install [XCode](https://developer.apple.com/xcode/) and simulate apple devices locally (This is super handy, I would recommend!) Currently we don't have an app store account, but iOS compatability is desired.
 
 ## Deploying a new version
 

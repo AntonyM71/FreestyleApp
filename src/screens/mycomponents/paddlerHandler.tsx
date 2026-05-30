@@ -1,5 +1,5 @@
 import React from "react"
-import { Text, View } from "react-native"
+import { StyleSheet, Text, View } from "react-native"
 import { Button } from "react-native-paper"
 import { useDispatch, useSelector } from "react-redux"
 import {
@@ -82,9 +82,9 @@ export const PaddlerHandler = () => {
 
 	if (numberOfPaddlersInCurrentHeat !== 0) {
 		return (
-			<View>
-				<View style={{ flexDirection: "row", alignItems: "center" }}>
-					<View style={{ flex: 1 }}>
+			<View style={layoutStyles.container}>
+				<View style={layoutStyles.controlRow}>
+					<View style={layoutStyles.controlCell}>
 						<Button
 							onPress={handlePressPrevious}
 								{...paperButtonProps.changeButton}
@@ -92,11 +92,15 @@ export const PaddlerHandler = () => {
 							{"Last Paddler"}
 						</Button>
 					</View>
-					<View style={{ flex: 1 }}>
+					<View style={layoutStyles.centerCell}>
 						<Text
+							numberOfLines={1}
+							ellipsizeMode="tail"
 							style={{
 								...styles.standardText,
-								marginTop: 4,
+								marginTop: 2,
+								marginBottom: 0,
+								fontSize: 18,
 								textAlign: "center"
 							}}
 						>
@@ -105,9 +109,10 @@ export const PaddlerHandler = () => {
 						<DisplayScore
 							paddler={currentPaddler.name}
 							run={currentRun}
+							fontSize={18}
 						/>
 					</View>
-					<View style={{ flex: 1 }}>
+					<View style={layoutStyles.controlCell}>
 						<Button
 							onPress={handlePressNext}
 								{...paperButtonProps.changeButton}
@@ -117,8 +122,8 @@ export const PaddlerHandler = () => {
 					</View>
 				</View>
 				{showRunHandler ? (
-					<View style={{ flexDirection: "row", alignItems: "center" }}>
-						<View style={{ flex: 1 }}>
+					<View style={layoutStyles.controlRow}>
+						<View style={layoutStyles.controlCell}>
 							<Button
 								onPress={handlePressPreviousRun}
 								{...paperButtonProps.changeButton}
@@ -126,18 +131,18 @@ export const PaddlerHandler = () => {
 								{"Prev Run"}
 							</Button>
 						</View>
-						<View style={{ flex: 1 }}>
+						<View style={layoutStyles.centerCell}>
 							<Text
 								style={{
 									...styles.standardText,
-									marginTop: 15,
+									marginTop: 8,
 									textAlign: "center"
 								}}
 							>
 								{currentRun + 1}
 							</Text>
 						</View>
-						<View style={{ flex: 1 }}>
+						<View style={layoutStyles.controlCell}>
 							<Button
 								onPress={handlePressNextRun}
 								{...paperButtonProps.changeButton}
@@ -165,3 +170,23 @@ export const PaddlerHandler = () => {
 		)
 	}
 }
+
+const layoutStyles = StyleSheet.create({
+	container: {
+		width: "100%"
+	},
+	controlRow: {
+		flexDirection: "row",
+		alignItems: "center"
+	},
+	controlCell: {
+		flex: 1,
+		paddingHorizontal: 2
+	},
+	centerCell: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
+		paddingHorizontal: 2
+	}
+})
