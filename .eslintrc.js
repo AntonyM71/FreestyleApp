@@ -27,8 +27,7 @@ module.exports = {
 		}
 	],
 	parserOptions: {
-		project: ["./tsconfig.json"], // Specify it only for TypeScript files
-		warnOnUnsupportedTypeScriptVersion: false
+		project: ["./tsconfig.json"] // Specify it only for TypeScript files
 	},
 	rules: {
 
@@ -62,8 +61,9 @@ module.exports = {
 		"@typescript-eslint/prefer-for-of": "error",
 		"@typescript-eslint/ban-ts-comment": "off",
 		"@typescript-eslint/prefer-function-type": "error",
-		"@typescript-eslint/quotes": ["warn", "double"],
+		quotes: ["warn", "double"],
 		"@typescript-eslint/unified-signatures": "error",
+		"@typescript-eslint/no-unnecessary-type-assertion": "off",
 		"testing-library/await-async-query": "error",
 		"testing-library/no-await-sync-query": "error",
 		"testing-library/no-dom-import": "off",
