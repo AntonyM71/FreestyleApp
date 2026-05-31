@@ -35,20 +35,49 @@ export const getNumberOfPaddlersInHeat = (state: IStoreType) =>
 export const getPaddlerScores = (state: IStoreType) =>
 	state.paddlers.paddlerScores
 
-export const getCurrentPaddler = (state: IStoreType): IPaddler =>
-	getPaddlersInHeat(state)[state.paddlers.paddlerIndex]
+export const getCurrentPaddler = (state: IStoreType): IPaddler | undefined => {
+	const paddlersInHeat = getPaddlersInHeat(state)
+	const index = state.paddlers.paddlerIndex
+
+	// Bounds check: ensure index is within valid range
+	if (index < 0 || index >= paddlersInHeat.length) {
+		return undefined
+	}
+
+	return paddlersInHeat[index]
+}
 
 export const getAvailableMovesForPaddler = (
 	state: IStoreType
 ): IEnabledMoves => {
 	const currentPaddler = getCurrentPaddler(state)
-	if (currentPaddler && currentPaddler.category) {
+
+	// Check if currentPaddler exists before accessing properties
+	if (!currentPaddler) {
+		console.warn(
+			"getAvailableMovesForPaddler: No current paddler found. Returning default moves."
+		)
+
+		return {
+			wave: true,
+			hole: true,
+			nfl: false
+		}
+	}
+
+	if (currentPaddler.category) {
 		const availableMoves = state.paddlers.categories.find(
 			(c) => c.name === currentPaddler.category
 		)?.availableMoves
 		if (availableMoves) {
 			return availableMoves
 		}
+
+		// Log when category not found - indicates data inconsistency
+		console.warn(
+			`getAvailableMovesForPaddler: Category "${currentPaddler.category}" not found ` +
+			`for paddler "${currentPaddler.name}". Using defaults.`
+		)
 	}
 
 	return {

@@ -16,20 +16,38 @@ export const PaddlerHeatManagerPresentation = () => {
 	const paddlerList = useSelector(getPaddlerHeatList)
 
 	const handleAddChange = (newCategoryName: string) => {
+		const trimmedName = newCategoryName.trim()
 		setNewCategory(newCategoryName)
-		setIsDuplicate(categoryList.map((p) => p.name).indexOf(newCategoryName) > -1)
+		setIsDuplicate(categoryList.map((p) => p.name).indexOf(trimmedName) > -1)
 	}
 	const handleAddCategory = (newCategoryName: string) => {
+		const trimmedName = newCategoryName.trim()
+
+		// Validate input: not empty, not duplicate, within max length
+		if (trimmedName.length === 0) {
+			alert("Category name cannot be empty")
+
+			return
+		}
+
+		if (trimmedName.length > 50) {
+			alert("Category name too long (max 50 characters)")
+
+			return
+		}
+
 		if (!isDuplicate) {
 			const newCategoryList: ICategory[] = [
 				...categoryList,
 				{
-					name: newCategoryName,
+					name: trimmedName,
 					availableMoves: { hole: true, wave: true, nfl: false }
 				}
 			]
 			setNewCategory("")
 			dispatch(addOrRemoveCategory(newCategoryList))
+		} else {
+			alert("Category name already exists")
 		}
 	}
 	const handleDeleteCategory = (removedCategoryName: string) => {

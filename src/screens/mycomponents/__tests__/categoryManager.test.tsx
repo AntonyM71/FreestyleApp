@@ -12,6 +12,9 @@ jest.mock("../enabledMoves", () => ({
   default: () => null
 }))
 
+// Mock alert
+global.alert = jest.fn()
+
 describe("CategoryManager", () => {
   const mockCategories = [
     {

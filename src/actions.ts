@@ -12,18 +12,54 @@ import {
 } from "./actionTypes"
 import { ICategory, IPaddlerList, IPaddlerScores } from "./reducers"
 
-export const changePaddler = (paddlerIndex: number) => ({
-	type: CHANGE_PADDLER,
-	payload: paddlerIndex
-})
-export const changeRun = (runIndex: number) => ({
-	type: UPDATE_RUN,
-	payload: runIndex
-})
-export const changeNumberOfRuns = (maxRunIndex: number) => ({
-	type: UPDATE_NUMBER_OF_RUNS,
-	payload: maxRunIndex
-})
+export const changePaddler = (paddlerIndex: number) => {
+	// Validate paddlerIndex is non-negative
+	if (paddlerIndex < 0) {
+		console.error(`changePaddler: Invalid paddlerIndex ${paddlerIndex}. Must be non-negative.`)
+
+		return {
+			type: CHANGE_PADDLER,
+			payload: 0
+		}
+	}
+
+	return {
+		type: CHANGE_PADDLER,
+		payload: paddlerIndex
+	}
+}
+export const changeRun = (runIndex: number) => {
+	// Validate runIndex is non-negative
+	if (runIndex < 0) {
+		console.error(`changeRun: Invalid runIndex ${runIndex}. Must be non-negative.`)
+
+		return {
+			type: UPDATE_RUN,
+			payload: 0
+		}
+	}
+
+	return {
+		type: UPDATE_RUN,
+		payload: runIndex
+	}
+}
+export const changeNumberOfRuns = (maxRunIndex: number) => {
+	// Validate maxRunIndex is non-negative
+	if (maxRunIndex < 0) {
+		console.error(`changeNumberOfRuns: Invalid maxRunIndex ${maxRunIndex}. Must be non-negative.`)
+
+		return {
+			type: UPDATE_NUMBER_OF_RUNS,
+			payload: 0
+		}
+	}
+
+	return {
+		type: UPDATE_NUMBER_OF_RUNS,
+		payload: maxRunIndex
+	}
+}
 
 export const changeHeat = (newHeatIndex: number) => ({
 	type: CHANGE_HEAT,

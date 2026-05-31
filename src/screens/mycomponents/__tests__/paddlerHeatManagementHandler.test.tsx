@@ -105,7 +105,7 @@ describe("PaddlerHeatManagerPresentation", () => {
   ]
 
   const mockPaddlers = [
-    { name: "paddler1", category: "category 1", heat: 1 }
+    { name: "paddler1", category: "", heat: 1 }
   ]
 
   const mockScores = {

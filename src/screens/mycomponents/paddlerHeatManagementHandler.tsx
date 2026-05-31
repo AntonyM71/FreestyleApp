@@ -83,21 +83,25 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 		setIsDuplicate(
 			paddlerHeatList
 				.flat()
-				.map((p) => p.name)
+				.map((p: IPaddler) => p.name)
 				.indexOf(newPaddlerName) > -1
 		)
 	}
 	const handleAddPaddler =
 		(heatKey: number, paddlerList: IPaddler[], newPaddlerName: string) =>
 		() => {
-			if (newPaddlerName.length === 0) {
+			const trimmedName = newPaddlerName.trim()
+
+			if (trimmedName.length === 0) {
 				alert("People like having names :)")
+			} else if (trimmedName.length > 50) {
+				alert("Paddler name too long (max 50 characters)")
 			} else {
 				if (
 					paddlerHeatList
 						.flat()
-						.map((p) => p.name)
-						.indexOf(newPaddlerName) > -1
+						.map((p: IPaddler) => p.name)
+						.indexOf(trimmedName) > -1
 				) {
 					alert("You've already added this paddler")
 				} else {
@@ -106,7 +110,7 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 						addOrRemovePaddler(heatKey, [
 							...paddlerList,
 							{
-								name: newPaddlerName,
+								name: trimmedName,
 								category: "",
 								heat: heatKey
 							}
@@ -120,22 +124,28 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 		remainingPaddlers: IPaddler[]
 	) => {
 		const newList = remainingPaddlers.length === 0 ? [] : remainingPaddlers
-		const newPaddlerScores = paddlerScores
+		// Deep clone to avoid mutating Redux state
+		const newPaddlerScores = JSON.parse(
+			JSON.stringify(paddlerScores)
+		) as typeof paddlerScores
 		newList.flat().map((paddler) => {
 			// @ts-ignore
-			if (!newPaddlerScores[paddler]) {
+			// Fix: check paddler.name, not paddler object
+			if (!newPaddlerScores[paddler.name]) {
 				newPaddlerScores[paddler.name] = []
 			}
 
+			// Fix: replace array instead of appending to existing
 			if (
 				numberOfRuns + 1 !==
 				// @ts-ignore
 				newPaddlerScores[paddler.name].length
 			) {
-				for (let i = 0; i < numberOfRuns + 1; i++) {
-					// @ts-ignore
-					newPaddlerScores[paddler.name].push(initialScoresheet())
-				}
+				// Create array with correct length
+				// @ts-ignore
+				newPaddlerScores[paddler.name] = Array(numberOfRuns + 1)
+					.fill(null)
+					.map(() => initialScoresheet())
 			}
 		})
 		const paddlersInOtherHeats = paddlerHeatList.filter(
@@ -153,6 +163,14 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 		const changedPaddlerIndex = paddlerHeatList.findIndex(
 			(p) => p.name === paddlerName
 		)
+
+		// Check if paddler was found before accessing array
+		if (changedPaddlerIndex === -1) {
+			console.error(`Paddler "${paddlerName}" not found in heat list`)
+
+			return
+		}
+
 		if (
 			newCategory !== "" &&
 			newCategory !== paddlerHeatList[changedPaddlerIndex].category
@@ -162,7 +180,10 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 
 			newPaddlerList[changedPaddlerIndex].category = newCategory
 
-			newPaddlerScores[paddlerName] = [initialScoresheet()]
+			// Create correct number of scoresheets for numberOfRuns
+			newPaddlerScores[paddlerName] = Array(numberOfRuns + 1)
+				.fill(null)
+				.map(() => initialScoresheet())
 
 			batch(() => {
 				dispatch(addOrRemovePaddlerName([...newPaddlerList]))

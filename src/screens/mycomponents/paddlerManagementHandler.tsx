@@ -65,11 +65,8 @@ export const PaddlerManager = () => {
 	}
 	const clearPaddlers = () => {
 		const newHeatList: IPaddlerList = []
+		// When clearing paddlers, also clear all scores
 		const startingScoresheet = {}
-		newHeatList.flat().map((paddler: IPaddler) => {
-			// @ts-ignore
-			startingScoresheet[paddler.name] = [initialScoresheet()]
-		})
 
 		batch(() => {
 			dispatch(changePaddler(0))

@@ -67,12 +67,19 @@ export const PaddlerHandler = () => {
 		if (newRunIndex < numberOfRuns) {
 			dispatch(changeRun(newRunIndex))
 		} else {
-			const scores = paddlerScores
+			// Deep clone to avoid mutating Redux state directly
+			const scores = JSON.parse(JSON.stringify(paddlerScores)) as typeof paddlerScores
 			paddlerList
 				.flat()
 				.map((paddler: { toString: () => React.ReactText }) => {
 					// @ts-ignore
-					scores[paddler.name].push(initialScoresheet())
+					// Check if paddler exists in scores before pushing
+					if (scores[paddler.name]) {
+						scores[paddler.name].push(initialScoresheet())
+					} else {
+						// Initialize if missing
+						scores[paddler.name] = [initialScoresheet()]
+					}
 				})
 			dispatch(changeNumberOfRuns(newRunIndex))
 			dispatch(updatePaddlerScores({ ...scores }))

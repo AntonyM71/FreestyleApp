@@ -66,34 +66,68 @@ export const paddlerReducer = (
 ): IPaddlerStateType => {
 	switch (action.type) {
 		case CHANGE_PADDLER:
+			// Validate paddlerIndex is non-negative
+			if (action.payload < 0) {
+				console.error("CHANGE_PADDLER: paddlerIndex must be non-negative")
+
+				return state
+			}
+
 			return {
 				...state,
 				paddlerIndex: action.payload
 			}
 		case CHANGE_HEAT:
+			// Allow any heat value (validated by selectors)
 			return {
 				...state,
 				currentHeat: action.payload
 			}
 		case ADD_OR_REMOVE_PADDLER:
+			// Validate payload is an array
+			if (!Array.isArray(action.payload)) {
+				console.error("ADD_OR_REMOVE_PADDLER: payload must be an array")
+
+				return state
+			}
+
 			return {
 				...state,
-				paddlerList: action.payload
+				paddlerList: action.payload,
+				// Reset paddlerIndex if it's out of bounds
+				paddlerIndex: state.paddlerIndex >= action.payload.length ? 0 : state.paddlerIndex
 			}
 		case UPDATE_PADDLER_SCORES:
+			// Validate payload is not null/undefined
+			if (!action.payload || typeof action.payload !== "object") {
+				console.error("UPDATE_PADDLER_SCORES: payload must be a valid object")
+
+				return state
+			}
+
 			return {
 				...state,
 				paddlerScores: action.payload
 			}
 		case UPDATE_RUN:
+			// Validate currentRun doesn't exceed numberOfRuns
 			return {
 				...state,
-				currentRun: action.payload
+				currentRun: action.payload <= state.numberOfRuns ? action.payload : state.numberOfRuns
 			}
 		case UPDATE_NUMBER_OF_RUNS:
+			// Validate numberOfRuns is non-negative and adjust currentRun if needed
+			if (action.payload < 0) {
+				console.error("UPDATE_NUMBER_OF_RUNS: numberOfRuns must be non-negative")
+
+				return state
+			}
+
 			return {
 				...state,
-				numberOfRuns: action.payload
+				numberOfRuns: action.payload,
+				// Reset currentRun if it exceeds new numberOfRuns
+				currentRun: state.currentRun > action.payload ? 0 : state.currentRun
 			}
 		case UPDATE_SHOW_TIMER:
 			return {
@@ -111,6 +145,13 @@ export const paddlerReducer = (
 				categories: action.payload
 			}
 		case ADD_OR_REMOVE_HEATS:
+			// Validate payload is an array
+			if (!Array.isArray(action.payload)) {
+				console.error("ADD_OR_REMOVE_HEATS: payload must be an array")
+
+				return state
+			}
+
 			return {
 				...state,
 				heats: action.payload

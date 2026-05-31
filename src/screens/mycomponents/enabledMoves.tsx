@@ -28,6 +28,13 @@ const moveSelectionPresentation = ({ category }: { category: ICategory }) => {
 			(c) => c.name === category.name
 		)
 
+		// Check if category was found before accessing array
+		if (categoryIndex === -1) {
+			console.error(`Category "${category.name}" not found in category list`)
+
+			return
+		}
+
 		newCategoryList[categoryIndex].availableMoves = newMoves
 		dispatch(addOrRemoveCategory(newCategoryList))
 		clearScores()

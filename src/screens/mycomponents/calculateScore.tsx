@@ -37,39 +37,58 @@ const DisplayScorePresenetation = (props: {
 }) => {
 	const paddlerScores = useSelector(getScoresState)
 	const paddlerScore: number[] = [0]
-	// @ts-ignore
-	if (
-		paddlerScores &&
-		paddlerScores[props.paddler] &&
-		paddlerScores[props.paddler][props.run]
-	) {
+
+	try {
 		// @ts-ignore
-		const scoredMoves = paddlerScores[props.paddler][props.run]
-		moveListArray.map((item) => {
-			if (Array.isArray(scoredMoves[item.Move])) {
-				// @ts-ignore
-				scoredMoves[item.Move].map(
-					(arrayItem: { [x: string]: moveSideInterface }) => {
-						const moveTotal =
-							calculateScoreAndBonuses(item, arrayItem.left) +
-							calculateScoreAndBonuses(item, arrayItem.right)
-						paddlerScore.push(moveTotal)
-					}
-				)
-			} else if (!Array.isArray(scoredMoves[item.Move])) {
-				const moveTotal =
-					calculateScoreAndBonuses(
-						item,
+		if (
+			paddlerScores &&
+			paddlerScores[props.paddler] &&
+			paddlerScores[props.paddler][props.run]
+		) {
+			// @ts-ignore
+			const scoredMoves = paddlerScores[props.paddler][props.run]
+			moveListArray.map((item) => {
+				// Check if scoredMoves[item.Move] exists before accessing
+				const moveData = scoredMoves?.[item.Move]
+
+				if (!moveData) {
+					return // Skip if move data doesn't exist
+				}
+
+				if (Array.isArray(moveData)) {
+					// @ts-ignore
+					moveData.map(
+						(arrayItem: { [x: string]: moveSideInterface }) => {
+							// Validate arrayItem has left and right properties
+							if (arrayItem?.left && arrayItem?.right) {
+								const moveTotal =
+									calculateScoreAndBonuses(item, arrayItem.left) +
+									calculateScoreAndBonuses(item, arrayItem.right)
+								paddlerScore.push(moveTotal)
+							}
+						}
+					)
+				} else if (moveData?.left && moveData?.right) {
+					const moveTotal =
+						calculateScoreAndBonuses(
+							item,
+							// @ts-ignore
+							// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+							moveData.left
+						) +
 						// @ts-ignore
 						// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-						scoredMoves[item.Move].left
-					) +
-					// @ts-ignore
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-					calculateScoreAndBonuses(item, scoredMoves[item.Move].right)
-				paddlerScore.push(moveTotal)
-			}
-		})
+						calculateScoreAndBonuses(item, moveData.right)
+					paddlerScore.push(moveTotal)
+				}
+			})
+		}
+	} catch (error) {
+		// Graceful error handling - log and return 0 score
+		console.error(
+			`DisplayScore: Error calculating score for paddler ${props.paddler}, run ${props.run}:`,
+			error
+		)
 	}
 
 	return (

@@ -22,6 +22,13 @@ export const PaddlerHandler = () => {
 
 	const numberOfHeats = availableHeats.length
 	const handlePressNextHeat = () => {
+		// Validate that heats array is not empty
+		if (numberOfHeats === 0) {
+			console.error("Cannot navigate: no heats available")
+
+			return
+		}
+
 		// -1 to account for zero indexing
 		const newHeatIndex =
 			currentHeatIndex < numberOfHeats - 1 ? currentHeatIndex + 1 : 0
@@ -34,6 +41,13 @@ export const PaddlerHandler = () => {
 	}
 
 	const handlePressPreviousHeat = () => {
+		// Validate that heats array is not empty
+		if (numberOfHeats === 0) {
+			console.error("Cannot navigate: no heats available")
+
+			return
+		}
+
 		// -1 to account for zero indexing
 		const newHeatIndex =
 			currentHeatIndex === 0 ? numberOfHeats - 1 : currentHeatIndex - 1

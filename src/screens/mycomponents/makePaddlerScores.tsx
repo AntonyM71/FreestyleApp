@@ -1,6 +1,17 @@
 import moveList, { IMoves } from "../../data/moves_lists/move_list"
 export const moveListArray: IMoves[] = Object.values(moveList).flat()
+
+// Default empty scoresheet structure for fallback
+const defaultScoresheet = {}
+
 export const initialScoresheet = () => {
+	// Handle empty move list
+	if (!moveListArray || moveListArray.length === 0) {
+		console.error("initialScoresheet: moveListArray is empty or undefined")
+
+		return defaultScoresheet
+	}
+
 	const initialMoves = moveListArray.map(
 		(item): moveInterface | moveInterface[] => {
 			const scoresObject = {
