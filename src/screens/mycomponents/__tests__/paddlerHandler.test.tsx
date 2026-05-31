@@ -51,6 +51,31 @@ describe("PaddlerHandler", () => {
     expect(screen.getByText("This heat has no paddlers.")).toBeTruthy()
   })
 
+  it("uses first available heat when current heat is invalid", () => {
+    const initialState = {
+      paddlers: {
+        paddlerList: mockPaddlers,
+        currentHeat: 0,
+        heats: [1],
+        paddlerIndex: 0,
+        currentRun: 0,
+        numberOfRuns: 1,
+        showRunHandler: true,
+        paddlerScores: mockScores
+      }
+    }
+    const store = mockStore(initialState)
+
+    render(
+      <Provider store={store}>
+        <PaddlerHandler />
+      </Provider>
+    )
+
+    expect(screen.getByText("Paddler1")).toBeTruthy()
+    expect(screen.queryByText("This heat has no paddlers.")).toBeNull()
+  })
+
   it("renders correctly with paddlers", () => {
     const initialState = {
       paddlers: {

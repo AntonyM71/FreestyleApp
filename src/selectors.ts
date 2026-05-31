@@ -12,8 +12,18 @@ export const getPaddlerHeatList = (state: IStoreType) =>
 export const getNumberOfRuns = (state: IStoreType) =>
 	state.paddlers.numberOfRuns
 export const getCurrentRun = (state: IStoreType) => state.paddlers.currentRun
-export const getCurrentHeat = (state: IStoreType) =>
-	state.paddlers.currentHeat || getAvailableHeats(state)[0]
+export const getCurrentHeat = (state: IStoreType) => {
+	const availableHeats = getAvailableHeats(state)
+	if (availableHeats.length === 0) {
+		return state.paddlers.currentHeat
+	}
+
+	if (availableHeats.includes(state.paddlers.currentHeat)) {
+		return state.paddlers.currentHeat
+	}
+
+	return availableHeats[0] || 0
+}
 export const getShowRunHandler = (state: IStoreType) =>
 	state.paddlers.showRunHandler
 export const getShowTimer = (state: IStoreType) => state.paddlers.showTimer
@@ -49,10 +59,13 @@ export const getAvailableMovesForPaddler = (
 }
 export const getCategories = (state: IStoreType): ICategory[] =>
 	state.paddlers.categories
-export const getPaddlersInHeat = (state: IStoreType): IPaddler[] =>
-	state.paddlers.paddlerList.filter(
-		(p) => p.heat === state.paddlers.currentHeat // displayed heat numbers are not zero indexed
+export const getPaddlersInHeat = (state: IStoreType): IPaddler[] => {
+	const currentHeat = getCurrentHeat(state)
+
+	return state.paddlers.paddlerList.filter(
+		(p) => p.heat === currentHeat // displayed heat numbers are not zero indexed
 	)
+}
 
 const selectPaddlerHeats = (state: IStoreType) => state.paddlers.heats
 
