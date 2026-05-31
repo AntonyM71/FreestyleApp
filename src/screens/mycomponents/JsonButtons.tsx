@@ -1,8 +1,8 @@
 // Testing json import
 import React, { Fragment } from "react"
 import { Dimensions, StyleSheet, Text, View } from "react-native"
-import { useDispatch, useSelector } from "react-redux"
-import { addOrRemovePaddlerName } from "../../actions"
+import { batch, useDispatch, useSelector } from "react-redux"
+import { addOrRemovePaddlerName, updatePaddlerScores } from "../../actions"
 import moveList from "../../data/moves_lists/move_list"
 import { IDirection, IPaddler } from "../../reducers"
 import {
@@ -11,12 +11,13 @@ import {
 	getCurrentPaddler,
 	getCurrentRun,
 	getNumberOfPaddlersInHeat,
-	getPaddlerHeatList
+	getPaddlerHeatList,
+	getScoresState
 } from "../../selectors"
 import { DynamicButton } from "./dynamicButton"
 import { EntryDynamicButton } from "./entryDynamicButton"
 import CategoryPicker from "./CategoryPicker"
-import { dataSourceMoveInterface } from "./makePaddlerScores"
+import { dataSourceMoveInterface, initialScoresheet } from "./makePaddlerScores"
 const NormalMove = (props: {
 	currentPaddler: IPaddler
 	currentRun: number
@@ -37,6 +38,7 @@ export const MoveButtons = () => {
 	const currentPaddler = useSelector(getCurrentPaddler)
 	const categories = useSelector(getCategories)
 	const paddlerHeatList = useSelector(getPaddlerHeatList)
+	const paddlerScores = useSelector(getScoresState)
 	const numberOfPaddlersInCurrentHeat = useSelector(getNumberOfPaddlersInHeat)
 	const showMoves = useSelector(getAvailableMovesForPaddler)
 	// eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -47,10 +49,26 @@ export const MoveButtons = () => {
 	const hasCategory = Boolean(currentPaddler?.category)
 
 	const handleCategorySelection = (categoryName: string) => {
+		if (
+			!currentPaddler ||
+			categoryName === "" ||
+			categoryName === currentPaddler.category
+		) {
+			return
+		}
+
 		const newPaddlerList = paddlerHeatList.map((p) =>
 			p.name === currentPaddler.name ? { ...p, category: categoryName } : p
 		)
-		dispatch(addOrRemovePaddlerName(newPaddlerList))
+		const newPaddlerScores = {
+			...paddlerScores,
+			[currentPaddler.name]: [initialScoresheet()]
+		}
+
+		batch(() => {
+			dispatch(addOrRemovePaddlerName(newPaddlerList))
+			dispatch(updatePaddlerScores(newPaddlerScores))
+		})
 	}
 	{
 		if (numberOfPaddlersInCurrentHeat !== 0) {
