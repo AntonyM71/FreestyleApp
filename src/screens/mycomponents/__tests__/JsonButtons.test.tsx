@@ -4,6 +4,8 @@ import { render, screen, fireEvent } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 import { Dimensions, StyleSheet } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Provider as PaperProvider } from "react-native-paper";
 import MoveButtons from "../JsonButtons";
 import * as selectors from "../../../selectors";
 
@@ -110,6 +112,22 @@ jest.spyOn(Dimensions, "get").mockReturnValue({
 
 describe("MoveButtons", () => {
   const mockStore = configureStore([]);
+  const safeAreaMetrics = {
+    frame: { x: 0, y: 0, width: 320, height: 640 },
+    insets: { top: 0, left: 0, right: 0, bottom: 0 }
+  };
+
+  const renderWithProviders = (store: any) =>
+    render(
+      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+        <PaperProvider>
+          <Provider store={store}>
+            <MoveButtons />
+          </Provider>
+        </PaperProvider>
+      </SafeAreaProvider>
+    );
+
   const defaultState: {
     paddlers: {
       paddlerScores: Record<string, Record<number, Record<string, {
@@ -179,6 +197,19 @@ describe("MoveButtons", () => {
       heat: 1
     });
     jest.spyOn(selectors, "getNumberOfPaddlersInHeat").mockReturnValue(1);
+    jest.spyOn(selectors, "getCategories").mockReturnValue([
+      {
+        name: "Test Category",
+        availableMoves: { hole: true, wave: true, nfl: false }
+      }
+    ]);
+    jest.spyOn(selectors, "getPaddlerHeatList").mockReturnValue([
+      {
+        name: "Test Paddler",
+        category: "Test Category",
+        heat: 1
+      }
+    ]);
     jest.spyOn(selectors, "getAvailableMovesForPaddler").mockReturnValue({
       hole: true,
       wave: true,
@@ -193,11 +224,7 @@ describe("MoveButtons", () => {
   it("should hide moves section when there are no paddlers", () => {
     jest.spyOn(selectors, "getNumberOfPaddlersInHeat").mockReturnValue(0);
     const store = mockStore(defaultState);
-    render(
-      <Provider store={store}>
-        <MoveButtons />
-      </Provider>
-    );
+    renderWithProviders(store);
 
     expect(screen.queryByText(/Entry Move 1/)).toBeNull();
     expect(screen.queryByText(/Both Move 1/)).toBeNull();
@@ -205,22 +232,14 @@ describe("MoveButtons", () => {
 
   it("should display entry moves for current paddler", () => {
     const store = mockStore(defaultState);
-    render(
-      <Provider store={store}>
-        <MoveButtons />
-      </Provider>
-    );
+    renderWithProviders(store);
 
     expect(screen.getByText(/Entry Move 1/)).toBeTruthy();
   });
 
   it("should display both-side moves with left/right options", () => {
     const store = mockStore(defaultState);
-    render(
-      <Provider store={store}>
-        <MoveButtons />
-      </Provider>
-    );
+    renderWithProviders(store);
 
     // Both Move 2 is reversible, so it should appear twice
     const bothMove2Buttons = screen.getAllByText(/Both Move 2/);
@@ -235,11 +254,7 @@ describe("MoveButtons", () => {
     });
 
     const store = mockStore(defaultState);
-    render(
-      <Provider store={store}>
-        <MoveButtons />
-      </Provider>
-    );
+    renderWithProviders(store);
 
     // Should show hole moves
     expect(screen.getByText(/Hole Move 1/)).toBeTruthy();
@@ -252,11 +267,7 @@ describe("MoveButtons", () => {
   it("should adjust layout based on screen size", () => {
     // Test small screen first
     const store = mockStore(defaultState);
-    const { rerender } = render(
-      <Provider store={store}>
-        <MoveButtons />
-      </Provider>
-    );
+    const { rerender } = renderWithProviders(store);
 
     const getButtonStyle = () => {
       // Find the container by testID since we need the container's width
@@ -277,9 +288,13 @@ describe("MoveButtons", () => {
     });
 
     rerender(
-      <Provider store={store}>
-        <MoveButtons />
-      </Provider>
+      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+        <PaperProvider>
+          <Provider store={store}>
+            <MoveButtons />
+          </Provider>
+        </PaperProvider>
+      </SafeAreaProvider>
     );
 
     // Large screen should use 25% width
@@ -288,11 +303,7 @@ describe("MoveButtons", () => {
 
   it("should handle entry move button interactions", () => {
     const store = mockStore(defaultState);
-    render(
-      <Provider store={store}>
-        <MoveButtons />
-      </Provider>
-    );
+    renderWithProviders(store);
 
     // Press an entry move button
     fireEvent.press(screen.getByText(/Entry Move 1/));
@@ -307,11 +318,7 @@ describe("MoveButtons", () => {
 
   it("should handle reversible move button interactions", () => {
     const store = mockStore(defaultState);
-    render(
-      <Provider store={store}>
-        <MoveButtons />
-      </Provider>
-    );
+    renderWithProviders(store);
 
     // Both Move 2 is reversible, so test both left and right buttons
     const [leftButton, rightButton] = screen.getAllByText(/Both Move 2/);
@@ -328,6 +335,59 @@ describe("MoveButtons", () => {
     expect(store.getActions()[1]).toMatchObject({
       type: "UPDATE_PADDLER_SCORES",
       payload: expect.any(Object)
+    });
+  });
+
+  it("shows category prompt instead of moves when paddler has no category", () => {
+    jest.spyOn(selectors, "getCurrentPaddler").mockReturnValue({
+      name: "Test Paddler",
+      category: "",
+      heat: 1
+    });
+
+    const store = mockStore(defaultState);
+    renderWithProviders(store);
+
+    expect(screen.getByTestId("category-required-prompt")).toBeTruthy();
+    expect(screen.getByText(/Category Required/)).toBeTruthy();
+    expect(screen.queryByText(/Entry Move 1/)).toBeNull();
+  });
+
+  it("updates paddler category from prompt action", () => {
+    jest.spyOn(selectors, "getCurrentPaddler").mockReturnValue({
+      name: "Test Paddler",
+      category: "",
+      heat: 1
+    });
+    jest.spyOn(selectors, "getCategories").mockReturnValue([
+      {
+        name: "Expert",
+        availableMoves: { hole: true, wave: true, nfl: false }
+      }
+    ]);
+    jest.spyOn(selectors, "getPaddlerHeatList").mockReturnValue([
+      {
+        name: "Test Paddler",
+        category: "",
+        heat: 1
+      }
+    ]);
+
+    const store = mockStore(defaultState);
+    renderWithProviders(store);
+
+    fireEvent.press(screen.getByTestId("category-picker"));
+    fireEvent.press(screen.getByTestId("set-category-Expert"));
+
+    expect(store.getActions()[0]).toEqual({
+      type: "ADD_OR_REMOVE_PADDLER",
+      payload: [
+        {
+          name: "Test Paddler",
+          category: "Expert",
+          heat: 1
+        }
+      ]
     });
   });
 });

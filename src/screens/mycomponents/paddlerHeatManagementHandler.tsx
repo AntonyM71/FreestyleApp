@@ -1,7 +1,7 @@
 import _ from "lodash"
 import React, { useMemo, useState } from "react"
-import { Pressable, StyleSheet, Text, View } from "react-native"
-import { Button, HelperText, Menu, TextInput } from "react-native-paper"
+import { StyleSheet, Text, View } from "react-native"
+import { Button, HelperText, TextInput } from "react-native-paper"
 import { batch, useDispatch, useSelector } from "react-redux"
 import {
 	addOrRemovePaddlerName,
@@ -16,6 +16,8 @@ import {
 	getScoresState
 } from "../../selectors"
 import { paperButtonProps, styles } from "../../styles"
+import CategoryPicker from "./CategoryPicker"
+import ConfirmationModal from "./ConfirmationModal"
 import { initialScoresheet } from "./makePaddlerScores"
 
 interface PropsType {
@@ -26,7 +28,9 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 	const dispatch = useDispatch()
 	const [newPaddler, setNewPaddler] = useState("")
 	const [isDuplicate, setIsDuplicate] = useState(false)
-	const [openCategoryMenuFor, setOpenCategoryMenuFor] = useState<string | null>(null)
+	const [deleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false)
+	const [paddlerToDelete, setPaddlerToDelete] = useState<IPaddler | null>(null)
+	const [deleteContext, setDeleteContext] = useState<{ heatKey: number; paddlerList: IPaddler[] } | null>(null)
 	const paddlerScores = useSelector(getScoresState)
 	const paddlerHeatList = useSelector(getPaddlerHeatList)
 	const numberOfRuns = useSelector(getNumberOfRuns)
@@ -50,13 +54,29 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 		)
 	}, [availableCategories, paddlerHeatList])
 
-	const handleDeletePaddler =
-		(heatKey: number, paddlerList: IPaddler[], paddler: IPaddler) => () => {
+	const handleDeletePaddler = (paddler: IPaddler) => () => {
+		setPaddlerToDelete(paddler)
+		setDeleteContext({ heatKey: props.heatKey, paddlerList: props.paddlerList })
+		setDeleteConfirmationVisible(true)
+	}
+
+	const handleDeleteConfirm = () => {
+		if (paddlerToDelete && deleteContext) {
 			addOrRemovePaddler(
-				heatKey,
-				paddlerList.filter((e) => e !== paddler)
+				deleteContext.heatKey,
+				deleteContext.paddlerList.filter((e) => e !== paddlerToDelete)
 			)
 		}
+		setDeleteConfirmationVisible(false)
+		setPaddlerToDelete(null)
+		setDeleteContext(null)
+	}
+
+	const handleDeleteCancel = () => {
+		setDeleteConfirmationVisible(false)
+		setPaddlerToDelete(null)
+		setDeleteContext(null)
+	}
 
 	const handleAddChange = (newPaddlerName: string) => {
 		setNewPaddler(newPaddlerName)
@@ -151,11 +171,14 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 		}
 	}
 
-	const getCategoryLabel = (currentCategory: string) =>
-		currentCategory.length > 0 ? currentCategory : "Select a Category"
-
 	return (
 		<View style={layoutStyles.heatContent}>
+			<ConfirmationModal
+				visible={deleteConfirmationVisible}
+				message={`Are you sure you want to delete ${paddlerToDelete?.name ?? "this paddler"}?`}
+				onConfirm={handleDeleteConfirm}
+				onCancel={handleDeleteCancel}
+			/>
 			<View style={layoutStyles.heatHeaderWrap}>
 				<Text style={layoutStyles.heatHeaderText}>{`Heat ${props.heatKey}`}</Text>
 			</View>
@@ -174,11 +197,7 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 							{paddler.name}
 						</Text>
 						<Button
-							onPress={handleDeletePaddler(
-								props.heatKey,
-								props.paddlerList,
-								paddler
-							)}
+							onPress={handleDeletePaddler(paddler)}
 							{...paperButtonProps.deleteButtonSpaced}
 							contentStyle={{ minHeight: 48 }}
 						>
@@ -186,49 +205,20 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 						</Button>
 					</View>
 					<View style={layoutStyles.pickerCell}>
-						<Menu
-							visible={openCategoryMenuFor === paddler.name}
-							onDismiss={() => setOpenCategoryMenuFor(null)}
-							anchor={
-								<Pressable
-									testID="category-picker"
-									onPress={() => setOpenCategoryMenuFor(paddler.name)}
-									style={layoutStyles.categoryDropdownButton}
-								>
-									<Text style={layoutStyles.categoryFloatingLabel}>{"Category"}</Text>
-									<View style={layoutStyles.categoryDropdownRow}>
-										<Text
-											numberOfLines={1}
-											ellipsizeMode="tail"
-											style={layoutStyles.categoryDropdownText}
-										>
-											{getCategoryLabel(paddler.category)}
-										</Text>
-										<Text style={layoutStyles.categoryDropdownArrow}>{"\u25BE"}</Text>
-									</View>
-								</Pressable>
+						<CategoryPicker
+							currentCategory={paddler.category}
+							categoryNames={pickerCategoryNames}
+							onSelectCategory={(categoryName) =>
+								handleCategoryChange(paddler.name, categoryName)
 							}
-						>
-							<Menu.Item
-								testID={`category-option-none-${paddler.name}`}
-								onPress={() => {
-									handleCategoryChange(paddler.name, "")
-									setOpenCategoryMenuFor(null)
-								}}
-								title="Select a Category"
-							/>
-							{pickerCategoryNames.map((categoryName) => (
-								<Menu.Item
-									key={categoryName + paddler.name}
-									testID={`category-option-${categoryName}-${paddler.name}`}
-									onPress={() => {
-										handleCategoryChange(paddler.name, categoryName)
-										setOpenCategoryMenuFor(null)
-									}}
-									title={categoryName}
-								/>
-							))}
-						</Menu>
+							pickerTestID="category-picker"
+							getNoneOptionTestID={() =>
+								`category-option-none-${paddler.name}`
+							}
+							getOptionTestID={(categoryName) =>
+								`category-option-${categoryName}-${paddler.name}`
+							}
+						/>
 					</View>
 				</View>
 			))}
@@ -305,42 +295,6 @@ const layoutStyles = StyleSheet.create({
 		width: "58%",
 		paddingHorizontal: 2,
 		justifyContent: "flex-end"
-	},
-	categoryDropdownButton: {
-		width: "100%",
-		justifyContent: "center",
-		borderColor: "#C7CDD6",
-		borderWidth: 1,
-		borderRadius: 3,
-		paddingHorizontal: 10,
-		paddingTop: 10,
-		paddingBottom: 8,
-		backgroundColor: "#FFFFFF",
-		position: "relative"
-	},
-	categoryFloatingLabel: {
-		position: "absolute",
-		top: -8,
-		left: 8,
-		paddingHorizontal: 4,
-		backgroundColor: "#FFFFFF",
-		fontSize: 12,
-		color: "#6B7280"
-	},
-	categoryDropdownRow: {
-		minHeight: 29,
-		flexDirection: "row",
-		alignItems: "center"
-	},
-	categoryDropdownText: {
-		flex: 1,
-		fontSize: 16,
-		color: "#111827"
-	},
-	categoryDropdownArrow: {
-		fontSize: 14,
-		color: "#6B7280",
-		marginLeft: 8
 	},
 	addPaddlerCard: {
 		backgroundColor: "#FFFFFF",
