@@ -367,7 +367,7 @@ describe("PaddlerHeatManagerPresentation", () => {
       { name: "paddler2", category: "FreestylePro", heat: 1 }
     ]
     const initialState = {
-      categories: [],            // no configured categories
+      categories: [], // no configured categories
       paddlerList: paddlersWithCategories,
       paddlerScores: {
         paddler1: [mockScoresheet],
