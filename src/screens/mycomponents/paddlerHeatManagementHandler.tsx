@@ -121,19 +121,16 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 	) => {
 		const newList = remainingPaddlers.length === 0 ? [] : remainingPaddlers
 		const newPaddlerScores = paddlerScores
-		newList.flat().map((paddler) => {
-			// @ts-ignore
-			if (!newPaddlerScores[paddler]) {
+		newList.flat().forEach((paddler) => {
+			if (!newPaddlerScores[paddler.name]) {
 				newPaddlerScores[paddler.name] = []
 			}
 
 			if (
 				numberOfRuns + 1 !==
-				// @ts-ignore
 				newPaddlerScores[paddler.name].length
 			) {
 				for (let i = 0; i < numberOfRuns + 1; i++) {
-					// @ts-ignore
 					newPaddlerScores[paddler.name].push(initialScoresheet())
 				}
 			}

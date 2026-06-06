@@ -34,9 +34,8 @@ const listOfPaddlers = [
 	}
 ]
 
-const startingScoresheet = {}
-listOfPaddlers.flat().map((paddler) => {
-	// @ts-ignore
+const startingScoresheet: IPaddlerScores = {}
+listOfPaddlers.forEach((paddler) => {
 	startingScoresheet[paddler.name] = [initialScoresheet()]
 })
 

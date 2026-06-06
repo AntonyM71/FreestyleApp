@@ -11,7 +11,7 @@ import {
 	changeRun,
 	updatePaddlerScores
 } from "../../actions"
-import { IPaddler, IPaddlerList } from "../../reducers"
+import { IPaddler, IPaddlerList, IPaddlerScores } from "../../reducers"
 import {
 	getAvailableHeats,
 	getNumberOfRuns,
@@ -65,9 +65,8 @@ export const PaddlerManager = () => {
 	}
 	const clearPaddlers = () => {
 		const newHeatList: IPaddlerList = []
-		const startingScoresheet = {}
-		newHeatList.flat().map((paddler: IPaddler) => {
-			// @ts-ignore
+		const startingScoresheet: IPaddlerScores = {}
+		newHeatList.forEach((paddler: IPaddler) => {
 			startingScoresheet[paddler.name] = [initialScoresheet()]
 		})
 
@@ -80,9 +79,8 @@ export const PaddlerManager = () => {
 		})
 	}
 	const clearScores = () => {
-		const startingScoresheet = {}
-		paddlerHeatList.flat().map((paddler: IPaddler) => {
-			// @ts-ignore
+		const startingScoresheet: IPaddlerScores = {}
+		paddlerHeatList.forEach((paddler: IPaddler) => {
 			startingScoresheet[paddler.name] = [initialScoresheet()]
 		})
 		batch(() => {

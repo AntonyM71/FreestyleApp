@@ -13,9 +13,10 @@ const calculateScoreAndBonuses = (
 	move: dataSourceMoveInterface,
 	truth: moveSideInterface
 ) => {
-	// the below is a bit of a hack for ascenario where we have huge but no air,  it will add in the air bonus
+	// the below is a bit of a hack for a scenario where we have huge but no air, it will add in the air bonus
 	truth.air = truth.huge ? true : truth.air
-	const moveScore = truth.scored
+
+	return truth.scored
 		? [
 				truth.scored === true ? move.Value : 0,
 				truth.clean ? move.Clean : 0,
@@ -26,47 +27,27 @@ const calculateScoreAndBonuses = (
 				truth.style ? move.Style : 0
 			].reduce((a, b) => a + b)
 		: 0
-
-	return moveScore
 }
 
 const DisplayScorePresenetation = (props: {
-	paddler: string | number
+	paddler: string
 	run: number
 	fontSize?: number
 }) => {
 	const paddlerScores = useSelector(getScoresState)
 	const paddlerScore: number[] = [0]
-	// @ts-ignore
 	if (
 		paddlerScores &&
 		paddlerScores[props.paddler] &&
 		paddlerScores[props.paddler][props.run]
 	) {
-		// @ts-ignore
 		const scoredMoves = paddlerScores[props.paddler][props.run]
 		moveListArray.map((item) => {
-			if (Array.isArray(scoredMoves[item.Move])) {
-				// @ts-ignore
-				scoredMoves[item.Move].map(
-					(arrayItem: { [x: string]: moveSideInterface }) => {
-						const moveTotal =
-							calculateScoreAndBonuses(item, arrayItem.left) +
-							calculateScoreAndBonuses(item, arrayItem.right)
-						paddlerScore.push(moveTotal)
-					}
-				)
-			} else if (!Array.isArray(scoredMoves[item.Move])) {
+			if (scoredMoves[item.Move]) {
+				const moveData = scoredMoves[item.Move]
 				const moveTotal =
-					calculateScoreAndBonuses(
-						item,
-						// @ts-ignore
-						// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-						scoredMoves[item.Move].left
-					) +
-					// @ts-ignore
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-					calculateScoreAndBonuses(item, scoredMoves[item.Move].right)
+					calculateScoreAndBonuses(item, moveData.left) +
+					calculateScoreAndBonuses(item, moveData.right)
 				paddlerScore.push(moveTotal)
 			}
 		})

@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 import { getShowTimer } from "../../selectors"
 import { paperButtonProps } from "../../styles"
 
-const timerPresentation = () => {
+const TimerPresentation = () => {
 	const [time, setTime] = useState(0)
 	const showTimer = useSelector(getShowTimer)
 	useEffect(() => {
@@ -48,4 +48,4 @@ const timerPresentation = () => {
 	}
 }
 
-export default timerPresentation
+export default TimerPresentation

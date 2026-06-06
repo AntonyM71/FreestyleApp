@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { updateShowTimer } from "../../actions"
 import { getShowTimer } from "../../selectors"
 
-const timerOptionsPresentation = () => {
+const TimerOptionsPresentation = () => {
 	const showTimer = useSelector(getShowTimer)
 	const activeTrackColor = "#4F84C4"
 	const inactiveTrackColor = "#C7CDD6"
@@ -55,4 +55,4 @@ const layoutStyles = StyleSheet.create({
 	}
 })
 
-export default timerOptionsPresentation
+export default TimerOptionsPresentation
