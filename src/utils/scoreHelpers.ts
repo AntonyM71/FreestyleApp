@@ -7,7 +7,7 @@ export const calculateScoreAndBonuses = (
 	move: dataSourceMoveInterface,
 	truth: moveSideInterface
 ): number => {
-	const airBonus = truth.huge ? true : truth.air
+	const hasAirBonus = truth.huge ? true : truth.air
 	if (!truth.scored) {
 		return 0
 	}
@@ -16,7 +16,7 @@ export const calculateScoreAndBonuses = (
 		move.Value,
 		truth.clean ? move.Clean : 0,
 		truth.superClean ? move.SuperClean : 0,
-		airBonus ? move.Air : 0,
+		hasAirBonus ? move.Air : 0,
 		truth.huge ? move.Huge : 0,
 		truth.link ? move.Link : 0,
 		truth.style ? move.Style : 0

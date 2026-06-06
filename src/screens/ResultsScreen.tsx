@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { StyleSheet, View } from "react-native"
+import { Alert, StyleSheet, View } from "react-native"
 import { Button } from "react-native-paper"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { useSelector } from "react-redux"
@@ -27,7 +27,9 @@ const ResultsScreenComponent = () => {
 				try {
 					await handleExportCsv()
 				} catch (err: unknown) {
-					console.error("Failed to export scores:", err)
+					const message =
+						err instanceof Error ? err.message : "An unexpected error occurred."
+					Alert.alert("Export failed", message)
 				}
 			}
 		}
