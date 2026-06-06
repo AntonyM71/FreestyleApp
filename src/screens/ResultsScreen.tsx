@@ -23,7 +23,11 @@ const ResultsScreenComponent = () => {
 		{
 			key: "csv",
 			label: "Save as CSV",
-			onPress: () => { void handleExportCsv() }
+			onPress: () => {
+				handleExportCsv().catch((err: unknown) => {
+					console.error("Failed to export scores:", err)
+				})
+			}
 		}
 	]
 

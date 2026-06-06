@@ -3,9 +3,12 @@ import * as Sharing from "expo-sharing"
 import { IPaddler, IPaddlerScores } from "../reducers"
 import {
 	dataSourceMoveInterface,
+	moveInterface,
 	moveListArray,
 	moveSideInterface
 } from "../screens/mycomponents/makePaddlerScores"
+
+type ScoredMovesRecord = Record<string, moveInterface | moveInterface[]>
 
 const calculateScoreAndBonuses = (
 	move: dataSourceMoveInterface,
@@ -39,25 +42,20 @@ export const calculatePaddlerRunScore = (
 		paddlerScores[paddlerName] &&
 		paddlerScores[paddlerName][runIndex]
 	) {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		const scoredMoves: any = paddlerScores[paddlerName][runIndex]
+		const scoredMoves = paddlerScores[paddlerName][runIndex] as ScoredMovesRecord
 		moveListArray.forEach((item) => {
-			if (Array.isArray(scoredMoves[item.Move])) {
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				scoredMoves[item.Move].forEach((arrayItem: any) => {
+			const moveEntry = scoredMoves[item.Move]
+			if (Array.isArray(moveEntry)) {
+				moveEntry.forEach((arrayItem) => {
 					paddlerScore.push(
-						// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 						calculateScoreAndBonuses(item, arrayItem.left) +
-							// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 							calculateScoreAndBonuses(item, arrayItem.right)
 					)
 				})
-			} else if (scoredMoves[item.Move]) {
+			} else if (moveEntry) {
 				paddlerScore.push(
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-					calculateScoreAndBonuses(item, scoredMoves[item.Move].left) +
-						// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-						calculateScoreAndBonuses(item, scoredMoves[item.Move].right)
+					calculateScoreAndBonuses(item, moveEntry.left) +
+						calculateScoreAndBonuses(item, moveEntry.right)
 				)
 			}
 		})
