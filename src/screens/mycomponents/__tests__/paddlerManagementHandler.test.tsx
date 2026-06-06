@@ -189,4 +189,63 @@ describe("PaddlerManager", () => {
     const state = store.getState() as IStoreType
     expect(state.paddlers.heats).toEqual([1, 2])
   })
+
+  it("shows the correct message when 'Clear Scores' confirmation modal opens", () => {
+    const store = configureStore()
+    renderWithProviders(<PaddlerManager />, store)
+
+    fireEvent.press(screen.getByText("Clear Scores"))
+
+    expect(
+      screen.getByText("Are you sure you want to clear all scores?")
+    ).toBeTruthy()
+  })
+
+  it("shows the correct message when 'Clear Paddlers' confirmation modal opens", () => {
+    const store = configureStore()
+    renderWithProviders(<PaddlerManager />, store)
+
+    fireEvent.press(screen.getByText("Clear Paddlers"))
+
+    expect(
+      screen.getByText("Are you sure you want to clear all paddlers?")
+    ).toBeTruthy()
+  })
+
+  it("resets currentRun to 0 when scores are cleared", () => {
+    const store = configureStore()
+    renderWithProviders(<PaddlerManager />, store)
+
+    fireEvent.press(screen.getByText("Clear Scores"))
+    fireEvent.press(screen.getByText("Confirm"))
+
+    const state = store.getState() as IStoreType
+    expect(state.paddlers.currentRun).toBe(0)
+  })
+
+  it("resets paddlerIndex, currentHeat, and currentRun when paddlers are cleared", () => {
+    const store = configureStore()
+    renderWithProviders(<PaddlerManager />, store)
+
+    fireEvent.press(screen.getByText("Clear Paddlers"))
+    fireEvent.press(screen.getByText("Confirm"))
+
+    const state = store.getState() as IStoreType
+    expect(state.paddlers.paddlerList).toEqual([])
+    expect(state.paddlers.paddlerIndex).toBe(0)
+    expect(state.paddlers.currentHeat).toBe(0)
+    expect(state.paddlers.currentRun).toBe(0)
+  })
+
+  it("renders a heat section for every available heat", () => {
+    const store = configureStore()
+    renderWithProviders(<PaddlerManager />, store)
+
+    // Default store starts with heat 1 – add a second heat
+    fireEvent.press(screen.getByText("New Heat"))
+
+    // Both "Heat 1" and "Heat 2" headings should now appear
+    expect(screen.getByText("Heat 1")).toBeTruthy()
+    expect(screen.getByText("Heat 2")).toBeTruthy()
+  })
 })

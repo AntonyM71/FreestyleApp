@@ -124,4 +124,50 @@ describe("HomeScreen", () => {
     expect(safeAreaView).toHaveProp("accessible", true)
     expect(scrollView).toHaveProp("accessible", true)
   })
+
+  it("hides the timer when showTimer is false", () => {
+    const store = createTestStore(false)
+    mockDimensions(400)
+
+    render(
+      <Provider store={store}>
+        <HomeScreen />
+      </Provider>
+    )
+
+    expect(screen.queryByTestId("timer-container")).toBeNull()
+  })
+
+  it("gives heat handler full width when showTimer is false on small screen", () => {
+    const store = createTestStore(false)
+    mockDimensions(400)
+
+    render(
+      <Provider store={store}>
+        <HomeScreen />
+      </Provider>
+    )
+
+    const heatHandlerContainer = screen.getByTestId("heat-handler-container")
+    expect(heatHandlerContainer).toHaveStyle({ width: "100%" })
+  })
+
+  it("does not render the timer in tablet layout when showTimer is false", () => {
+    const store = createTestStore(false)
+    mockDimensions(800)
+
+    render(
+      <Provider store={store}>
+        <HomeScreen />
+      </Provider>
+    )
+
+    expect(screen.queryByTestId("timer-container")).toBeNull()
+    // paddler handler container is still present
+    expect(screen.getByTestId("paddler-handler-container")).toBeTruthy()
+  })
+
+  it("has navigationOptions with header set to null", () => {
+    expect(HomeScreen.navigationOptions).toEqual({ header: null })
+  })
 })
