@@ -324,4 +324,109 @@ describe("PaddlerHeatManagerPresentation", () => {
 
 
   })
+
+  it("shows inline duplicate-name error text when an existing name is typed", () => {
+    const initialState = {
+      categories: mockCategories,
+      paddlerList: mockPaddlers,
+      paddlerScores: mockScores,
+      numberOfRuns: 1
+    }
+    const store = createTestStore(initialState)
+
+    renderWithProviders(<PaddlerHeatManagerPresentation {...defaultProps} />, store)
+
+    const input = screen.getByPlaceholderText("New Paddler Name")
+    fireEvent.changeText(input, "paddler1")
+
+    // HelperText with the inline error message should be visible
+    expect(screen.getByText("Paddler already exists")).toBeTruthy()
+  })
+
+  it("shows no inline error when a unique name is typed", () => {
+    const initialState = {
+      categories: mockCategories,
+      paddlerList: mockPaddlers,
+      paddlerScores: mockScores,
+      numberOfRuns: 1
+    }
+    const store = createTestStore(initialState)
+
+    renderWithProviders(<PaddlerHeatManagerPresentation {...defaultProps} />, store)
+
+    const input = screen.getByPlaceholderText("New Paddler Name")
+    fireEvent.changeText(input, "brand new paddler")
+
+    // TextInput error prop should be false when the name is not a duplicate
+    expect(input.props.error).toBeFalsy()
+  })
+
+  it("derives category picklist from paddler categories when no configured categories exist", () => {
+    const paddlersWithCategories = [
+      { name: "paddler1", category: "SlalomPro", heat: 1 },
+      { name: "paddler2", category: "FreestylePro", heat: 1 }
+    ]
+    const initialState = {
+      categories: [], // no configured categories
+      paddlerList: paddlersWithCategories,
+      paddlerScores: {
+        paddler1: [mockScoresheet],
+        paddler2: [mockScoresheet]
+      },
+      numberOfRuns: 1
+    }
+    const store = createTestStore(initialState)
+
+    renderWithProviders(
+      <PaddlerHeatManagerPresentation
+        paddlerList={paddlersWithCategories}
+        heatKey={1}
+      />,
+      store
+    )
+
+    const picker = screen.getAllByTestId("category-picker")[0]
+    fireEvent.press(picker)
+
+    expect(screen.getByTestId("category-option-SlalomPro-paddler1")).toBeTruthy()
+    expect(screen.getByTestId("category-option-FreestylePro-paddler1")).toBeTruthy()
+  })
+
+  it("clears the input field after a paddler is successfully added", () => {
+    const initialState = {
+      categories: mockCategories,
+      paddlerList: mockPaddlers,
+      paddlerScores: mockScores,
+      numberOfRuns: 1
+    }
+    const store = createTestStore(initialState)
+
+    renderWithProviders(<PaddlerHeatManagerPresentation {...defaultProps} />, store)
+
+    const input = screen.getByPlaceholderText("New Paddler Name")
+    fireEvent.changeText(input, "BrandNewPaddler")
+    fireEvent(input, "onSubmitEditing")
+
+    // After adding, the input should be cleared
+    expect(input.props.value).toBe("")
+  })
+
+  it("shows the paddler name in the delete confirmation modal message", () => {
+    const initialState = {
+      categories: mockCategories,
+      paddlerList: mockPaddlers,
+      paddlerScores: mockScores,
+      numberOfRuns: 1
+    }
+    const store = createTestStore(initialState)
+
+    renderWithProviders(<PaddlerHeatManagerPresentation {...defaultProps} />, store)
+
+    const deleteButton = screen.getByText("Delete")
+    fireEvent.press(deleteButton)
+
+    expect(
+      screen.getByText("Are you sure you want to delete paddler1?")
+    ).toBeTruthy()
+  })
 })

@@ -390,4 +390,97 @@ describe("MoveButtons", () => {
       ]
     });
   });
+
+  it("resets paddler scores when category is changed from the prompt", () => {
+    jest.spyOn(selectors, "getCurrentPaddler").mockReturnValue({
+      name: "Test Paddler",
+      category: "",
+      heat: 1
+    });
+    jest.spyOn(selectors, "getCategories").mockReturnValue([
+      { name: "Expert", availableMoves: { hole: true, wave: true, nfl: false } }
+    ]);
+    jest.spyOn(selectors, "getPaddlerHeatList").mockReturnValue([
+      { name: "Test Paddler", category: "", heat: 1 }
+    ]);
+
+    const store = mockStore(defaultState);
+    renderWithProviders(store);
+
+    fireEvent.press(screen.getByTestId("category-picker"));
+    fireEvent.press(screen.getByTestId("set-category-Expert"));
+
+    const actions = store.getActions();
+    const scoresAction = actions.find((a: any) => a.type === "UPDATE_PADDLER_SCORES");
+    expect(scoresAction).toBeDefined();
+    expect(scoresAction.payload["Test Paddler"]).toHaveLength(1);
+  });
+
+  it("selecting none from the category picker is a no-op (dispatches nothing)", () => {
+    jest.spyOn(selectors, "getCurrentPaddler").mockReturnValue({
+      name: "Test Paddler",
+      category: "",
+      heat: 1
+    });
+    jest.spyOn(selectors, "getCategories").mockReturnValue([
+      { name: "Expert", availableMoves: { hole: true, wave: true, nfl: false } }
+    ]);
+    jest.spyOn(selectors, "getPaddlerHeatList").mockReturnValue([
+      { name: "Test Paddler", category: "", heat: 1 }
+    ]);
+
+    const store = mockStore(defaultState);
+    renderWithProviders(store);
+
+    // Selecting the "none" option sends "" which is an early-return in handleCategorySelection
+    fireEvent.press(screen.getByTestId("category-picker"));
+    fireEvent.press(screen.getByTestId("category-option-none"));
+
+    expect(store.getActions()).toHaveLength(0);
+  });
+
+  it("shows instruction text instead of picker when no categories are configured", () => {
+    jest.spyOn(selectors, "getCurrentPaddler").mockReturnValue({
+      name: "Test Paddler",
+      category: "",
+      heat: 1
+    });
+    jest.spyOn(selectors, "getCategories").mockReturnValue([]);
+
+    const store = mockStore(defaultState);
+    renderWithProviders(store);
+
+    expect(
+      screen.getByText("Add a category in the Paddlers screen to enable moves.")
+    ).toBeTruthy();
+    expect(screen.queryByTestId("category-picker")).toBeNull();
+  });
+
+  it("always shows trophy moves regardless of available move flags", () => {
+    jest.spyOn(selectors, "getAvailableMovesForPaddler").mockReturnValue({
+      hole: false,
+      wave: false,
+      nfl: false
+    });
+
+    const store = mockStore(defaultState);
+    renderWithProviders(store);
+
+    // Trophy moves are always rendered (left and right), so at least 2 instances expected
+    const trophyButtons = screen.getAllByText(/Trophy Move 1/);
+    expect(trophyButtons.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it("renders non-reversible 'both' moves only once", () => {
+    const store = mockStore(defaultState);
+    renderWithProviders(store);
+
+    // Both Move 1 is non-reversible (Reverse: false) → one button
+    const bothMove1Buttons = screen.getAllByText(/Both Move 1/);
+    expect(bothMove1Buttons).toHaveLength(1);
+
+    // Both Move 2 is reversible (Reverse: true) → two buttons (L and R)
+    const bothMove2Buttons = screen.getAllByText(/Both Move 2/);
+    expect(bothMove2Buttons).toHaveLength(2);
+  });
 });
