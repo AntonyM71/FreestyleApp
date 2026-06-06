@@ -6,41 +6,56 @@ import { updatePaddlerScores } from "../../actions"
 import { IDirection, IPaddler } from "../../reducers"
 import { getCurrentRun, getPaddlerScores } from "../../selectors"
 import { paperButtonProps } from "../../styles"
-import { dataSourceMoveInterface } from "./makePaddlerScores"
+import { dataSourceMoveInterface, moveSideInterface } from "./makePaddlerScores"
 
 interface PropsType {
 	paddler: IPaddler
 	move: dataSourceMoveInterface
 	direction: IDirection
 }
-// eslint-disable-next-line complexity
+
+interface BonusMoveButtonProps {
+	onPress: () => void
+	disabled: boolean
+	isScored: boolean
+	label: string
+}
+
+const BonusMoveButton = ({ onPress, disabled, isScored, label }: BonusMoveButtonProps) => (
+	<View style={layoutStyles.thirdWidthCell}>
+		<Button
+			onPress={onPress}
+			disabled={disabled}
+			{...(isScored ? paperButtonProps.bonusScored : paperButtonProps.noBonus)}
+		>
+			{label}
+		</Button>
+	</View>
+)
+
 const DynamicButtonPresentation = React.memo((props: PropsType) => {
 	const dispatch = useDispatch()
 	const currentRun = useSelector(getCurrentRun)
 	const paddlerScores = useSelector(getPaddlerScores)
-	const handleMove =
-		(
-			paddler: React.ReactText,
-			run: React.ReactText,
-			move: React.ReactText,
-			direction: React.ReactText,
-			type: string
-		) =>
-		() => {
-			const newScores = { ...paddlerScores }
-			// @ts-ignore
-			const newField = !newScores[paddler][run][move][direction][type]
-			// @ts-ignore
-			newScores[paddler][run][move][direction][type] = newField
 
-			// @ts-ignore
-			if (newScores[paddler][run][move][direction].huge) {
-				// @ts-ignore
-				newScores[paddler][run][move][direction].air = true
-			}
+	const handleMove = (
+		paddler: string,
+		run: number,
+		move: string,
+		direction: IDirection,
+		type: keyof moveSideInterface
+	) => () => {
+		const newScores = { ...paddlerScores }
+		newScores[paddler][run][move][direction][type] =
+			!newScores[paddler][run][move][direction][type]
 
-			dispatch(updatePaddlerScores(newScores))
+		if (newScores[paddler][run][move][direction].huge) {
+			newScores[paddler][run][move][direction].air = true
 		}
+
+		dispatch(updatePaddlerScores(newScores))
+	}
+
 	if (
 		paddlerScores &&
 		paddlerScores[props.paddler.name] &&
@@ -49,153 +64,72 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 	) {
 		const thisMove =
 			paddlerScores[props.paddler.name][currentRun][props.move.Move]
-		if (!Array.isArray(thisMove)) {
-			if (!thisMove[props.direction].scored) {
-				const buttonName = props.move.Move
-
-				return (
-					<View style={layoutStyles.unscoredButtonWrap}>
-						<Button
-							onPress={handleMove(
-								props.paddler.name,
-								currentRun,
-								props.move.Move,
-								props.direction,
-								"scored"
-							)}
-							{...paperButtonProps.noMove}
-						>
-							{buttonName}
-						</Button>
-					</View>
-				)
-			} else {
-				const buttonName = props.move.Move
-
-				return (
-					<View
-						style={layoutStyles.buttonBlock}
-					>
-						<View style={layoutStyles.fullWidthCell}>
-							<Button
-								onPress={handleMove(
-									props.paddler.name,
-									currentRun,
-									props.move.Move,
-									props.direction,
-									"scored"
-								)}
-								{...paperButtonProps.moveScored}
-							>
-								{buttonName}
-							</Button>
-						</View>
-						<View style={layoutStyles.thirdWidthCell}>
-								<Button
-									onPress={handleMove(
-										props.paddler.name,
-										currentRun,
-										props.move.Move,
-										props.direction,
-										"clean"
-									)}
-									disabled={props.move.Clean ? false : true}
-									{...(thisMove[props.direction].clean
-										? paperButtonProps.bonusScored
-										: paperButtonProps.noBonus)}
-								>
-									{"C"}
-								</Button>
-						</View>
-						<View style={layoutStyles.thirdWidthCell}>
-								<Button
-									onPress={handleMove(
-										props.paddler.name,
-										currentRun,
-										props.move.Move,
-										props.direction,
-										"superClean"
-									)}
-									disabled={props.move.SuperClean ? false : true}
-									{...(thisMove[props.direction].superClean
-										? paperButtonProps.bonusScored
-										: paperButtonProps.noBonus)}
-								>
-									{"SC"}
-								</Button>
-						</View>
-						<View style={layoutStyles.thirdWidthCell}>
-								<Button
-									onPress={handleMove(
-										props.paddler.name,
-										currentRun,
-										props.move.Move,
-										props.direction,
-										"link"
-									)}
-									disabled={props.move.Link ? false : true}
-									{...(thisMove[props.direction].link
-										? paperButtonProps.bonusScored
-										: paperButtonProps.noBonus)}
-								>
-									{"L"}
-								</Button>
-						</View>
-						<View style={layoutStyles.thirdWidthCell}>
-								<Button
-									onPress={handleMove(
-										props.paddler.name,
-										currentRun,
-										props.move.Move,
-										props.direction,
-										"air"
-									)}
-									disabled={props.move.Air ? false : true}
-									{...(thisMove[props.direction].air
-										? paperButtonProps.bonusScored
-										: paperButtonProps.noBonus)}
-								>
-									{"A"}
-								</Button>
-						</View>
-						<View style={layoutStyles.thirdWidthCell}>
-								<Button
-									onPress={handleMove(
-										props.paddler.name,
-										currentRun,
-										props.move.Move,
-										props.direction,
-										"huge"
-									)}
-									disabled={props.move.Huge ? false : true}
-									{...(thisMove[props.direction].huge
-										? paperButtonProps.bonusScored
-										: paperButtonProps.noBonus)}
-								>
-									{"H"}
-								</Button>
-						</View>
-						<View style={layoutStyles.thirdWidthCell}>
-								<Button
-									onPress={handleMove(
-										props.paddler.name,
-										currentRun,
-										props.move.Move,
-										props.direction,
-										"style"
-									)}
-									disabled={props.move.Style ? false : true}
-									{...(thisMove[props.direction].style
-										? paperButtonProps.bonusScored
-										: paperButtonProps.noBonus)}
-								>
-									{"S"}
-								</Button>
-						</View>
-					</View>
-				)
-			}
+		if (Array.isArray(thisMove)) {
+			return <> </>
 		}
+
+		const bonusHandler = (type: keyof moveSideInterface) =>
+			handleMove(props.paddler.name, currentRun, props.move.Move, props.direction, type)
+		const side = thisMove[props.direction]
+
+		if (!side.scored) {
+			return (
+				<View style={layoutStyles.unscoredButtonWrap}>
+					<Button
+						onPress={bonusHandler("scored")}
+						{...paperButtonProps.noMove}
+					>
+						{props.move.Move}
+					</Button>
+				</View>
+			)
+		}
+
+		return (
+			<View style={layoutStyles.buttonBlock}>
+				<View style={layoutStyles.fullWidthCell}>
+					<Button onPress={bonusHandler("scored")} {...paperButtonProps.moveScored}>
+						{props.move.Move}
+					</Button>
+				</View>
+				<BonusMoveButton
+					onPress={bonusHandler("clean")}
+					disabled={!props.move.Clean}
+					isScored={side.clean}
+					label="C"
+				/>
+				<BonusMoveButton
+					onPress={bonusHandler("superClean")}
+					disabled={!props.move.SuperClean}
+					isScored={side.superClean}
+					label="SC"
+				/>
+				<BonusMoveButton
+					onPress={bonusHandler("link")}
+					disabled={!props.move.Link}
+					isScored={side.link}
+					label="L"
+				/>
+				<BonusMoveButton
+					onPress={bonusHandler("air")}
+					disabled={!props.move.Air}
+					isScored={side.air}
+					label="A"
+				/>
+				<BonusMoveButton
+					onPress={bonusHandler("huge")}
+					disabled={!props.move.Huge}
+					isScored={side.huge}
+					label="H"
+				/>
+				<BonusMoveButton
+					onPress={bonusHandler("style")}
+					disabled={!props.move.Style}
+					isScored={side.style}
+					label="S"
+				/>
+			</View>
+		)
 	}
 
 	return <> </>

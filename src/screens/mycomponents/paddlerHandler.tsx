@@ -70,8 +70,7 @@ export const PaddlerHandler = () => {
 			const scores = paddlerScores
 			paddlerList
 				.flat()
-				.map((paddler: { toString: () => React.ReactText }) => {
-					// @ts-ignore
+				.forEach((paddler) => {
 					scores[paddler.name].push(initialScoresheet())
 				})
 			dispatch(changeNumberOfRuns(newRunIndex))
