@@ -3,32 +3,11 @@ import { Text } from "react-native"
 import { useSelector } from "react-redux"
 import { getScoresState } from "../../selectors"
 import { styles } from "../../styles"
+import { calculateScoreAndBonuses } from "../../utils/scoreHelpers"
 import {
-	dataSourceMoveInterface,
 	moveListArray,
 	moveSideInterface
 } from "./makePaddlerScores"
-
-const calculateScoreAndBonuses = (
-	move: dataSourceMoveInterface,
-	truth: moveSideInterface
-) => {
-	// the below is a bit of a hack for ascenario where we have huge but no air,  it will add in the air bonus
-	truth.air = truth.huge ? true : truth.air
-	const moveScore = truth.scored
-		? [
-				truth.scored === true ? move.Value : 0,
-				truth.clean ? move.Clean : 0,
-				truth.superClean ? move.SuperClean : 0,
-				truth.air ? move.Air : 0,
-				truth.huge ? move.Huge : 0,
-				truth.link ? move.Link : 0,
-				truth.style ? move.Style : 0
-			].reduce((a, b) => a + b)
-		: 0
-
-	return moveScore
-}
 
 const DisplayScorePresenetation = (props: {
 	paddler: string | number

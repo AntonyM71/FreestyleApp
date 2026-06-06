@@ -2,33 +2,12 @@ import * as FileSystem from "expo-file-system"
 import * as Sharing from "expo-sharing"
 import { IPaddler, IPaddlerScores } from "../reducers"
 import {
-	dataSourceMoveInterface,
 	moveInterface,
-	moveListArray,
-	moveSideInterface
+	moveListArray
 } from "../screens/mycomponents/makePaddlerScores"
+import { calculateScoreAndBonuses } from "./scoreHelpers"
 
 type ScoredMovesRecord = Record<string, moveInterface | moveInterface[]>
-
-const calculateScoreAndBonuses = (
-	move: dataSourceMoveInterface,
-	truth: moveSideInterface
-): number => {
-	const airBonus = truth.huge ? true : truth.air
-	if (!truth.scored) {
-		return 0
-	}
-
-	return [
-		move.Value,
-		truth.clean ? move.Clean : 0,
-		truth.superClean ? move.SuperClean : 0,
-		airBonus ? move.Air : 0,
-		truth.huge ? move.Huge : 0,
-		truth.link ? move.Link : 0,
-		truth.style ? move.Style : 0
-	].reduce((a, b) => a + b)
-}
 
 export const calculatePaddlerRunScore = (
 	paddlerScores: IPaddlerScores,
@@ -112,6 +91,17 @@ export const exportScoresToCsv = async (
 	paddlerList: IPaddler[],
 	paddlerScores: IPaddlerScores
 ): Promise<void> => {
+	if (!FileSystem.cacheDirectory) {
+		throw new Error(
+			"Export is not supported on this platform: no writable cache directory."
+		)
+	}
+
+	const isAvailable = await Sharing.isAvailableAsync()
+	if (!isAvailable) {
+		throw new Error("Sharing is not available on this device.")
+	}
+
 	const csvContent = generateCsvContent(paddlerList, paddlerScores)
 	const timestamp = new Date().toISOString().replace(/[:.]/g, "-")
 	const fileName = `freestyle-scores-${timestamp}.csv`
@@ -121,12 +111,9 @@ export const exportScoresToCsv = async (
 		encoding: FileSystem.EncodingType.UTF8
 	})
 
-	const isAvailable = await Sharing.isAvailableAsync()
-	if (isAvailable) {
-		await Sharing.shareAsync(fileUri, {
-			mimeType: "text/csv",
-			dialogTitle: "Save Scores CSV",
-			UTI: "public.comma-separated-values-text"
-		})
-	}
+	await Sharing.shareAsync(fileUri, {
+		mimeType: "text/csv",
+		dialogTitle: "Save Scores CSV",
+		UTI: "public.comma-separated-values-text"
+	})
 }

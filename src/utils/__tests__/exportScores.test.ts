@@ -9,6 +9,7 @@ import {
 } from "../exportScores"
 
 jest.mock("expo-file-system", () => ({
+	__esModule: true,
 	writeAsStringAsync: jest.fn().mockResolvedValue(undefined),
 	cacheDirectory: "file:///cache/",
 	EncodingType: { UTF8: "utf8" }
@@ -275,6 +276,9 @@ describe("generateCsvContent", () => {
 describe("exportScoresToCsv", () => {
 	beforeEach(() => {
 		jest.clearAllMocks()
+		// Ensure cacheDirectory is reset to a non-null value before each test
+		// @ts-ignore
+		FileSystem.cacheDirectory = "file:///cache/"
 	})
 
 	it("writes CSV to cache directory and calls shareAsync", async () => {
@@ -296,7 +300,7 @@ describe("exportScoresToCsv", () => {
 		)
 	})
 
-	it("does not call shareAsync when sharing is unavailable", async () => {
+	it("throws when sharing is unavailable", async () => {
 		jest
 			.mocked(Sharing.isAvailableAsync)
 			.mockResolvedValueOnce(false)
@@ -306,9 +310,26 @@ describe("exportScoresToCsv", () => {
 			Alice: [initialScoresheet()]
 		}
 
-		await exportScoresToCsv(paddlerList, paddlerScores)
+		await expect(exportScoresToCsv(paddlerList, paddlerScores)).rejects.toThrow(
+			"Sharing is not available on this device."
+		)
+		expect(FileSystem.writeAsStringAsync).not.toHaveBeenCalled()
+		expect(Sharing.shareAsync).not.toHaveBeenCalled()
+	})
 
-		expect(FileSystem.writeAsStringAsync).toHaveBeenCalled()
+	it("throws when cacheDirectory is null", async () => {
+		// @ts-ignore
+		FileSystem.cacheDirectory = null
+
+		const paddlerList = [{ name: "Alice", category: "Novice", heat: 1 }]
+		const paddlerScores: IPaddlerScores = {
+			Alice: [initialScoresheet()]
+		}
+
+		await expect(exportScoresToCsv(paddlerList, paddlerScores)).rejects.toThrow(
+			"Export is not supported on this platform: no writable cache directory."
+		)
+		expect(FileSystem.writeAsStringAsync).not.toHaveBeenCalled()
 		expect(Sharing.shareAsync).not.toHaveBeenCalled()
 	})
 })
