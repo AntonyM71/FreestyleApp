@@ -390,4 +390,52 @@ describe("PaddlerHandler", () => {
     expect(screen.queryByText("New Run")).toBeNull()
     expect(screen.queryByText("Prev Run")).toBeNull()
   })
+
+  it("displays the run number as 1-indexed (currentRun + 1)", () => {
+    const initialState = {
+      paddlers: {
+        paddlerList: mockPaddlers,
+        currentHeat: 1,
+        paddlerIndex: 0,
+        currentRun: 2,
+        numberOfRuns: 3,
+        showRunHandler: true,
+        paddlerScores: mockScores
+      }
+    }
+    const store = mockStore(initialState)
+
+    render(
+      <Provider store={store}>
+        <PaddlerHandler />
+      </Provider>
+    )
+
+    // currentRun is 0-indexed (2), so the displayed number should be 3
+    expect(screen.getByText("3")).toBeTruthy()
+  })
+
+  it("shows run controls when showRunHandler is true", () => {
+    const initialState = {
+      paddlers: {
+        paddlerList: mockPaddlers,
+        currentHeat: 1,
+        paddlerIndex: 0,
+        currentRun: 0,
+        numberOfRuns: 1,
+        showRunHandler: true,
+        paddlerScores: mockScores
+      }
+    }
+    const store = mockStore(initialState)
+
+    render(
+      <Provider store={store}>
+        <PaddlerHandler />
+      </Provider>
+    )
+
+    expect(screen.getByText("Prev Run")).toBeTruthy()
+    expect(screen.getByText("New Run")).toBeTruthy()
+  })
 })

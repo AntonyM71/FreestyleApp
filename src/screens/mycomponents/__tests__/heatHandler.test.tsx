@@ -198,4 +198,52 @@ describe("HeatHandler", () => {
     expect(actions[0]).toEqual(changePaddler(0))
     expect(actions[1]).toEqual(changeHeat(2))
   })
+
+  it("hides the component when there is a single heat with multiple paddlers", () => {
+    // paddlerList as one group (length=1) → condition paddlerList.length !== 1 is false → null
+    const initialState = {
+      paddlers: {
+        paddlerList: [
+          [
+            { name: "Paddler1", category: "Category1", heat: 1 },
+            { name: "Paddler2", category: "Category1", heat: 1 },
+            { name: "Paddler3", category: "Category1", heat: 1 }
+          ]
+        ],
+        currentHeat: 1,
+        heats: [1]
+      }
+    }
+    const store = mockStore(initialState)
+
+    render(
+      <Provider store={store}>
+        <HeatHandler />
+      </Provider>
+    )
+
+    expect(screen.queryByText("Heat 1")).toBeNull()
+    expect(screen.queryByText("Last")).toBeNull()
+    expect(screen.queryByText("Next")).toBeNull()
+  })
+
+  it("displays the current heat label matching the state value", () => {
+    const initialState = {
+      paddlers: {
+        paddlerList: mockPaddlers,
+        currentHeat: 2,
+        heats: [1, 2]
+      }
+    }
+    const store = mockStore(initialState)
+
+    render(
+      <Provider store={store}>
+        <HeatHandler />
+      </Provider>
+    )
+
+    expect(screen.getByText("Heat 2")).toBeTruthy()
+    expect(screen.queryByText("Heat 1")).toBeNull()
+  })
 })
