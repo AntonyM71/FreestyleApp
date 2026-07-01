@@ -11,7 +11,8 @@ const App = () => (
 	<NavigationContainer>
 		<Tab.Navigator
 			screenOptions={{
-				headerShown: false
+				headerShown: false,
+				tabBarStyle: { paddingTop: 0 }
 			}}
 		>
 			<Tab.Screen
