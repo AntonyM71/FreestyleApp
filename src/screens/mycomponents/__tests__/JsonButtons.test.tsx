@@ -150,7 +150,7 @@ describe("MoveButtons", () => {
   } = {
     paddlers: {
       paddlerScores: {
-        TEST_PADDLER_NAME: {
+        [TEST_PADDLER_NAME]: {
           1: {
             "Entry Move 1": {
               left: { ...defaultSide },
