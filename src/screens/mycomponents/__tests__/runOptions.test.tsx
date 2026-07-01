@@ -1,11 +1,14 @@
+import { fireEvent, render, screen } from "@testing-library/react-native"
 import React from "react"
-import { render, fireEvent, screen } from "@testing-library/react-native"
 import { Provider } from "react-redux"
 import configureStore from "redux-mock-store"
-import RunOptions from "../runOptions"
+
 import { changeRun, updateShowRun } from "../../../actions"
+import RunOptions from "../runOptions"
 
 const mockStore = configureStore([])
+
+const RUN_OPTIONS_SWITCH_TEST_ID = "run-options-switch"
 
 describe("RunOptions", () => {
   it("renders correctly with runs hidden", () => {
@@ -20,7 +23,7 @@ describe("RunOptions", () => {
 
     expect(screen.getByText("Runs")).toBeTruthy()
     expect(screen.getByText("Hidden")).toBeTruthy()
-    expect(screen.getByTestId("run-options-switch")).toHaveProp("value", false)
+    expect(screen.getByTestId(RUN_OPTIONS_SWITCH_TEST_ID)).toHaveProp("value", false)
   })
 
   it("renders correctly with runs shown", () => {
@@ -35,7 +38,7 @@ describe("RunOptions", () => {
 
     expect(screen.getByText("Runs")).toBeTruthy()
     expect(screen.getByText("Shown")).toBeTruthy()
-    expect(screen.getByTestId("run-options-switch")).toHaveProp("value", true)
+    expect(screen.getByTestId(RUN_OPTIONS_SWITCH_TEST_ID)).toHaveProp("value", true)
   })
 
   it("dispatches both actions when button is pressed with runs shown", () => {
@@ -48,7 +51,7 @@ describe("RunOptions", () => {
       </Provider>
     )
 
-    const toggle = screen.getByTestId("run-options-switch")
+    const toggle = screen.getByTestId(RUN_OPTIONS_SWITCH_TEST_ID)
     fireEvent(toggle, "valueChange", false)
 
     const actions = store.getActions()
@@ -67,7 +70,7 @@ describe("RunOptions", () => {
       </Provider>
     )
 
-    const toggle = screen.getByTestId("run-options-switch")
+    const toggle = screen.getByTestId(RUN_OPTIONS_SWITCH_TEST_ID)
     fireEvent(toggle, "valueChange", true)
 
     const actions = store.getActions()

@@ -1,7 +1,8 @@
-import React from "react"
 import { fireEvent, render, screen } from "@testing-library/react-native"
-import { SafeAreaProvider } from "react-native-safe-area-context"
+import React from "react"
 import { Provider as PaperProvider } from "react-native-paper"
+import { SafeAreaProvider } from "react-native-safe-area-context"
+
 import { ConfirmationModal } from "../ConfirmationModal"
 
 const safeAreaMetrics = {

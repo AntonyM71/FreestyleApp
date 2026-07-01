@@ -1,11 +1,14 @@
+import { fireEvent,render, screen } from "@testing-library/react-native"
 import React from "react"
-import { render, screen, fireEvent } from "@testing-library/react-native"
 import { Provider } from "react-redux"
 import configureStore from "redux-mock-store"
-import { DynamicButton } from "../dynamicButton"
+
 import { IDirection } from "../../../reducers"
+import { DynamicButton } from "../dynamicButton"
 
 const mockStore = configureStore([])
+
+const TEST_CATEGORY = "category 1"
 
 describe("DynamicButton", () => {
 	const createInitialState = (scored = false, moveName = "Spin") => ({
@@ -40,7 +43,7 @@ describe("DynamicButton", () => {
 			paddlerList: [
 				{
 					name: "TestPaddler",
-					category: "category 1",
+					category: TEST_CATEGORY,
 					heat: 1
 				}
 			],
@@ -52,7 +55,7 @@ describe("DynamicButton", () => {
 			places: [],
 			categories: [
 				{
-					name: "category 1",
+					name: TEST_CATEGORY,
 					availableMoves: { hole: true, wave: false, nfl: false }
 				}
 			],
@@ -68,7 +71,7 @@ describe("DynamicButton", () => {
 		const props = {
 			paddler: {
 				name: "TestPaddler",
-				category: "category 1",
+				category: TEST_CATEGORY,
 				heat: 1
 			},
 			currentRun: 1,
@@ -124,7 +127,7 @@ describe("DynamicButton", () => {
 		const props = {
 			paddler: {
 				name: "TestPaddler",
-				category: "category 1",
+				category: TEST_CATEGORY,
 				heat: 1
 			},
 			currentRun: 1,
@@ -172,7 +175,7 @@ describe("DynamicButton", () => {
 		const props = {
 			paddler: {
 				name: "TestPaddler",
-				category: "category 1",
+				category: TEST_CATEGORY,
 				heat: 1
 			},
 			currentRun: 1,
@@ -209,7 +212,7 @@ describe("DynamicButton", () => {
 		const store = mockStore(initialState)
 
 		const props = {
-			paddler: { name: "TestPaddler", category: "category 1", heat: 1 },
+			paddler: { name: "TestPaddler", category: TEST_CATEGORY, heat: 1 },
 			currentRun: 1,
 			move: {
 				Move: "Spin",
@@ -256,7 +259,7 @@ describe("DynamicButton", () => {
 		const store = mockStore(initialState)
 
 		const props = {
-			paddler: { name: "TestPaddler", category: "category 1", heat: 1 },
+			paddler: { name: "TestPaddler", category: TEST_CATEGORY, heat: 1 },
 			currentRun: 1,
 			move: {
 				Move: "Spin",
@@ -301,7 +304,7 @@ describe("DynamicButton", () => {
 		const store = mockStore(initialState)
 
 		const props = {
-			paddler: { name: "TestPaddler", category: "category 1", heat: 1 },
+			paddler: { name: "TestPaddler", category: TEST_CATEGORY, heat: 1 },
 			currentRun: 1,
 			move: {
 				Move: "Loop",

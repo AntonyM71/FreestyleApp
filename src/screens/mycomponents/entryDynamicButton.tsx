@@ -2,6 +2,7 @@ import React from "react"
 import { StyleSheet, View } from "react-native"
 import { Button } from "react-native-paper"
 import { useDispatch, useSelector } from "react-redux"
+
 import { updatePaddlerScores } from "../../actions"
 import { IDirection, IPaddler } from "../../reducers"
 import { getCurrentRun, getPaddlerScores } from "../../selectors"

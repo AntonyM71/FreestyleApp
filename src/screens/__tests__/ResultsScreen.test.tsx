@@ -1,7 +1,8 @@
-import React from "react"
 import { render, screen } from "@testing-library/react-native"
+import React from "react"
 import { Provider } from "react-redux"
 import { createStore } from "redux"
+
 import ResultsScreen from "../ResultsScreen"
 
 // Mock ResultsView component

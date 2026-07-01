@@ -1,5 +1,5 @@
-import { MovesList, IMoves } from "../../../data/moves_lists/move_list";
-import { initialScoresheet, moveInterface, dataSourceMoveInterface } from "../makePaddlerScores";
+import { IMoves,MovesList } from "../../../data/moves_lists/move_list";
+import { dataSourceMoveInterface,initialScoresheet, moveInterface } from "../makePaddlerScores";
 
 type ScoreSheet = Record<string, moveInterface>;
 

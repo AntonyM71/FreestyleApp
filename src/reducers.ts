@@ -16,28 +16,29 @@ import {
 } from "./screens/mycomponents/makePaddlerScores"
 
 // make our starting scoresheet from the list of paddlers
+const DEFAULT_CATEGORY = "category 1"
 const listOfPaddlers = [
 	{
 		name: "paddler1",
-		category: "category 1",
+		category: DEFAULT_CATEGORY,
 		heat: 1
 	},
 	{
 		name: "paddler2",
-		category: "category 1",
+		category: DEFAULT_CATEGORY,
 		heat: 1
 	},
 	{
 		name: "paddler3",
-		category: "category 1",
+		category: DEFAULT_CATEGORY,
 		heat: 1
 	}
 ]
 
 const startingScoresheet: IPaddlerScores = {}
-listOfPaddlers.forEach((paddler) => {
+for (const paddler of listOfPaddlers) {
 	startingScoresheet[paddler.name] = [initialScoresheet()]
-})
+}
 
 const initialState: IPaddlerStateType = {
 	places: [],
@@ -51,7 +52,7 @@ const initialState: IPaddlerStateType = {
 	showRunHandler: true,
 	categories: [
 		{
-			name: "category 1",
+			name: DEFAULT_CATEGORY,
 			availableMoves: { hole: true, wave: false, nfl: false }
 		}
 	],

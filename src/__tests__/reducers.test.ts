@@ -1,16 +1,15 @@
-import { paddlerReducer, IPaddlerStateType } from "../reducers"
 import {
-	CHANGE_PADDLER,
-	CHANGE_HEAT,
+	ADD_OR_REMOVE_CATEGORY,
+	ADD_OR_REMOVE_HEATS,
 	ADD_OR_REMOVE_PADDLER,
+	CHANGE_HEAT,
+	CHANGE_PADDLER,
+	UPDATE_NUMBER_OF_RUNS,
 	UPDATE_PADDLER_SCORES,
 	UPDATE_RUN,
-	UPDATE_NUMBER_OF_RUNS,
-	UPDATE_SHOW_TIMER,
 	UPDATE_SHOW_RUN,
-	ADD_OR_REMOVE_CATEGORY,
-	ADD_OR_REMOVE_HEATS
-} from "../actionTypes"
+	UPDATE_SHOW_TIMER } from "../actionTypes"
+import { IPaddlerStateType,paddlerReducer } from "../reducers"
 
 // Minimal initial state for reducer tests
 const baseState: IPaddlerStateType = {

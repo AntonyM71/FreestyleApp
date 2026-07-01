@@ -2,6 +2,7 @@
 import React, { Fragment } from "react"
 import { Dimensions, StyleSheet, Text, View } from "react-native"
 import { batch, useDispatch, useSelector } from "react-redux"
+
 import { addOrRemovePaddlerName, updatePaddlerScores } from "../../actions"
 import moveList from "../../data/moves_lists/move_list"
 import { IDirection, IPaddler } from "../../reducers"
@@ -14,9 +15,9 @@ import {
 	getPaddlerHeatList,
 	getScoresState
 } from "../../selectors"
+import CategoryPicker from "./CategoryPicker"
 import { DynamicButton } from "./dynamicButton"
 import { EntryDynamicButton } from "./entryDynamicButton"
-import CategoryPicker from "./CategoryPicker"
 import { dataSourceMoveInterface, initialScoresheet } from "./makePaddlerScores"
 const NormalMove = (props: {
 	currentPaddler: IPaddler
@@ -45,7 +46,7 @@ export const MoveButtons = () => {
 	const screenWidth = Math.round(Dimensions.get("window").width)
 	const availableMoves = moveList
 	const buttonPercentage = screenWidth > 600 ? "25%" : "50%"
-	const entryButtonPercentage = screenWidth > 600 ? "33.33%" : "33.33%"
+	const entryButtonPercentage = "33.33%"
 	const hasCategory = Boolean(currentPaddler?.category)
 
 	const handleCategorySelection = (categoryName: string) => {

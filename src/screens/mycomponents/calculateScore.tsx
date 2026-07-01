@@ -1,6 +1,7 @@
 import React from "react"
 import { Text } from "react-native"
 import { useSelector } from "react-redux"
+
 import { getScoresState } from "../../selectors"
 import { styles } from "../../styles"
 import {
@@ -13,20 +14,19 @@ const calculateScoreAndBonuses = (
 	move: dataSourceMoveInterface,
 	truth: moveSideInterface
 ) => {
+	if (!truth.scored) { return 0 }
 	// the below is a bit of a hack for a scenario where we have huge but no air, it will add in the air bonus
 	truth.air = truth.huge ? true : truth.air
 
-	return truth.scored
-		? [
-				truth.scored === true ? move.Value : 0,
-				truth.clean ? move.Clean : 0,
-				truth.superClean ? move.SuperClean : 0,
-				truth.air ? move.Air : 0,
-				truth.huge ? move.Huge : 0,
-				truth.link ? move.Link : 0,
-				truth.style ? move.Style : 0
-			].reduce((a, b) => a + b)
-		: 0
+	return [
+		move.Value,
+		truth.clean ? move.Clean : 0,
+		truth.superClean ? move.SuperClean : 0,
+		truth.air ? move.Air : 0,
+		truth.huge ? move.Huge : 0,
+		truth.link ? move.Link : 0,
+		truth.style ? move.Style : 0
+	].reduce((a, b) => a + b)
 }
 
 const DisplayScorePresenetation = (props: {

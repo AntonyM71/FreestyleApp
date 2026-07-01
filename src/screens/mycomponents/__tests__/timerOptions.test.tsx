@@ -1,11 +1,14 @@
+import { fireEvent, render, screen } from "@testing-library/react-native"
 import React from "react"
-import { render, fireEvent, screen } from "@testing-library/react-native"
 import { Provider } from "react-redux"
 import configureStore from "redux-mock-store"
-import TimerOptions from "../timerOptions"
+
 import { updateShowTimer } from "../../../actions"
+import TimerOptions from "../timerOptions"
 
 const mockStore = configureStore([])
+
+const TIMER_OPTIONS_SWITCH_TEST_ID = "timer-options-switch"
 
 describe("TimerOptions", () => {
   it("renders correctly with timer hidden", () => {
@@ -20,7 +23,7 @@ describe("TimerOptions", () => {
 
     expect(screen.getByText("Timer")).toBeTruthy()
     expect(screen.getByText("Hidden")).toBeTruthy()
-    expect(screen.getByTestId("timer-options-switch")).toHaveProp("value", false)
+    expect(screen.getByTestId(TIMER_OPTIONS_SWITCH_TEST_ID)).toHaveProp("value", false)
   })
 
   it("renders correctly with timer shown", () => {
@@ -35,7 +38,7 @@ describe("TimerOptions", () => {
 
     expect(screen.getByText("Timer")).toBeTruthy()
     expect(screen.getByText("Shown")).toBeTruthy()
-    expect(screen.getByTestId("timer-options-switch")).toHaveProp("value", true)
+    expect(screen.getByTestId(TIMER_OPTIONS_SWITCH_TEST_ID)).toHaveProp("value", true)
   })
 
   it("dispatches updateShowTimer action when button is pressed", () => {
@@ -48,7 +51,7 @@ describe("TimerOptions", () => {
       </Provider>
     )
 
-    const toggle = screen.getByTestId("timer-options-switch")
+    const toggle = screen.getByTestId(TIMER_OPTIONS_SWITCH_TEST_ID)
     fireEvent(toggle, "valueChange", true)
 
     const actions = store.getActions()

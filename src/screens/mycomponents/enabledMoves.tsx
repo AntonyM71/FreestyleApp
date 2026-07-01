@@ -1,6 +1,7 @@
 import React from "react"
 import { StyleSheet, Switch, Text, View } from "react-native"
 import { batch, useDispatch, useSelector } from "react-redux"
+
 import {
 	addOrRemoveCategory,
 	changeRun,
@@ -36,9 +37,9 @@ const MoveSelectionPresentation = ({ category }: { category: ICategory }) => {
 	const clearScores = () => {
 		const startingScoresheet: IPaddlerScores = {}
 
-		paddlerHeatList.forEach((paddler) => {
+		for (const paddler of paddlerHeatList) {
 			startingScoresheet[paddler.name] = [initialScoresheet()]
-		})
+		}
 		batch(() => {
 			dispatch(changeRun(0))
 			dispatch(updatePaddlerScores(startingScoresheet))

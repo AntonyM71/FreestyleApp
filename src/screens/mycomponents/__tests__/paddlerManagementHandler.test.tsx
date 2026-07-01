@@ -1,11 +1,12 @@
+import { fireEvent,render, screen } from "@testing-library/react-native"
 import React from "react"
-import { render, screen, fireEvent } from "@testing-library/react-native"
-import { Provider } from "react-redux"
-import { SafeAreaProvider } from "react-native-safe-area-context"
 import { Provider as PaperProvider } from "react-native-paper"
-import PaddlerManager from "../paddlerManagementHandler"
-import { initialScoresheet } from "../makePaddlerScores"
+import { SafeAreaProvider } from "react-native-safe-area-context"
+import { Provider } from "react-redux"
+
 import configureStore, { IStoreType } from "../../../store"
+import { initialScoresheet } from "../makePaddlerScores"
+import PaddlerManager from "../paddlerManagementHandler"
 
 const safeAreaMetrics = {
   frame: { x: 0, y: 0, width: 320, height: 640 },
@@ -24,11 +25,14 @@ const renderWithProviders = (ui: React.ReactElement, store: ReturnType<typeof co
   })
 
 describe("PaddlerManager", () => {
+  const CATEGORY_ONE = "category 1"
+  const CLEAR_SCORES_TEXT = "Clear Scores"
+  const CLEAR_PADDLERS_TEXT = "Clear Paddlers"
   // Use the same initial state as defined in reducers.ts
   const testPaddlers = [
-    { name: "paddler1", category: "category 1", heat: 1 },
-    { name: "paddler2", category: "category 1", heat: 1 },
-    { name: "paddler3", category: "category 1", heat: 1 }
+    { name: "paddler1", category: CATEGORY_ONE, heat: 1 },
+    { name: "paddler2", category: CATEGORY_ONE, heat: 1 },
+    { name: "paddler3", category: CATEGORY_ONE, heat: 1 }
   ]
 
   const initialState = {
@@ -48,7 +52,7 @@ describe("PaddlerManager", () => {
       showRunHandler: true,
       categories: [
         {
-          name: "category 1",
+          name: CATEGORY_ONE,
           availableMoves: { hole: true, wave: false, nfl: false }
         }
       ],
@@ -68,12 +72,12 @@ describe("PaddlerManager", () => {
     const heat1Paddlers = testPaddlers.filter((p) => p.heat === 1)
     const heat2Paddlers = testPaddlers.filter((p) => p.heat === 2)
 
-    heat1Paddlers.forEach((paddler) => {
+    for (const paddler of heat1Paddlers) {
       expect(screen.getByText(paddler.name)).toBeTruthy()
-    })
-    heat2Paddlers.forEach((paddler) => {
+    }
+    for (const paddler of heat2Paddlers) {
       expect(screen.getByText(paddler.name)).toBeTruthy()
-    })
+    }
   })
 
   it("adds a new heat when 'New Heat' button is clicked", () => {
@@ -94,7 +98,7 @@ describe("PaddlerManager", () => {
     renderWithProviders(<PaddlerManager />, store)
 
     // Find and click the Clear Scores button to open the confirmation modal
-    const clearScoresButton = screen.getByText("Clear Scores")
+    const clearScoresButton = screen.getByText(CLEAR_SCORES_TEXT)
     fireEvent.press(clearScoresButton)
 
     // Confirm the action in the dialog
@@ -117,7 +121,7 @@ describe("PaddlerManager", () => {
 
     const initialPaddlerScores = (store.getState() as IStoreType).paddlers.paddlerScores
 
-    const clearScoresButton = screen.getByText("Clear Scores")
+    const clearScoresButton = screen.getByText(CLEAR_SCORES_TEXT)
     fireEvent.press(clearScoresButton)
 
     // Cancel the action in the dialog
@@ -134,7 +138,7 @@ describe("PaddlerManager", () => {
     renderWithProviders(<PaddlerManager />, store)
 
     // Find and click the Clear Paddlers button to open the confirmation modal
-    const clearPaddlersButton = screen.getByText("Clear Paddlers")
+    const clearPaddlersButton = screen.getByText(CLEAR_PADDLERS_TEXT)
     fireEvent.press(clearPaddlersButton)
 
     // Confirm the action in the dialog
@@ -154,7 +158,7 @@ describe("PaddlerManager", () => {
 
     const initialPaddlerList = (store.getState() as IStoreType).paddlers.paddlerList
 
-    const clearPaddlersButton = screen.getByText("Clear Paddlers")
+    const clearPaddlersButton = screen.getByText(CLEAR_PADDLERS_TEXT)
     fireEvent.press(clearPaddlersButton)
 
     // Cancel the action in the dialog
@@ -181,8 +185,8 @@ describe("PaddlerManager", () => {
 
     // Should still render buttons
     expect(screen.getByText("New Heat")).toBeTruthy()
-    expect(screen.getByText("Clear Scores")).toBeTruthy()
-    expect(screen.getByText("Clear Paddlers")).toBeTruthy()
+    expect(screen.getByText(CLEAR_SCORES_TEXT)).toBeTruthy()
+    expect(screen.getByText(CLEAR_PADDLERS_TEXT)).toBeTruthy()
 
     // Adding heat to empty state should start with heat 1
     fireEvent.press(screen.getByText("New Heat"))
@@ -194,7 +198,7 @@ describe("PaddlerManager", () => {
     const store = configureStore()
     renderWithProviders(<PaddlerManager />, store)
 
-    fireEvent.press(screen.getByText("Clear Scores"))
+    fireEvent.press(screen.getByText(CLEAR_SCORES_TEXT))
 
     expect(
       screen.getByText("Are you sure you want to clear all scores?")
@@ -205,7 +209,7 @@ describe("PaddlerManager", () => {
     const store = configureStore()
     renderWithProviders(<PaddlerManager />, store)
 
-    fireEvent.press(screen.getByText("Clear Paddlers"))
+    fireEvent.press(screen.getByText(CLEAR_PADDLERS_TEXT))
 
     expect(
       screen.getByText("Are you sure you want to clear all paddlers?")
@@ -216,7 +220,7 @@ describe("PaddlerManager", () => {
     const store = configureStore()
     renderWithProviders(<PaddlerManager />, store)
 
-    fireEvent.press(screen.getByText("Clear Scores"))
+    fireEvent.press(screen.getByText(CLEAR_SCORES_TEXT))
     fireEvent.press(screen.getByText("Confirm"))
 
     const state = store.getState() as IStoreType
@@ -227,7 +231,7 @@ describe("PaddlerManager", () => {
     const store = configureStore()
     renderWithProviders(<PaddlerManager />, store)
 
-    fireEvent.press(screen.getByText("Clear Paddlers"))
+    fireEvent.press(screen.getByText(CLEAR_PADDLERS_TEXT))
     fireEvent.press(screen.getByText("Confirm"))
 
     const state = store.getState() as IStoreType

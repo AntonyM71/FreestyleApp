@@ -1,7 +1,8 @@
+import { fireEvent,render, screen } from "@testing-library/react-native"
 import React from "react"
-import { render, screen, fireEvent } from "@testing-library/react-native"
-import { SafeAreaProvider } from "react-native-safe-area-context"
 import { Provider as PaperProvider } from "react-native-paper"
+import { SafeAreaProvider } from "react-native-safe-area-context"
+
 import CategoryPicker from "../CategoryPicker"
 
 const safeAreaMetrics = {
@@ -19,6 +20,7 @@ const renderWithProviders = (ui: React.ReactElement) =>
 	})
 
 describe("CategoryPicker", () => {
+	const CATEGORY_PICKER_TEST_ID = "category-picker"
 	const categories = ["Novice", "Intermediate", "Expert"]
 	const onSelectCategory = jest.fn()
 
@@ -59,7 +61,7 @@ describe("CategoryPicker", () => {
 			/>
 		)
 
-		fireEvent.press(screen.getByTestId("category-picker"))
+		fireEvent.press(screen.getByTestId(CATEGORY_PICKER_TEST_ID))
 
 		expect(screen.getByText("Novice")).toBeTruthy()
 		expect(screen.getByText("Intermediate")).toBeTruthy()
@@ -75,7 +77,7 @@ describe("CategoryPicker", () => {
 			/>
 		)
 
-		fireEvent.press(screen.getByTestId("category-picker"))
+		fireEvent.press(screen.getByTestId(CATEGORY_PICKER_TEST_ID))
 		fireEvent.press(screen.getByTestId("category-option-Expert"))
 
 		expect(onSelectCategory).toHaveBeenCalledWith("Expert")
@@ -91,7 +93,7 @@ describe("CategoryPicker", () => {
 			/>
 		)
 
-		fireEvent.press(screen.getByTestId("category-picker"))
+		fireEvent.press(screen.getByTestId(CATEGORY_PICKER_TEST_ID))
 		fireEvent.press(screen.getByTestId("category-option-none"))
 
 		expect(onSelectCategory).toHaveBeenCalledWith("")

@@ -1,6 +1,7 @@
 import React from "react"
 import { StyleSheet, Switch, Text, View } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
+
 import { updateShowTimer } from "../../actions"
 import { getShowTimer } from "../../selectors"
 

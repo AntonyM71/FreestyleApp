@@ -1,21 +1,20 @@
 import {
-	getScores,
-	getScoresState,
-	getPaddlerHeatList,
-	getNumberOfRuns,
-	getCurrentRun,
-	getCurrentHeat,
-	getShowRunHandler,
-	getShowTimer,
-	getPaddlerIndex,
-	getNumberOfPaddlersInHeat,
-	getPaddlerScores,
-	getCurrentPaddler,
+	getAvailableHeats,
 	getAvailableMovesForPaddler,
 	getCategories,
+	getCurrentHeat,
+	getCurrentPaddler,
+	getCurrentRun,
+	getNumberOfPaddlersInHeat,
+	getNumberOfRuns,
+	getPaddlerHeatList,
+	getPaddlerIndex,
+	getPaddlerScores,
 	getPaddlersInHeat,
-	getAvailableHeats
-} from "../selectors"
+	getScores,
+	getScoresState,
+	getShowRunHandler,
+	getShowTimer } from "../selectors"
 import { IStoreType } from "../store"
 
 // Helper to build a minimal store state

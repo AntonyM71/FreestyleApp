@@ -1,11 +1,12 @@
-import React from "react"
 import { fireEvent, render, screen } from "@testing-library/react-native"
-import { Provider } from "react-redux"
-import { SafeAreaProvider } from "react-native-safe-area-context"
+import React from "react"
 import { Provider as PaperProvider } from "react-native-paper"
+import { SafeAreaProvider } from "react-native-safe-area-context"
+import { Provider } from "react-redux"
 import { createStore, Store } from "redux"
-import { PaddlerHeatManagerPresentation } from "../paddlerHeatManagementHandler"
+
 import * as makePaddlerScores from "../makePaddlerScores"
+import { PaddlerHeatManagerPresentation } from "../paddlerHeatManagementHandler"
 
 // Mock initialScoresheet to return a simple test scoresheet
 const mockScoresheet = {
@@ -32,7 +33,7 @@ const mockScoresheet = {
   }
 }
 jest.spyOn(makePaddlerScores, "initialScoresheet").mockReturnValue(mockScoresheet)
-import { paddlerReducer, IPaddlerStateType } from "../../../reducers"
+import { IPaddlerStateType,paddlerReducer } from "../../../reducers"
 
 interface RootState {
   paddlers: IPaddlerStateType;
@@ -96,16 +97,19 @@ const renderWithProviders = (
 // Mock alert
 global.alert = jest.fn()
 
+const CATEGORY_ONE = "category 1"
+const NEW_PADDLER_PLACEHOLDER = "New Paddler Name"
+
 describe("PaddlerHeatManagerPresentation", () => {
   const mockCategories = [
     {
-      name: "category 1",
+      name: CATEGORY_ONE,
       availableMoves: { hole: true, wave: false, nfl: false }
     }
   ]
 
   const mockPaddlers = [
-    { name: "paddler1", category: "category 1", heat: 1 }
+    { name: "paddler1", category: CATEGORY_ONE, heat: 1 }
   ]
 
   const mockScores = {
@@ -135,7 +139,7 @@ describe("PaddlerHeatManagerPresentation", () => {
     expect(screen.getByText("Heat 1")).toBeTruthy()
     expect(screen.getByText("paddler1")).toBeTruthy()
     expect(screen.getByText("Delete")).toBeTruthy()
-    expect(screen.getByPlaceholderText("New Paddler Name")).toBeTruthy()
+    expect(screen.getByPlaceholderText(NEW_PADDLER_PLACEHOLDER)).toBeTruthy()
   })
 
   it("handles adding new paddler", () => {
@@ -152,7 +156,7 @@ describe("PaddlerHeatManagerPresentation", () => {
       store
     )
 
-    const input = screen.getByPlaceholderText("New Paddler Name")
+    const input = screen.getByPlaceholderText(NEW_PADDLER_PLACEHOLDER)
     fireEvent.changeText(input, "NewPaddler")
     fireEvent(input, "onSubmitEditing")
 
@@ -190,7 +194,7 @@ describe("PaddlerHeatManagerPresentation", () => {
 
     renderWithProviders(<PaddlerHeatManagerPresentation {...defaultProps} />, store)
 
-    const input = screen.getByPlaceholderText("New Paddler Name")
+    const input = screen.getByPlaceholderText(NEW_PADDLER_PLACEHOLDER)
     fireEvent.changeText(input, "paddler1")
     fireEvent(input, "onSubmitEditing")
 
@@ -213,7 +217,7 @@ describe("PaddlerHeatManagerPresentation", () => {
 
     renderWithProviders(<PaddlerHeatManagerPresentation {...defaultProps} />, store)
 
-    const input = screen.getByPlaceholderText("New Paddler Name")
+    const input = screen.getByPlaceholderText(NEW_PADDLER_PLACEHOLDER)
     fireEvent.changeText(input, "")
     fireEvent(input, "onSubmitEditing")
 
@@ -314,7 +318,7 @@ describe("PaddlerHeatManagerPresentation", () => {
     const state = store.getState().paddlers
 
     // Verify state updates
-    expect(state.paddlerList[0].category).toBe("category 1")
+    expect(state.paddlerList[0].category).toBe(CATEGORY_ONE)
     // Component resets scoresheet when category changes
     // numberOfRuns + 1 scoresheets are created
     const expectedScores = Array(initialState.numberOfRuns + 1)
@@ -336,7 +340,7 @@ describe("PaddlerHeatManagerPresentation", () => {
 
     renderWithProviders(<PaddlerHeatManagerPresentation {...defaultProps} />, store)
 
-    const input = screen.getByPlaceholderText("New Paddler Name")
+    const input = screen.getByPlaceholderText(NEW_PADDLER_PLACEHOLDER)
     fireEvent.changeText(input, "paddler1")
 
     // HelperText with the inline error message should be visible
@@ -354,7 +358,7 @@ describe("PaddlerHeatManagerPresentation", () => {
 
     renderWithProviders(<PaddlerHeatManagerPresentation {...defaultProps} />, store)
 
-    const input = screen.getByPlaceholderText("New Paddler Name")
+    const input = screen.getByPlaceholderText(NEW_PADDLER_PLACEHOLDER)
     fireEvent.changeText(input, "brand new paddler")
 
     // TextInput error prop should be false when the name is not a duplicate
@@ -403,7 +407,7 @@ describe("PaddlerHeatManagerPresentation", () => {
 
     renderWithProviders(<PaddlerHeatManagerPresentation {...defaultProps} />, store)
 
-    const input = screen.getByPlaceholderText("New Paddler Name")
+    const input = screen.getByPlaceholderText(NEW_PADDLER_PLACEHOLDER)
     fireEvent.changeText(input, "BrandNewPaddler")
     fireEvent(input, "onSubmitEditing")
 

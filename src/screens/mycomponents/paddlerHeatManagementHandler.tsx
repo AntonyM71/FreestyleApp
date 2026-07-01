@@ -3,6 +3,7 @@ import React, { useMemo, useState } from "react"
 import { StyleSheet, Text, View } from "react-native"
 import { Button, HelperText, TextInput } from "react-native-paper"
 import { batch, useDispatch, useSelector } from "react-redux"
+
 import {
 	addOrRemovePaddlerName,
 	changePaddler,
@@ -84,7 +85,7 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 			paddlerHeatList
 				.flat()
 				.map((p) => p.name)
-				.indexOf(newPaddlerName) > -1
+				.includes(newPaddlerName)
 		)
 	}
 	const handleAddPaddler =
@@ -97,7 +98,7 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 					paddlerHeatList
 						.flat()
 						.map((p) => p.name)
-						.indexOf(newPaddlerName) > -1
+						.includes(newPaddlerName)
 				) {
 					alert("You've already added this paddler")
 				} else {
@@ -120,8 +121,8 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 		remainingPaddlers: IPaddler[]
 	) => {
 		const newList = remainingPaddlers.length === 0 ? [] : remainingPaddlers
-		const newPaddlerScores = paddlerScores
-		newList.flat().forEach((paddler) => {
+		const newPaddlerScores = { ...paddlerScores }
+		for (const paddler of newList.flat()) {
 			if (!newPaddlerScores[paddler.name]) {
 				newPaddlerScores[paddler.name] = []
 			}
@@ -134,7 +135,7 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 					newPaddlerScores[paddler.name].push(initialScoresheet())
 				}
 			}
-		})
+		}
 		const paddlersInOtherHeats = paddlerHeatList.filter(
 			(p) => p.heat !== heatKey
 		)

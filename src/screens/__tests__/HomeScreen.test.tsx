@@ -1,8 +1,9 @@
-import React from "react"
 import { render, screen } from "@testing-library/react-native"
+import React from "react"
+import { Dimensions } from "react-native"
 import { Provider } from "react-redux"
 import { createStore } from "redux"
-import { Dimensions } from "react-native"
+
 import HomeScreen from "../HomeScreen"
 
 // Mock child components with string components
@@ -21,6 +22,9 @@ const mockDimensions = (width: number) => {
 }
 
 describe("HomeScreen", () => {
+  const TIMER_CONTAINER_TEST_ID = "timer-container"
+  const HEAT_HANDLER_CONTAINER_TEST_ID = "heat-handler-container"
+  const PADDLER_HANDLER_CONTAINER_TEST_ID = "paddler-handler-container"
   const createTestStore = (showTimer = false) => {
     const initialState = {
       paddlers: {
@@ -68,9 +72,9 @@ describe("HomeScreen", () => {
       </Provider>
     )
 
-    const timerContainer = screen.getByTestId("timer-container")
-    const heatHandlerContainer = screen.getByTestId("heat-handler-container")
-    const paddlerHandlerContainer = screen.getByTestId("paddler-handler-container")
+    const timerContainer = screen.getByTestId(TIMER_CONTAINER_TEST_ID)
+    const heatHandlerContainer = screen.getByTestId(HEAT_HANDLER_CONTAINER_TEST_ID)
+    const paddlerHandlerContainer = screen.getByTestId(PADDLER_HANDLER_CONTAINER_TEST_ID)
 
     expect(timerContainer).toHaveStyle({ width: "33.3%" })
     expect(heatHandlerContainer).toHaveStyle({ width: "66.6%" })
@@ -87,9 +91,9 @@ describe("HomeScreen", () => {
       </Provider>
     )
 
-    const timerContainer = screen.getByTestId("timer-container")
-    const heatHandlerContainer = screen.getByTestId("heat-handler-container")
-    const paddlerHandlerContainer = screen.getByTestId("paddler-handler-container")
+    const timerContainer = screen.getByTestId(TIMER_CONTAINER_TEST_ID)
+    const heatHandlerContainer = screen.getByTestId(HEAT_HANDLER_CONTAINER_TEST_ID)
+    const paddlerHandlerContainer = screen.getByTestId(PADDLER_HANDLER_CONTAINER_TEST_ID)
 
     expect(timerContainer).toHaveStyle({ width: "100%" })
     expect(heatHandlerContainer).toHaveStyle({ width: "100%" })
@@ -104,9 +108,9 @@ describe("HomeScreen", () => {
       </Provider>
     )
 
-    expect(screen.getByTestId("timer-container")).toBeTruthy()
-    expect(screen.getByTestId("heat-handler-container")).toBeTruthy()
-    expect(screen.getByTestId("paddler-handler-container")).toBeTruthy()
+    expect(screen.getByTestId(TIMER_CONTAINER_TEST_ID)).toBeTruthy()
+    expect(screen.getByTestId(HEAT_HANDLER_CONTAINER_TEST_ID)).toBeTruthy()
+    expect(screen.getByTestId(PADDLER_HANDLER_CONTAINER_TEST_ID)).toBeTruthy()
     expect(screen.getByTestId("move-buttons-container")).toBeTruthy()
   })
 
@@ -135,7 +139,7 @@ describe("HomeScreen", () => {
       </Provider>
     )
 
-    expect(screen.queryByTestId("timer-container")).toBeNull()
+    expect(screen.queryByTestId(TIMER_CONTAINER_TEST_ID)).toBeNull()
   })
 
   it("gives heat handler full width when showTimer is false on small screen", () => {
@@ -148,7 +152,7 @@ describe("HomeScreen", () => {
       </Provider>
     )
 
-    const heatHandlerContainer = screen.getByTestId("heat-handler-container")
+    const heatHandlerContainer = screen.getByTestId(HEAT_HANDLER_CONTAINER_TEST_ID)
     expect(heatHandlerContainer).toHaveStyle({ width: "100%" })
   })
 
@@ -162,9 +166,9 @@ describe("HomeScreen", () => {
       </Provider>
     )
 
-    expect(screen.queryByTestId("timer-container")).toBeNull()
+    expect(screen.queryByTestId(TIMER_CONTAINER_TEST_ID)).toBeNull()
     // paddler handler container is still present
-    expect(screen.getByTestId("paddler-handler-container")).toBeTruthy()
+    expect(screen.getByTestId(PADDLER_HANDLER_CONTAINER_TEST_ID)).toBeTruthy()
   })
 
   it("has navigationOptions with header set to null", () => {

@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { StyleSheet, Text, View } from "react-native"
 import { Button, HelperText, TextInput } from "react-native-paper"
 import { batch, useDispatch, useSelector } from "react-redux"
+
 import { addOrRemoveCategory, addOrRemovePaddlerName } from "../../actions"
 import { ICategory } from "../../reducers"
 import { getCategories, getPaddlerHeatList } from "../../selectors"
@@ -17,7 +18,7 @@ export const PaddlerHeatManagerPresentation = () => {
 
 	const handleAddChange = (newCategoryName: string) => {
 		setNewCategory(newCategoryName)
-		setIsDuplicate(categoryList.map((p) => p.name).indexOf(newCategoryName) > -1)
+		setIsDuplicate(categoryList.map((p) => p.name).includes(newCategoryName))
 	}
 	const handleAddCategory = (newCategoryName: string) => {
 		if (!isDuplicate) {

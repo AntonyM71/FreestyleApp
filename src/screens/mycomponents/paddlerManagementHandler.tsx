@@ -3,6 +3,7 @@ import React, { useState } from "react"
 import { ScrollView, StyleSheet, View } from "react-native"
 import { Button } from "react-native-paper"
 import { batch, useDispatch, useSelector } from "react-redux"
+
 import {
 	addOrRemoveHeat,
 	addOrRemovePaddlerName,
