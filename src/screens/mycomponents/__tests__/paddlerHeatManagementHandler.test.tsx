@@ -310,7 +310,7 @@ describe("PaddlerHeatManagerPresentation", () => {
 
     renderWithProviders(
       <PaddlerHeatManagerPresentation
-        paddlerList={[paddlerWithNoCategory]}
+        paddlerList={initialState.paddlerList}
         heatKey={1}
       />,
       store

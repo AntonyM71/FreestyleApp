@@ -123,14 +123,23 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 		const newList = remainingPaddlers.length === 0 ? [] : remainingPaddlers
 		const newPaddlerScores = { ...paddlerScores }
 		for (const paddler of newList.flat()) {
-			if (
-				!newPaddlerScores[paddler.name] ||
-				numberOfRuns + 1 !== newPaddlerScores[paddler.name].length
-			) {
+			const existing = newPaddlerScores[paddler.name]
+			const target = numberOfRuns + 1
+			if (!existing) {
 				newPaddlerScores[paddler.name] = Array.from(
-					{ length: numberOfRuns + 1 },
+					{ length: target },
 					() => initialScoresheet()
 				)
+			} else if (existing.length < target) {
+				newPaddlerScores[paddler.name] = [
+					...existing,
+					...Array.from(
+						{ length: target - existing.length },
+						() => initialScoresheet()
+					)
+				]
+			} else if (existing.length > target) {
+				newPaddlerScores[paddler.name] = existing.slice(0, target)
 			}
 		}
 		const paddlersInOtherHeats = paddlerHeatList.filter(
