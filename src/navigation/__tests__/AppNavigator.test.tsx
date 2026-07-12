@@ -10,9 +10,15 @@ jest.mock("@react-navigation/native", () => ({
   })
 }))
 
+let capturedScreenOptions: Record<string, any> = {}
+
 jest.mock("@react-navigation/bottom-tabs", () => ({
   createBottomTabNavigator: () => ({
-    Navigator: ({ children }: { children: React.ReactNode }) => children,
+    Navigator: ({ children, screenOptions }: { children: React.ReactNode; screenOptions?: Record<string, any> }) => {
+      capturedScreenOptions = screenOptions ?? {}
+
+      return children
+    },
     Screen: ({ name, options }: { name: string; options: any }) => (
       <mock-screen testID={`screen-${name.toLowerCase()}`}>
         {options.tabBarIcon({ focused: true })}
@@ -83,5 +89,11 @@ describe("AppNavigator", () => {
     expect(resultsScreen).toBeTruthy()
     expect(paddlersScreen).toBeTruthy()
     expect(settingsScreen).toBeTruthy()
+  })
+
+  it("sets tabBarStyle paddingTop to 0 to remove excess padding above tab bar", () => {
+    render(<AppNavigator />)
+
+    expect(capturedScreenOptions.tabBarStyle).toEqual({ paddingTop: 0 })
   })
 })
