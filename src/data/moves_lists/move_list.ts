@@ -356,7 +356,7 @@ export const MovesList: IMovesList = {
 			Huge: 40,
 			Link: 20,
 			Style: 20,
-			Reverse: false
+			Reverse: true
 		},
 		{
 			Move: "Gedi Flip",
