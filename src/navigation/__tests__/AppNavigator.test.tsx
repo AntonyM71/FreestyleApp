@@ -16,6 +16,7 @@ jest.mock("@react-navigation/bottom-tabs", () => ({
   createBottomTabNavigator: () => ({
     Navigator: ({ children, screenOptions }: { children: React.ReactNode; screenOptions?: Record<string, any> }) => {
       capturedScreenOptions = screenOptions ?? {}
+
       return children
     },
     Screen: ({ name, options }: { name: string; options: any }) => (
