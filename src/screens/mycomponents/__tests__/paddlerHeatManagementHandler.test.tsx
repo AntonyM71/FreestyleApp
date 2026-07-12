@@ -299,15 +299,22 @@ describe("PaddlerHeatManagerPresentation", () => {
   })
 
   it("handles changing paddler category", () => {
+    const paddlerWithNoCategory = { name: "paddler1", category: "", heat: 1 }
     const initialState = {
       categories: mockCategories,
-      paddlerList: mockPaddlers,
+      paddlerList: [paddlerWithNoCategory],
       paddlerScores: mockScores,
       numberOfRuns: 1
     }
     const store = createTestStore(initialState)
 
-    renderWithProviders(<PaddlerHeatManagerPresentation {...defaultProps} />, store)
+    renderWithProviders(
+      <PaddlerHeatManagerPresentation
+        paddlerList={[paddlerWithNoCategory]}
+        heatKey={1}
+      />,
+      store
+    )
 
     const picker = screen.getByTestId("category-picker")
     fireEvent.press(picker)
@@ -325,8 +332,6 @@ describe("PaddlerHeatManagerPresentation", () => {
       .fill(null)
       .map(() => ({ ...mockScoresheet }))
     expect(state.paddlerScores.paddler1).toEqual(expectedScores)
-
-
   })
 
   it("shows inline duplicate-name error text when an existing name is typed", () => {
