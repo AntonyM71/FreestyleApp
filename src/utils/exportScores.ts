@@ -1,0 +1,119 @@
+import * as FileSystem from "expo-file-system"
+import * as Sharing from "expo-sharing"
+import { IPaddler, IPaddlerScores } from "../reducers"
+import {
+	moveInterface,
+	moveListArray
+} from "../screens/mycomponents/makePaddlerScores"
+import { calculateScoreAndBonuses } from "./scoreHelpers"
+
+type ScoredMovesRecord = Record<string, moveInterface | moveInterface[]>
+
+export const calculatePaddlerRunScore = (
+	paddlerScores: IPaddlerScores,
+	paddlerName: string,
+	runIndex: number
+): number => {
+	const paddlerScore: number[] = [0]
+
+	if (
+		paddlerScores &&
+		paddlerScores[paddlerName] &&
+		paddlerScores[paddlerName][runIndex]
+	) {
+		const scoredMoves = paddlerScores[paddlerName][runIndex] as ScoredMovesRecord
+		moveListArray.forEach((item) => {
+			const moveEntry = scoredMoves[item.Move]
+			if (Array.isArray(moveEntry)) {
+				moveEntry.forEach((arrayItem) => {
+					paddlerScore.push(
+						calculateScoreAndBonuses(item, arrayItem.left) +
+							calculateScoreAndBonuses(item, arrayItem.right)
+					)
+				})
+			} else if (moveEntry) {
+				paddlerScore.push(
+					calculateScoreAndBonuses(item, moveEntry.left) +
+						calculateScoreAndBonuses(item, moveEntry.right)
+				)
+			}
+		})
+	}
+
+	return paddlerScore.reduce((a, b) => a + b)
+}
+
+export const generateCsvContent = (
+	paddlerList: IPaddler[],
+	paddlerScores: IPaddlerScores
+): string => {
+	if (paddlerList.length === 0) {
+		return ""
+	}
+
+	const maxRuns = Math.max(
+		...paddlerList.map((p) =>
+			paddlerScores[p.name] ? paddlerScores[p.name].length : 0
+		),
+		0
+	)
+
+	const runHeaders = Array.from(
+		{ length: maxRuns },
+		(_, i) => `Run ${i + 1}`
+	)
+	const headers = ["Name", "Category", "Heat", ...runHeaders]
+
+	const rows = paddlerList.map((paddler) => {
+		const runScores = Array.from({ length: maxRuns }, (_, runIndex) =>
+			String(calculatePaddlerRunScore(paddlerScores, paddler.name, runIndex))
+		)
+
+		return [paddler.name, paddler.category, String(paddler.heat), ...runScores]
+	})
+
+	const escape = (value: string): string => {
+		if (value.includes(",") || value.includes("\"") || value.includes("\n")) {
+			return "\"" + value.replace(/"/g, "\"\"") + "\""
+		}
+
+		return value
+	}
+
+	const lines = [headers, ...rows].map((row) =>
+		row.map(escape).join(",")
+	)
+
+	return lines.join("\n")
+}
+
+export const exportScoresToCsv = async (
+	paddlerList: IPaddler[],
+	paddlerScores: IPaddlerScores
+): Promise<void> => {
+	if (!FileSystem.cacheDirectory) {
+		throw new Error(
+			"Export is not supported on this platform: no writable cache directory."
+		)
+	}
+
+	const isAvailable = await Sharing.isAvailableAsync()
+	if (!isAvailable) {
+		throw new Error("Sharing is not available on this device.")
+	}
+
+	const csvContent = generateCsvContent(paddlerList, paddlerScores)
+	const timestamp = new Date().toISOString().replace(/[:.]/g, "-")
+	const fileName = `freestyle-scores-${timestamp}.csv`
+	const fileUri = `${FileSystem.cacheDirectory}${fileName}`
+
+	await FileSystem.writeAsStringAsync(fileUri, csvContent, {
+		encoding: FileSystem.EncodingType.UTF8
+	})
+
+	await Sharing.shareAsync(fileUri, {
+		mimeType: "text/csv",
+		dialogTitle: "Save Scores CSV",
+		UTI: "public.comma-separated-values-text"
+	})
+}
