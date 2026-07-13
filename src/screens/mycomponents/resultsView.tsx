@@ -2,6 +2,7 @@
 import React from "react"
 import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native"
 import { useSelector } from "react-redux"
+
 import { IPaddler, IPaddlerList } from "../../reducers"
 import { getPaddlerHeatList, getScoresState } from "../../selectors"
 import { styles } from "../../styles"

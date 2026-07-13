@@ -1,4 +1,5 @@
 import { combineReducers, createStore } from "redux"
+
 import { IPaddlerStateType, paddlerReducer } from "./reducers"
 
 const rootReducer = combineReducers({

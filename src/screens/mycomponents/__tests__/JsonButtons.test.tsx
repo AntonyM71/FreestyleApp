@@ -1,13 +1,18 @@
 /* eslint-disable testing-library/prefer-presence-queries */
+import { fireEvent,render, screen } from "@testing-library/react-native";
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react-native";
+import { Dimensions, StyleSheet } from "react-native";
+import { Provider as PaperProvider } from "react-native-paper";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
-import { Dimensions, StyleSheet } from "react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Provider as PaperProvider } from "react-native-paper";
-import MoveButtons from "../JsonButtons";
+
 import * as selectors from "../../../selectors";
+import MoveButtons from "../JsonButtons";
+
+const TEST_PADDLER_NAME = "Test Paddler"
+const TEST_CATEGORY = "category 1"
+const CATEGORY_PICKER_TEST_ID = "category-picker"
 
 const defaultSide = {
   scored: false,
@@ -145,7 +150,7 @@ describe("MoveButtons", () => {
   } = {
     paddlers: {
       paddlerScores: {
-        "Test Paddler": {
+        [TEST_PADDLER_NAME]: {
           1: {
             "Entry Move 1": {
               left: { ...defaultSide },
@@ -181,8 +186,8 @@ describe("MoveButtons", () => {
       paddlerIndex: 0,
       currentHeat: 1,
       paddlersInHeat: [{
-        name: "Test Paddler",
-        category: "Test Category",
+        name: TEST_PADDLER_NAME,
+        category: TEST_CATEGORY,
         heat: 1
       }]
     }
@@ -192,21 +197,21 @@ describe("MoveButtons", () => {
     // Mock all required selectors
     jest.spyOn(selectors, "getCurrentRun").mockReturnValue(1);
     jest.spyOn(selectors, "getCurrentPaddler").mockReturnValue({
-      name: "Test Paddler",
-      category: "Test Category",
+      name: TEST_PADDLER_NAME,
+      category: TEST_CATEGORY,
       heat: 1
     });
     jest.spyOn(selectors, "getNumberOfPaddlersInHeat").mockReturnValue(1);
     jest.spyOn(selectors, "getCategories").mockReturnValue([
       {
-        name: "Test Category",
+        name: TEST_CATEGORY,
         availableMoves: { hole: true, wave: true, nfl: false }
       }
     ]);
     jest.spyOn(selectors, "getPaddlerHeatList").mockReturnValue([
       {
-        name: "Test Paddler",
-        category: "Test Category",
+        name: TEST_PADDLER_NAME,
+        category: TEST_CATEGORY,
         heat: 1
       }
     ]);
@@ -340,7 +345,7 @@ describe("MoveButtons", () => {
 
   it("shows category prompt instead of moves when paddler has no category", () => {
     jest.spyOn(selectors, "getCurrentPaddler").mockReturnValue({
-      name: "Test Paddler",
+      name: TEST_PADDLER_NAME,
       category: "",
       heat: 1
     });
@@ -355,7 +360,7 @@ describe("MoveButtons", () => {
 
   it("updates paddler category from prompt action", () => {
     jest.spyOn(selectors, "getCurrentPaddler").mockReturnValue({
-      name: "Test Paddler",
+      name: TEST_PADDLER_NAME,
       category: "",
       heat: 1
     });
@@ -367,7 +372,7 @@ describe("MoveButtons", () => {
     ]);
     jest.spyOn(selectors, "getPaddlerHeatList").mockReturnValue([
       {
-        name: "Test Paddler",
+        name: TEST_PADDLER_NAME,
         category: "",
         heat: 1
       }
@@ -376,14 +381,14 @@ describe("MoveButtons", () => {
     const store = mockStore(defaultState);
     renderWithProviders(store);
 
-    fireEvent.press(screen.getByTestId("category-picker"));
+    fireEvent.press(screen.getByTestId(CATEGORY_PICKER_TEST_ID));
     fireEvent.press(screen.getByTestId("set-category-Expert"));
 
     expect(store.getActions()[0]).toEqual({
       type: "ADD_OR_REMOVE_PADDLER",
       payload: [
         {
-          name: "Test Paddler",
+          name: TEST_PADDLER_NAME,
           category: "Expert",
           heat: 1
         }
@@ -393,7 +398,7 @@ describe("MoveButtons", () => {
 
   it("resets paddler scores when category is changed from the prompt", () => {
     jest.spyOn(selectors, "getCurrentPaddler").mockReturnValue({
-      name: "Test Paddler",
+      name: TEST_PADDLER_NAME,
       category: "",
       heat: 1
     });
@@ -401,24 +406,24 @@ describe("MoveButtons", () => {
       { name: "Expert", availableMoves: { hole: true, wave: true, nfl: false } }
     ]);
     jest.spyOn(selectors, "getPaddlerHeatList").mockReturnValue([
-      { name: "Test Paddler", category: "", heat: 1 }
+      { name: TEST_PADDLER_NAME, category: "", heat: 1 }
     ]);
 
     const store = mockStore(defaultState);
     renderWithProviders(store);
 
-    fireEvent.press(screen.getByTestId("category-picker"));
+    fireEvent.press(screen.getByTestId(CATEGORY_PICKER_TEST_ID));
     fireEvent.press(screen.getByTestId("set-category-Expert"));
 
     const actions = store.getActions();
     const scoresAction = actions.find((a: any) => a.type === "UPDATE_PADDLER_SCORES");
     expect(scoresAction).toBeDefined();
-    expect(scoresAction.payload["Test Paddler"]).toHaveLength(1);
+    expect(scoresAction.payload[TEST_PADDLER_NAME]).toHaveLength(1);
   });
 
   it("selecting none from the category picker is a no-op (dispatches nothing)", () => {
     jest.spyOn(selectors, "getCurrentPaddler").mockReturnValue({
-      name: "Test Paddler",
+      name: TEST_PADDLER_NAME,
       category: "",
       heat: 1
     });
@@ -426,14 +431,14 @@ describe("MoveButtons", () => {
       { name: "Expert", availableMoves: { hole: true, wave: true, nfl: false } }
     ]);
     jest.spyOn(selectors, "getPaddlerHeatList").mockReturnValue([
-      { name: "Test Paddler", category: "", heat: 1 }
+      { name: TEST_PADDLER_NAME, category: "", heat: 1 }
     ]);
 
     const store = mockStore(defaultState);
     renderWithProviders(store);
 
     // Selecting the "none" option sends "" which is an early-return in handleCategorySelection
-    fireEvent.press(screen.getByTestId("category-picker"));
+    fireEvent.press(screen.getByTestId(CATEGORY_PICKER_TEST_ID));
     fireEvent.press(screen.getByTestId("category-option-none"));
 
     expect(store.getActions()).toHaveLength(0);
@@ -441,7 +446,7 @@ describe("MoveButtons", () => {
 
   it("shows instruction text instead of picker when no categories are configured", () => {
     jest.spyOn(selectors, "getCurrentPaddler").mockReturnValue({
-      name: "Test Paddler",
+      name: TEST_PADDLER_NAME,
       category: "",
       heat: 1
     });
@@ -453,7 +458,7 @@ describe("MoveButtons", () => {
     expect(
       screen.getByText("Add a category in the Paddlers screen to enable moves.")
     ).toBeTruthy();
-    expect(screen.queryByTestId("category-picker")).toBeNull();
+    expect(screen.queryByTestId(CATEGORY_PICKER_TEST_ID)).toBeNull();
   });
 
   it("always shows trophy moves regardless of available move flags", () => {

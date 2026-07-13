@@ -1,11 +1,14 @@
+import { fireEvent,render, screen } from "@testing-library/react-native"
 import React from "react"
-import { render, screen, fireEvent } from "@testing-library/react-native"
 import { Provider } from "react-redux"
 import configureStore from "redux-mock-store"
-import { EntryDynamicButton } from "../entryDynamicButton"
+
 import { IDirection } from "../../../reducers"
+import { EntryDynamicButton } from "../entryDynamicButton"
 
 const mockStore = configureStore([])
+
+const TEST_CATEGORY = "category 1"
 
 describe("EntryDynamicButton", () => {
 	const createInitialState = (scored = false, moveName = "Spin") => ({
@@ -41,7 +44,7 @@ describe("EntryDynamicButton", () => {
 			paddlerList: [
 				{
 					name: "TestPaddler",
-					category: "category 1",
+					category: TEST_CATEGORY,
 					heat: 1
 				}
 			]
@@ -55,7 +58,7 @@ describe("EntryDynamicButton", () => {
 		const props = {
 			paddler: {
 				name: "TestPaddler",
-				category: "category 1",
+				category: TEST_CATEGORY,
 				heat: 1
 			},
 			move: {
@@ -89,7 +92,7 @@ describe("EntryDynamicButton", () => {
 		const props = {
 			paddler: {
 				name: "TestPaddler",
-				category: "category 1",
+				category: TEST_CATEGORY,
 				heat: 1
 			},
 			move: {
@@ -138,7 +141,7 @@ describe("EntryDynamicButton", () => {
 		const props = {
 			paddler: {
 				name: "TestPaddler",
-				category: "category 1",
+				category: TEST_CATEGORY,
 				heat: 1
 			},
 			move: {
@@ -179,7 +182,7 @@ describe("EntryDynamicButton", () => {
 		const props = {
 			paddler: {
 				name: "TestPaddler",
-				category: "category 1",
+				category: TEST_CATEGORY,
 				heat: 1
 			},
 			move: {
@@ -230,7 +233,7 @@ describe("EntryDynamicButton", () => {
 		const props = {
 			paddler: {
 				name: "TestPaddler",
-				category: "category 1",
+				category: TEST_CATEGORY,
 				heat: 1
 			},
 			move: {

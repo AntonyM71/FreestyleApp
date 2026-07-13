@@ -2,198 +2,32 @@ import React from "react"
 import { StyleSheet, View } from "react-native"
 import { Button } from "react-native-paper"
 import { useDispatch, useSelector } from "react-redux"
+
 import { updatePaddlerScores } from "../../actions"
 import { IMoves } from "../../data/moves_lists/move_list"
-import { IDirection, IPaddler } from "../../reducers"
+import { IDirection, IPaddler, IPaddlerScores } from "../../reducers"
 import { getPaddlerScores } from "../../selectors"
 import { paperButtonProps } from "../../styles"
+import { moveSideInterface } from "./makePaddlerScores"
 
-// eslint-disable-next-line complexity
-const DynamicButtonPresentation = React.memo((props: IPropsType) => {
-	const dispatch = useDispatch()
-	const paddlerScores = useSelector(getPaddlerScores)
-	const oneSidedMoves = ["Loop", "Back Loop"]
-	const handleMove =
-		(
-			paddler: string,
-			currentRun: number,
-			move: string,
-			direction: string,
-			type: string
-		) =>
-		() => {
-			const newScores = { ...paddlerScores }
-			const newField =
-				// @ts-ignore
-				!newScores[paddler][currentRun][move][direction][type]
-			// @ts-ignore
-			newScores[paddler][currentRun][move][direction][type] = newField
-			// @ts-ignore
-			if (newScores[paddler][currentRun][move][direction].huge) {
-				// @ts-ignore
-				newScores[paddler][currentRun][move][direction].air = true
-			}
-			dispatch(updatePaddlerScores(newScores))
-		}
+interface BonusMoveButtonProps {
+	onPress: () => void
+	disabled: boolean
+	isScored: boolean
+	label: string
+}
 
-	const thisMove =
-		paddlerScores[props.paddler.name][props.currentRun][props.move.Move]
-	if (!Array.isArray(thisMove)) {
-		if (!thisMove[props.direction].scored) {
-			const buttonName =
-				oneSidedMoves.indexOf(props.move.Move) > -1
-					? props.move.Move
-					: props.move.Move + " " + props.direction[0].toUpperCase()
-
-			return (
-				<View style={layoutStyles.unscoredButtonWrap}>
-					<Button
-						onPress={handleMove(
-							props.paddler.name,
-							props.currentRun,
-							props.move.Move,
-							props.direction,
-							"scored"
-						)}
-						{...paperButtonProps.noMove}
-					>
-						{buttonName}
-					</Button>
-				</View>
-			)
-		} else {
-			const buttonName =
-				props.move.Move === "Loop" || props.move.Move === "Back Loop"
-					? props.move.Move
-					: props.move.Move + " " + props.direction[0].toUpperCase()
-
-			return (
-				<View
-					style={layoutStyles.buttonBlock}
-				>
-					<View style={layoutStyles.fullWidthCell}>
-						<Button
-							onPress={handleMove(
-								props.paddler.name,
-								props.currentRun,
-								props.move.Move,
-								props.direction,
-								"scored"
-							)}
-							{...paperButtonProps.moveScored}
-						>
-							{buttonName}
-						</Button>
-					</View>
-					<View style={layoutStyles.thirdWidthCell}>
-							<Button
-								onPress={handleMove(
-									props.paddler.name,
-									props.currentRun,
-									props.move.Move,
-									props.direction,
-									"clean"
-								)}
-								disabled={props.move.Clean ? false : true}
-								{...(thisMove[props.direction].clean
-									? paperButtonProps.bonusScored
-									: paperButtonProps.noBonus)}
-							>
-								{"C"}
-							</Button>
-					</View>
-					<View style={layoutStyles.thirdWidthCell}>
-							<Button
-								onPress={handleMove(
-									props.paddler.name,
-									props.currentRun,
-									props.move.Move,
-									props.direction,
-									"superClean"
-								)}
-								disabled={props.move.SuperClean ? false : true}
-								{...(thisMove[props.direction].superClean
-									? paperButtonProps.bonusScored
-									: paperButtonProps.noBonus)}
-							>
-								{"SC"}
-							</Button>
-					</View>
-					<View style={layoutStyles.thirdWidthCell}>
-							<Button
-								onPress={handleMove(
-									props.paddler.name,
-									props.currentRun,
-									props.move.Move,
-									props.direction,
-									"link"
-								)}
-								disabled={props.move.Link ? false : true}
-								{...(thisMove[props.direction].link
-									? paperButtonProps.bonusScored
-									: paperButtonProps.noBonus)}
-							>
-								{"L"}
-							</Button>
-					</View>
-					<View style={layoutStyles.thirdWidthCell}>
-							<Button
-								onPress={handleMove(
-									props.paddler.name,
-									props.currentRun,
-									props.move.Move,
-									props.direction,
-									"air"
-								)}
-								disabled={props.move.Air ? false : true}
-								{...(thisMove[props.direction].air
-									? paperButtonProps.bonusScored
-									: paperButtonProps.noBonus)}
-							>
-								{"A"}
-							</Button>
-					</View>
-					<View style={layoutStyles.thirdWidthCell}>
-							<Button
-								onPress={handleMove(
-									props.paddler.name,
-									props.currentRun,
-									props.move.Move,
-									props.direction,
-									"huge"
-								)}
-								disabled={props.move.Huge ? false : true}
-								{...(thisMove[props.direction].huge
-									? paperButtonProps.bonusScored
-									: paperButtonProps.noBonus)}
-							>
-								{"H"}
-							</Button>
-					</View>
-					<View style={layoutStyles.thirdWidthCell}>
-							<Button
-								onPress={handleMove(
-									props.paddler.name,
-									props.currentRun,
-									props.move.Move,
-									props.direction,
-									"style"
-								)}
-								disabled={props.move.Style ? false : true}
-								{...(thisMove[props.direction].style
-									? paperButtonProps.bonusScored
-									: paperButtonProps.noBonus)}
-							>
-								{"S"}
-							</Button>
-					</View>
-				</View>
-			)
-		}
-	}
-
-	return <> </>
-})
+const BonusMoveButton = ({ onPress, disabled, isScored, label }: BonusMoveButtonProps) => (
+	<View style={layoutStyles.thirdWidthCell}>
+		<Button
+			onPress={onPress}
+			disabled={disabled}
+			{...(isScored ? paperButtonProps.bonusScored : paperButtonProps.noBonus)}
+		>
+			{label}
+		</Button>
+	</View>
+)
 
 interface IPropsType {
 	paddler: IPaddler
@@ -201,6 +35,126 @@ interface IPropsType {
 	move: IMoves
 	direction: IDirection
 }
+
+type PaddlerRuns = IPaddlerScores[string] | Record<number, IPaddlerScores[string][number]>
+
+const DynamicButtonPresentation = React.memo((props: IPropsType) => {
+	const dispatch = useDispatch()
+	const paddlerScores = useSelector(getPaddlerScores)
+	const oneSidedMoves = ["Loop", "Back Loop"]
+
+	const handleMove = (
+		paddler: string,
+		currentRun: number,
+		move: string,
+		direction: IDirection,
+		type: keyof moveSideInterface
+	) => () => {
+		const existingRuns = paddlerScores[paddler] as PaddlerRuns
+		const paddlerRuns: PaddlerRuns = Array.isArray(existingRuns)
+			? [...existingRuns]
+			: { ...existingRuns }
+		const runScores = { ...paddlerRuns[currentRun] }
+		const moveScores = runScores[move]
+		const nextSide = {
+			...moveScores[direction],
+			[type]: !moveScores[direction][type]
+		}
+		const updatedSide = nextSide.huge ? { ...nextSide, air: true } : nextSide
+		paddlerRuns[currentRun] = {
+			...runScores,
+			[move]: {
+				...moveScores,
+				[direction]: updatedSide
+			}
+		}
+		const newScores = {
+			...paddlerScores,
+			[paddler]: paddlerRuns as IPaddlerScores[string]
+		}
+		dispatch(updatePaddlerScores(newScores))
+	}
+
+	const thisMove =
+		paddlerScores[props.paddler.name][props.currentRun][props.move.Move]
+	if (Array.isArray(thisMove)) {
+		return null
+	}
+
+	const isOneSided = oneSidedMoves.includes(props.move.Move)
+	const buttonName = isOneSided
+		? props.move.Move
+		: props.move.Move + " " + props.direction[0].toUpperCase()
+
+	if (!thisMove[props.direction].scored) {
+		return (
+			<View style={layoutStyles.unscoredButtonWrap}>
+				<Button
+					onPress={handleMove(
+						props.paddler.name,
+						props.currentRun,
+						props.move.Move,
+						props.direction,
+						"scored"
+					)}
+					{...paperButtonProps.noMove}
+				>
+					{buttonName}
+				</Button>
+			</View>
+		)
+	}
+
+	const bonusHandler = (type: keyof moveSideInterface) =>
+		handleMove(props.paddler.name, props.currentRun, props.move.Move, props.direction, type)
+	const side = thisMove[props.direction]
+
+	return (
+		<View style={layoutStyles.buttonBlock}>
+			<View style={layoutStyles.fullWidthCell}>
+				<Button onPress={bonusHandler("scored")} {...paperButtonProps.moveScored}>
+					{buttonName}
+				</Button>
+			</View>
+			<BonusMoveButton
+				onPress={bonusHandler("clean")}
+				disabled={!props.move.Clean}
+				isScored={side.clean}
+				label="C"
+			/>
+			<BonusMoveButton
+				onPress={bonusHandler("superClean")}
+				disabled={!props.move.SuperClean}
+				isScored={side.superClean}
+				label="SC"
+			/>
+			<BonusMoveButton
+				onPress={bonusHandler("link")}
+				disabled={!props.move.Link}
+				isScored={side.link}
+				label="L"
+			/>
+			<BonusMoveButton
+				onPress={bonusHandler("air")}
+				disabled={!props.move.Air}
+				isScored={side.air}
+				label="A"
+			/>
+			<BonusMoveButton
+				onPress={bonusHandler("huge")}
+				disabled={!props.move.Huge}
+				isScored={side.huge}
+				label="H"
+			/>
+			<BonusMoveButton
+				onPress={bonusHandler("style")}
+				disabled={!props.move.Style}
+				isScored={side.style}
+				label="S"
+			/>
+		</View>
+	)
+})
 
 // can we make this go deeper, so that we only update a single component when we add a move?
 

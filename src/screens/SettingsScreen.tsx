@@ -1,6 +1,7 @@
 import React from "react"
 import { ScrollView, StyleSheet, Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
+
 import { styles } from "../styles"
 import CategoryManager from "./mycomponents/categoryManager"
 import RunOptions from "./mycomponents/runOptions"

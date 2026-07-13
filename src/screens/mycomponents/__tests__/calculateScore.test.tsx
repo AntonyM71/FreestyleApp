@@ -1,12 +1,14 @@
 /* eslint-disable testing-library/prefer-presence-queries, testing-library/prefer-screen-queries */
-import React from "react";
+/* eslint-disable sonarjs/no-duplicate-string */
 import { render, screen } from "@testing-library/react-native";
+import React from "react";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
-import { DisplayScore } from "../calculateScore";
-import * as selectors from "../../../selectors";
+
 import { IPaddlerScores, MoveType } from "../../../reducers";
-import { moveSideInterface, dataSourceMoveInterface } from "../makePaddlerScores";
+import * as selectors from "../../../selectors";
+import { DisplayScore } from "../calculateScore";
+import { dataSourceMoveInterface,moveSideInterface } from "../makePaddlerScores";
 
 // Test data
 const mockMoves: dataSourceMoveInterface[] = [

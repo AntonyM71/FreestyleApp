@@ -1,46 +1,34 @@
 import moveList, { IMoves } from "../../data/moves_lists/move_list"
 export const moveListArray: IMoves[] = Object.values(moveList).flat()
-export const initialScoresheet = () => {
+export const initialScoresheet = (): Record<string, moveInterface> => {
 	const initialMoves = moveListArray.map(
-		(item): moveInterface | moveInterface[] => {
-			const scoresObject = {
-				id: item.Move,
-				left: {
-					scored: false,
-					air: false,
-					huge: false,
-					clean: false,
-					superClean: false,
-					link: false,
-					style: false
-				},
-				right: {
-					scored: false,
-					air: false,
-					huge: false,
-					clean: false,
-					superClean: false,
-					link: false,
-					style: false
-				}
+		(item): moveInterface => ({
+			id: item.Move,
+			left: {
+				scored: false,
+				air: false,
+				huge: false,
+				clean: false,
+				superClean: false,
+				link: false,
+				style: false
+			},
+			right: {
+				scored: false,
+				air: false,
+				huge: false,
+				clean: false,
+				superClean: false,
+				link: false,
+				style: false
 			}
-
-			return scoresObject
-		}
+		})
 	)
 
-	return initialMoves.reduce((obj, item) => {
-		if (Array.isArray(item)) {
-			// @ts-ignore
-			obj[item[0].id] = item
+	return initialMoves.reduce<Record<string, moveInterface>>((obj, item) => {
+		obj[item.id] = item
 
-			return obj
-		} else {
-			// @ts-ignore
-			obj[item.id] = item
-
-			return obj
-		}
+		return obj
 	}, {})
 }
 

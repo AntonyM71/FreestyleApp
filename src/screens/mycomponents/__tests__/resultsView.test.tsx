@@ -1,11 +1,12 @@
-import React from "react"
 import { render, screen } from "@testing-library/react-native"
+import React from "react"
+import { ScrollView } from "react-native"
 import { Provider } from "react-redux"
 import configureStore from "redux-mock-store"
-import { ScrollView } from "react-native"
-import ResultsView from "../resultsView"
+
 import type { IPaddler } from "../../../reducers"
 import { initialScoresheet } from "../makePaddlerScores"
+import ResultsView from "../resultsView"
 
 const mockStore = configureStore([])
 
@@ -100,9 +101,9 @@ describe("ResultsView", () => {
     expect(paddlerContainers).toHaveLength(3)
 
     // Each paddler should have a score container
-    paddlerContainers.forEach((container) => {
+    for (const container of paddlerContainers) {
       expect(container.parent).toBeTruthy()
-    })
+    }
   })
 
   it("handles empty paddler list", () => {

@@ -2,6 +2,7 @@ import React from "react"
 import { StyleSheet, Text, View } from "react-native"
 import { Button } from "react-native-paper"
 import { useDispatch, useSelector } from "react-redux"
+
 import {
 	changeNumberOfRuns,
 	changePaddler,
@@ -67,15 +68,15 @@ export const PaddlerHandler = () => {
 		if (newRunIndex < numberOfRuns) {
 			dispatch(changeRun(newRunIndex))
 		} else {
-			const scores = paddlerScores
-			paddlerList
-				.flat()
-				.map((paddler: { toString: () => React.ReactText }) => {
-					// @ts-ignore
-					scores[paddler.name].push(initialScoresheet())
-				})
+			const scores = { ...paddlerScores }
+			for (const paddler of paddlerList.flat()) {
+				scores[paddler.name] = [
+					...(scores[paddler.name] || []),
+					initialScoresheet()
+				]
+			}
 			dispatch(changeNumberOfRuns(newRunIndex))
-			dispatch(updatePaddlerScores({ ...scores }))
+			dispatch(updatePaddlerScores(scores))
 			dispatch(changeRun(newRunIndex))
 		}
 	}

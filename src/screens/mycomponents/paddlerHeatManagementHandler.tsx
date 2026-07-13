@@ -3,6 +3,7 @@ import React, { useMemo, useState } from "react"
 import { StyleSheet, Text, View } from "react-native"
 import { Button, HelperText, TextInput } from "react-native-paper"
 import { batch, useDispatch, useSelector } from "react-redux"
+
 import {
 	addOrRemovePaddlerName,
 	changePaddler,
@@ -84,7 +85,7 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 			paddlerHeatList
 				.flat()
 				.map((p) => p.name)
-				.indexOf(newPaddlerName) > -1
+				.includes(newPaddlerName)
 		)
 	}
 	const handleAddPaddler =
@@ -97,7 +98,7 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 					paddlerHeatList
 						.flat()
 						.map((p) => p.name)
-						.indexOf(newPaddlerName) > -1
+						.includes(newPaddlerName)
 				) {
 					alert("You've already added this paddler")
 				} else {
@@ -120,24 +121,27 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 		remainingPaddlers: IPaddler[]
 	) => {
 		const newList = remainingPaddlers.length === 0 ? [] : remainingPaddlers
-		const newPaddlerScores = paddlerScores
-		newList.flat().map((paddler) => {
-			// @ts-ignore
-			if (!newPaddlerScores[paddler]) {
-				newPaddlerScores[paddler.name] = []
+		const newPaddlerScores = { ...paddlerScores }
+		for (const paddler of newList.flat()) {
+			const existing = newPaddlerScores[paddler.name]
+			const target = numberOfRuns + 1
+			if (!existing) {
+				newPaddlerScores[paddler.name] = Array.from(
+					{ length: target },
+					() => initialScoresheet()
+				)
+			} else if (existing.length < target) {
+				newPaddlerScores[paddler.name] = [
+					...existing,
+					...Array.from(
+						{ length: target - existing.length },
+						() => initialScoresheet()
+					)
+				]
+			} else if (existing.length > target) {
+				newPaddlerScores[paddler.name] = existing.slice(0, target)
 			}
-
-			if (
-				numberOfRuns + 1 !==
-				// @ts-ignore
-				newPaddlerScores[paddler.name].length
-			) {
-				for (let i = 0; i < numberOfRuns + 1; i++) {
-					// @ts-ignore
-					newPaddlerScores[paddler.name].push(initialScoresheet())
-				}
-			}
-		})
+		}
 		const paddlersInOtherHeats = paddlerHeatList.filter(
 			(p) => p.heat !== heatKey
 		)
@@ -162,7 +166,10 @@ export const PaddlerHeatManagerPresentation = (props: PropsType) => {
 
 			newPaddlerList[changedPaddlerIndex].category = newCategory
 
-			newPaddlerScores[paddlerName] = [initialScoresheet()]
+			newPaddlerScores[paddlerName] = Array.from(
+				{ length: numberOfRuns + 1 },
+				() => initialScoresheet()
+			)
 
 			batch(() => {
 				dispatch(addOrRemovePaddlerName([...newPaddlerList]))

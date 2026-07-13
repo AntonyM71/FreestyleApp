@@ -2,6 +2,7 @@ import React from "react"
 import { Dimensions, ScrollView, View, ViewStyle } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { useSelector } from "react-redux"
+
 import { getShowTimer } from "../selectors"
 import { styles } from "../styles"
 import HeatHandler from "./mycomponents/heatHandler"

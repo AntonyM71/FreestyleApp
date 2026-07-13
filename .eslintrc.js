@@ -11,15 +11,20 @@ module.exports = {
 		"eslint:recommended",
 		"plugin:@typescript-eslint/recommended",
 		"plugin:@typescript-eslint/recommended-requiring-type-checking",
-
+		"plugin:react-hooks/recommended",
+		"plugin:sonarjs/recommended",
 		"plugin:testing-library/react"
 	],
 	plugins: [
 		"@typescript-eslint",
 		"prefer-arrow",
 		"import",
-		"testing-library",
-
+		"react-hooks",
+		"sonarjs",
+		"unicorn",
+		"promise",
+		"simple-import-sort",
+		"testing-library"
 	],
 	overrides: [
 		{
@@ -45,9 +50,12 @@ module.exports = {
 		"@typescript-eslint/explicit-function-return-type": "off",
 		"@typescript-eslint/no-empty-function": "warn",
 		"@typescript-eslint/no-empty-interface": "off",
-		"@typescript-eslint/no-explicit-any": "off",
+		"@typescript-eslint/no-explicit-any": "warn",
 		"@typescript-eslint/no-floating-promises": "error",
-		"@typescript-eslint/no-unsafe-assignment": "off",
+		"@typescript-eslint/no-unsafe-assignment": "warn",
+		"@typescript-eslint/no-unsafe-member-access": "warn",
+		"@typescript-eslint/no-unsafe-call": "warn",
+		"@typescript-eslint/no-unsafe-return": "warn",
 		"@typescript-eslint/no-parameter-properties": "off",
 		"@typescript-eslint/prefer-regexp-exec": "off",
 		"@typescript-eslint/no-use-before-define": "off",
@@ -57,24 +65,31 @@ module.exports = {
 			{ varsIgnorePattern: "_*" }
 		],
 		"@typescript-eslint/await-thenable": "off", // this not working properly
-		"@typescript-eslint/unbound-method": "off", // functional programing and preferring arrow functions leads us to the state where all functions are unbound by definition
+		"@typescript-eslint/unbound-method": "off", // functional programming and preferring arrow functions leads us to the state where all functions are unbound by definition
 		"@typescript-eslint/prefer-for-of": "error",
-		"@typescript-eslint/ban-ts-comment": "off",
+		"@typescript-eslint/ban-ts-comment": [
+			"warn",
+			{
+				"ts-ignore": "allow-with-description",
+				minimumDescriptionLength: 10
+			}
+		],
 		"@typescript-eslint/prefer-function-type": "error",
-		quotes: ["warn", "double"],
+		quotes: ["error", "double"],
 		"@typescript-eslint/unified-signatures": "error",
 		"@typescript-eslint/no-unnecessary-type-assertion": "off",
 		"testing-library/await-async-query": "error",
 		"testing-library/no-await-sync-query": "error",
 		"testing-library/no-dom-import": "off",
+		"testing-library/prefer-user-event": "warn",
 		"arrow-body-style": "error",
 		"arrow-parens": [
 			// Following this style will help you find arrow functions (=>) which may be mistakenly included in a condition when a comparison such as >= was the intent.
-			"warn",
+			"error",
 			"always"
 		],
-		camelcase: "warn",
-		"comma-dangle": "warn",
+		camelcase: "error",
+		"comma-dangle": "error",
 		complexity: [
 			"warn",
 			{
@@ -85,16 +100,14 @@ module.exports = {
 		curly: "error",
 		"dot-notation": "error",
 		"eol-last": "error",
-		"@typescript-eslint/no-unsafe-member-access": 0,
-		"@typescript-eslint/no-unsafe-call": 0,
-		"@typescript-eslint/explicit-member-accessibility": 0,
-		"@typescript-eslint/no-unsafe-return": 0,
 		eqeqeq: ["error", "smart"],
 		"guard-for-in": "error",
 		"id-blacklist": "off", // this conflicting with typescript. It bans Number, Boolean, String, number, boolean, undefined but we widely use it in typescript
 		"id-match": "error",
-		"import/order": 1, // too strict, turning it off 🙂
-		"linebreak-style": [1, "unix"],
+		"import/order": "off", // replaced by simple-import-sort
+		"simple-import-sort/imports": "error",
+		"simple-import-sort/exports": "error",
+		"linebreak-style": ["error", "unix"],
 		"max-classes-per-file": ["error", 1],
 		"max-len": [
 			"error",
@@ -182,6 +195,8 @@ module.exports = {
 				singleReturnOnly: true
 			}
 		],
+		"promise/no-return-wrap": "error",
+		"promise/param-names": "error",
 		"quote-props": ["error", "as-needed"],
 		radix: "off", // doesnt respect the fact that radix can be undefined
 		"space-before-function-paren": [
@@ -193,8 +208,9 @@ module.exports = {
 			}
 		],
 		"spaced-comment": "error",
+		"unicorn/prefer-includes": "warn",
+		"unicorn/no-array-for-each": "warn",
 		"use-isnan": "error",
-		"valid-typeof": "error",
-		
+		"valid-typeof": "error"
 	}
 }

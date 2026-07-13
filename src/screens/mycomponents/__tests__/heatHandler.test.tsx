@@ -1,9 +1,10 @@
+import { fireEvent, render, screen } from "@testing-library/react-native"
 import React from "react"
-import { render, fireEvent, screen } from "@testing-library/react-native"
 import { Provider } from "react-redux"
 import configureStore from "redux-mock-store"
-import HeatHandler from "../heatHandler"
+
 import { changeHeat, changePaddler } from "../../../actions"
+import HeatHandler from "../heatHandler"
 
 const mockStore = configureStore([])
 

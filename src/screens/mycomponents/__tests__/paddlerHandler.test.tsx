@@ -1,17 +1,20 @@
+import { fireEvent, render, screen } from "@testing-library/react-native"
 import React from "react"
-import { render, fireEvent, screen } from "@testing-library/react-native"
 import { Provider } from "react-redux"
 import configureStore from "redux-mock-store"
-import { PaddlerHandler } from "../paddlerHandler"
+
 import {
+  changeNumberOfRuns,
   changePaddler,
   changeRun,
-  changeNumberOfRuns,
   updatePaddlerScores
 } from "../../../actions"
 import { initialScoresheet } from "../makePaddlerScores"
+import { PaddlerHandler } from "../paddlerHandler"
 
 const mockStore = configureStore([])
+
+const LAST_PADDLER_TEXT = "Last Paddler"
 
 jest.mock("../calculateScore", () => ({
   DisplayScore: () => null
@@ -97,7 +100,7 @@ describe("PaddlerHandler", () => {
     )
 
     expect(screen.getByText("Paddler1")).toBeTruthy()
-    expect(screen.getByText("Last Paddler")).toBeTruthy()
+    expect(screen.getByText(LAST_PADDLER_TEXT)).toBeTruthy()
     expect(screen.getByText("Next")).toBeTruthy()
   })
 
@@ -122,7 +125,7 @@ describe("PaddlerHandler", () => {
     )
 
     // Verify navigation buttons render with correct accessible labels and role
-    expect(screen.getByRole("button", { name: "Last Paddler" })).toBeTruthy()
+    expect(screen.getByRole("button", { name: LAST_PADDLER_TEXT })).toBeTruthy()
     expect(screen.getByRole("button", { name: "Next" })).toBeTruthy()
   })
 
@@ -202,7 +205,7 @@ describe("PaddlerHandler", () => {
       </Provider>
     )
 
-    const lastButton = screen.getByText("Last Paddler")
+    const lastButton = screen.getByText(LAST_PADDLER_TEXT)
     fireEvent.press(lastButton)
 
     const actions = store.getActions()
@@ -230,7 +233,7 @@ describe("PaddlerHandler", () => {
       </Provider>
     )
 
-    const lastButton = screen.getByText("Last Paddler")
+    const lastButton = screen.getByText(LAST_PADDLER_TEXT)
     fireEvent.press(lastButton)
 
     const actions = store.getActions()

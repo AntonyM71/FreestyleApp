@@ -1,4 +1,5 @@
 import { createSelector } from "reselect"
+
 import { ICategory, IEnabledMoves, IPaddler } from "./reducers"
 import { IStoreType } from "./store"
 

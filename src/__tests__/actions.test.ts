@@ -1,27 +1,25 @@
 import {
-	changePaddler,
-	changeRun,
-	changeNumberOfRuns,
-	changeHeat,
-	addOrRemovePaddlerName,
 	addOrRemoveCategory,
 	addOrRemoveHeat,
+	addOrRemovePaddlerName,
+	changeHeat,
+	changeNumberOfRuns,
+	changePaddler,
+	changeRun,
 	updatePaddlerScores,
-	updateShowTimer,
-	updateShowRun
-} from "../actions"
+	updateShowRun,
+	updateShowTimer } from "../actions"
 import {
-	CHANGE_PADDLER,
-	UPDATE_RUN,
-	UPDATE_NUMBER_OF_RUNS,
-	CHANGE_HEAT,
-	ADD_OR_REMOVE_PADDLER,
 	ADD_OR_REMOVE_CATEGORY,
 	ADD_OR_REMOVE_HEATS,
+	ADD_OR_REMOVE_PADDLER,
+	CHANGE_HEAT,
+	CHANGE_PADDLER,
+	UPDATE_NUMBER_OF_RUNS,
 	UPDATE_PADDLER_SCORES,
-	UPDATE_SHOW_TIMER,
-	UPDATE_SHOW_RUN
-} from "../actionTypes"
+	UPDATE_RUN,
+	UPDATE_SHOW_RUN,
+	UPDATE_SHOW_TIMER } from "../actionTypes"
 
 describe("actions", () => {
 	it("changePaddler returns correct action", () => {

@@ -1,7 +1,8 @@
+import { act,fireEvent, render, screen } from "@testing-library/react-native"
 import React from "react"
-import { render, fireEvent, screen, act } from "@testing-library/react-native"
 import { Provider } from "react-redux"
 import configureStore from "redux-mock-store"
+
 import Timer from "../timer"
 
 const mockStore = configureStore([])

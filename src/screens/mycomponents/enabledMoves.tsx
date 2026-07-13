@@ -1,12 +1,13 @@
 import React from "react"
 import { StyleSheet, Switch, Text, View } from "react-native"
 import { batch, useDispatch, useSelector } from "react-redux"
+
 import {
 	addOrRemoveCategory,
 	changeRun,
 	updatePaddlerScores
 } from "../../actions"
-import { ICategory, IEnabledMoves } from "../../reducers"
+import { ICategory, IEnabledMoves, IPaddlerScores } from "../../reducers"
 import { getCategories, getPaddlerHeatList } from "../../selectors"
 import { initialScoresheet } from "./makePaddlerScores"
 
@@ -14,7 +15,7 @@ const activeTrackColor = "#4F84C4"
 const inactiveTrackColor = "#C7CDD6"
 const thumbColor = "#223A5E"
 
-const moveSelectionPresentation = ({ category }: { category: ICategory }) => {
+const MoveSelectionPresentation = ({ category }: { category: ICategory }) => {
 	const dispatch = useDispatch()
 	const paddlerHeatList = useSelector(getPaddlerHeatList)
 	const enabledMovesList: IEnabledMoves = category.availableMoves
@@ -34,14 +35,11 @@ const moveSelectionPresentation = ({ category }: { category: ICategory }) => {
 	}
 
 	const clearScores = () => {
-		const startingScoresheet = {}
+		const startingScoresheet: IPaddlerScores = {}
 
-		paddlerHeatList
-			.flat()
-			.map((paddler: { toString: () => React.ReactText }) => {
-				// @ts-ignore
-				startingScoresheet[paddler.name] = [initialScoresheet()]
-			})
+		for (const paddler of paddlerHeatList) {
+			startingScoresheet[paddler.name] = [initialScoresheet()]
+		}
 		batch(() => {
 			dispatch(changeRun(0))
 			dispatch(updatePaddlerScores(startingScoresheet))
@@ -115,4 +113,4 @@ const layoutStyles = StyleSheet.create({
 	}
 })
 
-export default moveSelectionPresentation
+export default MoveSelectionPresentation

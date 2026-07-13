@@ -2,6 +2,7 @@ import React from "react"
 import { StyleSheet, Text, View } from "react-native"
 import { Button } from "react-native-paper"
 import { batch, useDispatch, useSelector } from "react-redux"
+
 import { changeHeat, changePaddler } from "../../actions"
 import {
 	getAvailableHeats,
