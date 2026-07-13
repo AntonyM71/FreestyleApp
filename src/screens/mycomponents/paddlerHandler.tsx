@@ -71,7 +71,7 @@ export const PaddlerHandler = () => {
 			const scores = { ...paddlerScores }
 			for (const paddler of paddlerList.flat()) {
 				scores[paddler.name] = [
-					...(paddlerScores[paddler.name] || []),
+					...(scores[paddler.name] || []),
 					initialScoresheet()
 				]
 			}

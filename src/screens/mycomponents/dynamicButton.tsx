@@ -36,6 +36,8 @@ interface IPropsType {
 	direction: IDirection
 }
 
+type PaddlerRuns = IPaddlerScores[string] | Record<number, IPaddlerScores[string][number]>
+
 const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 	const dispatch = useDispatch()
 	const paddlerScores = useSelector(getPaddlerScores)
@@ -48,7 +50,10 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 		direction: IDirection,
 		type: keyof moveSideInterface
 	) => () => {
-		const paddlerRuns: IPaddlerScores[string] = Object.assign([], paddlerScores[paddler])
+		const existingRuns = paddlerScores[paddler] as PaddlerRuns
+		const paddlerRuns: PaddlerRuns = Array.isArray(existingRuns)
+			? [...existingRuns]
+			: { ...existingRuns }
 		const runScores = { ...paddlerRuns[currentRun] }
 		const moveScores = runScores[move]
 		const nextSide = {
@@ -65,7 +70,7 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 		}
 		const newScores = {
 			...paddlerScores,
-			[paddler]: paddlerRuns
+			[paddler]: paddlerRuns as IPaddlerScores[string]
 		}
 		dispatch(updatePaddlerScores(newScores))
 	}

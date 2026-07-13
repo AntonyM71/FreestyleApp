@@ -22,6 +22,8 @@ interface BonusMoveButtonProps {
 	label: string
 }
 
+type PaddlerRuns = IPaddlerScores[string] | Record<number, IPaddlerScores[string][number]>
+
 const BonusMoveButton = ({ onPress, disabled, isScored, label }: BonusMoveButtonProps) => (
 	<View style={layoutStyles.thirdWidthCell}>
 		<Button
@@ -46,7 +48,10 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 		direction: IDirection,
 		type: keyof moveSideInterface
 	) => () => {
-		const paddlerRuns: IPaddlerScores[string] = Object.assign([], paddlerScores[paddler])
+		const existingRuns = paddlerScores[paddler] as PaddlerRuns
+		const paddlerRuns: PaddlerRuns = Array.isArray(existingRuns)
+			? [...existingRuns]
+			: { ...existingRuns }
 		const runScores = { ...paddlerRuns[run] }
 		const moveScores = runScores[move]
 		const nextSide = {
@@ -63,7 +68,7 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 		}
 		const newScores = {
 			...paddlerScores,
-			[paddler]: paddlerRuns
+			[paddler]: paddlerRuns as IPaddlerScores[string]
 		}
 
 		dispatch(updatePaddlerScores(newScores))
