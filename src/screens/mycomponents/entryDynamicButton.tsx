@@ -4,7 +4,7 @@ import { Button } from "react-native-paper"
 import { useDispatch, useSelector } from "react-redux"
 
 import { updatePaddlerScores } from "../../actions"
-import { IDirection, IPaddler } from "../../reducers"
+import { IDirection, IPaddler, IPaddlerScores } from "../../reducers"
 import { getCurrentRun, getPaddlerScores } from "../../selectors"
 import { paperButtonProps } from "../../styles"
 import { dataSourceMoveInterface, moveSideInterface } from "./makePaddlerScores"
@@ -46,12 +46,24 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 		direction: IDirection,
 		type: keyof moveSideInterface
 	) => () => {
-		const newScores = { ...paddlerScores }
-		newScores[paddler][run][move][direction][type] =
-			!newScores[paddler][run][move][direction][type]
-
-		if (newScores[paddler][run][move][direction].huge) {
-			newScores[paddler][run][move][direction].air = true
+		const paddlerRuns: IPaddlerScores[string] = Object.assign([], paddlerScores[paddler])
+		const runScores = { ...paddlerRuns[run] }
+		const moveScores = runScores[move]
+		const nextSide = {
+			...moveScores[direction],
+			[type]: !moveScores[direction][type]
+		}
+		const updatedSide = nextSide.huge ? { ...nextSide, air: true } : nextSide
+		paddlerRuns[run] = {
+			...runScores,
+			[move]: {
+				...moveScores,
+				[direction]: updatedSide
+			}
+		}
+		const newScores = {
+			...paddlerScores,
+			[paddler]: paddlerRuns
 		}
 
 		dispatch(updatePaddlerScores(newScores))
@@ -66,7 +78,7 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 		const thisMove =
 			paddlerScores[props.paddler.name][currentRun][props.move.Move]
 		if (Array.isArray(thisMove)) {
-			return <> </>
+			return null
 		}
 
 		const bonusHandler = (type: keyof moveSideInterface) =>
@@ -133,7 +145,7 @@ const DynamicButtonPresentation = React.memo((props: PropsType) => {
 		)
 	}
 
-	return <> </>
+	return null
 })
 
 export const EntryDynamicButton = DynamicButtonPresentation

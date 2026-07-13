@@ -68,13 +68,15 @@ export const PaddlerHandler = () => {
 		if (newRunIndex < numberOfRuns) {
 			dispatch(changeRun(newRunIndex))
 		} else {
-			const scores = paddlerScores
-			for (const paddler of paddlerList
-				.flat()) {
-					scores[paddler.name].push(initialScoresheet())
-				}
+			const scores = { ...paddlerScores }
+			for (const paddler of paddlerList.flat()) {
+				scores[paddler.name] = [
+					...(paddlerScores[paddler.name] || []),
+					initialScoresheet()
+				]
+			}
 			dispatch(changeNumberOfRuns(newRunIndex))
-			dispatch(updatePaddlerScores({ ...scores }))
+			dispatch(updatePaddlerScores(scores))
 			dispatch(changeRun(newRunIndex))
 		}
 	}

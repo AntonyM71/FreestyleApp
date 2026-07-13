@@ -16,13 +16,13 @@ const calculateScoreAndBonuses = (
 ) => {
 	if (!truth.scored) { return 0 }
 	// the below is a bit of a hack for a scenario where we have huge but no air, it will add in the air bonus
-	truth.air = truth.huge ? true : truth.air
+	const hasAir = truth.huge ? true : truth.air
 
 	return [
 		move.Value,
 		truth.clean ? move.Clean : 0,
 		truth.superClean ? move.SuperClean : 0,
-		truth.air ? move.Air : 0,
+		hasAir ? move.Air : 0,
 		truth.huge ? move.Huge : 0,
 		truth.link ? move.Link : 0,
 		truth.style ? move.Style : 0

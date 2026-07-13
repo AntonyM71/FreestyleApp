@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 import { updatePaddlerScores } from "../../actions"
 import { IMoves } from "../../data/moves_lists/move_list"
-import { IDirection, IPaddler } from "../../reducers"
+import { IDirection, IPaddler, IPaddlerScores } from "../../reducers"
 import { getPaddlerScores } from "../../selectors"
 import { paperButtonProps } from "../../styles"
 import { moveSideInterface } from "./makePaddlerScores"
@@ -48,11 +48,24 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 		direction: IDirection,
 		type: keyof moveSideInterface
 	) => () => {
-		const newScores = { ...paddlerScores }
-		newScores[paddler][currentRun][move][direction][type] =
-			!newScores[paddler][currentRun][move][direction][type]
-		if (newScores[paddler][currentRun][move][direction].huge) {
-			newScores[paddler][currentRun][move][direction].air = true
+		const paddlerRuns: IPaddlerScores[string] = Object.assign([], paddlerScores[paddler])
+		const runScores = { ...paddlerRuns[currentRun] }
+		const moveScores = runScores[move]
+		const nextSide = {
+			...moveScores[direction],
+			[type]: !moveScores[direction][type]
+		}
+		const updatedSide = nextSide.huge ? { ...nextSide, air: true } : nextSide
+		paddlerRuns[currentRun] = {
+			...runScores,
+			[move]: {
+				...moveScores,
+				[direction]: updatedSide
+			}
+		}
+		const newScores = {
+			...paddlerScores,
+			[paddler]: paddlerRuns
 		}
 		dispatch(updatePaddlerScores(newScores))
 	}
@@ -60,7 +73,7 @@ const DynamicButtonPresentation = React.memo((props: IPropsType) => {
 	const thisMove =
 		paddlerScores[props.paddler.name][props.currentRun][props.move.Move]
 	if (Array.isArray(thisMove)) {
-		return <> </>
+		return null
 	}
 
 	const isOneSided = oneSidedMoves.includes(props.move.Move)
