@@ -174,4 +174,16 @@ describe("HomeScreen", () => {
   it("has navigationOptions with header set to null", () => {
     expect(HomeScreen.navigationOptions).toEqual({ header: null })
   })
+
+  it("excludes bottom edge from SafeAreaView to prevent double bottom inset with tab bar", () => {
+    const store = createTestStore()
+    render(
+      <Provider store={store}>
+        <HomeScreen />
+      </Provider>
+    )
+
+    const safeAreaView = screen.getByTestId("home-safe-area")
+    expect(safeAreaView).toHaveProp("edges", expect.objectContaining({ bottom: "off" }))
+  })
 })

@@ -14,7 +14,11 @@ export default class SettingsScreen extends React.Component {
 
 	render() {
 		return (
-			<SafeAreaView style={styles.container} testID="settings-safe-area" accessible={true}>
+			<SafeAreaView
+				style={styles.container}
+				testID="settings-safe-area"
+				accessible={true}
+				edges={["top", "left", "right"]}>
 				<View style={styles.container} testID="settings-container">
 					<ScrollView
 						style={styles.container}
