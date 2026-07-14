@@ -73,4 +73,16 @@ describe("ResultsScreen", () => {
     const scrollView = screen.getByTestId("results-scroll-view")
     expect(scrollView).toHaveStyle({ flex: 1 }) // From styles.container
   })
+
+  it("excludes bottom edge from SafeAreaView to prevent double bottom inset with tab bar", () => {
+    const store = createTestStore()
+    render(
+      <Provider store={store}>
+        <ResultsScreen />
+      </Provider>
+    )
+
+    const safeAreaView = screen.getByTestId("results-safe-area")
+    expect(safeAreaView).toHaveProp("edges", expect.objectContaining({ bottom: "off" }))
+  })
 })

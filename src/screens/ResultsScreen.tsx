@@ -6,7 +6,11 @@ import { styles } from "../styles"
 import ResultsView from "./mycomponents/resultsView"
 
 const ResultsScreen = () => (
-	<SafeAreaView style={styles.container} testID="results-safe-area" accessible={true}>
+	<SafeAreaView
+		style={styles.container}
+		testID="results-safe-area"
+		accessible={true}
+		edges={["top", "left", "right"]}>
 		<View style={styles.container}>
 			<ScrollView
 				style={styles.container}

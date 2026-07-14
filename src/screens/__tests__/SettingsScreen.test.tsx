@@ -107,4 +107,16 @@ describe("SettingsScreen", () => {
     const scrollView = screen.getByTestId("settings-scroll-view")
     expect(scrollView).toHaveProp("accessible", true)
   })
+
+  it("excludes bottom edge from SafeAreaView to prevent double bottom inset with tab bar", () => {
+    const store = createTestStore()
+    render(
+      <Provider store={store}>
+        <SettingsScreen />
+      </Provider>
+    )
+
+    const safeAreaView = screen.getByTestId("settings-safe-area")
+    expect(safeAreaView).toHaveProp("edges", expect.objectContaining({ bottom: "off" }))
+  })
 })

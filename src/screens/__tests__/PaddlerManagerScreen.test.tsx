@@ -11,6 +11,8 @@ jest.mock("../mycomponents/paddlerManagementHandler", () =>
 )
 
 describe("PaddlerManagerScreen", () => {
+  const SAFE_AREA_TEST_ID = "paddler-manager-safe-area"
+  const SCROLL_VIEW_TEST_ID = "paddler-manager-scroll-view"
   const createTestStore = () => {
     const initialState = {
       paddlers: {
@@ -63,8 +65,8 @@ describe("PaddlerManagerScreen", () => {
       </Provider>
     )
 
-    const safeAreaView = screen.getByTestId("paddler-manager-safe-area")
-    const scrollView = screen.getByTestId("paddler-manager-scroll-view")
+    const safeAreaView = screen.getByTestId(SAFE_AREA_TEST_ID)
+    const scrollView = screen.getByTestId(SCROLL_VIEW_TEST_ID)
 
     expect(safeAreaView).toHaveProp("accessible", true)
     expect(scrollView).toHaveProp("accessible", true)
@@ -78,10 +80,22 @@ describe("PaddlerManagerScreen", () => {
       </Provider>
     )
 
-    const safeAreaView = screen.getByTestId("paddler-manager-safe-area")
-    const scrollView = screen.getByTestId("paddler-manager-scroll-view")
+    const safeAreaView = screen.getByTestId(SAFE_AREA_TEST_ID)
+    const scrollView = screen.getByTestId(SCROLL_VIEW_TEST_ID)
 
     expect(safeAreaView).toHaveStyle({ flex: 1 }) // From styles.container
     expect(scrollView).toHaveStyle({ flex: 1 }) // From styles.container
+  })
+
+  it("excludes bottom edge from SafeAreaView to prevent double bottom inset with tab bar", () => {
+    const store = createTestStore()
+    render(
+      <Provider store={store}>
+        <PaddlerManagerScreen />
+      </Provider>
+    )
+
+    const safeAreaView = screen.getByTestId(SAFE_AREA_TEST_ID)
+    expect(safeAreaView).toHaveProp("edges", expect.objectContaining({ bottom: "off" }))
   })
 })

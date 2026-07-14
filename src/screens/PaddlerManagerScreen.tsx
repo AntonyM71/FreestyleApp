@@ -15,7 +15,8 @@ export default class PaddlerManagerScreen extends React.Component {
 			<SafeAreaView
 				style={styles.container}
 				testID="paddler-manager-safe-area"
-				accessible={true}>
+				accessible={true}
+				edges={["top", "left", "right"]}>
 				<View style={styles.container}>
 					<ScrollView
 						style={styles.container}
